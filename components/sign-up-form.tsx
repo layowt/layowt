@@ -53,7 +53,7 @@ export default function SignUpForm() {
           e.preventDefault();
           handleRegistration();
         }}
-        className="flex flex-col gap-y-8 bg-white/5 rounded-xl p-7 w-80 lg:w-96"
+        className="flex flex-col font-cairo gap-y-8 bg-white/5 rounded-xl p-7 w-80 lg:w-96"
       >
         <h3 className="text-3xl flex justify-center w-full">
           Create an account

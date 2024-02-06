@@ -6,6 +6,8 @@ import { Theme } from '@radix-ui/themes';
 const CairoFont = Cairo({
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-cairo',
+  style: 'normal',
 });
 
 export const metadata = {
@@ -21,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={CairoFont.className}
+      className={`${CairoFont.className} font-cairo`}
     >
       <body>
         <Theme>{children}</Theme>

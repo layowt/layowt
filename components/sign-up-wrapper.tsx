@@ -78,7 +78,7 @@ export default function signUpComponent() {
       <div className="flex flex-col gap-y-8 max-h-[316px] w-80 lg:w-auto">
         <div className="">
           <div className="flex flex-col gap-y-3">
-            <h1 className="{Cairo}text-xl md:text-3xl lg:text-5xl xl:text-7xl font-medium">
+            <h1 className="{Cairo}text-xl font-cairo md:text-3xl lg:text-5xl xl:text-7xl font-semibold">
               Starting your online <br />
               journey has never been <br />
               easier.
