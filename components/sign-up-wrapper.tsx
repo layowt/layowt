@@ -16,7 +16,6 @@ export default function signUpComponent() {
   const [selectedFeature, setSelectedFeature] = useState('');
 
   const handleFeatureClick = (feature: string) => {
-    console.log(feature);
     if (featureClicked && feature === selectedFeature) {
       setFeatureClicked(false);
       setSelectedFeature('');
@@ -71,14 +70,15 @@ export default function signUpComponent() {
     },
   ];
 
-  let buttonClasses = 'mx-5';
+  let buttonClasses =
+    'mx-5 bg-transparent border border-white rounded-lg px-4 py-2';
 
   return (
-    <div className="flex h-screen gap-x-20 items-center justify-center text-white container">
-      <div className="flex flex-col gap-y-8 min-w-[711px] max-h-[316px]">
+    <div className="flex h-screen gap-x-20 items-center justify-center text-white px-10">
+      <div className="flex flex-col gap-y-8 max-h-[316px] w-80 lg:w-auto">
         <div className="">
           <div className="flex flex-col gap-y-3">
-            <h1 className="{Cairo}text-xl md:text-3xl lg:text-5xl xl:text-7xl font-bold">
+            <h1 className="{Cairo}text-xl md:text-3xl lg:text-5xl xl:text-7xl font-medium">
               Starting your online <br />
               journey has never been <br />
               easier.
@@ -100,7 +100,7 @@ export default function signUpComponent() {
                 }
                 onClick={() => handleFeatureClick(feature.component)}
               >
-                <span>{feature.component}</span>
+                <span>{feature.label}</span>
               </Button>
             ))}
           </Marquee>

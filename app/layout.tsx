@@ -1,5 +1,7 @@
 import './globals.css';
 import { Cairo } from 'next/font/google';
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
 
 const CairoFont = Cairo({
   subsets: ['latin'],
@@ -21,7 +23,9 @@ export default function RootLayout({
       lang="en"
       className={CairoFont.className}
     >
-      <body>{children}</body>
+      <body>
+        <Theme>{children}</Theme>
+      </body>
     </html>
   );
 }
