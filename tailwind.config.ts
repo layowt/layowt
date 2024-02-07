@@ -21,7 +21,7 @@ const config = {
     extend: {
       fontFamily: {
         cairo: ['__Cairo_f22647'],
-        karla: ['__Karla_f22647'],
+        karla: ['__Karla_546b71'],
       },
       colors: {
         border: 'hsl(var(--border))',
