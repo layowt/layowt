@@ -38,7 +38,7 @@ export default function SignUpForm() {
       // For now, redirect the user to the home page
       if (!user) return;
 
-      router.push('/');
+      router.push('/pricing');
 
       setIsLoading(false);
     } catch (e) {
@@ -101,7 +101,7 @@ export default function SignUpForm() {
                   <g
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
+                    stroke-inecap="round"
                     stroke-linejoin="round"
                   >
                     <path d="M11 5.5H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1m-.5 0V4a3.5 3.5 0 1 0-7 0v1.5"></path>

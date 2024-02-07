@@ -1,10 +1,8 @@
-import 'server-only';
-
 import Stripe from 'stripe';
 import { createInvoice } from '@/utils/stripe-invoice';
 
 const stripe = new Stripe(
-  process.env.NEXT_PRIVATE_STRIPE_SECRET_KEY as string,
+  'sk_test_51NkSBxIkd2lyiipNYgXjMIo00yWmxdWBBzHOOEgUDjEIFD1boaZegULaJGFnL9YRFr0ID61Km6GE2XYwvdG3IdcC00iES1k5TF',
   {
     apiVersion: '2023-10-16',
   }
@@ -95,7 +93,11 @@ export const createSubscription = async (
 
   if (!currentPlanType || !currentUser) return null;
 
-  const invoice = createInvoice(currentUser, currentPlanType.price, stripe);
+  const invoice = await createInvoice(
+    currentUser,
+    currentPlanType.price,
+    stripe
+  );
 
   return {
     invoice,
