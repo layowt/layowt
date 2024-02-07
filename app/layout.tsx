@@ -1,5 +1,5 @@
 import './globals.css';
-import { Cairo } from 'next/font/google';
+import { Cairo, Karla } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
@@ -7,6 +7,13 @@ const CairoFont = Cairo({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-cairo',
+  style: 'normal',
+});
+
+const KarlaFont = Karla({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-karla',
   style: 'normal',
 });
 
@@ -23,7 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${CairoFont.className} font-cairo`}
+      className={`${CairoFont.className} ${KarlaFont.className} font-cairo font-karla`}
     >
       <body
         className="bg-[#000814]"
