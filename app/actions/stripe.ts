@@ -1,40 +1,10 @@
 import Stripe from 'stripe';
-import { createInvoice } from '@/utils/stripe-invoice';
+import { createInvoice } from './utils/stripe-invoice';
+import { lookupCustomer, createCustomer } from './utils/stripe-customer
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16'
 });
-
-const lookupCustomer = async (
-  email: string
-): Promise<Stripe.Customer | null> => {
-  try {
-    const existingCustomer: Stripe.Response<Stripe.ApiList<Stripe.Customer>> =
-      await stripe.customers.list({
-        email: email,
-        limit: 1
-      });
-    if (existingCustomer.data.length) {
-      return existingCustomer.data[0];
-    }
-
-    return null;
-  } catch (error) {
-    console.error(error);
-
-    return Promise.reject(error);
-  }
-};
-
-const createCustomer = async (
-  customerParams: Stripe.CustomerCreateParams
-): Promise<Stripe.Customer> => {
-  try {
-    return await stripe.customers.create(customerParams);
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
 
 export const createSubscription = async (
   userEmail: string,
@@ -70,7 +40,7 @@ export const createSubscription = async (
   );
 
   // try to find the customer via the email
-  const isExistingCustomer = await lookupCustomer(userEmail);
+  const isExistingCustomer = await lookupCustomer(userEmail, stripe);
 
   if (isExistingCustomer) currentUser = isExistingCustomer;
 
@@ -80,7 +50,7 @@ export const createSubscription = async (
     };
 
     try {
-      currentUser = await createCustomer(newCustomerParams);
+      currentUser = await createCustomer(newCustomerParams, stripe);
 
       if (!currentUser) return null;
     } catch (error) {

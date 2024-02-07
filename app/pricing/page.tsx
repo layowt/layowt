@@ -21,7 +21,11 @@ export default function PricingPage() {
     // set the loading state
     setLoading(true);
     // Create a new subscription
-    await getStuff();
+    try {
+      await getStuff();
+    } catch (error) {
+      console.error(error);
+    }
 
     // reset the loading state
     setLoading(false);
