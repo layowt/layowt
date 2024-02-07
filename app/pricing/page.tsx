@@ -1,6 +1,8 @@
 'use client';
 // component imports
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+
 import Layout from '@/components/layout';
 import { useState } from 'react';
 import { ReloadIcon } from '@radix-ui/react-icons';
@@ -25,9 +27,11 @@ const getClientSecret = async (): Promise<{
 
   const { invoice, paymentPrice } = response;
 
+  console.log(response);
+
   if (!invoice) return null;
 
-  return invoice;
+  return response;
 };
 
 const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
@@ -35,7 +39,6 @@ const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 // component
 export default function PricingPage() {
   const [loading, setLoading] = useState(false);
-  const [stripeElements, setStripeElements] = useState(null);
   const [clientSecret, setClientSecret] = useState('');
 
   // TODO: his needs to take in the plan UID and user email
@@ -48,9 +51,12 @@ export default function PricingPage() {
 
       if (!response) return;
 
-      setClientSecret(response);
+      // set the client secret from the response from our endpoint
+      setClientSecret(response.invoice);
     } catch (error) {
       console.error(error);
+
+      // TODO: Show Sonner here on error
     }
 
     // reset the loading state
@@ -72,30 +78,34 @@ export default function PricingPage() {
             <h1 className="text-5xl font-bold">Plans Available</h1>
           </div>
 
-          {clientSecret}
-
           {clientSecret ? (
-            <Elements
-              stripe={stripe}
-              options={options}
-            >
-              <CheckoutForm />
-            </Elements>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  onClick={handleClientSecret}
+                  className="w-fit flex gap-x-2 min-w-[84px]"
+                >
+                  {loading ? (
+                    <ReloadIcon className="w-3 h-3 animate-spin" />
+                  ) : (
+                    'Buy now'
+                  )}
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <Elements
+                  stripe={stripe}
+                  options={options}
+                >
+                  <CheckoutForm />
+                </Elements>
+              </DialogContent>
+            </Dialog>
           ) : (
             ''
           )}
 
           {/** Placeholder purchase button */}
-          <Button
-            onClick={handleClientSecret}
-            className="w-fit flex gap-x-2 min-w-[84px]"
-          >
-            {loading ? (
-              <ReloadIcon className="w-3 h-3 animate-spin" />
-            ) : (
-              'Buy now'
-            )}
-          </Button>
         </div>
       </Layout>
     </>

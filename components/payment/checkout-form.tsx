@@ -21,6 +21,10 @@ export const CheckoutForm = () => {
         return_url: window.location.href
       }
     });
+
+    // TODO: handle the result
+
+    return result;
   };
 
   return (
