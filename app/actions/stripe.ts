@@ -1,12 +1,9 @@
 import Stripe from 'stripe';
 import { createInvoice } from '@/utils/stripe-invoice';
 
-const stripe = new Stripe(
-  'sk_test_51NkSBxIkd2lyiipNYgXjMIo00yWmxdWBBzHOOEgUDjEIFD1boaZegULaJGFnL9YRFr0ID61Km6GE2XYwvdG3IdcC00iES1k5TF',
-  {
-    apiVersion: '2023-10-16',
-  }
-);
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
+  apiVersion: '2023-10-16'
+});
 
 const lookupCustomer = async (
   email: string
@@ -15,7 +12,7 @@ const lookupCustomer = async (
     const existingCustomer: Stripe.Response<Stripe.ApiList<Stripe.Customer>> =
       await stripe.customers.list({
         email: email,
-        limit: 1,
+        limit: 1
       });
     if (existingCustomer.data.length) {
       return existingCustomer.data[0];
@@ -50,16 +47,16 @@ export const createSubscription = async (
   }[] = [
     {
       name: 'single',
-      price: 199,
+      price: 199
     },
     {
       name: 'monthly',
-      price: 499,
+      price: 499
     },
     {
       name: 'yearly',
-      price: 699,
-    },
+      price: 699
+    }
   ];
 
   // first we will check if the user already exists in stripe
@@ -79,7 +76,7 @@ export const createSubscription = async (
 
   if (!isExistingCustomer) {
     const newCustomerParams: Stripe.CustomerCreateParams = {
-      email: userEmail,
+      email: userEmail
     };
 
     try {
@@ -101,6 +98,6 @@ export const createSubscription = async (
 
   return {
     invoice,
-    paymentPrice: currentPlanType.price,
+    paymentPrice: currentPlanType.price
   };
 };

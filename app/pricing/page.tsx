@@ -10,9 +10,7 @@ import { createSubscription } from '@/app/actions/stripe';
 
 // methods
 const getStuff = async () => {
-  console.log('ran');
   const response = await createSubscription('logan@hiyield.co.uk', 'single');
-  console.log(await response);
 };
 
 // component
@@ -32,12 +30,12 @@ export default function PricingPage() {
   return (
     <>
       <Layout>
-        <div className="flex flex-col items-center gap-y-10 font-cairo text-white">
-          <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col h-full justify-center items-center gap-y-10 font-cairo text-white py-10">
+          <div className="flex flex-col gap-y-2 justify-center items-center">
             <h6 className="bg-gray-900 px-4 py-2 rounded-xl text-xs w-fit">
               Pricing
             </h6>
-            <h1 className="text-5xl font-bold">Pricing</h1>
+            <h1 className="text-5xl font-bold">Plans Available</h1>
           </div>
 
           {/** Placeholder purchase button */}
