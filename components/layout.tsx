@@ -1,7 +1,9 @@
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center text-center">
-      <div className="">NavBar</div>
+    <div className="container">
+      <div className="text-white text-3xl font-bold font-cairo py-2">
+        secure
+      </div>
       {children}
     </div>
   );
