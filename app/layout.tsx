@@ -25,7 +25,10 @@ export default function RootLayout({
       lang="en"
       className={`${CairoFont.className} font-cairo`}
     >
-      <body>
+      <body
+        className="bg-[#000814]"
+        suppressHydrationWarning={true}
+      >
         <Theme>{children}</Theme>
       </body>
     </html>
