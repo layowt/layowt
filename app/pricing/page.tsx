@@ -11,6 +11,8 @@ import { createSubscription } from '@/app/actions/stripe';
 // methods
 const getStuff = async () => {
   const response = await createSubscription('logan@hiyield.co.uk', 'single');
+
+  console.log(response);
 };
 
 // component
