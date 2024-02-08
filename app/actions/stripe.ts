@@ -16,8 +16,6 @@ export const createSubscription = async (
   const planTypes = await StripeProducts().then((response) => {
     if (!response) return null;
 
-    console.log(response.products);
-
     return response.products;
   });
 
@@ -48,11 +46,9 @@ export const createSubscription = async (
 
   const invoice = await createInvoice(
     currentUser,
-    currentPlan.default_price.unit_amount ?? '0',
+    currentPlan.default_price?.unit_amount,
     stripe
   );
-
-  console.log(invoice);
 
   return {
     invoice,

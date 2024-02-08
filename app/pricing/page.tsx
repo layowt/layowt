@@ -130,7 +130,7 @@ export default function PricingPage() {
                       onClick={async () => await handleClientSecret(product.id)}
                       className="w-fit flex gap-x-2 min-w-[84px]"
                     >
-                      {loading[product.metadata.planType] ? (
+                      {loading[product.id] ? (
                         <ReloadIcon className="w-3 h-3 animate-spin" />
                       ) : (
                         'Buy now'
