@@ -70,7 +70,7 @@ export default function PricingPage() {
   return (
     <>
       <Layout>
-        <div className="flex flex-col h-full justify-center items-center gap-y-10 font-cairo text-white py-10">
+        <div className="flex flex-col h-full justify-center items-center gap-y-10 text-white py-10">
           <div className="flex flex-col gap-y-2 justify-center items-center">
             <h6 className="bg-gray-900 px-4 py-2 rounded-xl text-xs w-fit">
               Pricing
@@ -78,20 +78,20 @@ export default function PricingPage() {
             <h1 className="text-5xl font-bold">Plans Available</h1>
           </div>
 
-          {clientSecret ? (
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  onClick={handleClientSecret}
-                  className="w-fit flex gap-x-2 min-w-[84px]"
-                >
-                  {loading ? (
-                    <ReloadIcon className="w-3 h-3 animate-spin" />
-                  ) : (
-                    'Buy now'
-                  )}
-                </Button>
-              </DialogTrigger>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                onClick={handleClientSecret}
+                className="w-fit flex gap-x-2 min-w-[84px]"
+              >
+                {loading ? (
+                  <ReloadIcon className="w-3 h-3 animate-spin" />
+                ) : (
+                  'Buy now'
+                )}
+              </Button>
+            </DialogTrigger>
+            {clientSecret ? (
               <DialogContent>
                 <Elements
                   stripe={stripe}
@@ -100,10 +100,10 @@ export default function PricingPage() {
                   <CheckoutForm />
                 </Elements>
               </DialogContent>
-            </Dialog>
-          ) : (
-            ''
-          )}
+            ) : (
+              ''
+            )}
+          </Dialog>
 
           {/** Placeholder purchase button */}
         </div>

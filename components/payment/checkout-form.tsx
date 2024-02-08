@@ -4,12 +4,17 @@ import {
   useElements,
   PaymentElement
 } from '@stripe/react-stripe-js';
+import { useState } from 'react';
+import { ReloadIcon } from '@radix-ui/react-icons';
 
 export const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     // prevent the default form submission
     event.preventDefault();
 
@@ -24,17 +29,25 @@ export const CheckoutForm = () => {
 
     // TODO: handle the result
 
+    setLoading(false);
+
     return result;
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
+    <form
+      onSubmit={handleSubmit}
+      className="p-5 flex flex-col gap-y-2"
+    >
+      <div className="flex flex-col gap-y-4">
+        <h3 className="text-2xl font-bold">Payment</h3>
+        <PaymentElement />
+      </div>
       <Button
         type="submit"
         disabled={!stripe}
       >
-        Submit
+        {loading ? <ReloadIcon className="w-3 h-3 animate-spin" /> : 'Submit'}
       </Button>
     </form>
   );
