@@ -42,7 +42,10 @@ const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 
 // component
 export default function PricingPage() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<{
+    [key: string]: boolean;
+  }>({});
+
   const [clientSecret, setClientSecret] = useState('');
 
   const [products, setProducts] = useState<Record<
@@ -52,8 +55,12 @@ export default function PricingPage() {
 
   // TODO: his needs to take in the plan UID and user email
   const handleClientSecret = async (planType: string) => {
-    // set the loading state
-    setLoading(true);
+    // set the loading state for the specific product
+    setLoading((prevLoading) => ({
+      ...prevLoading,
+      [planType]: true
+    }));
+
     // Create a new subscription
     try {
       const response = await getClientSecret(planType);
@@ -70,8 +77,11 @@ export default function PricingPage() {
       // TODO: Show Sonner here on error
     }
 
-    // reset the loading state
-    setLoading(false);
+    // reset the loading state for the specific product
+    setLoading((prevLoading) => ({
+      ...prevLoading,
+      [planType]: false
+    }));
   };
 
   // Promise<Record<"products", Stripe.Product[]> | null>
@@ -124,7 +134,7 @@ export default function PricingPage() {
                       }
                       className="w-fit flex gap-x-2 min-w-[84px]"
                     >
-                      {loading ? (
+                      {loading[product.metadata.planType] ? (
                         <ReloadIcon className="w-3 h-3 animate-spin" />
                       ) : (
                         'Buy now'
