@@ -54,18 +54,16 @@ export default function PricingPage() {
   > | null>(null);
 
   // TODO: his needs to take in the plan UID and user email
-  const handleClientSecret = async (planType: string) => {
+  const handleClientSecret = async (planUid: string) => {
     // set the loading state for the specific product
     setLoading((prevLoading) => ({
       ...prevLoading,
-      [planType]: true
+      [planUid]: true
     }));
 
     // Create a new subscription
     try {
-      const response = await getClientSecret(planType);
-
-      console.log(response);
+      const response = await getClientSecret(planUid);
 
       if (!response) return;
 
@@ -80,7 +78,7 @@ export default function PricingPage() {
     // reset the loading state for the specific product
     setLoading((prevLoading) => ({
       ...prevLoading,
-      [planType]: false
+      [planUid]: false
     }));
   };
 
@@ -129,9 +127,7 @@ export default function PricingPage() {
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      onClick={async () =>
-                        await handleClientSecret(product.metadata.planType)
-                      }
+                      onClick={async () => await handleClientSecret(product.id)}
                       className="w-fit flex gap-x-2 min-w-[84px]"
                     >
                       {loading[product.metadata.planType] ? (
