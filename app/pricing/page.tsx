@@ -4,30 +4,32 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 import Layout from '@/components/layout';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { CheckoutForm } from '@/components/payment/checkout-form';
 
 // action imports
 import { createSubscription } from '@/app/actions/stripe';
+import { StripeProducts } from '@/app/actions/stripe-products';
 
 // stripe imports
+import Stripe from 'stripe';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+
+// type imports
+import { StripeProduct } from '@/types/StripeProduct';
 
 // methods
 const getClientSecret = async (): Promise<{
   invoice: string;
-  paymentPrice: number;
 } | null> => {
   const response: {
     invoice: string;
     paymentPrice: number;
   } = await createSubscription('logan@hiyield.co.uk', 'single');
 
-  const { invoice, paymentPrice } = response;
-
-  console.log(response);
+  const { invoice } = response;
 
   if (!invoice) return null;
 
@@ -40,6 +42,11 @@ const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 export default function PricingPage() {
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState('');
+
+  const [products, setProducts] = useState<Record<
+    'products',
+    StripeProduct[]
+  > | null>(null);
 
   // TODO: his needs to take in the plan UID and user email
   const handleClientSecret = async () => {
@@ -63,6 +70,18 @@ export default function PricingPage() {
     setLoading(false);
   };
 
+  // Promise<Record<"products", Stripe.Product[]> | null>
+  // SetStateAction<Record<"products", StripeProduct[]> | null>
+
+  useEffect(() => {
+    const setProductsFunc = async () => {
+      // TODO: FIX
+      setProducts(await StripeProducts());
+    };
+
+    setProductsFunc();
+  }, []);
+
   const options = {
     clientSecret: clientSecret
   };
@@ -77,6 +96,21 @@ export default function PricingPage() {
             </h6>
             <h1 className="text-5xl font-bold">Plans Available</h1>
           </div>
+
+          {products?.products.map((product: StripeProduct) => (
+            <div
+              key={product.id}
+              className="flex flex-col gap-y-4"
+            >
+              <h2 className="text-3xl font-bold">{product.name}</h2>
+              <p className="text-lg">{product.description}</p>
+              <div className="flex gap-x-2">
+                {product.default_price?.unit_amount
+                  ? product.default_price?.unit_amount / 100
+                  : 'Free'}
+              </div>
+            </div>
+          ))}
 
           <Dialog>
             <DialogTrigger asChild>
