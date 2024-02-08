@@ -11,12 +11,14 @@ export const createSubscription = async (
   planType: string
 ): Promise<any> => {
   let currentUser: Stripe.Customer | null = null;
+
+  // we need to get the products from stripe - pass in the product uid to fetch here?
   const planTypes: {
     price: number;
     name: string;
   }[] = [
     {
-      name: 'single',
+      name: 'free',
       price: 199
     },
     {

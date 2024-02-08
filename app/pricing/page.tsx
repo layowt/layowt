@@ -13,7 +13,6 @@ import { createSubscription } from '@/app/actions/stripe';
 import { StripeProducts } from '@/app/actions/stripe-products';
 
 // stripe imports
-import Stripe from 'stripe';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
@@ -21,13 +20,16 @@ import { Elements } from '@stripe/react-stripe-js';
 import { StripeProduct } from '@/types/StripeProduct';
 
 // methods
-const getClientSecret = async (): Promise<{
+const getClientSecret = async (
+  planType: string
+): Promise<{
   invoice: string;
+  paymentPrice: number;
 } | null> => {
   const response: {
     invoice: string;
     paymentPrice: number;
-  } = await createSubscription('logan@hiyield.co.uk', 'single');
+  } = await createSubscription('logan@hiyield.co.uk', planType);
 
   const { invoice } = response;
 
@@ -49,12 +51,14 @@ export default function PricingPage() {
   > | null>(null);
 
   // TODO: his needs to take in the plan UID and user email
-  const handleClientSecret = async () => {
+  const handleClientSecret = async (planType: string) => {
     // set the loading state
     setLoading(true);
     // Create a new subscription
     try {
-      const response = await getClientSecret();
+      const response = await getClientSecret(planType);
+
+      console.log(response);
 
       if (!response) return;
 
@@ -75,7 +79,8 @@ export default function PricingPage() {
 
   useEffect(() => {
     const setProductsFunc = async () => {
-      // TODO: FIX
+      // TODO: fix this
+      // @ts-ignore
       setProducts(await StripeProducts());
     };
 
@@ -97,47 +102,51 @@ export default function PricingPage() {
             <h1 className="text-5xl font-bold">Plans Available</h1>
           </div>
 
-          {products?.products.map((product: StripeProduct) => (
-            <div
-              key={product.id}
-              className="flex flex-col gap-y-4"
-            >
-              <h2 className="text-3xl font-bold">{product.name}</h2>
-              <p className="text-lg">{product.description}</p>
-              <div className="flex gap-x-2">
-                {product.default_price?.unit_amount
-                  ? product.default_price?.unit_amount / 100
-                  : 'Free'}
-              </div>
-            </div>
-          ))}
-
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                onClick={handleClientSecret}
-                className="w-fit flex gap-x-2 min-w-[84px]"
+          <div className="grid grid-cols-2 gap-x-10">
+            {products?.products.map((product: StripeProduct) => (
+              <div
+                key={product.id}
+                className="flex flex-col gap-y-4 border border-white p-4 rounded-xl"
               >
-                {loading ? (
-                  <ReloadIcon className="w-3 h-3 animate-spin" />
-                ) : (
-                  'Buy now'
-                )}
-              </Button>
-            </DialogTrigger>
-            {clientSecret ? (
-              <DialogContent>
-                <Elements
-                  stripe={stripe}
-                  options={options}
-                >
-                  <CheckoutForm />
-                </Elements>
-              </DialogContent>
-            ) : (
-              ''
-            )}
-          </Dialog>
+                <h2 className="text-3xl font-bold">{product.name}</h2>
+                <p className="text-lg">{product.description}</p>
+                <div className="flex gap-x-2">
+                  {product.default_price?.unit_amount
+                    ? product.default_price?.unit_amount / 100
+                    : 'Free'}
+                </div>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      onClick={async () =>
+                        await handleClientSecret(product.metadata.planType)
+                      }
+                      className="w-fit flex gap-x-2 min-w-[84px]"
+                    >
+                      {loading ? (
+                        <ReloadIcon className="w-3 h-3 animate-spin" />
+                      ) : (
+                        'Buy now'
+                      )}
+                    </Button>
+                  </DialogTrigger>
+                  {clientSecret ? (
+                    <DialogContent>
+                      <Elements
+                        stripe={stripe}
+                        options={options}
+                      >
+                        <CheckoutForm />
+                      </Elements>
+                    </DialogContent>
+                  ) : (
+                    ''
+                  )}
+                </Dialog>
+              </div>
+            ))}
+          </div>
 
           {/** Placeholder purchase button */}
         </div>
