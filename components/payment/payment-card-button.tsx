@@ -26,10 +26,9 @@ const getClientSecret = async (
   invoice: string;
   paymentPrice: number;
 } | null> => {
-  const response: {
-    invoice: string;
-    paymentPrice: number;
-  } = await createSubscription('logan@hiyield.co.uk', planType);
+  const response = await createSubscription('logan@hiyield.co.uk', planType); // TODO: Change hardcoded email
+
+  if (!response) return null;
 
   const { invoice } = response;
 

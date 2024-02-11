@@ -10,7 +10,10 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
 export const createSubscription = async (
   userEmail: string,
   planUid: string
-): Promise<any> => {
+): Promise<{
+  invoice: string;
+  paymentPrice: number;
+} | null> => {
   let currentUser: Stripe.Customer | null = null;
 
   const planTypes = await StripeProducts().then((response) => {
