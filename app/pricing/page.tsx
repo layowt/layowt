@@ -65,8 +65,6 @@ export default function PricingPage() {
 
             <ArrowRightIcon className="w-5 h-5" />
           </div>
-
-          {/** Placeholder purchase button */}
         </div>
       </Layout>
     </>
