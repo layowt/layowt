@@ -4,7 +4,7 @@ export const createInvoice = async (
   user: Stripe.Customer,
   amount: number,
   stripe: Stripe
-): Promise<Stripe.Invoice | any> => {
+): Promise<Stripe.PaymentIntent['client_secret'] | null> => {
   if (!user || !user.id) {
     return Promise.reject('Invalid user');
   }
@@ -15,7 +15,7 @@ export const createInvoice = async (
       customer: user.id,
       description: 'Test Invoice',
       currency: 'gbp',
-      auto_advance: false,
+      auto_advance: false
     });
 
     // create an invoice item
@@ -29,12 +29,12 @@ export const createInvoice = async (
       customer: user?.id,
       unit_amount: amount,
       currency: 'gbp',
-      quantity: 1,
+      quantity: 1
     });
 
     const finalizedInvoice: Stripe.Response<Stripe.Invoice> =
         await stripe.invoices.finalizeInvoice(invoice.id, {
-          auto_advance: true,
+          auto_advance: true
         }),
       paymentIntentId = finalizedInvoice?.payment_intent;
 
@@ -50,9 +50,9 @@ export const createInvoice = async (
     paymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
       metadata: {
         email: user?.email,
-        amount: amount,
+        amount: amount
       },
-      receipt_email: user?.email,
+      receipt_email: user?.email
     });
 
     return paymentIntent.client_secret;

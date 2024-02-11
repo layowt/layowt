@@ -1,111 +1,70 @@
 'use client';
 // component imports
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { PricingCard } from '@/components/payment/payment-card';
 
 import Layout from '@/components/layout';
-import { useState } from 'react';
-import { ReloadIcon } from '@radix-ui/react-icons';
-import { CheckoutForm } from '@/components/payment/checkout-form';
+import { useState, useEffect } from 'react';
+import { ArrowRightIcon } from '@radix-ui/react-icons';
+import { Cairo } from 'next/font/google';
+
+// fonts
+const cairo = Cairo({ subsets: ['latin'] });
 
 // action imports
-import { createSubscription } from '@/app/actions/stripe';
+import { StripeProducts } from '@/app/actions/stripe-products';
 
-// stripe imports
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-
-// methods
-const getClientSecret = async (): Promise<{
-  invoice: string;
-  paymentPrice: number;
-} | null> => {
-  const response: {
-    invoice: string;
-    paymentPrice: number;
-  } = await createSubscription('logan@hiyield.co.uk', 'single');
-
-  const { invoice, paymentPrice } = response;
-
-  console.log(response);
-
-  if (!invoice) return null;
-
-  return response;
-};
-
-const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
+// type imports
+import { StripeProduct } from '@/types/StripeProduct';
 
 // component
 export default function PricingPage() {
-  const [loading, setLoading] = useState(false);
-  const [clientSecret, setClientSecret] = useState('');
+  const [products, setProducts] = useState<Record<
+    'products',
+    StripeProduct[]
+  > | null>(null);
 
-  // TODO: his needs to take in the plan UID and user email
-  const handleClientSecret = async () => {
-    // set the loading state
-    setLoading(true);
-    // Create a new subscription
-    try {
-      const response = await getClientSecret();
+  // Promise<Record<"products", Stripe.Product[]> | null>
+  // SetStateAction<Record<"products", StripeProduct[]> | null>
 
-      if (!response) return;
+  useEffect(() => {
+    const setProductsFunc = async () => {
+      // TODO: fix this
+      // @ts-ignore
+      setProducts(await StripeProducts());
 
-      // set the client secret from the response from our endpoint
-      setClientSecret(response.invoice);
-    } catch (error) {
-      console.error(error);
+      console.log(await StripeProducts());
+    };
 
-      // TODO: Show Sonner here on error
-    }
+    setProductsFunc();
+  }, []);
 
-    // reset the loading state
-    setLoading(false);
-  };
-
-  const options = {
-    clientSecret: clientSecret
-  };
+  let pricingPlansGrid = 'grid w-fit gap-x-8';
 
   return (
     <>
       <Layout>
-        <div className="flex flex-col h-full justify-center items-center gap-y-10 text-white py-10">
-          <div className="flex flex-col gap-y-2 justify-center items-center">
-            <h6 className="bg-gray-900 px-4 py-2 rounded-xl text-xs w-fit">
-              Pricing
-            </h6>
-            <h1 className="text-5xl font-bold">Plans Available</h1>
+        <div className="flex flex-col h-full gap-y-20 text-white py-20">
+          <div className="flex flex-col gap-y-6 w-full">
+            <h6 className="text-xs">Pricing</h6>
+            <h1 className={cairo.className + ` text-5xl font-bold`}>
+              Plans available
+            </h1>
           </div>
 
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                onClick={handleClientSecret}
-                className="w-fit flex gap-x-2 min-w-[84px]"
-              >
-                {loading ? (
-                  <ReloadIcon className="w-3 h-3 animate-spin" />
-                ) : (
-                  'Buy now'
-                )}
-              </Button>
-            </DialogTrigger>
-            {clientSecret ? (
-              <DialogContent>
-                <Elements
-                  stripe={stripe}
-                  options={options}
-                >
-                  <CheckoutForm />
-                </Elements>
-              </DialogContent>
-            ) : (
-              ''
-            )}
-          </Dialog>
+          <div className="flex gap-x-10 items-center">
+            <div
+              className={
+                pricingPlansGrid + ` grid-cols-${products?.products.length}`
+              }
+            >
+              {/** TODO: Extract the card into its own component */}
+              {products?.products.map((product: StripeProduct) => (
+                <PricingCard product={product} />
+              ))}
+            </div>
 
-          {/** Placeholder purchase button */}
+            <ArrowRightIcon className="w-5 h-5" />
+          </div>
         </div>
       </Layout>
     </>
