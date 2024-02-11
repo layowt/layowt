@@ -2,11 +2,16 @@
 // component imports
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { PricingCard } from '@/components/payment/payment-card';
 
 import Layout from '@/components/layout';
 import { useState, useEffect } from 'react';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { ReloadIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import { CheckoutForm } from '@/components/payment/checkout-form';
+import { Cairo } from 'next/font/google';
+
+// fonts
+const cairo = Cairo({ subsets: ['latin'] });
 
 // action imports
 import { createSubscription } from '@/app/actions/stripe';
@@ -90,6 +95,8 @@ export default function PricingPage() {
       // TODO: fix this
       // @ts-ignore
       setProducts(await StripeProducts());
+
+      console.log(await StripeProducts());
     };
 
     setProductsFunc();
@@ -99,59 +106,118 @@ export default function PricingPage() {
     clientSecret: clientSecret
   };
 
+  let pricingPlansGrid = 'grid w-fit gap-x-8';
+
   return (
     <>
       <Layout>
-        <div className="flex flex-col h-full justify-center items-center gap-y-10 text-white py-10">
-          <div className="flex flex-col gap-y-2 justify-center items-center">
-            <h6 className="bg-gray-900 px-4 py-2 rounded-xl text-xs w-fit">
-              Pricing
-            </h6>
-            <h1 className="text-5xl font-bold">Plans Available</h1>
+        <div className="flex flex-col h-full gap-y-20 text-white py-20">
+          <div className="flex flex-col gap-y-6 w-full">
+            <h6 className="text-xs">Pricing</h6>
+            <h1 className={cairo.className + ` text-5xl font-bold`}>
+              Plans available
+            </h1>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-10">
-            {products?.products.map((product: StripeProduct) => (
-              <div
-                key={product.id}
-                className="flex flex-col gap-y-4 border border-white p-4 rounded-xl"
-              >
-                <h2 className="text-3xl font-bold">{product.name}</h2>
-                <p className="text-lg">{product.description}</p>
-                <div className="flex gap-x-2">
-                  {product.default_price?.unit_amount
-                    ? product.default_price?.unit_amount / 100
-                    : 'Free'}
-                </div>
-
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      onClick={async () => await handleClientSecret(product.id)}
-                      className="w-fit flex gap-x-2 min-w-[84px]"
+          <div className="flex gap-x-10 items-center">
+            <div
+              className={
+                pricingPlansGrid + ` grid-cols-${products?.products.length}`
+              }
+            >
+              {/** TODO: Extract the card into its own component */}
+              {products?.products.map((product: StripeProduct) => (
+                <div
+                  key={product.id}
+                  className="
+                  flex flex-col gap-y-12 border border-white
+                  p-8 pt-10 max-w-72 justify-between relative
+                "
+                >
+                  <div className="flex flex-col gap-y-4">
+                    <div
+                      className={
+                        cairo.className + ` flex flex-col gap-y-2 w-full`
+                      }
                     >
-                      {loading[product.id] ? (
-                        <ReloadIcon className="w-3 h-3 animate-spin" />
+                      {product.metadata.mostPopular ? (
+                        <span
+                          className="
+                          text-white text-xs font-bold absolute top-0 right-0 py-1.5 px-3
+                          bg-pink rounded-bl-lg
+                          "
+                        >
+                          Most popular
+                        </span>
                       ) : (
-                        'Buy now'
+                        ''
                       )}
-                    </Button>
-                  </DialogTrigger>
-                  {clientSecret ? (
-                    <DialogContent>
-                      <Elements
-                        stripe={stripe}
-                        options={options}
+                      <h2 className="text-3xl font-bold">{product.name}</h2>
+                      <p className="text-xs">{product.description}</p>
+                    </div>
+                    <div className="flex gap-x-1 items-center">
+                      <div className="flex gap-x-1 items-center">
+                        £
+                        <span className={`text-3xl`}>
+                          {product.default_price?.unit_amount
+                            ? product.default_price?.unit_amount / 100
+                            : 'Free'}
+                        </span>
+                      </div>
+                      <span className="text-xs mt-2">/ month</span>
+                    </div>
+
+                    {/** Feature list */}
+                    <div className="flex flex-col gap-y-2">
+                      {product.features.map((feature) => (
+                        <div
+                          key={product.id + feature.name}
+                          className="flex gap-x-2 text-xs"
+                        >
+                          <span>{feature.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        onClick={async () =>
+                          await handleClientSecret(product.id)
+                        }
+                        className={
+                          product.metadata.mostPopular
+                            ? 'bg-pink hover:bg-pink/75'
+                            : '' +
+                              ` flex gap-x-2 min-w-[84px] duration-300 ease-in-out`
+                        }
                       >
-                        <CheckoutForm />
-                      </Elements>
-                    </DialogContent>
-                  ) : (
-                    ''
-                  )}
-                </Dialog>
-              </div>
-            ))}
+                        {loading[product.id] ? (
+                          <ReloadIcon className="w-3 h-3 animate-spin" />
+                        ) : (
+                          'Buy now'
+                        )}
+                      </Button>
+                    </DialogTrigger>
+                    {clientSecret ? (
+                      <DialogContent>
+                        <Elements
+                          stripe={stripe}
+                          options={options}
+                        >
+                          <CheckoutForm />
+                        </Elements>
+                      </DialogContent>
+                    ) : (
+                      ''
+                    )}
+                  </Dialog>
+                </div>
+              ))}
+            </div>
+
+            <ArrowRightIcon className="w-5 h-5" />
           </div>
 
           {/** Placeholder purchase button */}

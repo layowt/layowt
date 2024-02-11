@@ -19,6 +19,15 @@ export const StripeProducts = async (): Promise<Record<
 
   if (!products) return Promise.reject('No products found');
 
+  // once we have the products, lets sort them via the price
+  products.data.sort((productA, productB) => {
+    if (!productA.default_price || !productB.default_price) return 0;
+    return (
+      // @ts-ignore - we know that this is a field as we expand it in the list
+      productA.default_price.unit_amount - productB.default_price.unit_amount
+    );
+  });
+
   return {
     products: products.data
   };
