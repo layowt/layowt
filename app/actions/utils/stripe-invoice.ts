@@ -4,7 +4,7 @@ export const createInvoice = async (
   user: Stripe.Customer,
   amount: number,
   stripe: Stripe
-): Promise<Stripe.Invoice | any> => {
+): Promise<Stripe.PaymentIntent['client_secret'] | null> => {
   if (!user || !user.id) {
     return Promise.reject('Invalid user');
   }
