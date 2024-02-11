@@ -13,5 +13,5 @@ type StripeProductBase = Pick<
  */
 export interface StripeProduct extends StripeProductBase {
   default_price: Stripe.Price;
-  features: string[];
+  features: Record<'name', string>[];
 }
