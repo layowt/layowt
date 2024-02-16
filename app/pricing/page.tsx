@@ -57,7 +57,6 @@ export default function PricingPage() {
                 pricingPlansGrid + ` grid-cols-${products?.products.length}`
               }
             >
-              {/** TODO: Extract the card into its own component */}
               {products?.products.map((product: StripeProduct) => (
                 <PricingCard product={product} />
               ))}

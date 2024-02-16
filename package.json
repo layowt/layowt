@@ -36,8 +36,7 @@
     "sonner": "^1.4.0",
     "stripe": "^14.15.0",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7",
-    "zustand": "^4.5.0"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
