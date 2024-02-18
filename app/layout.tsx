@@ -3,6 +3,10 @@ import { Cairo, Karla, ABeeZee } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
+// redux imports
+import store from '@/store';
+import { Provider } from 'react-redux';
+
 const CairoFont = Cairo({
   subsets: ['latin'],
   display: 'swap',
@@ -44,7 +48,9 @@ export default function RootLayout({
         className="bg-[#000814]"
         suppressHydrationWarning={true}
       >
-        <Theme>{children}</Theme>
+        <Theme>
+          <Provider store={store}>{children}</Provider>
+        </Theme>
       </body>
     </html>
   );
