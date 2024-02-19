@@ -32,7 +32,7 @@ export default function PricingPage() {
       // @ts-ignore
       setProducts(await StripeProducts());
 
-      console.log(await StripeProducts());
+      //console.log(await StripeProducts());
     };
 
     setProductsFunc();
@@ -42,30 +42,31 @@ export default function PricingPage() {
 
   return (
     <>
-      <Layout>
-        <div className="flex flex-col h-full gap-y-20 text-white py-20">
-          <div className="flex flex-col gap-y-6 w-full">
-            <h6 className="text-xs">Pricing</h6>
-            <h1 className={cairo.className + ` text-5xl font-bold`}>
-              Plans available
-            </h1>
-          </div>
-
-          <div className="flex gap-x-10 items-center">
-            <div
-              className={
-                pricingPlansGrid + ` grid-cols-${products?.products.length}`
-              }
-            >
-              {products?.products.map((product: StripeProduct) => (
-                <PricingCard product={product} />
-              ))}
-            </div>
-
-            <ArrowRightIcon className="w-5 h-5" />
-          </div>
+      <div className="flex flex-col h-full gap-y-20 text-white py-20">
+        <div className="flex flex-col gap-y-6 w-full">
+          <h6 className="text-xs">Pricing</h6>
+          <h1 className={cairo.className + ` text-5xl font-bold`}>
+            Plans available
+          </h1>
         </div>
-      </Layout>
+
+        <div className="flex gap-x-10 items-center">
+          <div
+            className={
+              pricingPlansGrid + ` grid-cols-${products?.products.length}`
+            }
+          >
+            {products?.products.map((product: StripeProduct) => (
+              <PricingCard
+                key={product.id}
+                product={product}
+              />
+            ))}
+          </div>
+
+          <ArrowRightIcon className="w-5 h-5" />
+        </div>
+      </div>
     </>
   );
 }
