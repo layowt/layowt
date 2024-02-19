@@ -5,6 +5,9 @@ import { Theme } from '@radix-ui/themes';
 
 import StoreProvider from '@/StoreProvider';
 
+// layout to render on every page
+import Layout from '@/components/layout';
+
 const CairoFont = Cairo({
   subsets: ['latin'],
   display: 'swap',
@@ -47,7 +50,9 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <Theme>
-          <StoreProvider children={children}></StoreProvider>
+          <Layout>
+            <StoreProvider children={children}></StoreProvider>
+          </Layout>
         </Theme>
       </body>
     </html>
