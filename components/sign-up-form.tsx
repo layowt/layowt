@@ -1,10 +1,15 @@
+// react imports
 import { useState } from 'react';
+
+// ui imports
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ReloadIcon } from '@radix-ui/react-icons';
+
+// utils
 import { SignUp } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 
@@ -29,19 +34,23 @@ export default function SignUpForm() {
   };
 
   const handleRegistration = async () => {
+    // set the loading spinner to true
     setIsLoading(true);
 
+    // try to create the user
     try {
-      // try to get the user
       const user = await SignUp(userEmail, userPassword);
 
       // For now, redirect the user to the home page
       if (!user) return;
 
+      // push the user to the desired location
       router.push('/pricing');
 
+      // reset the loading state
       setIsLoading(false);
     } catch (e) {
+      // TODO: add sonner here on error
       console.error(e);
     }
   };

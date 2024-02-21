@@ -3,7 +3,7 @@ import { Cairo, Karla, ABeeZee } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
-import StoreProvider from '@/StoreProvider';
+import StoreProvider from '@/store/StoreProvider';
 
 // layout to render on every page
 import Layout from '@/components/layout';
@@ -41,20 +41,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
-    >
-      <body
-        className="bg-[#000814]"
-        suppressHydrationWarning={true}
+    <StoreProvider>
+      <html
+        lang="en"
+        className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
       >
-        <Theme>
-          <Layout>
-            <StoreProvider children={children}></StoreProvider>
-          </Layout>
-        </Theme>
-      </body>
-    </html>
+        <body
+          className="bg-[#000814]"
+          suppressHydrationWarning={true}
+        >
+          <Theme>
+            <Layout>{children}</Layout>
+          </Theme>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

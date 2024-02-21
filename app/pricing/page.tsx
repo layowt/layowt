@@ -1,20 +1,21 @@
 'use client';
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
-
-import Layout from '@/components/layout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, use } from 'react';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
-import { Cairo } from 'next/font/google';
 
 // fonts
+import { Cairo } from 'next/font/google';
 const cairo = Cairo({ subsets: ['latin'] });
-
 // action imports
 import { StripeProducts } from '@/app/actions/stripe-products';
-
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
+
+// redux imports
+import { useAppStore, useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { Button } from '@/components/ui/button';
+import { increment, decrement } from '@/store/user-store';
 
 // component
 export default function PricingPage() {
@@ -23,16 +24,14 @@ export default function PricingPage() {
     StripeProduct[]
   > | null>(null);
 
-  // Promise<Record<"products", Stripe.Product[]> | null>
-  // SetStateAction<Record<"products", StripeProduct[]> | null>
+  const dispatch = useAppDispatch();
+  const count = useAppSelector((state) => state.user.count);
 
   useEffect(() => {
     const setProductsFunc = async () => {
       // TODO: fix this
       // @ts-ignore
       setProducts(await StripeProducts());
-
-      //console.log(await StripeProducts());
     };
 
     setProductsFunc();
@@ -48,6 +47,24 @@ export default function PricingPage() {
           <h1 className={cairo.className + ` text-5xl font-bold`}>
             Plans available
           </h1>
+        </div>
+
+        <div className="flex flex-col gap-y-2">
+          {count.toString()}
+          <div className="flex gap-x-1">
+            <Button
+              onClick={() => dispatch(increment())}
+              className="w-fit"
+            >
+              increment
+            </Button>
+            <Button
+              onClick={() => dispatch(decrement())}
+              className="w-fit"
+            >
+              decrement
+            </Button>
+          </div>
         </div>
 
         <div className="flex gap-x-10 items-center">
