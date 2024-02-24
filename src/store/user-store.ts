@@ -49,8 +49,8 @@ export const {
   deleteUser
 } = userSlice.actions;
 
-export const count = (state: RootState) => state.user.auth.count;
-export const user = (state: RootState) => state.user.auth.user;
+export const count = (state: RootState) => state.user.count;
 
+export const user = (state: RootState) => state.user.user;
 // export the functions from the reducer
 export default userSlice.reducer;
