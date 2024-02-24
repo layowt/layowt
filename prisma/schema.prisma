@@ -41,4 +41,5 @@ model Subscription {
   planType           planType // enum
   dateOfPurchase     String
   dateOfExpiry       String
+  test              Boolean
 }
