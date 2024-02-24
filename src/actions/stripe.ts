@@ -53,6 +53,8 @@ export const createSubscription = async (
     stripe
   );
 
+  if (!invoice) return null;
+
   return {
     invoice,
     paymentPrice: currentPlan.default_price.unit_amount

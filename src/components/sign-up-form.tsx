@@ -141,7 +141,7 @@ export default function SignUpForm() {
                     fill="none"
                     stroke="currentColor"
                     stroke-inecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                   >
                     <path d="M11 5.5H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1m-.5 0V4a3.5 3.5 0 1 0-7 0v1.5"></path>
                     <path d="M7 10a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1"></path>
@@ -164,7 +164,7 @@ export default function SignUpForm() {
                 <div className="flex gap-x-2 items-center">
                   <Checkbox
                     id="terms"
-                    className="border border-white"
+                    className="border border-white rounded-[0.25rem]"
                     checked={acceptedTerms}
                     onCheckedChange={(e) => {
                       setAcceptedTerms(!acceptedTerms);

@@ -25,7 +25,7 @@ export function PricingCard({ product }: { product: StripeProduct }) {
                 <span
                   className="
 							text-white text-xs font-bold absolute top-0 right-0
-							py-1.5 px-3 bg-pink rounded-bl-lg
+							py-1.5 px-3 bg-pink rounded-bl-[0.5rem]
 							"
                 >
                   Most popular
