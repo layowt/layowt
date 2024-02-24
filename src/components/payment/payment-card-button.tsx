@@ -86,7 +86,8 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
             className={
               product.metadata.mostPopular
                 ? 'bg-pink hover:bg-pink/75'
-                : '' + ` flex gap-x-2 min-w-[84px] duration-300 ease-in-out`
+                : '' +
+                  ` flex gap-x-2 min-w-[84px] duration-300 ease-in-out border border-white`
             }
           >
             {loading[product.id] ? (
