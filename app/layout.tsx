@@ -3,7 +3,7 @@ import { Cairo, Karla, ABeeZee } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
-import StoreProvider from '@/store/StoreProvider';
+import StoreProvider from '@/store/store-provider';
 
 // layout to render on every page
 import Layout from '@/components/layout';
