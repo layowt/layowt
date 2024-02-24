@@ -1,20 +1,21 @@
 'use client';
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
-
-import Layout from '@/components/layout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, use } from 'react';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
-import { Cairo } from 'next/font/google';
+import { Button } from '@/components/ui/button';
 
 // fonts
+import { Cairo } from 'next/font/google';
 const cairo = Cairo({ subsets: ['latin'] });
-
 // action imports
 import { StripeProducts } from '@/app/actions/stripe-products';
-
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
+
+// redux imports
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { increment, decrement, incrementByAmount } from '@/store/user-store';
 
 // component
 export default function PricingPage() {
@@ -23,16 +24,15 @@ export default function PricingPage() {
     StripeProduct[]
   > | null>(null);
 
-  // Promise<Record<"products", Stripe.Product[]> | null>
-  // SetStateAction<Record<"products", StripeProduct[]> | null>
+  const dispatch = useAppDispatch();
+  const count = useAppSelector((state) => state.user.auth.count);
+  const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
     const setProductsFunc = async () => {
       // TODO: fix this
       // @ts-ignore
       setProducts(await StripeProducts());
-
-      console.log(await StripeProducts());
     };
 
     setProductsFunc();
@@ -42,31 +42,57 @@ export default function PricingPage() {
 
   return (
     <>
-      <Layout>
-        <div className="flex flex-col h-full gap-y-20 text-white py-20">
-          <div className="flex flex-col gap-y-6 w-full">
-            <h6 className="text-xs">Pricing</h6>
-            <h1 className={cairo.className + ` text-5xl font-bold`}>
-              Plans available
-            </h1>
-          </div>
+      <div className="flex flex-col h-full gap-y-20 text-white py-20">
+        <div className="flex flex-col gap-y-6 w-full">
+          <h6 className="text-xs">Pricing</h6>
+          <h1 className={cairo.className + ` text-5xl font-bold`}>
+            Plans available
+          </h1>
+        </div>
 
-          <div className="flex gap-x-10 items-center">
-            <div
-              className={
-                pricingPlansGrid + ` grid-cols-${products?.products.length}`
-              }
+        {user?.auth.user?.email}
+
+        <div className="flex flex-col gap-y-2">
+          {count?.toString()}
+          <div className="flex gap-x-1">
+            <Button
+              onClick={() => dispatch(increment())}
+              className="w-fit"
             >
-              {/** TODO: Extract the card into its own component */}
-              {products?.products.map((product: StripeProduct) => (
-                <PricingCard product={product} />
-              ))}
-            </div>
-
-            <ArrowRightIcon className="w-5 h-5" />
+              increment
+            </Button>
+            <Button
+              onClick={() => dispatch(decrement())}
+              className="w-fit"
+            >
+              decrement
+            </Button>
+            <Button
+              onClick={() => dispatch(incrementByAmount(5))}
+              className="w-fit"
+            >
+              increment by 5
+            </Button>
           </div>
         </div>
-      </Layout>
+
+        <div className="flex gap-x-10 items-center">
+          <div
+            className={
+              pricingPlansGrid + ` grid-cols-${products?.products.length}`
+            }
+          >
+            {products?.products.map((product: StripeProduct) => (
+              <PricingCard
+                key={product.id}
+                product={product}
+              />
+            ))}
+          </div>
+
+          <ArrowRightIcon className="w-5 h-5" />
+        </div>
+      </div>
     </>
   );
 }

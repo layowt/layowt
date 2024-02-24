@@ -1,14 +1,27 @@
+// react imports
 import { useState } from 'react';
+
+// ui imports
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ReloadIcon } from '@radix-ui/react-icons';
+
+// utils
 import { SignUp } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 
+// redux imports
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { createUser, deleteUser } from '@/store/user-store';
+import type { User } from 'firebase/auth';
+
 export default function SignUpForm() {
+  // redux
+  const dispatch = useAppDispatch();
+
   // user states
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -29,19 +42,45 @@ export default function SignUpForm() {
   };
 
   const handleRegistration = async () => {
+    // set the loading spinner to true
     setIsLoading(true);
 
+    // try to create the user
     try {
-      // try to get the user
       const user = await SignUp(userEmail, userPassword);
 
       // For now, redirect the user to the home page
       if (!user) return;
 
+      // push the user to the desired location
+
+      // delete the existing user in the store
+      // so we can create the new one
+      if (user) {
+        dispatch(deleteUser());
+      }
+
+      const serializedUser: Partial<User> = {
+        displayName: user.displayName,
+        email: user.email ?? undefined,
+        emailVerified: user.emailVerified,
+        isAnonymous: user.isAnonymous,
+        metadata: { ...user.metadata },
+        phoneNumber: user.phoneNumber,
+        photoURL: user.photoURL,
+        providerData: user.providerData,
+        uid: user.uid
+      };
+
+      // dispatch the user to the store
+      dispatch(createUser(serializedUser));
+
       router.push('/pricing');
 
+      // reset the loading state
       setIsLoading(false);
     } catch (e) {
+      // TODO: add sonner here on error
       console.error(e);
     }
   };
