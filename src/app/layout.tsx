@@ -6,7 +6,7 @@ import { Theme } from '@radix-ui/themes';
 import StoreProvider from '@/store/store-provider';
 
 // layout to render on every page
-import Layout from '@/components/layout';
+import Layout from '@/src/components/layout';
 
 const CairoFont = Cairo({
   subsets: ['latin'],

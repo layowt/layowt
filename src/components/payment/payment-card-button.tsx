@@ -1,18 +1,22 @@
 'use client';
 // component imports
 import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { CheckoutForm } from '@/components/payment/checkout-form';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger
+} from '@/src/components/ui/dialog';
+import { CheckoutForm } from '@/src/components/payment/checkout-form';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 // method imports
-import { createSubscription } from '@/app/actions/stripe';
+import { createSubscription } from '@/src/app/actions/stripe';
 
 // React imports
 import { useState } from 'react';
 
 //type imports
-import type { StripeProduct } from '@/types/StripeProduct';
+import type { StripeProduct } from '@/src/types/StripeProduct';
 
 // stripe imports
 import { loadStripe } from '@stripe/stripe-js';

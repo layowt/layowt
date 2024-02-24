@@ -1,8 +1,8 @@
 // component imports
-import { PaymentButton } from '@/components/payment/payment-card-button';
+import { PaymentButton } from '@/src/components/payment/payment-card-button';
 
 //type imports
-import type { StripeProduct } from '@/types/StripeProduct';
+import type { StripeProduct } from '@/src/types/StripeProduct';
 
 // fonts
 import { Cairo } from 'next/font/google';

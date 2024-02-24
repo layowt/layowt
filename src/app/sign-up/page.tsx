@@ -1,4 +1,4 @@
-import SignUpComponent from '@/components/sign-up-wrapper';
+import SignUpComponent from '@/src/components/sign-up-wrapper';
 
 export default function Signup() {
   return (

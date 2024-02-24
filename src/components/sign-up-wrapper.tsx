@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import Marquee from 'react-fast-marquee';
-import { Button } from '@/components/ui/button';
-import SignUpForm from '@/components/sign-up-form';
+import { Button } from '@/src/components/ui/button';
+import SignUpForm from '@/src/components/sign-up-form';
 
 /**
  * Renders the sign-up component.

@@ -2,19 +2,19 @@
 import { useState } from 'react';
 
 // ui imports
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Input } from '@/src/components/ui/input';
+import { Label } from '@/src/components/ui/label';
+import { Checkbox } from '@/src/components/ui/checkbox';
+import { Button } from '@/src/components/ui/button';
+import { Separator } from '@/src/components/ui/separator';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 // utils
-import { SignUp } from '@/utils/firebase';
+import { SignUp } from '@/src/utils/firebase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/src/lib/hooks';
 import { createUser, deleteUser } from '@/store/user-store';
 import type { User } from 'firebase/auth';
 

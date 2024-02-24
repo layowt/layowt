@@ -1,0 +1,58 @@
+generator client {
+	provider = "prisma-client-js"
+}
+
+datasource db {
+	provider = "postgresql"
+	url 					= env("NEXT_PRIVATE_DATABASE_URL")
+	directUrl 		= env("NEXT_PRIVATE_DIRECT_DATABASE_URL")
+}
+
+// types
+// the three different types of payment plans
+// investigate if we can pull this from stripe directly
+enum planType {
+  FREE
+  BASIC
+  PREMIUM
+}
+
+// defines the user data model
+model User {
+  uid                     String @id @default(uuid()) // uid of the user - unique
+  email                   String @unique              // email address of the user on sign up
+  firstName               String?                     // user first name
+  lastName                String?                     // user last name
+
+  subscription            Subscription?               // the users subscrption - a 1-1 between user and subscription
+
+  sites                   Website[]                   // array of site uids that the user owns
+
+  createdAt               DateTime @default(now())    // the creation date of the user account 
+  updatedAt               DateTime @updatedAt         // the last time an update was made to the users account
+}
+
+model Subscription {
+  // relationships
+  // A 1-1 relation between a user and their subscription
+  // link the transactionId to the user
+  User                    User   @relation(fields: [transactionId], references: [uid])
+  transactionId           String @id @unique
+
+  // Subscription unique fields
+  subscriptionActive      Boolean            // whether the users subscription is currently active
+  paymentEmail            String             // the email used for the payment - I think it is the same as the user account
+  subscriptionType        planType           
+  dateOfPurchase          String             // store the date the user created the subscription
+  dateOfExpiry            String             // used to check when to end the users plan
+}
+
+model Website {
+  // relationships
+  uid                     String @id @unique                                    // the uid of the users site
+  ownerUid                User @relation(fields: [uid], references: [uid])      // the uid of the site owner
+  
+  // Website unique fields
+  websiteDomain           String 
+  subscriptionType        planType
+}

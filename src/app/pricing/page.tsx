@@ -1,20 +1,20 @@
 'use client';
 // component imports
-import { PricingCard } from '@/components/payment/payment-card';
+import { PricingCard } from '@/src/components/payment/payment-card';
 import { useState, useEffect, useRef, use } from 'react';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/src/components/ui/button';
 
 // fonts
 import { Cairo } from 'next/font/google';
 const cairo = Cairo({ subsets: ['latin'] });
 // action imports
-import { StripeProducts } from '@/app/actions/stripe-products';
+import { StripeProducts } from '@/src/app/actions/stripe-products';
 // type imports
-import { StripeProduct } from '@/types/StripeProduct';
+import { StripeProduct } from '@/src/types/StripeProduct';
 
 // redux imports
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/src/lib/hooks';
 import { increment, decrement, incrementByAmount } from '@/store/user-store';
 
 // component

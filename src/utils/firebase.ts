@@ -1,6 +1,6 @@
 'use client';
 // firebase imports
-import { auth } from '@/lib/firebase-config';
+import { auth } from '@/src/lib/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export async function SignUp(email: string, password: string) {
