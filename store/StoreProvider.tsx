@@ -1,19 +1,14 @@
 'use client';
 import React, { useRef } from 'react';
 import { Provider } from 'react-redux';
-import { type AppStore, makeStore } from './store';
+import { store } from './store';
+import { persistStore } from 'redux-persist';
+persistStore(store);
 
-// types - has to be declared here cannot be exported from a
-// external file
-
-export default function StoreProvider({
+export default function ReduxProvider({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const storeRef = useRef<AppStore>();
-  if (!storeRef.current) {
-    storeRef.current = makeStore();
-  }
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  return <Provider store={store}>{children}</Provider>;
 }

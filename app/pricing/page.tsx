@@ -3,6 +3,7 @@
 import { PricingCard } from '@/components/payment/payment-card';
 import { useState, useEffect, useRef, use } from 'react';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
+import { Button } from '@/components/ui/button';
 
 // fonts
 import { Cairo } from 'next/font/google';
@@ -13,9 +14,8 @@ import { StripeProducts } from '@/app/actions/stripe-products';
 import { StripeProduct } from '@/types/StripeProduct';
 
 // redux imports
-import { useAppStore, useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { Button } from '@/components/ui/button';
-import { increment, decrement } from '@/store/user-store';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { increment, decrement, incrementByAmount } from '@/store/user-store';
 
 // component
 export default function PricingPage() {
@@ -25,7 +25,8 @@ export default function PricingPage() {
   > | null>(null);
 
   const dispatch = useAppDispatch();
-  const count = useAppSelector((state) => state.user.count);
+  const count = useAppSelector((state) => state.user.auth.count);
+  const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
     const setProductsFunc = async () => {
@@ -49,8 +50,10 @@ export default function PricingPage() {
           </h1>
         </div>
 
+        {user?.auth.user?.email}
+
         <div className="flex flex-col gap-y-2">
-          {count.toString()}
+          {count?.toString()}
           <div className="flex gap-x-1">
             <Button
               onClick={() => dispatch(increment())}
@@ -63,6 +66,12 @@ export default function PricingPage() {
               className="w-fit"
             >
               decrement
+            </Button>
+            <Button
+              onClick={() => dispatch(incrementByAmount(5))}
+              className="w-fit"
+            >
+              increment by 5
             </Button>
           </div>
         </div>

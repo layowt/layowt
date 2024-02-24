@@ -13,7 +13,15 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import { SignUp } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 
+// redux imports
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { createUser, deleteUser } from '@/store/user-store';
+import type { User } from 'firebase/auth';
+
 export default function SignUpForm() {
+  // redux
+  const dispatch = useAppDispatch();
+
   // user states
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -45,6 +53,28 @@ export default function SignUpForm() {
       if (!user) return;
 
       // push the user to the desired location
+
+      // delete the existing user in the store
+      // so we can create the new one
+      if (user) {
+        dispatch(deleteUser());
+      }
+
+      const serializedUser: Partial<User> = {
+        displayName: user.displayName,
+        email: user.email ?? undefined,
+        emailVerified: user.emailVerified,
+        isAnonymous: user.isAnonymous,
+        metadata: { ...user.metadata },
+        phoneNumber: user.phoneNumber,
+        photoURL: user.photoURL,
+        providerData: user.providerData,
+        uid: user.uid
+      };
+
+      // dispatch the user to the store
+      dispatch(createUser(serializedUser));
+
       router.push('/pricing');
 
       // reset the loading state
