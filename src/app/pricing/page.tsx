@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Cairo } from 'next/font/google';
 const cairo = Cairo({ subsets: ['latin'] });
 // action imports
-import { StripeProducts } from '@/app/actions/stripe-products';
+import { StripeProducts } from '@/actions/stripe-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
 
@@ -25,7 +25,7 @@ export default function PricingPage() {
   > | null>(null);
 
   const dispatch = useAppDispatch();
-  const count = useAppSelector((state) => state.user.auth.count);
+  const count = useAppSelector((state) => state.user.count);
   const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function PricingPage() {
           </h1>
         </div>
 
-        {user?.auth.user?.email}
+        {user?.user?.email}
 
         <div className="flex flex-col gap-y-2">
           {count?.toString()}

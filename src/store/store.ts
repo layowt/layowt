@@ -1,26 +1,12 @@
 // redux imports
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-
 import userSliceReducer from './user-store';
-
-// configure which keuy we want to persist
-const authPersistConfig = {
-  key: 'auth',
-  storage: storage,
-  whitelist: ['authState']
-};
-
-const rootReducer = combineReducers({
-  auth: persistReducer(authPersistConfig, userSliceReducer)
-});
 
 // exported function to crate the stores
 export const store = configureStore({
   reducer: {
-    user: rootReducer
+    user: userSliceReducer
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>
