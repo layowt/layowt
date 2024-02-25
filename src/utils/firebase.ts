@@ -1,35 +1,35 @@
-// firebase imports
-import { auth } from '@/lib/firebase-config';
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  User
-} from 'firebase/auth';
+'use client';
 import { useEffect, useState } from 'react';
+import {
+  User as FirebaseUser,
+  signOut as firebaseSignOut,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  setPersistence,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged
+} from 'firebase/auth';
 
-export async function SignUp(email: string, password: string) {
-  // create the user with the passed in email and password
-  const userCredential = await createUserWithEmailAndPassword(
-    auth, //
-    email,
-    password
+import { auth } from '@/lib/firebase-config';
+
+export async function signUp(
+  email: string,
+  password: string,
+  rememberMe: boolean = false
+) {
+  await setPersistence(
+    auth,
+    rememberMe ? browserLocalPersistence : browserSessionPersistence
   );
+  return createUserWithEmailAndPassword(auth, email, password);
+}
 
-  const user = userCredential.user;
-
-  // if we do not have a user, return an empty string
-  // TODO: this should be a better error message
-  // TODO: This should also add to supabase db
-  if (!user) return '';
-
-  // return the user
-  return user;
+export async function signOut() {
+  return firebaseSignOut(auth);
 }
 
 export function useUser() {
-  const [user, setUser] = useState<User | null | false>(false);
-
-  console.log(user);
+  const [user, setUser] = useState<FirebaseUser | null | false>(false);
 
   useEffect(() => {
     return onAuthStateChanged(auth, (user) => setUser(user));
