@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 // utils
-import { SignUp } from '@/utils/firebase';
+import { signUp } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
@@ -47,7 +47,7 @@ export default function SignUpForm() {
 
     // try to create the user
     try {
-      const user = await SignUp(userEmail, userPassword);
+      const user = await signUp(userEmail, userPassword);
 
       // For now, redirect the user to the home page
       if (!user) return;
@@ -56,7 +56,7 @@ export default function SignUpForm() {
 
       // delete the existing user in the store
       // so we can create the new one
-      if (user) {
+      if (user.user) {
         dispatch(deleteUser());
       }
 
