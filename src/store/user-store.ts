@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/store/store';
 // type imports
-import type { User } from 'firebase/auth';
+import type { User } from '@supabase/supabase-js';
 
 type UserInitialState = {
   user: Partial<User> | null;
@@ -17,7 +17,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUser: (state, action: PayloadAction<User['uid']>) => {
+    getUser: (state, action: PayloadAction<User>) => {
       // get the user from the supabase db via its uid
     },
     createUser: (state, action: PayloadAction<User>) => {

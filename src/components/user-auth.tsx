@@ -1,15 +1,15 @@
-'use client';
-import { useUser } from '@/utils/firebase';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+import { createClient } from '../utils/supabase/server';
+import { redirect } from 'next/navigation';
 
-export default function UserAuthentication({
+export default async function UserAuthentication({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const user = useUser();
-  const pathname = usePathname();
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+  console.log(data, error);
 
   return <>{children}</>;
 }
