@@ -20,7 +20,7 @@ const userSlice = createSlice({
     getUser: (state, action: PayloadAction<User['uid']>) => {
       // get the user from the supabase db via its uid
     },
-    createUser: (state, action: PayloadAction<Partial<User>>) => {
+    createUser: (state, action: PayloadAction<User>) => {
       // Only set the user if it's currently null
       state.user = action.payload;
     },
