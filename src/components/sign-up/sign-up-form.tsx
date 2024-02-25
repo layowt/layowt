@@ -10,13 +10,12 @@ import { Separator } from '@/components/ui/separator';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 // utils
-import { signUp } from '@/utils/supabase';
+import { signUp } from '../../utils/supabase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { createUser, deleteUser } from '@/store/user-store';
-import type { User } from 'firebase/auth';
 
 export default function SignUpForm() {
   // redux
@@ -73,7 +72,9 @@ export default function SignUpForm() {
       // };
 
       // dispatch the user to the store
-      dispatch(createUser(user.data.user));
+      //dispatch(createUser(user.data.user));
+
+      if (!user) return;
 
       router.push('/pricing');
 
