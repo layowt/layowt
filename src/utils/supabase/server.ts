@@ -7,14 +7,18 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
+// this is used in '/src/components/user-auth.tsx
+// this is used in '/src/app/auth/confirm' to verify the OTP
 export function createClient() {
   const cookieStore = cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
 
+  // we need the env variables to be set
   if (!supabaseUrl || !supabaseKey)
     throw new Error('Missing env variables for Supabase');
 
+  // create the client on the server
   return createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       get(name: string) {
