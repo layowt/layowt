@@ -10,13 +10,12 @@ import { Separator } from '@/components/ui/separator';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 // utils
-import { SignUp } from '@/utils/firebase';
+import { signUp } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { createUser, deleteUser } from '@/store/user-store';
-import type { User } from 'firebase/auth';
 
 export default function SignUpForm() {
   // redux
@@ -47,7 +46,7 @@ export default function SignUpForm() {
 
     // try to create the user
     try {
-      const user = await SignUp(userEmail, userPassword);
+      const user = await signUp(userEmail, userPassword);
 
       // For now, redirect the user to the home page
       if (!user) return;
@@ -60,20 +59,22 @@ export default function SignUpForm() {
         dispatch(deleteUser());
       }
 
-      const serializedUser: Partial<User> = {
-        displayName: user.displayName,
-        email: user.email ?? undefined,
-        emailVerified: user.emailVerified,
-        isAnonymous: user.isAnonymous,
-        metadata: { ...user.metadata },
-        phoneNumber: user.phoneNumber,
-        photoURL: user.photoURL,
-        providerData: user.providerData,
-        uid: user.uid
-      };
+      // const serializedUser: Partial<User> = {
+      //   displayName: user.displayName,
+      //   email: user.email ?? undefined,
+      //   emailVerified: user.emailVerified,
+      //   isAnonymous: user.isAnonymous,
+      //   metadata: { ...user.metadata },
+      //   phoneNumber: user.phoneNumber,
+      //   photoURL: user.photoURL,
+      //   providerData: user.providerData,
+      //   uid: user.uid
+      // };
 
       // dispatch the user to the store
-      dispatch(createUser(serializedUser));
+      //dispatch(createUser(user.data.user));
+
+      if (!user) return;
 
       router.push('/pricing');
 
