@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 // utils
-import { signUp } from '../../utils/supabase';
+import { signUp } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
