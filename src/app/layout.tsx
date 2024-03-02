@@ -4,6 +4,7 @@ import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
 import StoreProvider from '@/store/store-provider';
+import UserAuthentication from '@/components/user-auth';
 
 // layout to render on every page
 import Layout from '@/components/layout';
@@ -47,12 +48,14 @@ export default function RootLayout({
         className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
       >
         <body
-          className="bg-[#000814]"
+          className="bg-[#000814] min-h-screen"
           suppressHydrationWarning={true}
         >
-          <Theme>
-            <Layout>{children}</Layout>
-          </Theme>
+          <UserAuthentication>
+            <Theme>
+              <Layout>{children}</Layout>
+            </Theme>
+          </UserAuthentication>
         </body>
       </html>
     </StoreProvider>
