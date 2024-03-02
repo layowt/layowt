@@ -1,15 +1,22 @@
-'use client';
-import { useUser } from '@/utils/firebase';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+import { createClient } from '@/utils/supabase/server';
+import UserAuthModal from '@/components/modals/user-auth';
 
-export default function UserAuthentication({
+export default async function UserAuthentication({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const user = useUser();
-  const pathname = usePathname();
+  const supabase = createClient();
 
-  return <>{children}</>;
+  const { data: user, error } = await supabase.auth.getUser();
+
+  // check the current path of the user
+
+  // if the user is not logged in, show a modal to allow the user to log in
+  return (
+    <>
+      {!user.user ? <UserAuthModal /> : ''}
+      {children}
+    </>
+  );
 }
