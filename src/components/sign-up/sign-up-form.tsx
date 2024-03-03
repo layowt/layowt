@@ -49,7 +49,10 @@ export default function SignUpForm() {
       const user = await signUp(userEmail, userPassword);
 
       // For now, redirect the user to the home page
-      if (!user) return;
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
 
       // push the user to the desired location
 
