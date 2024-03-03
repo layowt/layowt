@@ -15,7 +15,7 @@ export default async function UserAuthentication({
   // if the user is not logged in, show a modal to allow the user to log in
   return (
     <>
-      {!user.user ? <UserAuthModal /> : ''}
+      {<UserAuthModal currentUser={user.user} />}
       {children}
     </>
   );
