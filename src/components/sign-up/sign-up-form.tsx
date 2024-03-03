@@ -59,24 +59,12 @@ export default function SignUpForm() {
         dispatch(deleteUser());
       }
 
-      // const serializedUser: Partial<User> = {
-      //   displayName: user.displayName,
-      //   email: user.email ?? undefined,
-      //   emailVerified: user.emailVerified,
-      //   isAnonymous: user.isAnonymous,
-      //   metadata: { ...user.metadata },
-      //   phoneNumber: user.phoneNumber,
-      //   photoURL: user.photoURL,
-      //   providerData: user.providerData,
-      //   uid: user.uid
-      // };
-
       // dispatch the user to the store
       //dispatch(createUser(user.data.user));
 
       if (!user) return;
 
-      router.push('/pricing');
+      router.push(process.env.NEXT_PUBLIC_AUTH_REDIRECT ?? '/');
 
       // reset the loading state
       setIsLoading(false);
