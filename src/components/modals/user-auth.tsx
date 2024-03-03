@@ -16,12 +16,14 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 // react imports
 import { useEffect, useState } from 'react';
 
-import { createClient } from '@/utils/supabase/client';
-import { CloudHail } from 'lucide-react';
+// type imports
+import type { User } from '@supabase/supabase-js';
 
-export default function UserAuthModal() {
-  const supabase = createClient();
-
+export default function UserAuthModal({
+  currentUser
+}: {
+  currentUser: User | null;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -31,17 +33,10 @@ export default function UserAuthModal() {
     setIsClient(true);
 
     // check if the user is logged in
-    const checkUser = async () => {
-      const { data: user } = await supabase.auth.getUser();
-
-      console.log(user.user);
-      // if the user is present, clear the URL of the waiting_for_auth query param
-      if (user.user) {
-        router.replace('waiting_for_auth', undefined);
-      }
-    };
-
-    checkUser();
+    // if the user is present, clear the URL of the waiting_for_auth query param
+    if (currentUser) {
+      router.replace('/pricing', undefined);
+    }
   }, []);
 
   const [loading, setLoading] = useState(false);
@@ -57,7 +52,7 @@ export default function UserAuthModal() {
   // do not display the modal if the user is on the sign-up page
   if (pathname === '/sign-up') return '';
 
-  return isClient ? (
+  return isClient && currentUser === null ? (
     <>
       <Dialog
         modal={true}
