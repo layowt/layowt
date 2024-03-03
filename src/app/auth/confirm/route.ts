@@ -3,8 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 import { createClient } from '@/utils/supabase/server';
 
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { prisma } from '@/utils/prisma';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
