@@ -1,9 +1,10 @@
 'use server';
 import { supabase } from '@/lib/supabase';
 import { type AuthResponse } from '@supabase/supabase-js';
+import { cookies } from 'next/headers';
+const cookiesStore = cookies();
 
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { prisma } from '@/utils/prisma';
 
 export const signUp = async (
   email: string,
@@ -21,8 +22,12 @@ export const signUp = async (
     // throw an error if required fields cannot be found
     if (!user || !user.id || !user.email) throw new Error('User not found');
 
+    // only set the cookie if the auth sign up is successful
+    const userId = user.id;
+    cookiesStore.set('userId', userId);
+
     // if the user sign up is successful, add the user to the database
-    const databaseUser = prisma.user.create({
+    await prisma.user.create({
       data: {
         uid: user?.id,
         email: user.email,
@@ -33,8 +38,6 @@ export const signUp = async (
         hasAuthenticatedEmail: false
       }
     });
-
-    supabase.from('users').insert(databaseUser);
 
     return user;
   } catch (error) {

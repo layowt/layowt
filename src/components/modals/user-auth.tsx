@@ -16,17 +16,24 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 // react imports
 import { useEffect, useState } from 'react';
 
+//supabase
+import { createClient } from '@/utils/supabase/client';
+
 // type imports
 import type { User } from '@supabase/supabase-js';
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 export default function UserAuthModal({
-  currentUser
+  currentUserObject,
+  currentUserId
 }: {
-  currentUser: User | null;
+  currentUserObject: User | null;
+  currentUserId: string | undefined;
 }) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const supabase = createClient();
 
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
@@ -34,10 +41,34 @@ export default function UserAuthModal({
 
     // check if the user is logged in
     // if the user is present, clear the URL of the waiting_for_auth query param
-    if (currentUser) {
+    if (currentUserObject) {
+      console.log('currentUser', currentUserObject);
       router.replace('/pricing', undefined);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(currentUserId);
+    // create a subscription to the user object
+    const channel = supabase
+      .channel('User Email Authenticated')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'User'
+        },
+        () => console.log('Record updated!')
+      )
+      .subscribe();
+
+    console.log(channel);
+
+    return () => {
+      channel.unsubscribe();
+    };
+  }, [supabase]);
 
   const [loading, setLoading] = useState(false);
   const [newUser, setNewUser] = useState(false);
@@ -52,7 +83,7 @@ export default function UserAuthModal({
   // do not display the modal if the user is on the sign-up page
   if (pathname === '/sign-up') return '';
 
-  return isClient && currentUser === null ? (
+  return isClient && currentUserObject === null ? (
     <>
       <Dialog
         modal={true}
