@@ -15,25 +15,25 @@ enum planType {
 }
 
 // defines the user data model
-model User {
+model users {
   uid                                         String @id @default(uuid())
   email                                       String @unique
   hasAuthenticatedEmail                       Boolean @default(false) // if the user has authenticated their email
   firstName                                   String?
   lastName                                    String?
 
-  websites                                    Website[]
+  websites                                    website[]
 
-  subscription                                Subscription?
+  subscription                                subscription?
 
   createdAt                                   DateTime @default(now())
   updatedAt                                   DateTime @updatedAt
 }
 
-model Subscription {
+model subscription {
   // A 1-1 relation between a user and their subscription
   // link the transactionId to the user
-  User                                        User   @relation(fields: [transactionId], references: [uid])
+  User                                        users   @relation(fields: [transactionId], references: [uid])
   transactionId                               String @id @unique
 
   subscriptionActive                          Boolean
@@ -43,9 +43,9 @@ model Subscription {
   dateOfExpiry                                String
 }
 
-model Website {
+model website {
   id                                          String @id @default(uuid())
-  owner                                       User @relation(fields: [id], references: [uid])
+  owner                                       users @relation(fields: [id], references: [uid])
   url                                         String
   title                                       String
   description                                 String

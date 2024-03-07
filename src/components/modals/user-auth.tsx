@@ -21,7 +21,6 @@ import { createClient } from '@/utils/supabase/client';
 
 // type imports
 import type { User } from '@supabase/supabase-js';
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
 export default function UserAuthModal({
   currentUserObject,
@@ -35,6 +34,8 @@ export default function UserAuthModal({
   const searchParams = useSearchParams();
   const supabase = createClient();
 
+  const [showModal, setShowModal] = useState(true);
+
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
     setIsClient(true);
@@ -42,7 +43,6 @@ export default function UserAuthModal({
     // check if the user is logged in
     // if the user is present, clear the URL of the waiting_for_auth query param
     if (currentUserObject) {
-      console.log('currentUser', currentUserObject);
       router.replace('/pricing', undefined);
     }
   }, []);
@@ -57,13 +57,23 @@ export default function UserAuthModal({
         {
           event: '*',
           schema: 'public',
-          table: 'User'
+          table: 'users',
+          filter: `uid=eq.${currentUserId}`
         },
-        () => console.log('Record updated!')
+        (payload) => {
+          // @ts-expect-error
+          if (payload.new.hasAuthenticatedEmail === true) {
+            // hide the modal for now
+            setShowModal(false);
+
+            // remove the 'waiting_for_auth' query param
+            router.replace('/pricing', undefined);
+          } else {
+            setShowModal(true);
+          }
+        }
       )
       .subscribe();
-
-    console.log(channel);
 
     return () => {
       channel.unsubscribe();
@@ -76,7 +86,7 @@ export default function UserAuthModal({
   useEffect(() => {
     // Reset loading state when pathname changes
     setLoading(false);
-    // if the user is waiting for MFA, show the 'waiting for MFA' modal
+    // let's set this as a cookie to avoid the user from seeing the modal again
     if (searchParams.get('waiting_for_auth')) setNewUser(true);
   }, [pathname]);
 
@@ -88,7 +98,7 @@ export default function UserAuthModal({
       <Dialog
         modal={true}
         defaultOpen={true}
-        open={true}
+        open={showModal}
       >
         <DialogContent
           hidden={false}

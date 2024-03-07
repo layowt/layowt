@@ -11,7 +11,7 @@ export const signUp = async (
   password: string
 ): Promise<AuthResponse['data']['user'] | null> => {
   try {
-    const { data } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password
     });
@@ -19,17 +19,23 @@ export const signUp = async (
     // easy access to the user object
     const user = data.user;
 
+    console.log(user);
+
+    // re_axM2a2Xu_NFDi8UBgDcNLbHFqjabDaqKG
+
     // throw an error if required fields cannot be found
-    if (!user || !user.id || !user.email) throw new Error('User not found');
+    if (!user || !user.id || !user.email) throw new Error(error?.message);
 
     // only set the cookie if the auth sign up is successful
     const userId = user.id;
     cookiesStore.set('userId', userId);
 
+    // REMEMBER EMAIL AUTH IS OFF!
+
     // if the user sign up is successful, add the user to the database
-    await prisma.user.create({
+    const newUser = await prisma.users.create({
       data: {
-        uid: user?.id,
+        uid: user.id,
         email: user.email,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -38,6 +44,8 @@ export const signUp = async (
         hasAuthenticatedEmail: false
       }
     });
+
+    console.log('New user:', newUser);
 
     return user;
   } catch (error) {
