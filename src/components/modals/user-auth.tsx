@@ -48,7 +48,7 @@ export default function UserAuthModal({
   }, []);
 
   useEffect(() => {
-    console.log(currentUserId);
+    // TODO: Check why the cookie is not being passed through one first instance of waiting for auth
     // create a subscription to the user object
     const channel = supabase
       .channel('User Email Authenticated')
@@ -68,6 +68,8 @@ export default function UserAuthModal({
 
             // remove the 'waiting_for_auth' query param
             router.replace('/pricing', undefined);
+
+            // clear the userId cookie
           } else {
             setShowModal(true);
           }
@@ -133,7 +135,5 @@ export default function UserAuthModal({
         </DialogContent>
       </Dialog>
     </>
-  ) : (
-    ''
-  );
+  ) : null;
 }
