@@ -17,8 +17,6 @@ export default async function UserAuthentication({
 
   const userId = cookiesStore.get('userId');
 
-  // check the current path of the user
-
   // if the user is not logged in, show a modal to allow the user to log in
   return (
     <>

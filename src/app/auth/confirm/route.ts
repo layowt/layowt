@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
       if (userSession.user) {
         // if the OTP is verified, check the user has been added to the db
-        const user = await prisma.user.findFirst({
+        const user = await prisma.users.findFirst({
           where: {
             uid: userSession.user.id
           }
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
 
         // if the user is not in the db, add them
         if (!user && userSession.user.email) {
-          await prisma.user.create({
+          await prisma.users.create({
             data: {
               uid: userSession.user.id,
               email: userSession.user.email,
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
           });
         } else {
           // if the user is in the db, update the hasAuthenticatedEmail field
-          await prisma.user.update({
+          await prisma.users.update({
             where: {
               uid: userSession.user.id
             },
