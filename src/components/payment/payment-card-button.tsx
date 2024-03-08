@@ -40,9 +40,7 @@ const getClientSecret = async (
 
   if (!response) return null;
 
-  const { invoice } = response;
-
-  if (!invoice) return null;
+  if (!response.invoice) return null;
 
   return response;
 };
