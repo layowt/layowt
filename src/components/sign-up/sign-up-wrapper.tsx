@@ -9,7 +9,7 @@ import SignUpForm from '@/components/sign-up/sign-up-form';
  *
  * @returns The sign-up component JSX.
  */
-export default function signUpComponent() {
+export default function SignUpComponent() {
   // useState will infer the type based on the initial value
   const [featureClicked, setFeatureClicked] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState('');
