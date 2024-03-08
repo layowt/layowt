@@ -18,6 +18,9 @@ import type { StripeProduct } from '@/types/StripeProduct';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
+// supabase imports
+import { createClient } from '@/utils/supabase/client';
+
 const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 
 // methods
@@ -27,9 +30,13 @@ const getClientSecret = async (
   invoice: string;
   paymentPrice: number;
 } | null> => {
-  // TODO: Change hardcoded email to the email of the user
-  // from 'src/utils/supabase/client.ts'
-  const response = await createSubscription('logan@hiyield.co.uk', planType); // TODO: Change hardcoded email
+  const { data } = await createClient().auth.getUser();
+
+  const user = data.user;
+
+  if (!user?.email) return null;
+
+  const response = await createSubscription(user.email, planType);
 
   if (!response) return null;
 
