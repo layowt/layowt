@@ -1,7 +1,5 @@
 import { createClient } from '@/utils/supabase/server';
 import UserAuthModal from '@/components/modals/user-auth';
-import { cookies } from 'next/headers';
-const cookiesStore = cookies();
 
 export default async function UserAuthentication({
   children
@@ -11,17 +9,12 @@ export default async function UserAuthentication({
   const supabase = createClient();
   const { data: user, error } = await supabase.auth.getUser();
 
-  const userId = cookiesStore.get('userId');
+  //console.log(user.user);
 
   // if the user is not logged in, show a modal to allow the user to log in
   return (
     <>
-      {
-        <UserAuthModal
-          currentUserObject={user.user}
-          currentUserId={userId?.value}
-        />
-      }
+      {<UserAuthModal currentUserObject={user.user} />}
       {children}
     </>
   );

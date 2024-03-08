@@ -19,6 +19,7 @@ const userSlice = createSlice({
   reducers: {
     getUser: (state, action: PayloadAction<User>) => {
       // get the user from the supabase db via its uid
+      console.log(state.user);
     },
     createUser: (state, action: PayloadAction<User>) => {
       // Only set the user if it's currently null
