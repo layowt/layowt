@@ -21,23 +21,24 @@ import { createClient } from '@/utils/supabase/client';
 
 // type imports
 import type { User } from '@supabase/supabase-js';
+import { user } from '@/store/user-store';
 
 export default function UserAuthModal({
-  currentUserObject,
-  currentUserId
+  currentUserObject
 }: {
   currentUserObject: User | null;
-  currentUserId: string | undefined;
 }) {
+  // TODO: CHECK IF THE EMAIL IS ALREADY AUTHED ON PAGE LOAD
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
 
   const [showModal, setShowModal] = useState(true);
-
   const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
+    // on initial render set the isClient to true
     setIsClient(true);
 
     // check if the user is logged in
@@ -48,7 +49,6 @@ export default function UserAuthModal({
   }, []);
 
   useEffect(() => {
-    // TODO: Check why the cookie is not being passed through one first instance of waiting for auth
     // create a subscription to the user object
     const channel = supabase
       .channel('User Email Authenticated')
@@ -58,7 +58,7 @@ export default function UserAuthModal({
           event: '*',
           schema: 'public',
           table: 'users',
-          filter: `uid=eq.${currentUserId}`
+          filter: `uid=eq.${searchParams.get('uid') ?? null}`
         },
         (payload) => {
           // @ts-expect-error
@@ -77,10 +77,12 @@ export default function UserAuthModal({
       )
       .subscribe();
 
+    //console.log(channel.joinPush.payload.config.postgres_changes[0]);
+
     return () => {
       channel.unsubscribe();
     };
-  }, [supabase]);
+  }, [supabase, pathname]);
 
   const [loading, setLoading] = useState(false);
   const [newUser, setNewUser] = useState(false);
@@ -89,11 +91,15 @@ export default function UserAuthModal({
     // Reset loading state when pathname changes
     setLoading(false);
     // let's set this as a cookie to avoid the user from seeing the modal again
-    if (searchParams.get('waiting_for_auth')) setNewUser(true);
-  }, [pathname]);
+    if (searchParams.get('uid')) {
+      setNewUser(true);
+    }
+  }, [pathname, searchParams]);
 
   // do not display the modal if the user is on the sign-up page
-  if (pathname === '/sign-up') return '';
+  if (pathname === '/sign-up' || currentUserObject) return '';
+
+  if (searchParams.get('access_token')) return '';
 
   return isClient && currentUserObject === null ? (
     <>
