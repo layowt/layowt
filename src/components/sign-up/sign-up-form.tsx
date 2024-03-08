@@ -14,16 +14,25 @@ import { signUp } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { useAppDispatch } from '@/lib/hooks';
 import { createUser, deleteUser } from '@/store/user-store';
 
 export default function SignUpForm() {
   // redux
   const dispatch = useAppDispatch();
 
-  // user states
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [state, setState] = useState({
+    userEmail: '',
+    userPassword: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   // other states
@@ -46,7 +55,7 @@ export default function SignUpForm() {
 
     // try to create the user
     try {
-      const user = await signUp(userEmail, userPassword);
+      const user = await signUp(state.userEmail, state.userPassword);
 
       // For now, redirect the user to the home page
       if (!user) {
@@ -67,7 +76,10 @@ export default function SignUpForm() {
 
       if (!user) return;
 
-      router.push(process.env.NEXT_PUBLIC_AUTH_REDIRECT ?? '/');
+      // create the user in the redux store
+      dispatch(createUser(user));
+
+      router.push(`/pricing?uid=${user.id}` ?? '/');
 
       // reset the loading state
       setIsLoading(false);
@@ -109,13 +121,14 @@ export default function SignUpForm() {
                 <Input
                   id="email"
                   type="email"
+                  name="userEmail"
                   placeholder="hello@secure.com"
                   className="
                     bg-transparent w-full border-none p-2 placeholder:text-muted-foreground 
                     focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
                   "
-                  value={userEmail}
-                  onChange={(event) => setUserEmail(event.target.value)}
+                  value={state.userEmail}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -143,9 +156,10 @@ export default function SignUpForm() {
                   id="password"
                   type="password"
                   placeholder="password"
+                  name="userPassword"
                   className="bg-transparent w-full border-none p-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                  value={userPassword}
-                  onChange={(event) => setUserPassword(event.target.value)}
+                  value={state.userPassword}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -178,8 +192,8 @@ export default function SignUpForm() {
                         duration-300 disabled:cursor-not-allowed flex gap-x-2 items-center
                       "
                       disabled={
-                        !validEmail(userEmail) ||
-                        !isValidPassword(userPassword) ||
+                        !validEmail(state.userEmail) ||
+                        !isValidPassword(state.userPassword) ||
                         !acceptedTerms
                       }
                     >

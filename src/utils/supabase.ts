@@ -47,6 +47,7 @@ export const signUp = async (
 
     console.log('New user:', newUser);
 
+    // return the user object so we can extract the user.id on the front end
     return user;
   } catch (error) {
     console.error('Error signing up:', error);
