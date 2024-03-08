@@ -38,9 +38,7 @@ const getClientSecret = async (
 
   const response = await createSubscription(user.email, planType);
 
-  if (!response) return null;
-
-  if (!response.invoice) return null;
+  if (!response || !response.invoice) return null;
 
   return response;
 };
