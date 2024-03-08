@@ -27,6 +27,8 @@ const getClientSecret = async (
   invoice: string;
   paymentPrice: number;
 } | null> => {
+  // TODO: Change hardcoded email to the email of the user
+  // from 'src/utils/supabase/client.ts'
   const response = await createSubscription('logan@hiyield.co.uk', planType); // TODO: Change hardcoded email
 
   if (!response) return null;
@@ -98,7 +100,7 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
           </Button>
         </DialogTrigger>
         {clientSecret ? (
-          <DialogContent>
+          <DialogContent showCloseButton={true}>
             <Elements
               stripe={stripe}
               options={options}

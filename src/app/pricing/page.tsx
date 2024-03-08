@@ -52,7 +52,7 @@ export default function PricingPage() {
 
         {user?.user?.email}
 
-        <div className="flex flex-col gap-y-2">
+        {/* <div className="flex flex-col gap-y-2">
           {count?.toString()}
           <div className="flex gap-x-1">
             <Button
@@ -74,7 +74,7 @@ export default function PricingPage() {
               increment by 5
             </Button>
           </div>
-        </div>
+        </div> */}
 
         <div className="flex gap-x-10 items-center">
           <div

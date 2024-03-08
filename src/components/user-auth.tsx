@@ -7,15 +7,14 @@ export default async function UserAuthentication({
   children: React.ReactNode;
 }) {
   const supabase = createClient();
-
   const { data: user, error } = await supabase.auth.getUser();
 
-  // check the current path of the user
+  //console.log(user.user);
 
   // if the user is not logged in, show a modal to allow the user to log in
   return (
     <>
-      {!user.user ? <UserAuthModal /> : ''}
+      {<UserAuthModal currentUserObject={user.user} />}
       {children}
     </>
   );
