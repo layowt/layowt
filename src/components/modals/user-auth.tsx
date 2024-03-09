@@ -124,7 +124,7 @@ export default function UserAuthModal({
               </h2>
               <p className="text-center">Click the button below to log in.</p>
               <Button
-                className="border border-white w-fit px-6"
+                className="border border-white w-fit px-6 bg-black"
                 onClick={() => {
                   setLoading(true);
                   router.push('/sign-up');
