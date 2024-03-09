@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
 });
 
 export const StripeProducts = async (
-  billingPeriod: 'month' | 'year' = 'year'
+  billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
 ): Promise<Record<
   'products',
   Stripe.Product[]
