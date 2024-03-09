@@ -5,18 +5,17 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
 });
 
 export const StripeProducts = async (
-  billingPeriod: 'month' | 'year' = 'month'
+  billingPeriod: 'month' | 'year' = 'year'
 ): Promise<Record<
   'products',
   Stripe.Product[]
 > | null> => {
   if (!stripe) return Promise.reject('Stripe is not available');
 
-  const products: Stripe.Response<Stripe.ApiList<Stripe.Product>> =
+  let products: Stripe.Response<Stripe.ApiList<Stripe.Product>> =
     await stripe.products.list({
       active: true,
-      limit: 10,
-      expand: ['data.default_price']
+      limit: 10
     });
     
   if (!products) return Promise.reject('No products found');
@@ -32,17 +31,19 @@ export const StripeProducts = async (
     }
   });
 
-  console.log(prices);
-
   // loop over all of the prices and match them to the product
-  let x = prices.data.forEach((price) => {
+  prices.data.forEach((price) => {
     // @ts-expect-error - the product object is expanded
     const priceProductId = price.product.id
 
     // find the product that matches the price
     const product = products.data.find((product) => product.id === priceProductId);
 
-    //console.log(product);
+    // if we can't find the product, then we can't match the price
+    if(!product) return;
+
+    // match the price to the product
+    product.default_price = price
   })
 
   // once we have the products, lets sort them via the price
