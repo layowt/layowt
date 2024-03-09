@@ -2,7 +2,6 @@
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
 import { useState, useEffect, useRef, use } from 'react';
-import { ArrowRightIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 
 // fonts
@@ -15,7 +14,7 @@ import { StripeProduct } from '@/types/StripeProduct';
 
 // redux imports
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { increment, decrement, incrementByAmount } from '@/store/user-store';
+//import { increment, decrement, incrementByAmount } from '@/store/user-store';
 
 // component
 export default function PricingPage() {
@@ -24,8 +23,8 @@ export default function PricingPage() {
     StripeProduct[]
   > | null>(null);
 
-  const dispatch = useAppDispatch();
-  const count = useAppSelector((state) => state.user.count);
+  //const dispatch = useAppDispatch();
+  //const count = useAppSelector((state) => state.user.count);
   const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ export default function PricingPage() {
   return (
     <>
       <div className="flex flex-col h-full gap-y-20 text-white py-20">
-        <div className="flex flex-col gap-y-6 w-full">
+        <div className="flex flex-col gap-y-6 w-full items-center">
           <h6 className="text-xs">Pricing</h6>
           <h1 className={cairo.className + ` text-5xl font-bold`}>
             Plans available
@@ -76,7 +75,7 @@ export default function PricingPage() {
           </div>
         </div> */}
 
-        <div className="flex gap-x-10 items-center">
+        <div className="flex gap-x-10 items-center justify-center">
           <div
             className={
               pricingPlansGrid + ` grid-cols-${products?.products.length}`
@@ -89,8 +88,6 @@ export default function PricingPage() {
               />
             ))}
           </div>
-
-          <ArrowRightIcon className="w-5 h-5" />
         </div>
       </div>
     </>
