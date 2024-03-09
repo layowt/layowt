@@ -56,8 +56,10 @@ export function PricingCard({
                     <ReloadIcon className="w-3 h-3 animate-spin" />
                   </div>
                 ) : (
-                  <span className={`text-3xl`}>
-                    {product.default_price?.unit_amount / 100}
+                  <span className="text-3xl">
+                    {product.default_price?.unit_amount
+                      ? product.default_price.unit_amount / 100
+                      : 0}
                   </span>
                 )}
               </div>
