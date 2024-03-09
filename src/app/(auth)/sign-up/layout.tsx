@@ -16,7 +16,7 @@ export default function SignUpLayout({
             karla.className + ` text-white text-3xl font-bold py-3 px-10`
           }
         >
-          visualsite
+          draggle
         </div>
         <div className="">{children}</div>
       </div>
