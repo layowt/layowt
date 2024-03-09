@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
-    "postinstall": "npm run generate"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.9.1",
