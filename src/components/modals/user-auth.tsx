@@ -118,13 +118,13 @@ export default function UserAuthModal({
               Waiting for MFA
             </DialogTitle>
           ) : (
-            <div className="flex flex-col gap-y-3 items-center">
+            <div className="flex flex-col gap-y-3 items-center text-white">
               <h2 className="text-3xl font-bold text-center">
                 You need to log in
               </h2>
               <p className="text-center">Click the button below to log in.</p>
               <Button
-                className="border border-white w-fit px-6"
+                className="border border-white w-fit px-6 bg-black"
                 onClick={() => {
                   setLoading(true);
                   router.push('/sign-up');
