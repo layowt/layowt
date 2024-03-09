@@ -24,6 +24,7 @@ export default function PricingPage() {
     'products',
     StripeProduct[]
   > | null>(null);
+  const [loading, setLoading] = useState(true);
 
   //const dispatch = useAppDispatch();
   //const count = useAppSelector((state) => state.user.count);
@@ -34,9 +35,11 @@ export default function PricingPage() {
   const setProductsFunc = async (
     billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
   ) => {
+    setLoading(true);
     // TODO: fix this
     // @ts-ignore
     setProducts(await StripeProducts(billingPeriod));
+    setLoading(false);
   };
 
   // useEffect to fetch the products on mount (This may need to be changed)
@@ -69,7 +72,6 @@ export default function PricingPage() {
             Annual
           </div>
         </div>
-
         {/* <div className="flex flex-col gap-y-2">
           {user?.user?.email}
 
@@ -95,7 +97,6 @@ export default function PricingPage() {
             </Button>
           </div>
         </div> */}
-
         <div className="flex gap-x-10 items-center justify-center">
           <div
             className={
@@ -106,6 +107,8 @@ export default function PricingPage() {
               <PricingCard
                 key={product.id}
                 product={product}
+                isLoading={loading}
+                billingPeriod={billingPeriod}
               />
             ))}
           </div>
