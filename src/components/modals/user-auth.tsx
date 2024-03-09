@@ -118,7 +118,7 @@ export default function UserAuthModal({
               Waiting for MFA
             </DialogTitle>
           ) : (
-            <div className="flex flex-col gap-y-3 items-center">
+            <div className="flex flex-col gap-y-3 items-center text-white">
               <h2 className="text-3xl font-bold text-center">
                 You need to log in
               </h2>
