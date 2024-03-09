@@ -2,7 +2,7 @@
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
 import { useState, useEffect, useRef, use } from 'react';
-import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 
 // fonts
 import { Cairo } from 'next/font/google';
@@ -12,8 +12,10 @@ import { StripeProducts } from '@/actions/stripe-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
 
+import Stripe from 'stripe';
+
 // redux imports
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+//import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 //import { increment, decrement, incrementByAmount } from '@/store/user-store';
 
 // component
@@ -25,17 +27,27 @@ export default function PricingPage() {
 
   //const dispatch = useAppDispatch();
   //const count = useAppSelector((state) => state.user.count);
-  const user = useAppSelector((state) => state.user);
+  //const user = useAppSelector((state) => state.user);
+  const [billingPeriod, setBillingPeriod] =
+    useState<Stripe.PriceListParams.Recurring.Interval>('month');
 
+  const setProductsFunc = async (
+    billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
+  ) => {
+    // TODO: fix this
+    // @ts-ignore
+    setProducts(await StripeProducts(billingPeriod));
+  };
+
+  // useEffect to fetch the products on mount (This may need to be changed)
   useEffect(() => {
-    const setProductsFunc = async () => {
-      // TODO: fix this
-      // @ts-ignore
-      setProducts(await StripeProducts());
-    };
-
     setProductsFunc();
   }, []);
+
+  // a use effect to update the products when the billing period changes
+  useEffect(() => {
+    setProductsFunc(billingPeriod);
+  }, [billingPeriod]);
 
   let pricingPlansGrid = 'grid w-fit gap-x-8';
 
@@ -47,11 +59,20 @@ export default function PricingPage() {
           <h1 className={cairo.className + ` text-5xl font-bold`}>
             Plans available
           </h1>
+          <div className="flex gap-x-2 items-center">
+            Monthly
+            <Switch
+              onCheckedChange={(checked) => {
+                setBillingPeriod(checked ? 'year' : 'month');
+              }}
+            />
+            Annual
+          </div>
         </div>
 
-        {user?.user?.email}
-
         {/* <div className="flex flex-col gap-y-2">
+          {user?.user?.email}
+
           {count?.toString()}
           <div className="flex gap-x-1">
             <Button
