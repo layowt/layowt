@@ -3,8 +3,9 @@ import { Cairo, Karla, ABeeZee } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
-import StoreProvider from '@/store/store-provider';
+//import StoreProvider from '@/store/store-provider';
 import UserAuthentication from '@/components/user-auth';
+import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider';
 
 // layout to render on every page
 import Layout from '@/components/layout';
@@ -42,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <StoreProvider>
+    <ReactQueryClientProvider>
       <html
         lang="en"
         className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
@@ -58,6 +59,6 @@ export default function RootLayout({
           </UserAuthentication>
         </body>
       </html>
-    </StoreProvider>
+    </ReactQueryClientProvider>
   );
 }
