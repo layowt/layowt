@@ -45,6 +45,7 @@ export default function PricingPage() {
   // useEffect to fetch the products on mount (This may need to be changed)
   useEffect(() => {
     setProductsFunc();
+    console.log('hello!');
   }, []);
 
   // a use effect to update the products when the billing period changes
