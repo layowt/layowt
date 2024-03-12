@@ -5,7 +5,6 @@ import { Theme } from '@radix-ui/themes';
 
 //import StoreProvider from '@/store/store-provider';
 import UserAuthentication from '@/components/user-auth';
-import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider';
 
 // layout to render on every page
 import Layout from '@/components/layout';
@@ -43,22 +42,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ReactQueryClientProvider>
-      <html
-        lang="en"
-        className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
+    <html
+      lang="en"
+      className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
+    >
+      <body
+        className="bg-[#000814] min-h-screen"
+        suppressHydrationWarning={true}
       >
-        <body
-          className="bg-[#000814] min-h-screen"
-          suppressHydrationWarning={true}
-        >
-          <UserAuthentication>
-            <Theme>
-              <Layout>{children}</Layout>
-            </Theme>
-          </UserAuthentication>
-        </body>
-      </html>
-    </ReactQueryClientProvider>
+        <UserAuthentication>
+          <Theme>
+            <Layout>{children}</Layout>
+          </Theme>
+        </UserAuthentication>
+      </body>
+    </html>
   );
 }
