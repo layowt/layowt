@@ -50,6 +50,7 @@ export default function PricingPage() {
   // a use effect to update the products when the billing period changes
   useEffect(() => {
     setProductsFunc(billingPeriod);
+    console.log('ran');
   }, [billingPeriod]);
 
   let pricingPlansGrid = 'grid w-fit gap-x-8';
