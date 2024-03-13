@@ -7,7 +7,7 @@ import {
 import { useState } from 'react';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
-export const CheckoutForm = () => {
+export const CheckoutForm = ({ productPrice }: { productPrice: number }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -40,7 +40,7 @@ export const CheckoutForm = () => {
       className="p-5 flex flex-col gap-y-2"
     >
       <div className="flex flex-col gap-y-4">
-        <h3 className="text-2xl font-bold">Payment</h3>
+        <h3 className="text-2xl font-bold">Payment: £{productPrice / 100}</h3>
         <PaymentElement />
       </div>
       <Button
