@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import { createInvoice } from './utils/stripe-invoice';
 import { lookupCustomer, createCustomer } from './utils/stripe-customer';
-import { StripeProducts } from './stripe-products';
+import { StripeProduct } from '@/types/StripeProduct';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16'
@@ -9,20 +9,14 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
 
 export const createSubscription = async (
   userEmail: string,
-  planUid: string
+  currentPlan: StripeProduct,
 ): Promise<{
   invoice: string;
   paymentPrice: number;
 } | null> => {
+  if(!currentPlan) throw new Error('No plan provided.')
+
   let currentUser: Stripe.Customer | null = null;
-
-  const planTypes = await StripeProducts().then((response) => {
-    if (!response) return null;
-
-    return response.products;
-  });
-
-  const currentPlan = planTypes?.find((plan) => plan.id === planUid);
 
   // try to find the customer via the email
   const isExistingCustomer = await lookupCustomer(userEmail, stripe);
