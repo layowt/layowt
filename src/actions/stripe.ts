@@ -15,9 +15,8 @@ export const createSubscription = async (
   paymentPrice: number;
 } | null> => {
   if(!currentPlan) throw new Error('No plan provided.')
-  
-  let currentUser: Stripe.Customer | null = null;
 
+  let currentUser: Stripe.Customer | null = null;
 
   // try to find the customer via the email
   const isExistingCustomer = await lookupCustomer(userEmail, stripe);

@@ -103,7 +103,7 @@ export default function UserAuthModal({
 
   return isClient &&
     currentUserObject === null &&
-    process.env.EMAIL_AUTH == true ? (
+    process.env.EMAIL_AUTH == 'true' ? (
     <>
       <Dialog
         modal={true}
