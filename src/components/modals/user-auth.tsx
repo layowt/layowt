@@ -101,7 +101,9 @@ export default function UserAuthModal({
 
   if (searchParams.get('access_token')) return '';
 
-  return isClient && currentUserObject === null ? (
+  return isClient &&
+    currentUserObject === null &&
+    process.env.EMAIL_AUTH == true ? (
     <>
       <Dialog
         modal={true}
@@ -114,7 +116,7 @@ export default function UserAuthModal({
           showCloseButton={false}
         >
           {newUser ? (
-            <DialogTitle className="text-3xl font-bold text-center">
+            <DialogTitle className="text-3xl font-bold text-center text-white">
               Waiting for MFA
             </DialogTitle>
           ) : (
