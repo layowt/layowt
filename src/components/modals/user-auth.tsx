@@ -101,9 +101,7 @@ export default function UserAuthModal({
 
   if (searchParams.get('access_token')) return '';
 
-  return isClient &&
-    currentUserObject === null &&
-    process.env.EMAIL_AUTH == 'true' ? (
+  return isClient && currentUserObject === null ? (
     <>
       <Dialog
         modal={true}
