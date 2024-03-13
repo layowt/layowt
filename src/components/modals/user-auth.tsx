@@ -99,6 +99,8 @@ export default function UserAuthModal({
 
   const resendVerificationEmail = async () => {
     try {
+      // need to get the user email from the db via the id from the search params
+
       const { data, error } = await supabase.auth.resend({
         type: 'signup',
         email: '',
@@ -137,7 +139,7 @@ export default function UserAuthModal({
                 onClick={resendVerificationEmail}
                 className="w-fit"
               >
-                Didn't receive an email?
+                Didn&apos;t receive an email?
               </Button>
             </DialogTitle>
           ) : (
