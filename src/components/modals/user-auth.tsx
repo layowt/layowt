@@ -37,6 +37,7 @@ export default function UserAuthModal({
   const [showModal, setShowModal] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
+  // Effects TODO: LOOK INTO REFACTORING INTO REACT QUERY
   useEffect(() => {
     // on initial render set the isClient to true
     setIsClient(true);
@@ -96,6 +97,21 @@ export default function UserAuthModal({
     }
   }, [pathname, searchParams]);
 
+  const resendVerificationEmail = async () => {
+    try {
+      const { data, error } = await supabase.auth.resend({
+        type: 'signup',
+        email: '',
+        options: {
+          emailRedirectTo: '/dashboard'
+        }
+      });
+    } catch (error) {
+      // TODO: USE SONNER HERE TO DISPLAY ERROR
+      console.error(error);
+    }
+  };
+
   // do not display the modal if the user is on the sign-up page
   if (pathname === '/sign-up' || currentUserObject) return '';
 
@@ -114,8 +130,15 @@ export default function UserAuthModal({
           showCloseButton={false}
         >
           {newUser ? (
-            <DialogTitle className="text-3xl font-bold text-center">
-              Waiting for MFA
+            <DialogTitle className="text-3xl font-bold text-center flex flex-col gap-y-4 items-center text-white">
+              <h2>Waiting for MFA</h2>
+
+              <Button
+                onClick={resendVerificationEmail}
+                className="w-fit"
+              >
+                Didn't receive an email?
+              </Button>
             </DialogTitle>
           ) : (
             <div className="flex flex-col gap-y-3 items-center text-white">
