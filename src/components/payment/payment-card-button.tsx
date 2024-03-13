@@ -88,7 +88,6 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
   return (
     <>
       <Dialog>
-        {product.default_price.unit_amount}
         <DialogTrigger asChild>
           <Button
             onClick={async () => await handleClientSecret(product)}
