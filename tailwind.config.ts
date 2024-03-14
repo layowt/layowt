@@ -41,11 +41,14 @@ const config = {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))'
         },
-        pink: {
-          DEFAULT: '#A42CD6'
+        purple: {
+          DEFAULT: '#560bad'
         },
         white: {
-          DEFAULT: '#F5F5F5'
+          DEFAULT: '#EBEBEB'
+        },
+        black: {
+          DEFAULT: '#030009'
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
