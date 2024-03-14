@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 // use router as we are in a client component
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
@@ -21,7 +23,6 @@ import { createClient } from '@/utils/supabase/client';
 
 // type imports
 import type { User } from '@supabase/supabase-js';
-import { user } from '@/store/user-store';
 
 export default function UserAuthModal({
   currentUserObject
@@ -99,13 +100,41 @@ export default function UserAuthModal({
 
   const resendVerificationEmail = async () => {
     try {
-      // need to get the user email from the db via the id from the search params
+      if (searchParams.get('uid') === null)
+        return console.error('No uid found in the search params');
 
-      const { data, error } = await supabase.auth.resend({
-        type: 'signup',
-        email: '',
-        options: {
-          emailRedirectTo: '/dashboard'
+      // need to get the user email from the db via the id from the search params
+      const userEmail = await supabase
+        .from('users')
+        .select('*')
+        .eq('uid', searchParams.get('uid'));
+
+      // we need the user email in order to send the verification email
+      if (!userEmail.data || !userEmail.data[0]?.email) {
+        toast.error('No user found');
+        throw new Error('No user found');
+      }
+
+      const promise = () =>
+        new Promise<void>(async (resolve) => {
+          await supabase.auth.resend({
+            type: 'signup',
+            email: userEmail.data[0].email,
+            options: {
+              emailRedirectTo: '/dashboard'
+            }
+          });
+          resolve();
+        });
+
+      toast.promise(promise, {
+        loading: 'Sending verification email...',
+        success: () => {
+          return `Check your inbox at ${userEmail.data[0].email} to verify your email.`;
+        },
+        classNames: {
+          toast:
+            'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto'
         }
       });
     } catch (error) {
@@ -126,6 +155,10 @@ export default function UserAuthModal({
         defaultOpen={true}
         open={showModal}
       >
+        <Toaster
+          closeButton
+          className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
+        />
         <DialogContent
           hidden={false}
           className="bg-black rounded-lg py-10"

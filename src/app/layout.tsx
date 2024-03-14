@@ -3,6 +3,8 @@ import { Cairo, Karla, ABeeZee } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
+import { Toaster } from '@/components/ui/sonner';
+
 import StoreProvider from '@/store/store-provider';
 import UserAuthentication from '@/components/user-auth';
 
@@ -53,7 +55,13 @@ export default function RootLayout({
         >
           <UserAuthentication>
             <Theme>
-              <Layout>{children}</Layout>
+              <Layout>
+                {children}
+                <Toaster
+                  closeButton
+                  className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
+                />
+              </Layout>
             </Theme>
           </UserAuthentication>
         </body>
