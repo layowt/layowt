@@ -35,7 +35,7 @@ export function PricingCard({
                 <span
                   className="
 							text-white text-xs font-bold absolute top-0 right-0
-							py-1.5 px-3 bg-pink rounded-bl-[0.5rem]
+							py-1.5 px-3 bg-purple rounded-bl-[0.5rem]
 							"
                 >
                   Most popular
