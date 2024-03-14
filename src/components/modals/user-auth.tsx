@@ -172,16 +172,17 @@ export default function UserAuthModal({
         />
         <DialogContent
           hidden={false}
-          className="bg-black border border-gray-700 rounded-lg py-10"
+          className="bg-black border border-gray-700 rounded-lg py-10 max-w-md"
           showCloseButton={false}
         >
           {newUser ? (
             <DialogTitle className="text-center flex flex-col gap-y-6 items-center text-white">
               <div className="flex flex-col gap-y-2">
-                <h2 className="text-2xl font-bold ">
+                <div className=""></div>
+                <h2 className="text-xl font-bold ">
                   Please verify your email.
                 </h2>
-                <span className="text-sm font-light max-w-[70%] flex self-center">
+                <span className="text-xs font-light max-w-[70%] flex self-center">
                   We have sent an email to {userEmail} with a link to verify
                   your account.
                 </span>
@@ -190,7 +191,7 @@ export default function UserAuthModal({
               <div className="flex gap-x-4">
                 <Button
                   onClick={resendVerificationEmail}
-                  className="w-fit bg-pink text-white duration-300 hover:bg-pink/60"
+                  className="w-fit bg-purple text-white duration-300 hover:bg-purple/60"
                 >
                   Resend Email
                 </Button>
