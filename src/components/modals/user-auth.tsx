@@ -38,6 +38,8 @@ export default function UserAuthModal({
   const [showModal, setShowModal] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
   // Effects TODO: LOOK INTO REFACTORING INTO REACT QUERY
   useEffect(() => {
     // on initial render set the isClient to true
@@ -48,6 +50,9 @@ export default function UserAuthModal({
     if (currentUserObject) {
       router.replace('/pricing', undefined);
     }
+
+    // get the user email on initial page load
+    getUserEmail();
   }, []);
 
   useEffect(() => {
@@ -100,26 +105,13 @@ export default function UserAuthModal({
 
   const resendVerificationEmail = async () => {
     try {
-      if (searchParams.get('uid') === null)
-        return console.error('No uid found in the search params');
-
-      // need to get the user email from the db via the id from the search params
-      const userEmail = await supabase
-        .from('users')
-        .select('*')
-        .eq('uid', searchParams.get('uid'));
-
-      // we need the user email in order to send the verification email
-      if (!userEmail.data || !userEmail.data[0]?.email) {
-        toast.error('No user found');
-        throw new Error('No user found');
-      }
+      if (!userEmail) return;
 
       const promise = () =>
         new Promise<void>(async (resolve) => {
           await supabase.auth.resend({
             type: 'signup',
-            email: userEmail.data[0].email,
+            email: userEmail,
             options: {
               emailRedirectTo: '/dashboard'
             }
@@ -130,7 +122,7 @@ export default function UserAuthModal({
       toast.promise(promise, {
         loading: 'Sending verification email...',
         success: () => {
-          return `Check your inbox at ${userEmail.data[0].email} to verify your email.`;
+          return `Check your inbox at ${userEmail} to verify your email.`;
         },
         classNames: {
           toast:
@@ -141,6 +133,25 @@ export default function UserAuthModal({
       // TODO: USE SONNER HERE TO DISPLAY ERROR
       console.error(error);
     }
+  };
+
+  const getUserEmail = async () => {
+    if (searchParams.get('uid') === null)
+      return console.error('No uid found in the search params');
+
+    // need to get the user email from the db via the id from the search params
+    const userEmail = await supabase
+      .from('users')
+      .select('*')
+      .eq('uid', searchParams.get('uid'));
+
+    // we need the user email in order to send the verification email
+    if (!userEmail.data || !userEmail.data[0]?.email) {
+      toast.error('No user found');
+      throw new Error('No user found');
+    }
+
+    setUserEmail(userEmail.data[0].email);
   };
 
   // do not display the modal if the user is on the sign-up page
@@ -161,19 +172,33 @@ export default function UserAuthModal({
         />
         <DialogContent
           hidden={false}
-          className="bg-black rounded-lg py-10"
+          className="bg-black border border-gray-700 rounded-lg py-10"
           showCloseButton={false}
         >
           {newUser ? (
-            <DialogTitle className="text-3xl font-bold text-center flex flex-col gap-y-4 items-center text-white">
-              <h2>Waiting for MFA</h2>
+            <DialogTitle className="text-center flex flex-col gap-y-6 items-center text-white">
+              <div className="flex flex-col gap-y-2">
+                <h2 className="text-2xl font-bold ">
+                  Please verify your email.
+                </h2>
+                <span className="text-sm font-light max-w-[70%] flex self-center">
+                  We have sent an email to {userEmail} with a link to verify
+                  your account.
+                </span>
+              </div>
 
-              <Button
-                onClick={resendVerificationEmail}
-                className="w-fit"
-              >
-                Didn&apos;t receive an email?
-              </Button>
+              <div className="flex gap-x-4">
+                <Button
+                  onClick={resendVerificationEmail}
+                  className="w-fit bg-pink text-white duration-300 hover:bg-pink/60"
+                >
+                  Resend Email
+                </Button>
+
+                <Button className="bg-transparent text-white border border-gray-700 hover:text-pink hover:bg-transparent hover:border-pink duration-300">
+                  Update Email
+                </Button>
+              </div>
             </DialogTitle>
           ) : (
             <div className="flex flex-col gap-y-3 items-center text-white">
