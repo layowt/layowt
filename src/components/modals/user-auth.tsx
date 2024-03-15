@@ -12,6 +12,8 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import { Toaster } from '@/components/ui/sonner';
 import { toast } from 'sonner';
 
+import { getUserFromDb } from '@/utils/user/getUserById';
+
 // use router as we are in a client component
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
@@ -40,6 +42,12 @@ export default function UserAuthModal({
 
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
+  const x = async () => {
+    const email = await getUserFromDb(searchParams.get('uid') ?? '');
+
+    return email;
+  };
+
   // Effects TODO: LOOK INTO REFACTORING INTO REACT QUERY
   useEffect(() => {
     // on initial render set the isClient to true
@@ -50,9 +58,6 @@ export default function UserAuthModal({
     if (currentUserObject) {
       router.replace('/pricing', undefined);
     }
-
-    // get the user email on initial page load
-    getUserEmail();
   }, []);
 
   useEffect(() => {
@@ -97,9 +102,18 @@ export default function UserAuthModal({
   useEffect(() => {
     // Reset loading state when pathname changes
     setLoading(false);
+
+    const fetchData = async () => {
+      const userEmail = await x(); // Wait for the promise to resolve
+      setUserEmail(userEmail.email);
+    };
+
     // let's set this as a cookie to avoid the user from seeing the modal again
     if (searchParams.get('uid')) {
       setNewUser(true);
+
+      // fetch the data if the uid is present in the url
+      fetchData();
     }
   }, [pathname, searchParams]);
 
@@ -179,10 +193,10 @@ export default function UserAuthModal({
             <DialogTitle className="text-center flex flex-col gap-y-6 items-center text-white">
               <div className="flex flex-col gap-y-2">
                 <div className=""></div>
-                <h2 className="text-xl font-bold ">
-                  Please verify your email.
+                <h2 className="text-2xl font-poppins">
+                  Please verify your email
                 </h2>
-                <span className="text-xs font-light max-w-[70%] flex self-center">
+                <span className="text-xs font-kanit leading-relaxed font-light max-w-[70%] flex self-center">
                   We have sent an email to {userEmail} with a link to verify
                   your account.
                 </span>
