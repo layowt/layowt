@@ -149,25 +149,6 @@ export default function UserAuthModal({
     }
   };
 
-  const getUserEmail = async () => {
-    if (searchParams.get('uid') === null)
-      return console.error('No uid found in the search params');
-
-    // need to get the user email from the db via the id from the search params
-    const userEmail = await supabase
-      .from('users')
-      .select('*')
-      .eq('uid', searchParams.get('uid'));
-
-    // we need the user email in order to send the verification email
-    if (!userEmail.data || !userEmail.data[0]?.email) {
-      toast.error('No user found');
-      throw new Error('No user found');
-    }
-
-    setUserEmail(userEmail.data[0].email);
-  };
-
   // do not display the modal if the user is on the sign-up page
   if (pathname === '/sign-up' || currentUserObject) return '';
 
@@ -197,8 +178,13 @@ export default function UserAuthModal({
                   Please verify your email
                 </h2>
                 <span className="text-xs font-kanit leading-relaxed font-light max-w-[70%] flex self-center">
-                  We have sent an email to {userEmail} with a link to verify
-                  your account.
+                  We have sent an email to{' '}
+                  {userEmail ? (
+                    userEmail
+                  ) : (
+                    <ReloadIcon className="w-3 h-3 animate-spin" />
+                  )}{' '}
+                  with a link to verify your account.
                 </span>
               </div>
 
