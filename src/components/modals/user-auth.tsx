@@ -1,4 +1,11 @@
 'use client';
+// react imports
+import { useEffect, useState } from 'react';
+//supabase
+import { createClient } from '@/utils/supabase/client';
+// use router as we are in a client component
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import WaitingForAuth from '@/components/modals/modalContent/user-auth';
 // shadcn imports
 import {
   Dialog,
@@ -10,18 +17,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Toaster } from '@/components/ui/sonner';
-import { toast } from 'sonner';
 
 import { getUserFromDb } from '@/utils/user/getUserById';
-
-// use router as we are in a client component
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-
-// react imports
-import { useEffect, useState } from 'react';
-
-//supabase
-import { createClient } from '@/utils/supabase/client';
 
 // type imports
 import type { User } from '@supabase/supabase-js';
@@ -117,38 +114,6 @@ export default function UserAuthModal({
     }
   }, [pathname, searchParams]);
 
-  const resendVerificationEmail = async () => {
-    try {
-      if (!userEmail) return;
-
-      const promise = () =>
-        new Promise<void>(async (resolve) => {
-          await supabase.auth.resend({
-            type: 'signup',
-            email: userEmail,
-            options: {
-              emailRedirectTo: '/dashboard'
-            }
-          });
-          resolve();
-        });
-
-      toast.promise(promise, {
-        loading: 'Sending verification email...',
-        success: () => {
-          return `Check your inbox at ${userEmail} to verify your email.`;
-        },
-        classNames: {
-          toast:
-            'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto'
-        }
-      });
-    } catch (error) {
-      // TODO: USE SONNER HERE TO DISPLAY ERROR
-      console.error(error);
-    }
-  };
-
   // do not display the modal if the user is on the sign-up page
   if (pathname === '/sign-up' || currentUserObject) return '';
 
@@ -170,37 +135,11 @@ export default function UserAuthModal({
           className="bg-black border border-gray-700 rounded-lg py-10 max-w-md"
           showCloseButton={false}
         >
-          {newUser ? (
-            <DialogTitle className="text-center flex flex-col gap-y-6 items-center text-white">
-              <div className="flex flex-col gap-y-2">
-                <div className=""></div>
-                <h2 className="text-2xl font-poppins">
-                  Please verify your email
-                </h2>
-                <span className="text-xs font-kanit leading-relaxed font-light max-w-[70%] flex self-center">
-                  We have sent an email to{' '}
-                  {userEmail ? (
-                    userEmail
-                  ) : (
-                    <ReloadIcon className="w-3 h-3 animate-spin" />
-                  )}{' '}
-                  with a link to verify your account.
-                </span>
-              </div>
-
-              <div className="flex gap-x-4">
-                <Button
-                  onClick={resendVerificationEmail}
-                  className="w-fit bg-purple text-white duration-300 hover:bg-purple/60"
-                >
-                  Resend Email
-                </Button>
-
-                <Button className="bg-transparent text-white border border-gray-700 hover:text-pink hover:bg-transparent hover:border-pink duration-300">
-                  Update Email
-                </Button>
-              </div>
-            </DialogTitle>
+          {newUser && userEmail ? (
+            <WaitingForAuth
+              userEmail={userEmail}
+              supabase={supabase}
+            />
           ) : (
             <div className="flex flex-col gap-y-3 items-center text-white">
               <h2 className="text-3xl font-bold text-center">
