@@ -8,12 +8,17 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
+import { useInterval } from '@/hooks/useInterval';
+
 import { getUserFromDb } from '@/utils/user/getUserById';
 
 /** Modal content to display if we are waiting for the user to confirm the OTP */
 export default function WaitingForAuth({ supabase }: { supabase: any }) {
   const searchParams = useSearchParams();
   const [userEmail, setUserEmail] = useState('');
+
+  const [seconds, setSeconds] = useState(5);
+  const interval = useInterval(() => setSeconds((s) => s - 1), 1000);
 
   /** run onMounted to get the user's email from the db */
   useEffect(() => {
@@ -26,6 +31,10 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
 
     // fetch the data if the uid is present in the url
     fetchData();
+
+    // start the interval countdown on page mount
+    interval.start();
+    return interval.stop;
   }, []);
 
   /** Method to resend a verification email upon request */
@@ -44,6 +53,11 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
           });
           resolve();
         });
+
+      // reset the seconds to 5
+      setSeconds(5);
+      // start the interval again
+      interval.start();
 
       toast.promise(promise, {
         loading: 'Sending verification email...',
@@ -65,7 +79,7 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
     <DialogTitle className="text-center flex flex-col gap-y-6 items-center text-white">
       <div className="flex flex-col gap-y-2">
         <div className=""></div>
-        <h2 className="text-2xl font-poppins">Please verify your email</h2>
+        <h2 className="text-2xl font-poppins">Please verify your email:</h2>
         <span className="flex-wrap text-xs font-kanit leading-relaxed font-light max-w-[70%] flex justify-center self-center">
           We have sent an email to&nbsp;
           <span className="font-bold">
@@ -79,10 +93,17 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
         </span>
       </div>
 
+      {seconds > 0 ? (
+        <span className="text-xs">Resend Email in {seconds} seconds</span>
+      ) : (
+        ''
+      )}
+
       <div className="flex gap-x-4">
         <Button
           onClick={resendVerificationEmail}
           className="w-fit bg-purple text-white duration-300 hover:bg-purple/60"
+          disabled={seconds > 0}
         >
           Resend Email
         </Button>
