@@ -7,6 +7,12 @@ import { DialogTitle } from '@/components/ui/dialog';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
 import { useInterval } from '@/hooks/useInterval';
 
@@ -93,20 +99,30 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
         </span>
       </div>
 
-      {seconds > 0 ? (
-        <span className="text-xs">Resend Email in {seconds} seconds</span>
-      ) : (
-        ''
-      )}
-
       <div className="flex gap-x-4">
-        <Button
-          onClick={resendVerificationEmail}
-          className="w-fit bg-purple text-white duration-300 hover:bg-purple/60"
-          disabled={seconds > 0}
-        >
-          Resend Email
-        </Button>
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={resendVerificationEmail}
+                className={`
+									w-fit bg-purple text-white duration-300 hover:bg-purple/60 
+									${seconds == 0 ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'}
+								`}
+                autoFocus={false}
+              >
+                Resend Email
+              </Button>
+            </TooltipTrigger>
+            {seconds != 0 ? (
+              <TooltipContent side="bottom">
+                <p className="text-xs">Resend Email in {seconds} seconds</p>
+              </TooltipContent>
+            ) : (
+              ''
+            )}
+          </Tooltip>
+        </TooltipProvider>
 
         <Button className="bg-transparent text-white border border-gray-700 hover:text-pink hover:bg-transparent hover:border-pink duration-300">
           Update Email
