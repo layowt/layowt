@@ -39,7 +39,7 @@ export default function UserAuthModal({
 
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  const x = async () => {
+  const getUserEmail = async () => {
     const email = await getUserFromDb(searchParams.get('uid') ?? '');
 
     return email;
@@ -101,7 +101,7 @@ export default function UserAuthModal({
     setLoading(false);
 
     const fetchData = async () => {
-      const userEmail = await x(); // Wait for the promise to resolve
+      const userEmail = await getUserEmail(); // Wait for the promise to resolve
       setUserEmail(userEmail.email);
     };
 
