@@ -27,7 +27,8 @@ const config = {
       fontFamily: {
         cairo: ['var(--font-cairo)'],
         poppins: ['var(--font-poppins)'],
-        kanit: ['var(--font-kanit)']
+        kanit: ['var(--font-kanit)'],
+        inter: ['var(--font-inter)']
       },
       colors: {
         border: 'hsl(var(--border))',
