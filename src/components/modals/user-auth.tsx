@@ -37,14 +37,6 @@ export default function UserAuthModal({
   const [showModal, setShowModal] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
-  const [userEmail, setUserEmail] = useState<string | null>(null);
-
-  const getUserEmail = async () => {
-    const email = await getUserFromDb(searchParams.get('uid') ?? '');
-
-    return email;
-  };
-
   // Effects TODO: LOOK INTO REFACTORING INTO REACT QUERY
   useEffect(() => {
     // on initial render set the isClient to true
@@ -94,23 +86,17 @@ export default function UserAuthModal({
   }, [supabase, pathname]);
 
   const [loading, setLoading] = useState(false);
-  const [newUser, setNewUser] = useState(false);
+
+  // variable to check if the user has just come from the sign up page
+  const [hasSignedUp, setHasSignedUp] = useState(false);
 
   useEffect(() => {
     // Reset loading state when pathname changes
     setLoading(false);
 
-    const fetchData = async () => {
-      const userEmail = await getUserEmail(); // Wait for the promise to resolve
-      setUserEmail(userEmail.email);
-    };
-
     // let's set this as a cookie to avoid the user from seeing the modal again
     if (searchParams.get('uid')) {
-      setNewUser(true);
-
-      // fetch the data if the uid is present in the url
-      fetchData();
+      setHasSignedUp(true);
     }
   }, [pathname, searchParams]);
 
@@ -135,11 +121,8 @@ export default function UserAuthModal({
           className="bg-black border border-gray-700 rounded-lg py-10 max-w-md"
           showCloseButton={false}
         >
-          {newUser && userEmail ? (
-            <WaitingForAuth
-              userEmail={userEmail}
-              supabase={supabase}
-            />
+          {hasSignedUp ? (
+            <WaitingForAuth supabase={supabase} />
           ) : (
             <div className="flex flex-col gap-y-3 items-center text-white">
               <h2 className="text-3xl font-bold text-center">
