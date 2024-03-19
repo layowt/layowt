@@ -25,7 +25,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        cairo: ['__Cairo_f22647']
+        cairo: ['var(--font-cairo)'],
+        poppins: ['var(--font-poppins)'],
+        kanit: ['var(--font-kanit)']
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -48,7 +50,9 @@ const config = {
           DEFAULT: '#EBEBEB'
         },
         black: {
-          DEFAULT: '#030009'
+          DEFAULT: '#090909',
+          100: '#070707',
+          200: '#0b0b0b'
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',

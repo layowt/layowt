@@ -118,7 +118,7 @@ export default function UserAuthModal({
         />
         <DialogContent
           hidden={false}
-          className="bg-black border border-gray-700 rounded-lg py-10 max-w-md"
+          className="bg-black-100 border border-gray-700 rounded-lg max-w-md"
           showCloseButton={false}
         >
           {hasSignedUp ? (
