@@ -82,11 +82,10 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
   };
 
   return (
-    <DialogTitle className="text-center flex flex-col gap-y-6 items-center text-white">
+    <DialogTitle className="flex flex-col gap-y-6 text-white">
       <div className="flex flex-col gap-y-2">
-        <div className=""></div>
         <h2 className="text-2xl font-poppins">Please verify your email:</h2>
-        <span className="flex-wrap text-xs font-kanit leading-relaxed font-light max-w-[70%] flex justify-center self-center">
+        <span className="flex-wrap text-xs font-kanit leading-relaxed font-light max-w-[70%] flex">
           We have sent an email to&nbsp;
           <span className="font-bold">
             {userEmail ? (
