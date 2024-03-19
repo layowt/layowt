@@ -1,5 +1,5 @@
 import './globals.css';
-import { Cairo, Karla, ABeeZee } from 'next/font/google';
+import { Cairo, Poppins, Kanit } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
@@ -18,19 +18,20 @@ const CairoFont = Cairo({
   style: 'normal'
 });
 
-const KarlaFont = Karla({
+const PoppinsFont = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-karla',
-  style: 'normal'
+  variable: '--font-poppins',
+  style: 'normal',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
 
-const ABeeZeeFont = ABeeZee({
+const KanitFont = Kanit({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-abeezee',
+  variable: '--font-kanit',
   style: 'normal',
-  weight: '400'
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
 
 export const metadata = {
@@ -47,7 +48,7 @@ export default function RootLayout({
     <StoreProvider>
       <html
         lang="en"
-        className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
+        className={`${CairoFont.variable} ${PoppinsFont.variable} ${KanitFont.variable}`}
       >
         <body
           className="bg-[#000814] min-h-screen"
