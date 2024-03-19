@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 
 // shadcn imports
 import { DialogTitle } from '@/components/ui/dialog';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { ReloadIcon, CheckCircledIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import {
@@ -83,13 +83,14 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
 
   return (
     <DialogTitle className="flex flex-col gap-y-6 text-white">
-      <div className="flex flex-col gap-y-2">
-        <h2 className="text-2xl font-poppins">Please verify your email:</h2>
-        <span className="flex-wrap text-xs font-kanit leading-relaxed font-light max-w-[70%] flex">
+      <div className="flex flex-col gap-y-2 items-center justify-center">
+        <CheckCircledIcon className="size-6" />
+        <h2 className="text-2xl font-poppins mt-2">Check your email</h2>
+        <span className="flex-wrap text-xs font-poppins leading-relaxed font-light flex justify-center">
           We have sent an email to&nbsp;
-          <span className="font-bold">
+          <span className="font-medium">
             {userEmail ? (
-              userEmail + '.'
+              userEmail
             ) : (
               <ReloadIcon className="w-3 h-3 animate-spin" />
             )}
@@ -97,15 +98,14 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
           Click the link to verify your account.
         </span>
       </div>
-
-      <div className="flex gap-x-4">
+      <div className="flex gap-x-4 justify-center w-full">
         <TooltipProvider delayDuration={0}>
           <Tooltip>
             <TooltipTrigger>
               <Button
                 onClick={resendVerificationEmail}
                 className={`
-									w-fit bg-purple text-white duration-300 hover:bg-purple/60 
+									w-full bg-purple text-white duration-300 hover:bg-purple/60 
 									${seconds == 0 ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'}
 								`}
                 autoFocus={false}
@@ -124,7 +124,7 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
           </Tooltip>
         </TooltipProvider>
 
-        <Button className="bg-transparent text-white border border-gray-700 hover:text-pink hover:bg-transparent hover:border-pink duration-300">
+        <Button className="w-fit bg-transparent text-white border border-gray-700 hover:text-pink hover:bg-transparent hover:border-pink duration-300">
           Update Email
         </Button>
       </div>
