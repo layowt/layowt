@@ -102,7 +102,7 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
       <div className="flex gap-x-4">
         <TooltipProvider delayDuration={0}>
           <Tooltip>
-            <TooltipTrigger asChild>
+            <TooltipTrigger>
               <Button
                 onClick={resendVerificationEmail}
                 className={`
@@ -110,6 +110,7 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
 									${seconds == 0 ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'}
 								`}
                 autoFocus={false}
+                disabled={seconds != 0}
               >
                 Resend Email
               </Button>
