@@ -25,7 +25,7 @@ const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 
 // methods
 const getClientSecret = async (
-  planType: string
+  product: StripeProduct
 ): Promise<{
   invoice: string;
   paymentPrice: number;
@@ -34,9 +34,14 @@ const getClientSecret = async (
 
   const user = data.user;
 
-  if (!user?.email) return null;
+  //if (!user?.email) return null;
 
-  const response = await createSubscription(user.email, planType);
+  // passing the whole product the backend.
+  // so we can determine whether it
+  const response = await createSubscription(
+    user?.email ?? 'logan@hiyield.co.uk',
+    product
+  );
 
   if (!response || !response.invoice) return null;
 
@@ -50,16 +55,16 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
 
   const [clientSecret, setClientSecret] = useState('');
 
-  const handleClientSecret = async (planUid: string) => {
+  const handleClientSecret = async (plan: StripeProduct) => {
     // set the loading state for the specific product
     setLoading((prevLoading) => ({
       ...prevLoading,
-      [planUid]: true
+      [plan.id]: true
     }));
 
     // Create a new subscription
     try {
-      const response = await getClientSecret(planUid);
+      const response = await getClientSecret(plan);
 
       if (!response) return;
 
@@ -74,20 +79,18 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
     // reset the loading state for the specific product
     setLoading((prevLoading) => ({
       ...prevLoading,
-      [planUid]: false
+      [plan.id]: false
     }));
   };
 
-  const options = {
-    clientSecret: clientSecret
-  };
+  const options = { clientSecret };
 
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
           <Button
-            onClick={async () => await handleClientSecret(product.id)}
+            onClick={async () => await handleClientSecret(product)}
             className={
               product.metadata.mostPopular
                 ? 'bg-purple hover:bg-purple/75'
@@ -108,7 +111,9 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
               stripe={stripe}
               options={options}
             >
-              <CheckoutForm />
+              <CheckoutForm
+                productPrice={product.default_price.unit_amount ?? 0}
+              />
             </Elements>
           </DialogContent>
         ) : (
