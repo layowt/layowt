@@ -60,6 +60,8 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
           resolve();
         });
 
+      console.log(promise);
+
       // reset the seconds to 5
       setSeconds(5);
       // start the interval again
@@ -84,7 +86,7 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
   return (
     <DialogTitle className="flex flex-col gap-y-6 text-white">
       <div className="flex flex-col gap-y-2 items-center justify-center">
-        <CheckCircledIcon className="size-6" />
+        {/* <CheckCircledIcon className="size-6" /> */}
         <h2 className="text-xl font-poppins mt-2">Check your email</h2>
         <span className="flex-wrap text-[0.65rem] font-poppins leading-relaxed font-light flex justify-center">
           We have sent an email to&nbsp;
