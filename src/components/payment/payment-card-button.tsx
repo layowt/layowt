@@ -93,7 +93,7 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
             onClick={async () => await handleClientSecret(product)}
             className={
               product.metadata.mostPopular
-                ? 'bg-pink hover:bg-pink/75'
+                ? 'bg-purple hover:bg-purple/75'
                 : '' +
                   ` flex gap-x-2 min-w-[84px] duration-300 ease-in-out border border-white`
             }

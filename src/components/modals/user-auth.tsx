@@ -1,4 +1,11 @@
 'use client';
+// react imports
+import { useEffect, useState } from 'react';
+//supabase
+import { createClient } from '@/utils/supabase/client';
+// use router as we are in a client component
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import WaitingForAuth from '@/components/modals/modalContent/user-auth';
 // shadcn imports
 import {
   Dialog,
@@ -9,19 +16,12 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
+import { Toaster } from '@/components/ui/sonner';
 
-// use router as we are in a client component
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-
-// react imports
-import { useEffect, useState } from 'react';
-
-//supabase
-import { createClient } from '@/utils/supabase/client';
+import { getUserFromDb } from '@/utils/user/getUserById';
 
 // type imports
 import type { User } from '@supabase/supabase-js';
-import { user } from '@/store/user-store';
 
 export default function UserAuthModal({
   currentUserObject
@@ -37,6 +37,7 @@ export default function UserAuthModal({
   const [showModal, setShowModal] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
+  // Effects TODO: LOOK INTO REFACTORING INTO REACT QUERY
   useEffect(() => {
     // on initial render set the isClient to true
     setIsClient(true);
@@ -85,14 +86,17 @@ export default function UserAuthModal({
   }, [supabase, pathname]);
 
   const [loading, setLoading] = useState(false);
-  const [newUser, setNewUser] = useState(false);
+
+  // variable to check if the user has just come from the sign up page
+  const [hasSignedUp, setHasSignedUp] = useState(false);
 
   useEffect(() => {
     // Reset loading state when pathname changes
     setLoading(false);
+
     // let's set this as a cookie to avoid the user from seeing the modal again
     if (searchParams.get('uid')) {
-      setNewUser(true);
+      setHasSignedUp(true);
     }
   }, [pathname, searchParams]);
 
@@ -108,15 +112,17 @@ export default function UserAuthModal({
         defaultOpen={true}
         open={showModal}
       >
+        <Toaster
+          closeButton
+          className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
+        />
         <DialogContent
           hidden={false}
-          className="bg-black rounded-lg py-10"
+          className="bg-black-100 border-2 border-black-200 rounded-lg max-w-[23rem] py-8"
           showCloseButton={false}
         >
-          {newUser ? (
-            <DialogTitle className="text-3xl font-bold text-center text-white">
-              Waiting for MFA
-            </DialogTitle>
+          {hasSignedUp ? (
+            <WaitingForAuth supabase={supabase} />
           ) : (
             <div className="flex flex-col gap-y-3 items-center text-white">
               <h2 className="text-3xl font-bold text-center">

@@ -122,7 +122,7 @@ export default function SignUpForm() {
                   id="email"
                   type="email"
                   name="userEmail"
-                  placeholder="hello@secure.com"
+                  placeholder="hello@draggle.com"
                   className="
                     bg-transparent w-full border-none p-2 placeholder:text-muted-foreground 
                     focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
