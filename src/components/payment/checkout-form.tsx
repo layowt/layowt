@@ -27,8 +27,8 @@ export const CheckoutForm = ({ productPrice }: { productPrice: number }) => {
       }
     });
 
-    // TODO: handle the result
-
+    // update the user record with the payment id
+    console.log(result);
     setLoading(false);
 
     return result;

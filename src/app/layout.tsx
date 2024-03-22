@@ -59,7 +59,7 @@ export default function RootLayout({
         className={`${CairoFont.variable} ${PoppinsFont.variable} ${KanitFont.variable} ${InterFont.variable}`}
       >
         <body
-          className="bg-[#000814] min-h-screen"
+          className="bg-black-200 min-h-screen"
           suppressHydrationWarning={true}
         >
           <UserAuthentication>
