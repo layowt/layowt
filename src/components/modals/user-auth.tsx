@@ -18,8 +18,6 @@ import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Toaster } from '@/components/ui/sonner';
 
-import { getUserFromDb } from '@/utils/user/getUserById';
-
 // type imports
 import type { User } from '@supabase/supabase-js';
 
@@ -44,7 +42,7 @@ export default function UserAuthModal({
 
     // check if the user is logged in
     // if the user is present, clear the URL of the waiting_for_auth query param
-    if (currentUserObject) {
+    if (currentUserObject && searchParams.get('waiting_for_auth')) {
       router.replace('/pricing', undefined);
     }
   }, []);
