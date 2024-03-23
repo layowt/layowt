@@ -1,7 +1,9 @@
 import './globals.css';
-import { Cairo, Karla, ABeeZee } from 'next/font/google';
+import { Cairo, Poppins, Kanit, Inter } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
+
+import { Toaster } from '@/components/ui/sonner';
 
 import StoreProvider from '@/store/store-provider';
 import UserAuthentication from '@/components/user-auth';
@@ -16,19 +18,28 @@ const CairoFont = Cairo({
   style: 'normal'
 });
 
-const KarlaFont = Karla({
+const PoppinsFont = Poppins({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-karla',
-  style: 'normal'
+  variable: '--font-poppins',
+  style: 'normal',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
 
-const ABeeZeeFont = ABeeZee({
+const KanitFont = Kanit({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-abeezee',
+  variable: '--font-kanit',
   style: 'normal',
-  weight: '400'
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+});
+
+const InterFont = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  style: 'normal',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
 
 export const metadata = {
@@ -45,15 +56,21 @@ export default function RootLayout({
     <StoreProvider>
       <html
         lang="en"
-        className={`${CairoFont.className} ${KarlaFont.className} ${ABeeZeeFont.className}`}
+        className={`${CairoFont.variable} ${PoppinsFont.variable} ${KanitFont.variable} ${InterFont.variable}`}
       >
         <body
-          className="bg-[#000814] min-h-screen"
+          className="bg-black-200 min-h-screen"
           suppressHydrationWarning={true}
         >
           <UserAuthentication>
             <Theme>
-              <Layout>{children}</Layout>
+              <Layout>
+                {children}
+                <Toaster
+                  closeButton
+                  className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
+                />
+              </Layout>
             </Theme>
           </UserAuthentication>
         </body>

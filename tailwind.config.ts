@@ -25,7 +25,10 @@ const config = {
     },
     extend: {
       fontFamily: {
-        cairo: ['__Cairo_f22647']
+        cairo: ['var(--font-cairo)'],
+        poppins: ['var(--font-poppins)'],
+        kanit: ['var(--font-kanit)'],
+        inter: ['var(--font-inter)']
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -41,11 +44,16 @@ const config = {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))'
         },
-        pink: {
-          DEFAULT: '#A42CD6'
+        purple: {
+          DEFAULT: '#560bad'
         },
         white: {
-          DEFAULT: '#F5F5F5'
+          DEFAULT: '#EBEBEB'
+        },
+        black: {
+          DEFAULT: '#090909',
+          100: '#070707',
+          200: '#0b0b0b'
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
