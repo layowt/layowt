@@ -19,7 +19,6 @@ export const signUp = async (
     // easy access to the user object
     const user = data.user;
 
-    console.log(user);
 
     // re_axM2a2Xu_NFDi8UBgDcNLbHFqjabDaqKG
 
