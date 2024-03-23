@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 // component imports
 import { PaymentButton } from '@/components/payment/payment-card-button';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { ReloadIcon, CheckIcon } from '@radix-ui/react-icons';
 import { IonSparkles } from '@/components/ui/icons/sparkle';
 
 //type imports
@@ -30,9 +30,9 @@ export function PricingCard({
 			"
       >
         <div className="flex flex-col justify-between h-full gap-y-8">
-          <div className="flex flex-col gap-y-6">
+          <div className="flex flex-col gap-y-6 h-full">
             <div className={cairo.className + ` flex flex-col gap-y-2 w-full`}>
-              <div className="flex flex-col gap-y-1 border-b border-electric-violet-50 pb-6">
+              <div className="flex flex-col gap-y-1 border-b border-black-50 pb-6">
                 <div className="flex w-full justify-between items-center">
                   <h2 className="text-xl font-semibold font-poppins">
                     {product.name}
@@ -73,21 +73,24 @@ export function PricingCard({
               </div>
             </div>
             {/** Feature list */}
-            <div className="flex flex-col gap-y-2 font-poppins">
-              {product.features.map((feature) => (
-                <div
-                  key={product.id + feature.name}
-                  className="flex gap-x-2 text-xs"
-                >
-                  <span>{feature.name}</span>
-                </div>
-              ))}
+            <div className="flex flex-col gap-y-6 h-full justify-between">
+              <div className="flex flex-col gap-y-3 font-poppins">
+                {product.features.map((feature) => (
+                  <div
+                    key={product.id + feature.name}
+                    className="flex gap-x-2 text-xs items-center"
+                  >
+                    <CheckIcon className="w-4 h-4 text-electric-violet-500" />
+                    <span>{feature.name}</span>
+                  </div>
+                ))}
+              </div>
+              {/** payment trigger */}
+              <PaymentButton
+                product={product}
+                key={product.id}
+              />
             </div>
-            {/** payment trigger */}
-            <PaymentButton
-              product={product}
-              key={product.id}
-            />
           </div>
         </div>
       </div>
