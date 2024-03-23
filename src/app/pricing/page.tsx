@@ -53,7 +53,7 @@ export default function PricingPage() {
     setProductsFunc(billingPeriod);
   }, [billingPeriod]);
 
-  let pricingPlansGrid = 'grid w-fit gap-x-8';
+  let pricingPlansGrid = 'grid w-full gap-x-8';
 
   return (
     <>
@@ -98,7 +98,7 @@ export default function PricingPage() {
             </Button>
           </div>
         </div> */}
-        <div className="flex gap-x-10 items-center justify-center">
+        <div className="flex gap-x-10 items-center justify-center self-center">
           <div
             className={
               pricingPlansGrid + ` grid-cols-${products?.products.length}`
