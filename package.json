@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev -p 4343",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "stripe:listen": "stripe listen --forward-to localhost:3000/api/stripe/webhook",
@@ -19,6 +19,7 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
+    "@radix-ui/react-tooltip": "^1.0.7",
     "@radix-ui/themes": "^2.0.3",
     "@reduxjs/toolkit": "^2.2.1",
     "@stripe/react-stripe-js": "^2.4.0",
