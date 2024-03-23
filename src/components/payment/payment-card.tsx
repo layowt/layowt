@@ -26,15 +26,15 @@ export function PricingCard({
         key={product.id}
         className="
 				flex flex-col gap-y- bg-black-100 p-8
-				max-w-80 justify-between relative rounded-xl
+				w-80 justify-between relative rounded-xl
 			"
       >
         <div className="flex flex-col justify-between h-full gap-y-8">
           <div className="flex flex-col gap-y-6">
             <div className={cairo.className + ` flex flex-col gap-y-2 w-full`}>
-              <div className="flex flex-col gap-y-1 border-b border-electric-violet-50/15 pb-6">
+              <div className="flex flex-col gap-y-1 border-b border-electric-violet-50 pb-6">
                 <div className="flex w-full justify-between items-center">
-                  <h2 className="text-base font-semibold font-poppins">
+                  <h2 className="text-xl font-semibold font-poppins">
                     {product.name}
                   </h2>
                   {product.metadata.mostPopular ? (
@@ -83,12 +83,12 @@ export function PricingCard({
                 </div>
               ))}
             </div>
+            {/** payment trigger */}
+            <PaymentButton
+              product={product}
+              key={product.id}
+            />
           </div>
-          {/** payment trigger */}
-          <PaymentButton
-            product={product}
-            key={product.id}
-          />
         </div>
       </div>
     </>
