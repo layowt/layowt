@@ -56,11 +56,9 @@ export function PricingCard({
                   <div className="flex gap-x-1 items-center">
                     £
                     {isLoading ? (
-                      <div className="">
-                        <ReloadIcon className="w-3 h-3 animate-spin" />
-                      </div>
+                      <ReloadIcon className="w-3 h-3 animate-spin" />
                     ) : (
-                      <span className="text-3xl font-kanit">
+                      <span className="text-4xl font-kanit">
                         {product.default_price?.unit_amount
                           ? product.default_price.unit_amount / 100
                           : 0}
