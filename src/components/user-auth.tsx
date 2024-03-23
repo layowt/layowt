@@ -9,10 +9,6 @@ export default async function UserAuthentication({
   const supabase = createClient();
   const { data: user, error } = await supabase.auth.getUser();
 
-  //console.log(user.user);
-
-  console.log(await supabase.auth.getSession());
-
   // if the user is not logged in, show a modal to allow the user to log in
   return (
     <>

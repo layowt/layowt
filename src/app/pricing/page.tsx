@@ -8,7 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import { Cairo } from 'next/font/google';
 const cairo = Cairo({ subsets: ['latin'] });
 // action imports
-import { StripeProducts } from '@/actions/stripe-products';
+import { StripeProducts } from '@/utils/stripe/stripe-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
 

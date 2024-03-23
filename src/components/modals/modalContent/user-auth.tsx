@@ -16,7 +16,7 @@ import {
 
 import { useInterval } from '@/hooks/useInterval';
 
-import { getUserFromDb } from '@/utils/user/getUserById';
+import { getUserFromDb } from '@/utils/user/user.get';
 
 /** Modal content to display if we are waiting for the user to confirm the OTP */
 export default function WaitingForAuth({ supabase }: { supabase: any }) {
