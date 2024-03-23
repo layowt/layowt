@@ -55,7 +55,5 @@ export const StripeProducts = async (
     );
   });
 
-  return {
-    products: products.data
-  };
+  return Promise.resolve({products: products.data})
 };
