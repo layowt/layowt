@@ -1,12 +1,10 @@
-import Cors from "micro-cors";
-import { NextResponse } from "next/server";
-import { stripe } from '@/lib/stripe'
 import { prisma } from '@/utils/prisma'
+import Stripe from "stripe";
 
 const webhookSecret = process.env.NEXT_PUBLIC_WEBHOOK_SECRET;
-
-const cors = Cors({
-  allowMethods: ["POST", "HEAD"],
+const stripeSecretKey = process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY;
+const stripe = new Stripe(stripeSecretKey ?? '', {
+  apiVersion: "2023-10-16",
 });
 
 /**
@@ -61,8 +59,6 @@ export async function POST(request: Request) {
           console.log('No user email found')
           throw new Error("No user email found")
         }
-
-        console.log(userEmail);
         
         // get the user from the database
         const user = await prisma.users.findUnique({
@@ -75,6 +71,18 @@ export async function POST(request: Request) {
           console.log('No user found')
           throw new Error("No user found")
         }
+
+        // get the plan type out of the event
+        // const session = event.data.object
+
+        // // hit stripe and get product id
+        // const { data } = await stripe.checkout.sessions.list({
+        //   payment_intent: session.payment_intent,
+        //   limit: 1
+        // })
+
+        // console.log(data);
+
         // add the subscription to the database
         await prisma.subscription.create({
           data: {
