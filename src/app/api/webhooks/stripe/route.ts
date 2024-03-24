@@ -1,7 +1,7 @@
 import { prisma } from '@/utils/prisma'
 import Stripe from "stripe";
 
-const webhookSecret = process.env.NEXT_PUBLIC_WEBHOOK_SECRET;
+const webhookSecret = process.env.NEXT_PRIVATE_WEBHOOK_SECRET;
 const stripeSecretKey = process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY;
 const stripe = new Stripe(stripeSecretKey ?? '', {
   apiVersion: "2023-10-16",
