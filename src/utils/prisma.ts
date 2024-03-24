@@ -10,4 +10,4 @@ declare global {
 export const prisma = globalThis.prisma || new PrismaClient();
 
 // This ensures that in development environments, changes to the Prisma client instance are reflected globally 
-if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
+if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma; 
