@@ -107,7 +107,7 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
               <Button
                 onClick={resendVerificationEmail}
                 className={`
-									w-full bg-purple text-white duration-300 hover:bg-purple/60 
+									w-full bg-electric-violet-500 text-white duration-300 hover:bg-electric-violet-500/60 
 									${seconds == 0 ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'}
 								`}
                 autoFocus={false}
