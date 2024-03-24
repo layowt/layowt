@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { PaymentButton } from '@/components/payment/payment-card-button';
 import { ReloadIcon, CheckIcon } from '@radix-ui/react-icons';
 import { IonSparkles } from '@/components/ui/icons/sparkle';
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 
 //type imports
 import type { StripeProduct } from '@/types/StripeProduct';
@@ -25,7 +26,7 @@ export function PricingCard({
       <div
         key={product.id}
         className="
-				flex flex-col gap-y- bg-black-100 p-8
+				flex flex-col gap-y- bg-black-100 p-8 border border-white/20
 				w-80 justify-between relative rounded-xl
 			"
       >
@@ -41,14 +42,22 @@ export function PricingCard({
                     <span
                       className="
                       text-white text-[0.5rem] font-bold h-min
-                      py-1 px-2 border border-electric-violet-500 rounded-md
-                      font-poppins flex gap-x-1 items-center
+                      py-1 px-2 border border-electric-violet-300 rounded-full
+                      font-poppins flex gap-x-1 items-center bg-electric-violet-500
                       "
                     >
                       <IonSparkles className="size-2 text-yellow-400" />
                       Recommended
                     </span>
                   ) : (
+                    // <HoverBorderGradient
+                    //   containerClassName="rounded-full border border-electric-violet-500"
+                    //   as="span"
+                    //   className="bg-transparent py-1 px-3 text-[0.5rem] font-poppins flex gap-x-1 items-center"
+                    // >
+                    //   <IonSparkles className="size-2 text-yellow-400" />
+                    //   Recommended
+                    // </HoverBorderGradient>
                     ''
                   )}
                 </div>
