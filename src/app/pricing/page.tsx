@@ -1,8 +1,9 @@
 'use client';
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
-import { useState, useEffect, useRef, use } from 'react';
+import { useState, useEffect } from 'react';
 import { Switch } from '@/components/ui/switch';
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 
 // fonts
 import { Cairo } from 'next/font/google';
@@ -57,13 +58,24 @@ export default function PricingPage() {
 
   return (
     <>
-      <div className="flex flex-col h-full gap-y-20 text-white py-20">
+      <div className="flex flex-col h-full gap-y-10 text-white py-20">
         <div className="flex flex-col gap-y-6 w-full items-center">
-          <h6 className="text-xs">Pricing</h6>
-          <h1 className={cairo.className + ` text-5xl font-bold`}>
-            Plans available
-          </h1>
-          <div className="flex gap-x-2 items-center">
+          <HoverBorderGradient
+            containerClassName="rounded-full"
+            className="bg-transparent border-none py-1 px-3 text-xs font-poppins"
+          >
+            Pricing
+          </HoverBorderGradient>
+          <div className="flex flex-col gap-y-3">
+            <h3 className="font-poppins text-5xl font-bold text-center">
+              Plans that grow with <br /> your business
+            </h3>
+            <h4 className="font-poppins text-sm text-center text-white/60">
+              Design, build, deploy and analyse your digital product all from
+              one application.
+            </h4>
+          </div>
+          <div className="font-kanit flex gap-x-2 items-center">
             Monthly
             <Switch
               onCheckedChange={(checked) => {
@@ -73,31 +85,6 @@ export default function PricingPage() {
             Annual
           </div>
         </div>
-        {/* <div className="flex flex-col gap-y-2">
-          {user?.user?.email}
-
-          {count?.toString()}
-          <div className="flex gap-x-1">
-            <Button
-              onClick={() => dispatch(increment())}
-              className="w-fit"
-            >
-              increment
-            </Button>
-            <Button
-              onClick={() => dispatch(decrement())}
-              className="w-fit"
-            >
-              decrement
-            </Button>
-            <Button
-              onClick={() => dispatch(incrementByAmount(5))}
-              className="w-fit"
-            >
-              increment by 5
-            </Button>
-          </div>
-        </div> */}
         <div className="flex gap-x-10 items-center justify-center self-center">
           <div
             className={
