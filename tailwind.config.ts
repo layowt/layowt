@@ -44,16 +44,36 @@ const config = {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))'
         },
-        purple: {
-          DEFAULT: '#560bad'
+        'electric-violet': {
+          DEFAULT: '#6725F2',
+          50: '#E0D2FC',
+          100: '#D2BFFB',
+          200: '#B899F9',
+          300: '#7c57cd',
+          400: '#824CF4',
+          500: '#6725F2',
+          600: '#4C0DD2',
+          700: '#39099D',
+          800: '#260668',
+          900: '#130334',
+          950: '#090119'
         },
         white: {
           DEFAULT: '#EBEBEB'
         },
         black: {
-          DEFAULT: '#090909',
-          100: '#070707',
-          200: '#0b0b0b'
+          DEFAULT: '#0E0E0E',
+          50: '#2D2D2D',
+          100: '#111111',
+          200: '#0E0E0E',
+          300: '#000000',
+          400: '#000000',
+          500: '#000000',
+          600: '#000000',
+          700: '#000000',
+          800: '#000000',
+          900: '#000000',
+          950: '#000000'
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
