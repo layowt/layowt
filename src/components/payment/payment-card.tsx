@@ -38,27 +38,20 @@ export function PricingCard({
                   <h2 className="text-xl font-semibold font-poppins">
                     {product.name}
                   </h2>
-                  {product.metadata.mostPopular ? (
+                  {product.metadata.mostPopular && (
                     <span
                       className="
-                      text-white text-[0.5rem] font-bold h-min
-                      py-1 px-2 border border-electric-violet-300 rounded-full
-                      font-poppins flex gap-x-1 items-center bg-electric-violet-500
+                        text-white text-[0.5rem] font-bold h-min animate-shimmer
+                        py-1 px-2 border border-electric-violet-300 rounded-full
+                        font-poppins flex gap-x-1 items-center bg-electric-violet-500
+                        justify-center0 bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] 
+                        bg-[length:200%_100%] transition-colors focus:outline-none focus:ring-2 
+                        focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50
                       "
                     >
                       <IonSparkles className="size-2 text-yellow-400" />
                       Recommended
                     </span>
-                  ) : (
-                    // <HoverBorderGradient
-                    //   containerClassName="rounded-full border border-electric-violet-500"
-                    //   as="span"
-                    //   className="bg-transparent py-1 px-3 text-[0.5rem] font-poppins flex gap-x-1 items-center"
-                    // >
-                    //   <IonSparkles className="size-2 text-yellow-400" />
-                    //   Recommended
-                    // </HoverBorderGradient>
-                    ''
                   )}
                 </div>
                 <div className="flex gap-x-1 items-center">
