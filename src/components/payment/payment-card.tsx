@@ -27,7 +27,7 @@ export function PricingCard({
         key={product.id}
         className="
 				flex flex-col gap-y- bg-black-100 p-8 border border-white/10
-				w-80 justify-between relative rounded-xl
+				w-80 justify-between relative rounded-xl min-h-full h-full
 			"
       >
         <div className="flex flex-col justify-between h-full gap-y-8">
