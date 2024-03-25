@@ -61,7 +61,7 @@ export default function PricingPage() {
         <div className="flex flex-col gap-y-6 w-full items-center">
           <h6 className="text-xs">Pricing</h6>
           <h1 className={cairo.className + ` text-5xl font-bold`}>
-            Plans available
+            Plans available.
           </h1>
           <div className="flex gap-x-2 items-center">
             Monthly
