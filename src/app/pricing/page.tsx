@@ -92,20 +92,32 @@ export default function PricingPage() {
                 Plans that grow with <br /> your business
               </h3>
             </motion.div>
-            <h4 className="font-poppins text-sm text-center text-white/60">
-              {/* Design, build, deploy and analyse your digital product all from
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <h4 className="font-poppins text-sm text-center text-white/60">
+                {/* Design, build, deploy and analyse your digital product all from
               one application. */}
-              Select from a range of payment plans to best suit your businesses
-              needs.
-            </h4>
+                Select from a range of payment plans to best suit your
+                businesses needs.
+              </h4>
+            </motion.div>
           </div>
-          <div className="mt-5 bg-black-100 rounded-2xl p-1 border border-white/10">
-            <ButtonGroup
-              tabs={tabs}
-              tabClassName="[&>span]:!text-white py-2 px-12"
-              activeTabClassName="bg-electric-violet-500 !text-white border border-electric-violet-300 rounded-xl"
-            />
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+          >
+            <div className="mt-5 bg-black-100 rounded-2xl p-1 border border-white/10">
+              <ButtonGroup
+                tabs={tabs}
+                tabClassName="[&>span]:!text-white py-2 px-12"
+                activeTabClassName="bg-electric-violet-500 !text-white border border-electric-violet-300 rounded-xl"
+              />
+            </div>
+          </motion.div>
         </div>
         <div className="flex gap-x-10 items-center justify-center self-center">
           <div
