@@ -1,7 +1,7 @@
 'use client';
 // react imports
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimate, stagger, animate } from 'framer-motion';
 
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
@@ -79,7 +79,7 @@ export default function PricingPage() {
               containerClassName="rounded-full"
               className="bg-transparent border-none py-1 px-2.5 text-xs font-poppins"
             >
-              Pricing:
+              Pricing
             </HoverBorderGradient>
           </motion.div>
           <div className="flex flex-col gap-y-3">
@@ -125,13 +125,21 @@ export default function PricingPage() {
               pricingPlansGrid + ` grid-cols-${products?.products.length}`
             }
           >
-            {products?.products.map((product: StripeProduct) => (
-              <PricingCard
+            {products?.products.map((product: StripeProduct, index) => (
+              <motion.div
                 key={product.id}
-                product={product}
-                isLoading={loading}
-                billingPeriod={currentBillingPeriod}
-              />
+                className="min-h-full"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <PricingCard
+                  key={product.id}
+                  product={product}
+                  isLoading={loading}
+                  billingPeriod={currentBillingPeriod}
+                />
+              </motion.div>
             ))}
           </div>
         </div>
