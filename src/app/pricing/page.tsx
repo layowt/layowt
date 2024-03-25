@@ -68,7 +68,7 @@ export default function PricingPage() {
               containerClassName="rounded-full"
               className="bg-transparent border-none py-1 px-2.5 text-xs font-poppins"
             >
-              Pricing.
+              Pricing
             </HoverBorderGradient>
           </motion.div>
           <div className="flex flex-col gap-y-3">
