@@ -1,11 +1,16 @@
 'use client';
+// react imports
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
-import { useState, useEffect, useRef } from 'react';
-import { Switch } from '@/components/ui/switch';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
-import { useInView } from 'framer-motion';
-import { motion } from 'framer-motion';
+
+// redux imports
+import { billingPeriod } from '@/store/user-store';
+import { useAppSelector } from '@/lib/hooks';
 
 // action imports
 import { StripeProducts } from '@/utils/stripe/stripe-products';
@@ -16,17 +21,13 @@ import { StripeProduct } from '@/types/StripeProduct';
 
 // component
 export default function PricingPage() {
+  const currentBillingPeriod = useAppSelector(billingPeriod);
+
   const [products, setProducts] = useState<Record<
     'products',
     StripeProduct[]
   > | null>(null);
   const [loading, setLoading] = useState(true);
-
-  //const dispatch = useAppDispatch();
-  //const count = useAppSelector((state) => state.user.count);
-  //const user = useAppSelector((state) => state.user);
-  const [billingPeriod, setBillingPeriod] =
-    useState<Stripe.PriceListParams.Recurring.Interval>('month');
 
   const setProductsFunc = async (
     billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
@@ -41,18 +42,28 @@ export default function PricingPage() {
   // useEffect to fetch the products on mount (This may need to be changed)
   useEffect(() => {
     setProductsFunc();
-    console.log('hello!');
   }, []);
 
   // a use effect to update the products when the billing period changes
   useEffect(() => {
-    setProductsFunc(billingPeriod);
-  }, [billingPeriod]);
+    setProductsFunc(currentBillingPeriod);
+  }, [currentBillingPeriod]);
 
   let pricingPlansGrid = 'grid w-full gap-x-8';
 
-  const pricingSpan = useRef(null);
-  const isInView = useInView(pricingSpan);
+  const tabs: {
+    title: string;
+    value: 'month' | 'year';
+  }[] = [
+    {
+      title: 'Monthly',
+      value: 'month'
+    },
+    {
+      title: 'Yearly',
+      value: 'year'
+    }
+  ];
 
   return (
     <>
@@ -68,7 +79,7 @@ export default function PricingPage() {
               containerClassName="rounded-full"
               className="bg-transparent border-none py-1 px-2.5 text-xs font-poppins"
             >
-              Pricing
+              Pricing:
             </HoverBorderGradient>
           </motion.div>
           <div className="flex flex-col gap-y-3">
@@ -88,14 +99,12 @@ export default function PricingPage() {
               needs.
             </h4>
           </div>
-          <div className="font-kanit flex gap-x-2 items-center">
-            Monthly
-            <Switch
-              onCheckedChange={(checked) => {
-                setBillingPeriod(checked ? 'year' : 'month');
-              }}
+          <div className="mt-5 bg-black-100 rounded-2xl p-1 border border-white/10">
+            <ButtonGroup
+              tabs={tabs}
+              tabClassName="[&>span]:!text-white py-2 px-12"
+              activeTabClassName="bg-electric-violet-500 !text-white border border-electric-violet-300 rounded-xl"
             />
-            Annual
           </div>
         </div>
         <div className="flex gap-x-10 items-center justify-center self-center">
@@ -109,7 +118,7 @@ export default function PricingPage() {
                 key={product.id}
                 product={product}
                 isLoading={loading}
-                billingPeriod={billingPeriod}
+                billingPeriod={currentBillingPeriod}
               />
             ))}
           </div>
