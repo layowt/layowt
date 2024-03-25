@@ -1,23 +1,18 @@
 'use client';
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Switch } from '@/components/ui/switch';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
+import { useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-// fonts
-import { Cairo } from 'next/font/google';
-const cairo = Cairo({ subsets: ['latin'] });
 // action imports
 import { StripeProducts } from '@/utils/stripe/stripe-products';
-// type imports
-import { StripeProduct } from '@/types/StripeProduct';
 
+// stripe imports
 import Stripe from 'stripe';
-
-// redux imports
-//import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-//import { increment, decrement, incrementByAmount } from '@/store/user-store';
+import { StripeProduct } from '@/types/StripeProduct';
 
 // component
 export default function PricingPage() {
@@ -56,23 +51,41 @@ export default function PricingPage() {
 
   let pricingPlansGrid = 'grid w-full gap-x-8';
 
+  const pricingSpan = useRef(null);
+  const isInView = useInView(pricingSpan);
+
   return (
     <>
       <div className="flex flex-col h-full gap-y-10 text-white py-20">
         <div className="flex flex-col gap-y-6 w-full items-center">
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            className="bg-transparent border-none py-1 px-3 text-xs font-poppins"
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="flex gap-x-2 items-center"
           >
-            Pricing
-          </HoverBorderGradient>
+            <HoverBorderGradient
+              containerClassName="rounded-full"
+              className="bg-transparent border-none py-1 px-2.5 text-xs font-poppins"
+            >
+              Pricing
+            </HoverBorderGradient>
+          </motion.div>
           <div className="flex flex-col gap-y-3">
-            <h3 className="font-poppins text-5xl font-bold text-center">
-              Plans that grow with <br /> your business
-            </h3>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="font-poppins text-5xl font-bold text-center">
+                Plans that grow with <br /> your business
+              </h3>
+            </motion.div>
             <h4 className="font-poppins text-sm text-center text-white/60">
-              Design, build, deploy and analyse your digital product all from
-              one application.
+              {/* Design, build, deploy and analyse your digital product all from
+              one application. */}
+              Select from a range of payment plans to best suit your businesses
+              needs.
             </h4>
           </div>
           <div className="font-kanit flex gap-x-2 items-center">
