@@ -3,14 +3,9 @@ import Stripe from 'stripe';
 import { PaymentButton } from '@/components/payment/payment-card-button';
 import { ReloadIcon, CheckIcon } from '@radix-ui/react-icons';
 import { IonSparkles } from '@/components/ui/icons/sparkle';
-import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 
 //type imports
 import type { StripeProduct } from '@/types/StripeProduct';
-
-// fonts
-import { Cairo } from 'next/font/google';
-const cairo = Cairo({ subsets: ['latin'] });
 
 export function PricingCard({
   product,
@@ -26,13 +21,13 @@ export function PricingCard({
       <div
         key={product.id}
         className="
-				flex flex-col gap-y- bg-black-100 p-8 border border-white/10
+				flex flex-col bg-electric-violet-900 p-8 border border-white/20
 				w-80 justify-between relative rounded-xl min-h-full h-full
 			"
       >
         <div className="flex flex-col justify-between h-full gap-y-8">
           <div className="flex flex-col gap-y-6 h-full">
-            <div className={cairo.className + ` flex flex-col gap-y-2 w-full`}>
+            <div className="flex flex-col gap-y-2 w-full">
               <div className="flex flex-col gap-y-1 border-b border-black-50 pb-6">
                 <div className="flex w-full justify-between items-center">
                   <h2 className="text-xl font-semibold font-poppins">
@@ -44,7 +39,7 @@ export function PricingCard({
                         text-white text-[0.5rem] font-bold h-min animate-shimmer
                         py-1 px-2 border border-electric-violet-300 rounded-full
                         font-poppins flex gap-x-1 items-center bg-electric-violet-500
-                        justify-center0 bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] 
+                        justify-center bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] 
                         bg-[length:200%_100%] transition-colors focus:outline-none focus:ring-2 
                         focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50
                       "
