@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { IonSparkles } from '@/components/ui/icons/sparkle';
+import { motion } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
 
@@ -49,16 +50,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button';
     return (
       <div className={special ? 'relative w-full' : ''}>
-        <Comp
-          className={cn(buttonVariants({ variant, size, className }))}
-          ref={ref}
-          {...props}
-        />
-        {special ? (
-          <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
-        ) : (
-          ''
-        )}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+        >
+          <Comp
+            className={cn(buttonVariants({ variant, size, className }))}
+            ref={ref}
+            {...props}
+          />
+          {special ? (
+            <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
+          ) : (
+            ''
+          )}
+        </motion.div>
       </div>
     );
   }
