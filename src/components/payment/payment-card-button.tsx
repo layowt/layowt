@@ -91,7 +91,7 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
         <DialogTrigger asChild>
           <Button
             onClick={async () => await handleClientSecret(product)}
-            className="flex gap-x-2 min-w-[84px] duration-300 ease-in-out"
+            className="flex gap-x-2 min-w-[84px] duration-300 ease-in-out "
             variant={product.metadata.mostPopular ? 'secondary' : 'default'}
           >
             {loading[product.id] ? (

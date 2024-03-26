@@ -59,11 +59,13 @@ export default function RootLayout({
         className={`${CairoFont.variable} ${PoppinsFont.variable} ${KanitFont.variable} ${InterFont.variable}`}
       >
         <body
-          className="bg-black-200 min-h-screen"
+          className="bg-gradient-to-b from-black-200 to-electric-violet-950 min-h-screen"
           suppressHydrationWarning={true}
         >
           <UserAuthentication>
+            {/* <Theme className="bg-grid-white/[0.03]"> */}
             <Theme>
+              {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div> */}
               <Layout>
                 {children}
                 <Toaster
