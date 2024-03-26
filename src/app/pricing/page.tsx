@@ -1,7 +1,7 @@
 'use client';
 // react imports
 import { useState, useEffect } from 'react';
-import { motion, useAnimate, stagger, animate } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
@@ -14,37 +14,14 @@ import { useAppSelector } from '@/lib/hooks';
 
 // action imports
 import { StripeProducts } from '@/utils/stripe/stripe-products';
-
-// stripe imports
-import Stripe from 'stripe';
-import { StripeProduct } from '@/types/StripeProduct';
-
-// component
-export default function PricingPage() {
-  const currentBillingPeriod = useAppSelector(billingPeriod);
-
-=======
-// component imports
-import { PricingCard } from '@/components/payment/payment-card';
-import { useState, useEffect, useRef, use } from 'react';
-import { Switch } from '@/components/ui/switch';
-
-// fonts
-import { Cairo } from 'next/font/google';
-const cairo = Cairo({ subsets: ['latin'] });
-// action imports
-import { StripeProducts } from '@/utils/stripe/stripe-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
 
 import Stripe from 'stripe';
 
-// redux imports
-//import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-//import { increment, decrement, incrementByAmount } from '@/store/user-store';
-
 // component
 export default function PricingPage() {
+  const currentBillingPeriod = useAppSelector(billingPeriod);
   const [products, setProducts] = useState<Record<
     'products',
     StripeProduct[]
