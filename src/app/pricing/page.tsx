@@ -110,7 +110,7 @@ export default function PricingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            <div className="mt-5 bg-black-100 rounded-2xl p-1 border border-white/10">
+            <div className="mt-5 bg-electric-violet-900 rounded-2xl p-1 border border-white/20">
               <ButtonGroup
                 tabs={tabs}
                 tabClassName="[&>span]:!text-white py-2 px-12"
