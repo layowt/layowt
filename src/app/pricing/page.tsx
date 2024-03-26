@@ -23,12 +23,33 @@ import { StripeProduct } from '@/types/StripeProduct';
 export default function PricingPage() {
   const currentBillingPeriod = useAppSelector(billingPeriod);
 
+=======
+// component imports
+import { PricingCard } from '@/components/payment/payment-card';
+import { useState, useEffect, useRef, use } from 'react';
+import { Switch } from '@/components/ui/switch';
+
+// fonts
+import { Cairo } from 'next/font/google';
+const cairo = Cairo({ subsets: ['latin'] });
+// action imports
+import { StripeProducts } from '@/utils/stripe/stripe-products';
+// type imports
+import { StripeProduct } from '@/types/StripeProduct';
+
+import Stripe from 'stripe';
+
+// redux imports
+//import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+//import { increment, decrement, incrementByAmount } from '@/store/user-store';
+
+// component
+export default function PricingPage() {
   const [products, setProducts] = useState<Record<
     'products',
     StripeProduct[]
   > | null>(null);
   const [loading, setLoading] = useState(true);
-
   const setProductsFunc = async (
     billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
   ) => {
