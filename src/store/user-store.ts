@@ -5,12 +5,12 @@ import type { User } from '@supabase/supabase-js';
 
 type UserInitialState = {
   user: Partial<User> | null;
-  count: number;
+  billingPeriod: 'month' | 'year';
 };
 
 const initialState: UserInitialState = {
   user: null,
-  count: 0
+  billingPeriod: 'month'
 };
 
 const userSlice = createSlice({
@@ -28,14 +28,8 @@ const userSlice = createSlice({
     deleteUser: (state) => {
       state.user = null;
     },
-    increment: (state) => {
-      state.count += 1;
-    },
-    decrement: (state) => {
-      state.count -= 1;
-    },
-    incrementByAmount: (state, actions: PayloadAction<number>) => {
-      state.count += actions.payload;
+    setBillingPeriod: (state, action: PayloadAction<'month' | 'year'>) => {
+      state.billingPeriod = action.payload
     }
   }
 });
@@ -44,14 +38,12 @@ const userSlice = createSlice({
 export const {
   getUser,
   createUser,
-  increment,
-  decrement,
-  incrementByAmount,
-  deleteUser
+  deleteUser,
+  setBillingPeriod
 } = userSlice.actions;
 
-export const count = (state: RootState) => state.user.count;
-
 export const user = (state: RootState) => state.user.user;
+
+export const billingPeriod = (state: RootState) => state.user.billingPeriod;
 // export the functions from the reducer
 export default userSlice.reducer;
