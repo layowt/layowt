@@ -45,5 +45,6 @@ export const {
 export const user = (state: RootState) => state.user.user;
 
 export const billingPeriod = (state: RootState) => state.user.billingPeriod;
+
 // export the functions from the reducer
 export default userSlice.reducer;
