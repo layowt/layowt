@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { updateSession } from '@/utils/supabase/middleware';
+import { updateSession } from './apps/dashboard/utils/supabase/middleware';
 
 // runs on every request
 // TODO: make this update the redux user?
