@@ -1,5 +1,5 @@
 'use server';
-import { supabase } from '@/dashboard/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { type AuthResponse } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 const cookiesStore = cookies();
