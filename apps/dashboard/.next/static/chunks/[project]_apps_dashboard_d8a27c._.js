@@ -223,12 +223,10 @@ const createSubscription = async (userEmail, currentPlan)=>{
         }
     }
     if (!currentPlan || !currentUser) return null;
-    const invoice = await __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$dashboard$2f$utils$2f$stripe$2f$stripe$2d$invoice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createInvoice"](currentUser, // @ts-expect-error
-    currentPlan.default_price?.unit_amount, stripe);
+    const invoice = await __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$dashboard$2f$utils$2f$stripe$2f$stripe$2d$invoice$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createInvoice"](currentUser, currentPlan.default_price?.unit_amount, stripe);
     if (!invoice) return null;
     return {
         invoice,
-        // @ts-expect-error
         paymentPrice: currentPlan.default_price.unit_amount
     };
 };
