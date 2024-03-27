@@ -1,0 +1,41 @@
+/* [next]/internal/font/google/cairo_92181f0a.module.css [app-client] (css) */
+@font-face{
+  font-family: '__Cairo_92181f';
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/cairo/v28/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS8p4_RHH1.woff2) format('woff2');
+  unicode-range: u+0600-06FF, u+0750-077F, u+0870-088E, u+0890-0891, u+0898-08E1, u+08E3-08FF, u+200C-200E, u+2010-2011, u+204F, u+2E41, u+FB50-FDFF, u+FE70-FE74, u+FE76-FEFC, u+102E0-102FB, u+10E60-10E7E, u+10EFD-10EFF, u+1EE00-1EE03, u+1EE05-1EE1F, u+1EE21-1EE22, u+1EE24, u+1EE27, u+1EE29-1EE32, u+1EE34-1EE37, u+1EE39, u+1EE3B, u+1EE42, u+1EE47, u+1EE49, u+1EE4B, u+1EE4D-1EE4F, u+1EE51-1EE52, u+1EE54, u+1EE57, u+1EE59, u+1EE5B, u+1EE5D, u+1EE5F, u+1EE61-1EE62, u+1EE64, u+1EE67-1EE6A, u+1EE6C-1EE72, u+1EE74-1EE77, u+1EE79-1EE7C, u+1EE7E, u+1EE80-1EE89, u+1EE8B-1EE9B, u+1EEA1-1EEA3, u+1EEA5-1EEA9, u+1EEAB-1EEBB, u+1EEF0-1EEF1;
+}
+@font-face{
+  font-family: '__Cairo_92181f';
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/cairo/v28/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscSCyS8p4_RHH1.woff2) format('woff2');
+  unicode-range: u+0100-02AF, u+0304, u+0308, u+0329, u+1E00-1E9F, u+1EF2-1EFF, u+2020, u+20A0-20AB, u+20AD-20C0, u+2113, u+2C60-2C7F, u+A720-A7FF;
+}
+@font-face{
+  font-family: '__Cairo_92181f';
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/cairo/v28/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscRiyS8p4_RA.woff2) format('woff2');
+  unicode-range: u+0000-00FF, u+0131, u+0152-0153, u+02BB-02BC, u+02C6, u+02DA, u+02DC, u+0304, u+0308, u+0329, u+2000-206F, u+2074, u+20AC, u+2122, u+2191, u+2193, u+2212, u+2215, u+FEFF, u+FFFD;
+}
+@font-face{
+  font-family: '__Cairo_Fallback_92181f';
+  src: local("Arial");
+  ascent-override: 136.94%;
+  descent-override: 60.01%;
+  line-gap-override: 0.00%;
+  size-adjust: 95.15%;
+}
+.className__cairo_92181f0a__26328676 {
+  font-family: '__Cairo_92181f', '__Cairo_Fallback_92181f';
+  font-style: normal;
+}
+.variable__cairo_92181f0a__26328676 {
+  --font-cairo: '__Cairo_92181f', '__Cairo_Fallback_92181f';
+}
+/*# sourceMappingURL=[next]_internal_font_google_cairo_92181f0a_module_b52d8e.css.map*/
