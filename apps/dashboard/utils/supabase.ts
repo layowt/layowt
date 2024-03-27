@@ -4,7 +4,7 @@ import { type AuthResponse } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 const cookiesStore = cookies();
 
-import { prisma } from './prisma';
+import { prisma } from '@/utils/prisma';
 
 export const signUp = async (
   email: string,
@@ -18,7 +18,6 @@ export const signUp = async (
 
     // easy access to the user object
     const user = data.user;
-
 
     // re_axM2a2Xu_NFDi8UBgDcNLbHFqjabDaqKG
 
