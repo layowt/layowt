@@ -1,0 +1,39 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "DATABASE_URL",
+        "DATABASE_URL",
+        "DIRECT_URL",
+        "NEXT_PUBLIC_AUTH_REDIRECT",
+        "NEXT_PUBLIC_APP_DOMAIN",
+        "NEXT_PUBLIC_STRIPE_PUBLIC_KEY",
+        "NEXT_PUBLIC_STRIPE_SECRET_KEY",
+        "NEXT_PRIVATE_WEBHOOK_SECRET",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_KEY",
+        "NEXT_PRIVATE_DATABASE_URL",
+        "NEXT_PRIVATE_DIRECT_URL",
+        "EMAIL_AUTH"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "deploy": {
+      "dependsOn": ["build", "test", "lint"]
+    },
+    "lint": {},
+    "test": {
+      "dependsOn": ["^build"]
+    }
+  }
+}
