@@ -1,26 +1,6 @@
 {
-  "version": 2,
-  "middleware": {
-    "/": {
-      "files": [
-        "server/edge/chunks/[project]__6a6059._.js",
-        "server/edge/chunks/[project]__8255d2._.js",
-        "server/edge/chunks/edge-wrapper_79a0ba.js",
-        "server/edge/chunks/edge-wrapper_f6b96a.js"
-      ],
-      "name": "middleware",
-      "page": "/",
-      "matchers": [
-        {
-          "locale": false,
-          "originalSource": "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-          "regexp": "^(?:/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*))$"
-        }
-      ]
-    }
-  },
-  "sortedMiddleware": [
-    "/"
-  ],
-  "functions": {}
+  "sortedMiddleware": [],
+  "middleware": {},
+  "functions": {},
+  "version": 2
 }

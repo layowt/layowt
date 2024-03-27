@@ -43,7 +43,6 @@ export const createSubscription = async (
 
   const invoice = await createInvoice(
     currentUser,
-    // @ts-expect-error
     currentPlan.default_price?.unit_amount,
     stripe
   );
@@ -52,7 +51,6 @@ export const createSubscription = async (
 
   return {
     invoice,
-    // @ts-expect-error
     paymentPrice: currentPlan.default_price.unit_amount
   };
 };
