@@ -6,7 +6,8 @@
       "@/components/*": ["./components/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/lib/*": ["./lib/*"],
-      "@/store/*": ["./store/*"]
+      "@/store/*": ["./store/*"],
+      "@/utils/*": ["./utils/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
