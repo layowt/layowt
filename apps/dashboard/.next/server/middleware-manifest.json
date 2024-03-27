@@ -3,10 +3,10 @@
   "middleware": {
     "/": {
       "files": [
-        "server/edge/chunks/[project]__6a6059._.js",
-        "server/edge/chunks/[project]__8255d2._.js",
-        "server/edge/chunks/edge-wrapper_79a0ba.js",
-        "server/edge/chunks/edge-wrapper_f6b96a.js"
+        "server/edge/chunks/[project]__bea432._.js",
+        "server/edge/chunks/[project]_middleware_ts_8a0420._.js",
+        "server/edge/chunks/edge-wrapper_e61b2e.js",
+        "server/edge/chunks/edge-wrapper_af0f37.js"
       ],
       "name": "middleware",
       "page": "/",
