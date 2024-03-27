@@ -1,11 +1,1 @@
-{
-  "/_not-found": "app/_not-found.js",
-  "/api/route": "app/api/route.js",
-  "/auth/confirm/route": "app/auth/confirm/route.js",
-  "/page": "app/page.js",
-  "/pricing/page": "app/pricing/page.js",
-  "/private/page": "app/private/page.js",
-  "/api/webhooks/stripe/route": "app/api/webhooks/stripe/route.js",
-  "/sign-up/page": "app/sign-up/page.js",
-  "/sign-up/test/page": "app/sign-up/test/page.js"
-}
+{}
