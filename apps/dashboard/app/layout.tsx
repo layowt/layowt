@@ -1,4 +1,4 @@
-import '../styles/globals.css';
+import './styles/globals.css';
 import { Cairo, Poppins, Kanit, Inter } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
