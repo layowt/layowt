@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "stripe:listen": "stripe listen --forward-to localhost:4343/api/webhooks/stripe",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "check:types": "tsc --noEmit"
   },
   "dependencies": {
     "database": "*",
