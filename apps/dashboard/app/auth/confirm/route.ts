@@ -6,6 +6,8 @@ import { createClient } from '@/utils/supabase/server';
 import { prisma } from '@/utils/prisma';
 
 export async function GET(request: NextRequest) {
+  if(!prisma) throw new Error('Prisma client not found')
+
   const { searchParams } = new URL(request.url);
   // pull the token has out of the query params
   // this gets set on the OTP in the email sent to the user
@@ -44,6 +46,8 @@ export async function GET(request: NextRequest) {
       // get the current user from the supabase client
       const { data: userSession } = await supabase.auth.getUser();
 
+      console.log(userSession);
+
       if (userSession.user) {
         // if the OTP is verified, check the user has been added to the db
         const user = await prisma.users.findFirst({
@@ -81,6 +85,9 @@ export async function GET(request: NextRequest) {
       // redirect the user to the next page
       redirectTo.searchParams.delete('next');
       return NextResponse.redirect(redirectTo);
+    }
+    else{
+      console.error('Error verifying OTP:', error.message)
     }
   }
 
