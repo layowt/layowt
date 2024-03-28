@@ -7,7 +7,8 @@
       "@/hooks/*": ["./hooks/*"],
       "@/lib/*": ["./lib/*"],
       "@/store/*": ["./store/*"],
-      "@/utils/*": ["./utils/*"]
+      "@/utils/*": ["./utils/*"],
+      "@/ui/*": ["./components/ui/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
