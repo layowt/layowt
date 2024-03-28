@@ -1,3 +1,3 @@
 export default function App() {
-  return <div>Test</div>;
+  return <div>Testing</div>;
 }
