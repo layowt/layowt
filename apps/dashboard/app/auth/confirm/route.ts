@@ -6,6 +6,8 @@ import { createClient } from '@/utils/supabase/server';
 import { prisma } from '@/utils/prisma';
 
 export async function GET(request: NextRequest) {
+  if(!prisma) throw new Error('Prisma client not found')
+
   const { searchParams } = new URL(request.url);
   // pull the token has out of the query params
   // this gets set on the OTP in the email sent to the user
