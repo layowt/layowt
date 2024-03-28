@@ -10,6 +10,9 @@ export const signUp = async (
   email: string,
   password: string
 ): Promise<AuthResponse['data']['user'] | null> => {
+  
+  if(!prisma) throw new Error('No prisma client found')
+
   try {
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -18,8 +21,6 @@ export const signUp = async (
 
     // easy access to the user object
     const user = data.user;
-
-    // re_axM2a2Xu_NFDi8UBgDcNLbHFqjabDaqKG
 
     // throw an error if required fields cannot be found
     if (!user || !user.id || !user.email) throw new Error(error?.message);
