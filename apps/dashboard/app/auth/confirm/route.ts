@@ -44,6 +44,8 @@ export async function GET(request: NextRequest) {
       // get the current user from the supabase client
       const { data: userSession } = await supabase.auth.getUser();
 
+      console.log(userSession);
+
       if (userSession.user) {
         // if the OTP is verified, check the user has been added to the db
         const user = await prisma.users.findFirst({

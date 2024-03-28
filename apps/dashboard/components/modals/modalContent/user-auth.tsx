@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 // shadcn imports
-import { DialogTitle } from '../../ui/dialog';
+import { DialogTitle } from '@/ui/dialog';
 import { ReloadIcon } from '@radix-ui/react-icons';
-import { Button } from '../../ui/button';
+import { Button } from '@/ui/button';
 import { toast } from 'sonner';
 import {
   Tooltip,
@@ -14,9 +14,9 @@ import {
   TooltipTrigger
 } from '../../ui/tooltip';
 
-import { useInterval } from '../../../hooks/useInterval';
+import { useInterval } from '@/hooks/useInterval';
 
-import { getUserFromDb } from '../../../utils/user/user.get';
+import { getUserFromDb } from '@/utils/user/user.get';
 
 /** Modal content to display if we are waiting for the user to confirm the OTP */
 export default function WaitingForAuth({ supabase }: { supabase: any }) {
