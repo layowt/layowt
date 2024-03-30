@@ -22,7 +22,8 @@ const buttonVariants = cva(
         tertiary:
           'bg-electric-violet-500 text-white hover:bg-white hover:text-black duration-300',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline'
+        link: 'text-primary underline-offset-4 hover:underline',
+        none: 'hover:bg-accent hover:text-accent-foreground hover:!bg-transparent'
       },
       size: {
         default: 'h-10 px-4',
