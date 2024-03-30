@@ -3,10 +3,10 @@ import { Cairo, Poppins, Kanit, Inter } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
-import { Toaster } from '../components/ui/sonner';
+import { Toaster } from '@/ui/sonner';
 
 import StoreProvider from '@/store/store-provider';
-import UserAuthentication from '../components/user-auth';
+import UserAuthentication from '@/components/user-auth';
 
 const CairoFont = Cairo({
   subsets: ['latin'],
@@ -56,15 +56,15 @@ export default function RootLayout({
         className={`${CairoFont.variable} ${PoppinsFont.variable} ${KanitFont.variable} ${InterFont.variable}`}
       >
         <body
-          className="bg-gradient-to-b from-black-200 to-electric-violet-950 min-h-screen"
+          className="bg-[#05050A] min-h-screen"
           suppressHydrationWarning={true}
         >
           <UserAuthentication>
             {/* <Theme className="bg-grid-white/[0.03]"> */}
             <Theme>
               {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div> */}
-              <div className="flex flex-col px-20">
-                {children}
+              <div className="flex flex-col relative">
+                <main>{children}</main>
                 <Toaster
                   closeButton
                   className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"

@@ -4,18 +4,18 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 // component imports
-import { PricingCard } from '../../components/payment/payment-card';
-import { ButtonGroup } from '../../components/ui/button-group';
-import { HoverBorderGradient } from '../../components/ui/hover-border-gradient';
+import { PricingCard } from '@/components/payment/payment-card';
+import { ButtonGroup } from '@/components/ui/button-group';
+import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 
 // redux imports
 import { billingPeriod } from '@/store/user-store';
 import { useAppSelector } from '@/lib/hooks';
 
 // action imports
-import { StripeProducts } from '../../utils/stripe/stripe-products';
+import { StripeProducts } from '@/utils/stripe/stripe-products';
 // type imports
-import { StripeProduct } from '../../types/StripeProduct';
+import { StripeProduct } from '@/types/StripeProduct';
 
 import Stripe from 'stripe';
 
