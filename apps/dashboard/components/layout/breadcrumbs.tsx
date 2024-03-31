@@ -8,7 +8,7 @@ import {
 import { usePathname, useRouter } from 'next/navigation';
 import { SlashIcon } from '@radix-ui/react-icons';
 
-export default function Breadcrumbs() {
+export default function Breadcrumbs({ ...props }) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -16,14 +16,17 @@ export default function Breadcrumbs() {
   const path = pathname.split('/').filter((p) => p !== '');
 
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
+    <Breadcrumb {...props}>
+      <BreadcrumbList className="!gap-1">
         {path.map((name, index) => {
           const isLast = index === path.length - 1;
           // Construct the href by joining the parts of the path up to the current index
           const href = `/${path.slice(0, index + 1).join('/')}`;
           return (
-            <div key={`breadcrumb-${index}`}>
+            <div
+              key={`breadcrumb-${index}`}
+              className="flex items-center !gap-1"
+            >
               <BreadcrumbItem>
                 <BreadcrumbLink
                   href={href}

@@ -10,10 +10,8 @@ export default function DashboardLayout({
     <div className="h-screen">
       <div className="flex text-white font-kanit">
         <DashboardSidebar />
-        <DashboardNavBar />
+        <DashboardNavBar>{children}</DashboardNavBar>
       </div>
-
-      {children}
     </div>
   );
 }
