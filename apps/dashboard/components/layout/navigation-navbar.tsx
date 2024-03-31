@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/ui/button';
 import {
   Command,
@@ -13,21 +13,14 @@ import {
   CommandShortcut
 } from '@/ui/command';
 
+import useKeyboard from '@/hooks/useKeyboard';
+
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
 export default function DashboardNavBar() {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
-      }
-    };
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
-  }, []);
+  useKeyboard('k', () => setOpen(true));
 
   return (
     <>
@@ -43,7 +36,7 @@ export default function DashboardNavBar() {
               onClick={() => setOpen(!open)}
             >
               <MagnifyingGlassIcon className="absolute left-2 size-3" />
-              Search
+              <span>Search</span>
               <p className="text-sm text-muted-foreground">
                 <kbd
                   className="
