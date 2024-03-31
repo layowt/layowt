@@ -133,26 +133,6 @@ export default function DashboardSidebar() {
               <span className="text-sm">Settings</span>
             </div>
           </Link>
-          {/** User profile */}
-          {/* <Link
-            href="/profile"
-            className="my-2 flex items-center gap-x-2 py-3 rounded-lg"
-          >
-            <div className="size-4">
-              <MaterialSymbolsPerson2OutlineRounded />
-            </div>
-            <span className="text-xs truncate">{user?.email}</span>
-          </Link> */}
-          <Button
-            className="
-              flex justify-start font-normal gap-x-2 items-center hover:!text-white text-white/80 hover:!scale-100
-              border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer
-            "
-            variant="none"
-          >
-            <ExitIcon className="size-4" />
-            <span>Logout</span>
-          </Button>
         </div>
       </nav>
     </section>

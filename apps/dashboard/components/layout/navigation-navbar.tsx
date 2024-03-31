@@ -86,8 +86,15 @@ export default function DashboardNavBar() {
             </Button>
           </div>
           <div className="flex items-center gap-x-2.5 text-white/60 absolute right-2">
+            <Button
+              className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white"
+              variant="none"
+              size="sm"
+            >
+              Feedback
+            </Button>
             <BellIcon className="size-3.5" />
-            <div className="flex gap-x-0.5 items-center border border-black-50 rounded-lg px-2 py-1">
+            <div className="flex gap-x-0.5 items-center bg-electric-violet-500 rounded-full px-2 py-1">
               <span className="flex items-center justify-center text-xs">
                 {user?.email ? (
                   user?.email.charAt(0).toUpperCase()
@@ -95,7 +102,6 @@ export default function DashboardNavBar() {
                   <ReloadIcon className="size-2 animate-spin" />
                 )}
               </span>
-              <ChevronDownIcon className="size-3" />
             </div>
           </div>
         </div>
