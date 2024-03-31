@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useInterval(fn: () => void, interval: number = 1000, seconds: number = 5) {
+const useInterval = (fn: () => void, interval: number = 1000, seconds: number = 5) => {
   const [active, setActive] = useState(false);
   const intervalRef = useRef<number>();
   const fnRef = useRef<() => void>();
@@ -39,3 +39,5 @@ export function useInterval(fn: () => void, interval: number = 1000, seconds: nu
 
   return { start, stop, toggle, active };
 }
+
+export default useInterval;
