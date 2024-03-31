@@ -30,6 +30,9 @@ const sharedConfig = {
       }
     },
     extend: {
+      transitionDuration: {
+        '3000': '3000ms',
+      },
       fontFamily: {
         cairo: ['var(--font-cairo)'],
         poppins: ['var(--font-poppins)'],

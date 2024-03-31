@@ -64,15 +64,20 @@ export default function DashboardSidebar() {
 					min-w-40 min-h-screen px-2 flex flex-col gap-y-10 text-white font-poppins border-r border-black-50
 				"
     >
-      <div className="py-5 pl-2 flex gap-x-1 items-center">
+      <Link
+        href="/dashboard"
+        className="py-5 pl-2 flex gap-x-1 items-center hover:cursor-pointer group"
+      >
         <Image
           src="/favicon.ico"
           width={20}
           height={20}
           alt="Draggle logo"
         />
-        <h1 className="text-xl font-bold font-kanit">Draggle</h1>
-      </div>
+        <h1 className="font-bold font-poppins group-hover:text-white/60 duration-300">
+          Draggle
+        </h1>
+      </Link>
 
       {/**  TODO: move into separate components */}
       <nav className="font-poppins h-full flex flex-col justify-between">
@@ -97,7 +102,7 @@ export default function DashboardSidebar() {
                 className={`flex items-center border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-7 rounded-lg hover:cursor-pointer
                 ${
                   pathname === item.link
-                    ? 'bg-electric-violet-600 transition-colors !duration-1000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
+                    ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
                     : 'text-white/80'
                 }`}
                 initial={{ opacity: 0, x: 0 }}
