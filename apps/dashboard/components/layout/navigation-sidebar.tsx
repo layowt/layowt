@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { motion, stagger } from 'framer-motion';
 
 // icon imports
 import MaterialSymbolsHomeOutlineRounded from '@/ui/icons/home';
@@ -22,6 +23,9 @@ export default function DashboardSidebar() {
   const supabase = createClient();
   const pathname = usePathname();
   const router = useRouter();
+
+  const [user, setUser] = useState<User>(null);
+
   // TODO: make this come from a CMS
   // TODO: If there are errors in the logs, make the 'logs' icon the 'dataCross' icon
   const navItems = [
@@ -60,10 +64,12 @@ export default function DashboardSidebar() {
     }
   ];
 
-  const [user, setUser] = useState<User>(null);
+  let init = false;
 
   // on mount get the user data
   useEffect(() => {
+    if (init) return;
+    init = true;
     const getCurrentUser = async () => {
       const { data: user, error } = await supabase.auth.getUser();
 
@@ -80,14 +86,15 @@ export default function DashboardSidebar() {
     };
     getCurrentUser();
   }, []);
+
   return (
     <section
       className="
-					max-w-48 min-h-screen px-2 flex flex-col gap-y-10 text-white font-poppins border-r border-black-50
+					min-w-48 min-h-screen px-2 flex flex-col gap-y-10 text-white font-poppins border-r border-black-50
 				"
     >
       <div className="py-5 pl-2">
-        <h1 className="text-3xl font-bold font-kanit">Draggle</h1>
+        <h1 className="text-2xl font-bold font-kanit">Draggle</h1>
       </div>
 
       {/**  TODO: move into separate components */}
@@ -106,14 +113,17 @@ export default function DashboardSidebar() {
                 className="w-auto h-px bg-black-50 my-3 mx-2"
               />
             ) : (
-              <li
+              <motion.li
                 key={item.name}
-                className={`flex items-center border-2 border-transparent hover:border-electric-violet-300 hover:bg-electric-violet-600 duration-300 pl-2 pr-4 h-8 rounded-lg
+                className={`flex items-center border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer
                 ${
                   pathname === item.link
                     ? 'bg-electric-violet-600 transition-colors !duration-1000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
-                    : '!duration-1000 hover:!border-electric-violet-300 animate-shimmer hover:bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] hover:bg-[length:200%_100%] text-white/80'
+                    : 'text-white/80'
                 }`}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
               >
                 <Link href={item.link}>
                   <div
@@ -123,7 +133,7 @@ export default function DashboardSidebar() {
                     <span className="text-sm">{item.name}</span>
                   </div>
                 </Link>
-              </li>
+              </motion.li>
             )
           )}
         </ul>
