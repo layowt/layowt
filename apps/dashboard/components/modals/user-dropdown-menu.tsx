@@ -80,14 +80,14 @@ export default function UserDropdownMenu() {
           >
             <button
               className="
-								flex gap-x-0.5 items-center bg-electric-violet-500 rounded-full px-[0.55rem] py-1
+								flex gap-x-0.5 items-center bg-electric-violet-500 rounded-full px-[0.55rem] py-1 min-w-6 min-h-6
 							"
             >
               <span className="flex items-center justify-center text-[0.65rem]">
                 {user?.email ? (
                   user?.email.charAt(0).toUpperCase()
                 ) : (
-                  <ReloadIcon className="size-2 animate-spin" />
+                  <ReloadIcon className="size-2 my-1 animate-spin" />
                 )}
               </span>
             </button>
