@@ -40,7 +40,10 @@ export default function Breadcrumbs({ ...props }) {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {!isLast && (
-                <BreadcrumbSeparator key={`separator-${index}`}>
+                <BreadcrumbSeparator
+                  key={`separator-${index}`}
+                  className="[&>svg]:size-3"
+                >
                   <SlashIcon />
                 </BreadcrumbSeparator>
               )}
