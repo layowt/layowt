@@ -4,7 +4,7 @@ export default function SiteLogo({ showName = true }: { showName?: boolean }) {
   return (
     <Link
       href="/dashboard"
-      className="py-5 pl-2 flex gap-x-1 items-center hover:cursor-pointer group"
+      className="py-4 pl-2 flex gap-x-1 items-center hover:cursor-pointer group"
     >
       <svg
         version="1.1"
