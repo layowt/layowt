@@ -18,6 +18,7 @@ import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 
 import { useState } from 'react';
 import useKeyboard from '@/hooks/useKeyboard';
+import { motion } from 'framer-motion';
 
 export default function DashboardNavBar({
   children
@@ -32,15 +33,20 @@ export default function DashboardNavBar({
   return (
     <>
       <div className="flex flex-col w-full h-full">
-        <div className="w-full h-16 border-b border-black-50">
+        <div className="w-full h-14 border-b border-black-50">
           <div className="flex justify-center items-center size-full relative">
             <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" />
-            <div className="h-full relative flex items-center">
+            <motion.div
+              className="h-full relative flex items-center"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
               <Button
                 className="
-              flex justify-start items-center border border-black-50 rounded-lg w-64 h-3/5 py-1.5 
-              pl-6 font-poppins hover:text-white text-white/60 group text-[0.65rem] bg-black-75
-              "
+                  flex justify-start items-center border border-black-50 rounded-lg w-64 h-3/5 py-1.5 
+                  pl-6 font-poppins hover:text-white text-white/60 group text-[0.65rem] bg-black-75
+                "
                 variant="none"
                 onClick={() => setOpen(!open)}
               >
@@ -49,7 +55,7 @@ export default function DashboardNavBar({
                 <p className="text-sm text-muted-foreground">
                   <kbd
                     className="
-                   bg-transparent pointer-events-none inline-flex h-5 select-none items-center gap-[2px] rounded border px-1.5 text-[10px] font-medium   
+                   bg-black-50 pointer-events-none inline-flex h-4 select-none items-center gap-[2px] rounded border px-1 text-[10px] font-medium   
                    opacity-100 !border-none absolute right-1.5 top-1/2 transform -translate-y-1/2 text-white/60 group-hover:!text-white
                   "
                   >
@@ -57,7 +63,7 @@ export default function DashboardNavBar({
                   </kbd>
                 </p>
               </Button>
-            </div>
+            </motion.div>
             <div className="flex items-center gap-x-2.5 text-white/60 absolute right-2">
               <Button
                 className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white bg-black-75"
