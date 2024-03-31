@@ -11,52 +11,18 @@ import {
   CommandSeparator,
   CommandShortcut
 } from '@/ui/command';
-import {
-  MagnifyingGlassIcon,
-  BellIcon,
-  ChevronDownIcon,
-  ReloadIcon,
-  EnvelopeClosedIcon
-} from '@radix-ui/react-icons';
+import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 
-import { useState, useEffect } from 'react';
+import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
+
+import { useState } from 'react';
 import useKeyboard from '@/hooks/useKeyboard';
-import { createClient } from '@/utils/supabase/client';
-import { usePathname, useRouter } from 'next/navigation';
-import type { User } from '@supabase/supabase-js';
 
 export default function DashboardNavBar() {
-  // new supabase client instance so we can get the current user data;
-  const supabase = createClient();
-  const router = useRouter();
-
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState<User>(null);
 
   // open the command dialog when the user presses '⌘ + k'
   useKeyboard('k', () => setOpen(true));
-
-  let init = false;
-  // on mount get the user data
-  useEffect(() => {
-    if (init) return;
-    init = true;
-    const getCurrentUser = async () => {
-      const { data: user, error } = await supabase.auth.getUser();
-
-      // exit early if error
-      if (error) throw new Error('Error getting user data', error);
-
-      // redirect user if we cannot find the session
-      // TODO: show a toast/sonner here so the user know the cause of the redirect
-      if (!user || !user.user.email) {
-        router.push('/login');
-      }
-
-      setUser(user.user);
-    };
-    getCurrentUser();
-  }, []);
 
   return (
     <>
@@ -93,16 +59,10 @@ export default function DashboardNavBar() {
             >
               Feedback
             </Button>
-            <BellIcon className="size-3.5" />
-            <div className="flex gap-x-0.5 items-center bg-electric-violet-500 rounded-full px-2 py-1">
-              <span className="flex items-center justify-center text-xs">
-                {user?.email ? (
-                  user?.email.charAt(0).toUpperCase()
-                ) : (
-                  <ReloadIcon className="size-2 animate-spin" />
-                )}
-              </span>
+            <div className="hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center">
+              <BellIcon className="size-3.5" />
             </div>
+            <UserDropdownMenu />
           </div>
         </div>
       </div>
