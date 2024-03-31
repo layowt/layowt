@@ -11,6 +11,12 @@ import {
   CommandSeparator,
   CommandShortcut
 } from '@/ui/command';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/ui/tooltip';
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
 
@@ -73,7 +79,19 @@ export default function DashboardNavBar({
                 Feedback
               </Button>
               <div className="hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center">
-                <BellIcon className="size-3.5" />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger
+                      asChild
+                      className="size-3.5"
+                    >
+                      <BellIcon />
+                    </TooltipTrigger>
+                    <TooltipContent className="text-[0.55rem] m-2 bg-black-75 text-white border border-black font-poppins">
+                      <p>No Notifications.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               <UserDropdownMenu />
             </div>
