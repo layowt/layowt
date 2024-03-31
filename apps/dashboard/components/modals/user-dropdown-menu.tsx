@@ -1,7 +1,6 @@
 'use client';
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -95,17 +94,23 @@ export default function UserDropdownMenu() {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="font-poppins border border-black-50 !bg-black text-white/80 m-1">
-          <DropdownMenuLabel className="text-[0.65rem] font-normal">
-            {user?.email}
-          </DropdownMenuLabel>
+          <motion.div
+            initial={{ opacity: 0, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <DropdownMenuLabel className="text-[0.65rem] font-normal">
+              {user?.email}
+            </DropdownMenuLabel>
+          </motion.div>
           <DropdownMenuSeparator className="!bg-black-50" />
           <DropdownMenuGroup className="flex flex-col">
             {items.map((item, index) => (
               <motion.li
                 key={index}
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: 0 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
+                transition={{ duration: 0.2, delay: index * 0.1 }}
                 className="list-none w-full"
               >
                 {item.name === 'separator' ? (
