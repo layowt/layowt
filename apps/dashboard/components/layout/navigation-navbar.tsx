@@ -12,6 +12,7 @@ import {
   CommandShortcut
 } from '@/ui/command';
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
+import Breadcrumbs from '@/components/layout/breadcrumbs';
 
 import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 
@@ -27,7 +28,10 @@ export default function DashboardNavBar() {
   return (
     <>
       <div className="w-full h-16 border-b border-black-50">
-        <div className="flex justify-center items-center size-full">
+        <div className="flex justify-center items-center size-full relative">
+          <div className="absolute left-3 text-xs font-poppins font-bold">
+            <Breadcrumbs />
+          </div>
           <div className="h-full relative flex items-center">
             <Button
               className="
