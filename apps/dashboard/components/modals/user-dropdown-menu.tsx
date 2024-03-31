@@ -93,7 +93,7 @@ export default function UserDropdownMenu() {
             </button>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="font-poppins border border-black-50 !bg-black text-white/80 m-1">
+        <DropdownMenuContent className="font-poppins border border-black-50 !bg-black-75 text-white/80 m-1">
           <motion.div
             initial={{ opacity: 0, x: 0 }}
             animate={{ opacity: 1, x: 0 }}

@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { IonSparkles } from './icons/sparkle';
 import { motion } from 'framer-motion';
 
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
   'relative w-full inline-flex items-center font-kanit justify-center whitespace-nowrap rounded-2xl hover:rounded-xl duration-300 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
