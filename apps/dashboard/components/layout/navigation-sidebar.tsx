@@ -2,7 +2,6 @@
 import NavigationItems from '@/components/layout/navigation-items';
 import SiteLogo from '@/components/logo';
 
-// TODO: THIS FILE NEEDS TO BE SMALLER - BREAK DOWN INTO SMALLER COMPONENTS
 export default function DashboardSidebar() {
   return (
     <section
