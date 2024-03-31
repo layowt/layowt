@@ -1,16 +1,15 @@
-'use client';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbSeparator,
-  BreadcrumbPage
+  BreadcrumbSeparator
 } from '@/ui/breadcrumb';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { SlashIcon } from '@radix-ui/react-icons';
 
 export default function Breadcrumbs() {
+  const router = useRouter();
   const pathname = usePathname();
 
   // get the current path and split it into an array
@@ -21,22 +20,28 @@ export default function Breadcrumbs() {
       <BreadcrumbList>
         {path.map((name, index) => {
           const isLast = index === path.length - 1;
+          // Construct the href by joining the parts of the path up to the current index
+          const href = `/${path.slice(0, index + 1).join('/')}`;
           return (
-            <>
+            <div key={`breadcrumb-${index}`}>
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  href={`/${name}`}
-                  className={`text-white font-poppins text-xs font-medium hover:!text-white/80 duration-300`}
+                  href={href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(href);
+                  }}
+                  className={`text-white font-poppins text-[0.65rem] font-medium hover:!text-white/80 duration-300`}
                 >
                   {name.charAt(0).toLocaleUpperCase() + name.slice(1)}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {!isLast && (
-                <BreadcrumbSeparator>
+                <BreadcrumbSeparator key={`separator-${index}`}>
                   <SlashIcon />
                 </BreadcrumbSeparator>
               )}
-            </>
+            </div>
           );
         })}
       </BreadcrumbList>

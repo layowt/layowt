@@ -29,7 +29,7 @@ export default function DashboardNavBar() {
     <>
       <div className="w-full h-16 border-b border-black-50">
         <div className="flex justify-center items-center size-full relative">
-          <div className="absolute left-3 text-xs font-poppins font-bold">
+          <div className="absolute left-4 text-xs font-poppins font-bold">
             <Breadcrumbs />
           </div>
           <div className="h-full relative flex items-center">
