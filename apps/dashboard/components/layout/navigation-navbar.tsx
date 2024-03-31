@@ -17,8 +17,10 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/ui/tooltip';
-import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
+import { Toggle } from '@/ui/toggle';
+
+import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 
 import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 
@@ -78,7 +80,13 @@ export default function DashboardNavBar({
               >
                 Feedback
               </Button>
-              <div className="hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center">
+              <Toggle
+                className="
+                  hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center
+                  data-[state=on]:bg-black-50 data-[state=on]:text-white/80
+                "
+                size="sm"
+              >
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger
@@ -88,14 +96,15 @@ export default function DashboardNavBar({
                       <BellIcon />
                     </TooltipTrigger>
                     <TooltipContent className="text-[0.55rem] m-2 bg-black-75 text-white border border-black font-poppins">
-                      <p>No Notifications.</p>
+                      <p>Up to date!</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-              </div>
+              </Toggle>
               <UserDropdownMenu />
             </div>
           </div>
+          {/** Entry point for page */}
           <div className="container py-5">{children}</div>
         </div>
       </div>
