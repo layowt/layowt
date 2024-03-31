@@ -25,7 +25,7 @@ export default function NavigationItems() {
     },
     {
       name: 'Sites',
-      link: '/sites',
+      link: '/dashboard/test',
       icon: <DesktopIcon />
     },
     {
