@@ -39,7 +39,7 @@ export default function DashboardNavBar({
               <Button
                 className="
               flex justify-start items-center border border-black-50 rounded-lg w-64 h-3/5 py-1.5 
-              pl-6 font-poppins hover:text-white text-white/60 group text-[0.65rem]
+              pl-6 font-poppins hover:text-white text-white/60 group text-[0.65rem] bg-black-75
               "
                 variant="none"
                 onClick={() => setOpen(!open)}
@@ -60,7 +60,7 @@ export default function DashboardNavBar({
             </div>
             <div className="flex items-center gap-x-2.5 text-white/60 absolute right-2">
               <Button
-                className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white"
+                className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white bg-black-75"
                 variant="none"
                 size="sm"
               >

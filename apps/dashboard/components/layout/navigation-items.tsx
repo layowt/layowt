@@ -71,34 +71,36 @@ export default function NavigationItems() {
               className="w-auto h-px bg-black-50 my-3 mx-2"
             />
           ) : (
-            <motion.li
+            <Link
+              href={item.link}
               key={item.name}
-              className={`flex items-center border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-7 rounded-lg hover:cursor-pointer
+            >
+              <motion.li
+                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-7 rounded-lg hover:cursor-pointer
                 ${
                   pathname === item.link
                     ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
                     : 'text-white/80'
                 }`}
-              initial={{ opacity: 0, x: 0 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-            >
-              <Link href={item.link}>
+                initial={{ opacity: 0, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
                 <div
                   className={`flex items-center gap-x-2 font-kanit leading-loose`}
                 >
                   <div className="size-3">{item.icon}</div>
                   <span className="text-xs">{item.name}</span>
                 </div>
-              </Link>
-            </motion.li>
+              </motion.li>
+            </Link>
           )
         )}
       </ul>
       <div className="flex flex-col gap-y-1 py-3">
         <Link
           href="/settings"
-          className="flex items-center border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
+          className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
         >
           <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
             <div className="size-4">
