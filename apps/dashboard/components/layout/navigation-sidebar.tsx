@@ -121,9 +121,9 @@ export default function DashboardSidebar() {
                     ? 'bg-electric-violet-600 transition-colors !duration-1000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
                     : 'text-white/80'
                 }`}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: 0 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <Link href={item.link}>
                   <div
@@ -138,7 +138,6 @@ export default function DashboardSidebar() {
           )}
         </ul>
         <div className="pl-2 pr-4">
-          {/** User profile */}
           <Link href="/settings">
             <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
               <div className="size-4">
@@ -147,6 +146,7 @@ export default function DashboardSidebar() {
               <span className="text-sm">Settings</span>
             </div>
           </Link>
+          {/** User profile */}
           <Link
             href="/profile"
             className="my-2 flex items-center gap-x-2 py-3 rounded-lg"
