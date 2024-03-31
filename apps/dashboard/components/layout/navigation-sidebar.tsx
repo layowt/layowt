@@ -15,6 +15,7 @@ import {
   DesktopIcon,
   ExitIcon
 } from '@radix-ui/react-icons';
+import Image from 'next/image';
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
@@ -60,18 +61,24 @@ export default function DashboardSidebar() {
   return (
     <section
       className="
-					min-w-48 min-h-screen px-2 flex flex-col gap-y-10 text-white font-poppins border-r border-black-50
+					min-w-40 min-h-screen px-2 flex flex-col gap-y-10 text-white font-poppins border-r border-black-50
 				"
     >
-      <div className="py-5 pl-2">
-        <h1 className="text-2xl font-bold font-kanit">Draggle</h1>
+      <div className="py-5 pl-2 flex gap-x-1 items-center">
+        <Image
+          src="/favicon.ico"
+          width={20}
+          height={20}
+          alt="Draggle logo"
+        />
+        <h1 className="text-xl font-bold font-kanit">Draggle</h1>
       </div>
 
       {/**  TODO: move into separate components */}
       <nav className="font-poppins h-full flex flex-col justify-between">
         <ul className="flex flex-col gap-y-1">
           <motion.span
-            className="text-[0.65rem] uppercase text-white/50 mx-2 mb-2"
+            className="text-[0.5rem] uppercase text-white/50 mx-2 mb-2"
             initial={{ opacity: 0, x: 0 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.2 }}
@@ -87,7 +94,7 @@ export default function DashboardSidebar() {
             ) : (
               <motion.li
                 key={item.name}
-                className={`flex items-center border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer
+                className={`flex items-center border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-7 rounded-lg hover:cursor-pointer
                 ${
                   pathname === item.link
                     ? 'bg-electric-violet-600 transition-colors !duration-1000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
@@ -101,8 +108,8 @@ export default function DashboardSidebar() {
                   <div
                     className={`flex items-center gap-x-2 font-kanit leading-loose`}
                   >
-                    <div className="size-4">{item.icon}</div>
-                    <span className="text-sm">{item.name}</span>
+                    <div className="size-3">{item.icon}</div>
+                    <span className="text-xs">{item.name}</span>
                   </div>
                 </Link>
               </motion.li>
