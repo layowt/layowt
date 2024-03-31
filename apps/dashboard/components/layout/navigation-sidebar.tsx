@@ -1,30 +1,23 @@
 'use client';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { motion, stagger } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 // icon imports
 import MaterialSymbolsHomeOutlineRounded from '@/ui/icons/home';
 import MaterialSymbolsBuildOutlineRounded from '@/ui/icons/build';
-import MaterialSymbolsComputerOutlineRounded from '@/ui/icons/computer';
-import MaterialSymbolsDataCheck from '@/ui/icons/logs-okay';
 import MaterialSymbolsSettingsOutlineRounded from '@/ui/icons/settings';
-import MaterialSymbolsChatOutlineRounded from '@/ui/icons/message';
-import MaterialSymbolsAnalyticsOutlineRounded from '@/ui/icons/analytics';
-import MaterialSymbolsPerson2OutlineRounded from '@/ui/icons/profile';
-
-import { createClient } from '@/utils/supabase/client';
-import { useEffect, useState } from 'react';
-
-import type { User } from '@supabase/supabase-js';
+import { Button } from '@/ui/button';
+import {
+  ActivityLogIcon,
+  BarChartIcon,
+  ChatBubbleIcon,
+  DesktopIcon,
+  ExitIcon
+} from '@radix-ui/react-icons';
 
 export default function DashboardSidebar() {
-  // new supabase client instance so we can get the current user data
-  const supabase = createClient();
   const pathname = usePathname();
-  const router = useRouter();
-
-  const [user, setUser] = useState<User>(null);
 
   // TODO: make this come from a CMS
   // TODO: If there are errors in the logs, make the 'logs' icon the 'dataCross' icon
@@ -37,7 +30,7 @@ export default function DashboardSidebar() {
     {
       name: 'Sites',
       link: '/sites',
-      icon: <MaterialSymbolsComputerOutlineRounded />
+      icon: <DesktopIcon />
     },
     {
       name: 'Site Builder',
@@ -47,12 +40,12 @@ export default function DashboardSidebar() {
     {
       name: 'Analytics',
       link: '/analytics',
-      icon: <MaterialSymbolsAnalyticsOutlineRounded />
+      icon: <BarChartIcon />
     },
     {
       name: 'Logs',
       link: '/logs',
-      icon: <MaterialSymbolsDataCheck />
+      icon: <ActivityLogIcon />
     },
     {
       name: 'separator'
@@ -60,32 +53,9 @@ export default function DashboardSidebar() {
     {
       name: 'Support',
       link: '/support',
-      icon: <MaterialSymbolsChatOutlineRounded />
+      icon: <ChatBubbleIcon />
     }
   ];
-
-  let init = false;
-
-  // on mount get the user data
-  useEffect(() => {
-    if (init) return;
-    init = true;
-    const getCurrentUser = async () => {
-      const { data: user, error } = await supabase.auth.getUser();
-
-      // exit early if error
-      if (error) throw new Error('Error getting user data', error);
-
-      // redirect user if we cannot find the session
-      // TODO: show a toast/sonner here so the user know the cause of the redirect
-      if (!user || !user.user.email) {
-        router.push('/login');
-      }
-
-      setUser(user.user);
-    };
-    getCurrentUser();
-  }, []);
 
   return (
     <section
@@ -100,12 +70,14 @@ export default function DashboardSidebar() {
       {/**  TODO: move into separate components */}
       <nav className="font-poppins h-full flex flex-col justify-between">
         <ul className="flex flex-col gap-y-1">
-          <span className="text-[0.65rem] uppercase text-white/50 mx-2 mb-2">
+          <motion.span
+            className="text-[0.65rem] uppercase text-white/50 mx-2 mb-2"
+            initial={{ opacity: 0, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2 }}
+          >
             Menu
-          </span>
-
-          {/* <div className="w-auto h-px bg-black-50 mt-1 mx-2 mb-2" /> */}
-
+          </motion.span>
           {navItems.map((item, index) =>
             item.name === 'separator' ? (
               <div
@@ -137,8 +109,11 @@ export default function DashboardSidebar() {
             )
           )}
         </ul>
-        <div className="pl-2 pr-4">
-          <Link href="/settings">
+        <div className="flex flex-col gap-y-1 py-3">
+          <Link
+            href="/settings"
+            className="flex items-center border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
+          >
             <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
               <div className="size-4">
                 <MaterialSymbolsSettingsOutlineRounded />
@@ -147,7 +122,7 @@ export default function DashboardSidebar() {
             </div>
           </Link>
           {/** User profile */}
-          <Link
+          {/* <Link
             href="/profile"
             className="my-2 flex items-center gap-x-2 py-3 rounded-lg"
           >
@@ -155,7 +130,17 @@ export default function DashboardSidebar() {
               <MaterialSymbolsPerson2OutlineRounded />
             </div>
             <span className="text-xs truncate">{user?.email}</span>
-          </Link>
+          </Link> */}
+          <Button
+            className="
+              flex justify-start font-normal gap-x-2 items-center hover:!text-white text-white/80 hover:!scale-100
+              border-2 hover:bg-black-50 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer
+            "
+            variant="none"
+          >
+            <ExitIcon className="size-4" />
+            <span>Logout</span>
+          </Button>
         </div>
       </nav>
     </section>
