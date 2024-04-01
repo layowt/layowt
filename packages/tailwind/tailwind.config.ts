@@ -30,6 +30,9 @@ const sharedConfig = {
       }
     },
     extend: {
+      transitionDuration: {
+        '3000': '3000ms',
+      },
       fontFamily: {
         cairo: ['var(--font-cairo)'],
         poppins: ['var(--font-poppins)'],
@@ -70,6 +73,7 @@ const sharedConfig = {
         black: {
           DEFAULT: '#0E0E0E',
           50: '#2D2D2D',
+          75: '#131313',
           100: '#111111',
           200: '#0E0E0E',
           300: '#000000',

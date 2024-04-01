@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { IonSparkles } from './icons/sparkle';
 import { motion } from 'framer-motion';
 
-import { cn } from '../../lib/utils';
+import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
   'relative w-full inline-flex items-center font-kanit justify-center whitespace-nowrap rounded-2xl hover:rounded-xl duration-300 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -22,11 +22,12 @@ const buttonVariants = cva(
         tertiary:
           'bg-electric-violet-500 text-white hover:bg-white hover:text-black duration-300',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline'
+        link: 'text-primary underline-offset-4 hover:underline',
+        none: 'hover:bg-accent hover:text-accent-foreground hover:!bg-transparent hover:!text-none'
       },
       size: {
         default: 'h-10 px-4',
-        sm: 'h-9 rounded-md px-3',
+        sm: 'h-7 rounded-md px-3 py-1',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10'
       }

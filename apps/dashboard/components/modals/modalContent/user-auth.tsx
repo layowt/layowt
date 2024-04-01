@@ -12,9 +12,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
-} from '../../ui/tooltip';
+} from '@/ui/tooltip';
 
-import { useInterval } from '@/hooks/useInterval';
+import useInterval from '@/hooks/useInterval';
 
 import { getUserFromDb } from '@/utils/user/user.get';
 
