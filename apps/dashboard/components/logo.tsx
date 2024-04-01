@@ -1,6 +1,12 @@
 import Link from 'next/link';
 
-export default function SiteLogo({ showName = true }: { showName?: boolean }) {
+export default function SiteLogo({
+  className,
+  showName = true
+}: {
+  className?: string;
+  showName?: boolean;
+}) {
   return (
     <Link
       href="/dashboard"
