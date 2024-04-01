@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import SiteLogo from '@/components/logo';
+import { ReloadIcon } from '@radix-ui/react-icons';
 
 const fetchUser = async () => {
   const supabase = createClient();
@@ -11,10 +12,10 @@ const fetchUser = async () => {
     throw new Error('User not found', error);
   }
 
-  // wait 2 seconds
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // force a delay to show the loading state
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  Promise.resolve(data.user);
+  return data.user;
 };
 
 export default async function App() {
@@ -27,9 +28,14 @@ export default async function App() {
 
   return (
     <div className="w-full h-screen text-white font-poppins flex justify-center">
-      <div className="flex flex-col w-full justify-center items-center">
-        <SiteLogo />
-        <h1 className="text-3xl font-bold">Loading...</h1>
+      <div className="flex gap-x-1 w-full justify-center items-center">
+        <SiteLogo
+          className="p-0"
+          showName={false}
+        />
+        <h1 className="font-bold font-poppins group-hover:text-white/60 duration-300">
+          Loading...
+        </h1>
       </div>
     </div>
   );
