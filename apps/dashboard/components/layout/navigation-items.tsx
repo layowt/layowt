@@ -64,7 +64,7 @@ export default function NavigationItems({ className, ...props }) {
     >
       <ul className="flex flex-col gap-y-1">
         <motion.span
-          className="text-[0.5rem] uppercase text-white/50 mx-2 mb-2"
+          className="text-xs uppercase text-white/50 mx-2 mb-2"
           initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.2 }}
@@ -83,7 +83,7 @@ export default function NavigationItems({ className, ...props }) {
               key={item.name}
             >
               <motion.li
-                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-7 rounded hover:cursor-pointer
+                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer
                 ${
                   pathname === item.link
                     ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
@@ -97,7 +97,7 @@ export default function NavigationItems({ className, ...props }) {
                   className={`flex items-center gap-x-2 font-kanit leading-loose`}
                 >
                   <div className="size-3">{item.icon}</div>
-                  <span className="text-xs">{item.name}</span>
+                  <span className="text-base">{item.name}</span>
                 </div>
               </motion.li>
             </Link>
@@ -118,7 +118,7 @@ export default function NavigationItems({ className, ...props }) {
             <div className="size-4">
               <MaterialSymbolsSettingsOutlineRounded />
             </div>
-            <span className="text-sm">Settings</span>
+            <span className="text-base">Settings</span>
           </div>
         </Link>
       </motion.div>
