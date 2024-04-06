@@ -1,7 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import SiteLogo from '@/components/logo';
-import { ReloadIcon } from '@radix-ui/react-icons';
 
 const fetchUser = async () => {
   const supabase = createClient();
@@ -11,10 +10,6 @@ const fetchUser = async () => {
   if (!data.user) {
     throw new Error('User not found', error);
   }
-
-  // force a delay to show the loading state
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
   return data.user;
 };
 
@@ -22,6 +17,7 @@ export default async function App() {
   // get the user
   const user = await fetchUser();
 
+  // redirect to the dashboard
   if (user) {
     redirect('/dashboard');
   }
