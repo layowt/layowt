@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export default function SiteLogo({
-  className = 'py-4 pl-2',
+  className = 'py-5 pl-2',
   showName = true
 }: {
   className?: string;
