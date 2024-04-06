@@ -1,10 +1,20 @@
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
-export default function SiteLogo({ showName = true }: { showName?: boolean }) {
+export default function SiteLogo({
+  className = 'py-5 pl-2',
+  showName = true
+}: {
+  className?: string;
+  showName?: boolean;
+}) {
   return (
     <Link
       href="/dashboard"
-      className="py-4 pl-2 flex gap-x-1 items-center hover:cursor-pointer group"
+      className={cn(
+        'flex gap-x-1 items-center hover:cursor-pointer group',
+        className
+      )}
     >
       <svg
         version="1.1"

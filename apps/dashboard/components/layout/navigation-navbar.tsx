@@ -41,7 +41,7 @@ export default function DashboardNavBar({
   return (
     <>
       <div className="flex flex-col w-full h-full">
-        <div className="w-full h-14 border-b border-black-50">
+        <div className="w-full h-16 border-b border-black-50">
           <div className="flex justify-center items-center size-full relative">
             <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" />
             <motion.div
@@ -52,7 +52,7 @@ export default function DashboardNavBar({
             >
               <Button
                 className="
-                  flex justify-start items-center border border-black-50 rounded-lg w-64 h-3/5 py-1.5 
+                  flex justify-start items-center border border-black-50 rounded-lg w-64 h-3/4 py-1.5 
                   pl-6 font-poppins hover:text-white text-white/60 group text-[0.65rem] bg-black-75
                 "
                 variant="none"

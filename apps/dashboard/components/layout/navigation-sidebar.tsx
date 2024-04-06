@@ -7,7 +7,7 @@ export default function DashboardSidebar() {
   return (
     <section
       className="
-					min-w-40 min-h-screen flex flex-col gap-y-6 text-white font-poppins border-r border-black-50
+					min-w-48 min-h-screen flex flex-col gap-y-6 text-white font-poppins border-r border-black-50
 				"
     >
       <div className="border-b border-black-50 relative -top-px">
