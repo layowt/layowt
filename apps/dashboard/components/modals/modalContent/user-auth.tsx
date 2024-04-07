@@ -110,7 +110,7 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
                 onClick={resendVerificationEmail}
                 className={`
                 w-full bg-electric-violet-500 text-white duration-300 hover:bg-electric-violet-500/60 h-10 px-4 rounded-2xl
-                text-sm 
+                text-sm hover:rounded-xl
                 ${
                   seconds == 0
                     ? 'hover:cursor-pointer'
