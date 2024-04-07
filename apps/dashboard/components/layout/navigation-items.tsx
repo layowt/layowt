@@ -31,7 +31,7 @@ export default function NavigationItems({ className, ...props }) {
       nested: [
         {
           name: 'New Site',
-          link: '/dashboard/create-new-site',
+          link: '/create-new-site',
           icon: <PlusIcon />
         }
       ]
