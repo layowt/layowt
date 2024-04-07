@@ -1,7 +1,5 @@
-'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import NavigationItem from '@/components/layout/navigation-item';
 
 // icon imports
@@ -18,7 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 
 export default function NavigationItems({ className, ...props }) {
-  const [navItems, setNavItems] = useState([
+  const navItems = [
     {
       name: 'Overview',
       link: '/dashboard',
@@ -65,7 +63,7 @@ export default function NavigationItems({ className, ...props }) {
       icon: <ChatBubbleIcon />,
       expanded: false
     }
-  ]);
+  ];
 
   return (
     <nav
