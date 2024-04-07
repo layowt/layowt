@@ -1,48 +1,60 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import NavigationItem from '@/components/layout/navigation-item';
 
 // icon imports
 import MaterialSymbolsHomeOutlineRounded from '@/ui/icons/home';
-import MaterialSymbolsBuildOutlineRounded from '@/ui/icons/build';
 import MaterialSymbolsSettingsOutlineRounded from '@/ui/icons/settings';
+import MaterialSymbolsBuildOutlineRounded from '@/ui/icons/build';
 import {
   ActivityLogIcon,
   BarChartIcon,
   ChatBubbleIcon,
-  DesktopIcon
+  DesktopIcon,
+  PlusIcon
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 
 export default function NavigationItems({ className, ...props }) {
-  const pathname = usePathname();
-
-  const navItems = [
+  const [navItems, setNavItems] = useState([
     {
       name: 'Overview',
       link: '/dashboard',
-      icon: <MaterialSymbolsHomeOutlineRounded />
+      icon: <MaterialSymbolsHomeOutlineRounded />,
+      expanded: false
     },
     {
       name: 'Sites',
       link: '/dashboard/test',
-      icon: <DesktopIcon />
+      icon: <DesktopIcon />,
+      expanded: false,
+      nested: [
+        {
+          name: 'New Site',
+          link: '/dashboard/create-new-site',
+          icon: <PlusIcon />
+        }
+      ]
     },
     {
       name: 'Site Builder',
       link: '/site-builder',
-      icon: <MaterialSymbolsBuildOutlineRounded />
+      icon: <MaterialSymbolsBuildOutlineRounded />,
+      expanded: false
     },
     {
       name: 'Analytics',
       link: '/analytics',
-      icon: <BarChartIcon />
+      icon: <BarChartIcon />,
+      expanded: false
     },
     {
       name: 'Logs',
       link: '/logs',
-      icon: <ActivityLogIcon />
+      icon: <ActivityLogIcon />,
+      expanded: false
     },
     {
       name: 'separator'
@@ -50,9 +62,10 @@ export default function NavigationItems({ className, ...props }) {
     {
       name: 'Support',
       link: '/support',
-      icon: <ChatBubbleIcon />
+      icon: <ChatBubbleIcon />,
+      expanded: false
     }
-  ];
+  ]);
 
   return (
     <nav
@@ -78,29 +91,11 @@ export default function NavigationItems({ className, ...props }) {
               className="w-auto h-px bg-black-50 my-3 mx-2"
             />
           ) : (
-            <Link
-              href={item.link}
-              key={item.name}
-            >
-              <motion.li
-                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer
-                ${
-                  pathname === item.link
-                    ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
-                    : 'text-white/80'
-                }`}
-                initial={{ opacity: 0, x: 0 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-              >
-                <div
-                  className={`flex items-center gap-x-2 font-kanit leading-loose`}
-                >
-                  <div className="size-3">{item.icon}</div>
-                  <span className="text-base">{item.name}</span>
-                </div>
-              </motion.li>
-            </Link>
+            <NavigationItem
+              key={`${item.name}-${index}`}
+              index={index}
+              opts={item}
+            />
           )
         )}
       </ul>
