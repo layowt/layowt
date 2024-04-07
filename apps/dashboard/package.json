@@ -12,7 +12,6 @@
     "check:types": "tsc --noEmit"
   },
   "dependencies": {
-    "database": "*",
     "@prisma/client": "^5.9.1",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -34,6 +33,7 @@
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.0",
+    "database": "*",
     "framer-motion": "^11.0.20",
     "lucide-react": "^0.323.0",
     "micro-cors": "^0.1.1",
@@ -52,7 +52,8 @@
     "sonner": "^1.4.0",
     "stripe": "^14.15.0",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@types/micro-cors": "^0.1.5",
