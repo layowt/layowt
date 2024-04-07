@@ -9,6 +9,7 @@ export default async function CreateNewSite() {
   // get the userId from the current session
   const userSession = await getUserFromSession();
 
+  // TODO: HANDLE THIS BETTER
   if (!userSession || !userSession.data.user.id) {
     return;
   }
@@ -18,6 +19,11 @@ export default async function CreateNewSite() {
       uid: userSession.data.user.id
     }
   });
+
+  // TODO: HANDLE THIS BETTER
+  if (!user) {
+    throw new Error('User not found');
+  }
 
   return (
     <div className="text-white">

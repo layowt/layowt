@@ -1,4 +1,4 @@
-import { prisma } from '../../../../utils/prisma'
+import { prisma } from '@/utils/prisma'
 import Stripe from "stripe";
 
 const webhookSecret = process.env.NEXT_PRIVATE_WEBHOOK_SECRET;

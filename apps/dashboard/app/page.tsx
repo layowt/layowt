@@ -6,12 +6,12 @@ export default async function App() {
   // get the user
   const user = await getUserFromSession();
 
-  if (!user) {
-    throw new Error('User not found');
+  if (!user.data?.user?.id) {
+    return;
   }
 
   // redirect to the dashboard
-  if (user) {
+  if (user.data) {
     redirect('/dashboard');
   }
 
