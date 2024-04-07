@@ -35,7 +35,9 @@ export default function UserDropdownMenu() {
       const { data: user, error } = await supabase.auth.getUser();
 
       // exit early if error
-      if (error) throw new Error('Error getting user data', error);
+      if (error) {
+        return;
+      }
 
       // redirect user if we cannot find the session
       // TODO: show a toast/sonner here so the user know the cause of the redirect
