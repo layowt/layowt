@@ -49,5 +49,5 @@ model websites {
   websiteId                                   String @id @default(uuid())
   
   owner                                       users @relation(fields: [userId], references: [uid])
-  userId                                      String @unique
+  userId                                      String
 }
