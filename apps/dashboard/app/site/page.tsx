@@ -3,6 +3,7 @@ import getUserFromSession from '@/utils/user/getUserFromSession';
 import uniqid from 'uniqid';
 import { getUserFromDb } from '@/utils/user/user.get';
 import { createWebsite } from '@/utils/database/websites';
+import { redirect } from 'next/navigation';
 
 export default async function CreateNewSite() {
   // 1. check if the user has reached their limit of sites
@@ -29,23 +30,20 @@ export default async function CreateNewSite() {
   const siteUid = uniqid();
 
   // // add this value to the db
-  // await prisma.websites.create({
-  //   data: {
-  //     websiteId: siteUid,
-  //     owner: {
-  //       connect: {
-  //         uid: user.uid,
-  //         websites: {
-  //           some: {
-  //             websiteId: siteUid
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // });
+  const newWebsite = await createWebsite(user.uid, siteUid);
 
-  const foo = await createWebsite(user.uid, siteUid);
+  // TODO: REDIRECT WITH AN APPROPRIATE MESSAGE
+  if (!newWebsite) {
+    return (
+      <div className="text-white">
+        <h1>Failed to create new site</h1>
+      </div>
+    );
+  }
+
+  // if we have a value, redirect the user to the /site
+  // page with the new site id
+  redirect(`/site/${siteUid}`);
 
   return (
     <div className="text-white">
