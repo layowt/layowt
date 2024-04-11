@@ -3,11 +3,9 @@ generator client {
 }
 
 datasource db {
-
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-
 }
 
 enum planType {
@@ -46,7 +44,7 @@ model subscription {
 }
 
 model websites {
-  websiteId                                   String @id @default(uuid())
+  websiteId                                   String @id
   
   owner                                       users @relation(fields: [userId], references: [uid])
   userId                                      String
