@@ -97,24 +97,42 @@ export default function NavigationItems({ className, ...props }) {
           )
         )}
       </ul>
-      <motion.div
-        className="py-3"
-        initial={{ opacity: 0, x: 0 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
-      >
-        <Link
-          href="/settings"
-          className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
+      <div className="">
+        <motion.div
+          className="py-3"
+          initial={{ opacity: 0, x: 0 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
         >
-          <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
-            <div className="size-4">
-              <MaterialSymbolsSettingsOutlineRounded />
+          <Link
+            href="/pricing"
+            className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
+          >
+            <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
+              <div className="size-4"></div>
+              <span className="text-base">Plans</span>
             </div>
-            <span className="text-base">Settings</span>
-          </div>
-        </Link>
-      </motion.div>
+          </Link>
+        </motion.div>
+        <motion.div
+          className="py-3"
+          initial={{ opacity: 0, x: 0 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
+        >
+          <Link
+            href="/settings"
+            className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
+          >
+            <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
+              <div className="size-4">
+                <MaterialSymbolsSettingsOutlineRounded />
+              </div>
+              <span className="text-base">Settings</span>
+            </div>
+          </Link>
+        </motion.div>
+      </div>
     </nav>
   );
 }
