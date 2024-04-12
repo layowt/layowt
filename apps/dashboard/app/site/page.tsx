@@ -5,6 +5,7 @@ import { getUserFromDb } from '@/utils/user/user.get';
 import { createWebsite } from '@/utils/database/websites';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/utils/prisma';
+import { getUserSubscription } from '@/utils/subscriptions/subscriptions.get';
 
 export default async function CreateNewSite() {
   // 1. check if the user has reached their limit of sites
@@ -28,11 +29,7 @@ export default async function CreateNewSite() {
   }
 
   //before we generate a new site, check if the user is eligible
-  const userSubscription = await prisma.subscription.findUnique({
-    where: {
-      userId: user.uid
-    }
-  });
+  const userSubscription = await getUserSubscription(user.uid);
 
   // get the number of sites the use has
   const userSites = await prisma.websites.findMany({
@@ -57,6 +54,9 @@ export default async function CreateNewSite() {
   const newWebsite = await createWebsite(user.uid, siteUid);
 
   // TODO: REDIRECT WITH AN APPROPRIATE MESSAGE
+  // either -
+  // 1. prompt user to upgrade their subscription
+  // 2. redirect to the dashboard page
   if (!newWebsite) {
     return (
       <div className="text-white">
