@@ -14,6 +14,8 @@ export default async function Page({ params }: { params: { uid: string } }) {
     }
   });
 
+  // we now need to hit our external api to get the site data
+
   return (
     <div className="text-white">
       <h6>{website.userId}</h6>

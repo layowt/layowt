@@ -1,10 +1,10 @@
 'use server';
-import getUserFromSession from '@/utils/user/getUserFromSession';
+import getUserFromSession from '@/utils/user/user-session';
 import uniqid from 'uniqid';
 import { getUserFromDb } from '@/utils/user/user.get';
 import { createWebsite } from '@/utils/database/websites';
 import { redirect } from 'next/navigation';
-import { prisma } from '@/utils/prisma';
+import { getUserWebsite } from '@/utils/websites/website.get';
 import { getUserSubscription } from '@/utils/subscriptions/subscriptions.get';
 
 export default async function CreateNewSite() {
@@ -24,19 +24,13 @@ export default async function CreateNewSite() {
   const user = await getUserFromDb(userSession?.data?.user?.id);
 
   // TODO: HANDLE THIS BETTER
-  if (!user) {
-    throw new Error('User not found');
-  }
+  if (!user) throw new Error('User not found');
 
   //before we generate a new site, check if the user is eligible
   const userSubscription = await getUserSubscription(user.uid);
 
   // get the number of sites the use has
-  const userSites = await prisma.websites.findMany({
-    where: {
-      userId: user.uid
-    }
-  });
+  const userSites = await getUserWebsite(user.uid);
 
   // compare the number of sites the user has to the limit
   if (userSites.length >= userSubscription?.numOfWebsites) {
