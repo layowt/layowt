@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/prisma';
+import { getWebsite } from '@/utils/websites/website.get';
 
 export default async function Page({ params }: { params: { uid: string } }) {
   // get the uid from the params
@@ -8,11 +8,7 @@ export default async function Page({ params }: { params: { uid: string } }) {
   if (!websiteUid) throw new Error('Website UID not found');
 
   // once we have the websiteUid, we can fetch all of its data from the db
-  const website = await prisma.websites.findFirst({
-    where: {
-      websiteId: websiteUid
-    }
-  });
+  const website = await getWebsite({ websiteId: websiteUid });
 
   // we now need to hit our external api to get the site data
 
