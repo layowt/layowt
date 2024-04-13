@@ -1,11 +1,15 @@
 'use server';
-import getUserFromSession from '@/utils/user/user-session';
-import uniqid from 'uniqid';
+// utils
+import { getUserFromSession } from '@/utils/user/user-session';
 import { getUserFromDb } from '@/utils/user/user.get';
 import { createWebsite } from '@/utils/database/websites';
-import { redirect } from 'next/navigation';
-import { getUserWebsite } from '@/utils/websites/website.get';
+import { getWebsite } from '@/utils/websites/website.get';
 import { getUserSubscription } from '@/utils/subscriptions/subscriptions.get';
+import type { websites } from '@prisma/client';
+
+// other
+import { redirect } from 'next/navigation';
+import uniqid from 'uniqid';
 
 export default async function CreateNewSite() {
   // 1. check if the user has reached their limit of sites
@@ -30,7 +34,7 @@ export default async function CreateNewSite() {
   const userSubscription = await getUserSubscription(user.uid);
 
   // get the number of sites the use has
-  const userSites = await getUserWebsite(user.uid);
+  const userSites = await getWebsite<websites[]>({ userId: user.uid }, true);
 
   // compare the number of sites the user has to the limit
   if (userSites.length >= userSubscription?.numOfWebsites) {
