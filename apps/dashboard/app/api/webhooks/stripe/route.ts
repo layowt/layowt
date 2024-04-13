@@ -1,4 +1,4 @@
-import { prisma } from '../../../../utils/prisma'
+import { prisma } from '@/utils/prisma'
 import Stripe from "stripe";
 
 const webhookSecret = process.env.NEXT_PRIVATE_WEBHOOK_SECRET;
@@ -92,7 +92,8 @@ export async function POST(request: Request) {
             dateOfExpiry: new Date().toISOString(),
             planType: 'BASIC',
             subscriptionActive: true,
-            userId: user.uid
+            userId: user.uid,
+            numOfWebsites: 0
           }
         })
 
