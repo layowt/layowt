@@ -13,6 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/ui/tooltip';
+import { motion } from 'framer-motion';
 
 import useInterval from '@/hooks/useInterval';
 
@@ -60,8 +61,6 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
           resolve();
         });
 
-      console.log(promise);
-
       // reset the seconds to 5
       setSeconds(5);
       // start the interval again
@@ -103,19 +102,27 @@ export default function WaitingForAuth({ supabase }: { supabase: any }) {
       <div className="flex gap-x-4 justify-center w-full">
         <TooltipProvider delayDuration={0}>
           <Tooltip>
-            <TooltipTrigger>
-              <Button
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+            >
+              <TooltipTrigger
                 onClick={resendVerificationEmail}
                 className={`
-									w-full bg-electric-violet-500 text-white duration-300 hover:bg-electric-violet-500/60 
-									${seconds == 0 ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'}
-								`}
+                w-full bg-electric-violet-500 text-white duration-300 hover:bg-electric-violet-500/60 h-10 px-4 rounded-2xl
+                text-sm hover:rounded-xl
+                ${
+                  seconds == 0
+                    ? 'hover:cursor-pointer'
+                    : 'hover:cursor-not-allowed'
+                }
+              `}
                 autoFocus={false}
                 disabled={seconds != 0}
               >
                 Resend Email
-              </Button>
-            </TooltipTrigger>
+              </TooltipTrigger>
+            </motion.div>
             {seconds != 0 ? (
               <TooltipContent side="bottom">
                 <p className="text-xs">Resend Email in {seconds} seconds</p>

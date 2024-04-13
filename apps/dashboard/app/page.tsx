@@ -1,24 +1,17 @@
-import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import SiteLogo from '@/components/logo';
-
-const fetchUser = async () => {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-
-  if (!data.user) {
-    throw new Error('User not found', error);
-  }
-  return data.user;
-};
+import { getUserFromSession } from '@/utils/user/user-session';
 
 export default async function App() {
   // get the user
-  const user = await fetchUser();
+  const user = await getUserFromSession();
+
+  if (!user.data?.user?.id) {
+    return;
+  }
 
   // redirect to the dashboard
-  if (user) {
+  if (user.data) {
     redirect('/dashboard');
   }
 
