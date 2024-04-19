@@ -1,10 +1,17 @@
 'use client';
-import React from 'react';
+import { useState } from 'react';
+
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Typewriter from 'typewriter-effect';
 
 export default function App() {
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   return (
     <div className="min-w-[100vw] mx-auto h-screen overflow-hidden">
       <div className="min-h-full w-full bg-[#05050A] bg-dot-white/[0.2] relative flex items-center justify-center">
@@ -36,15 +43,20 @@ export default function App() {
             requires no code.
           </p>
           <div className="flex flex-col gap-y-6 justify-center text-white z-20 w-full md:w-auto">
-            <div
+            <form
               className="
                 flex flex-col md:flex-row gap-y-4 mt-8 items-center gap-x-4 self-center w-full md:w-auto
                 md:bg-black p-2 border-none md:!border-solid md:border md:!border-white/20 rounded-lg
               "
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
             >
               <Input
                 type="email"
                 placeholder="Email"
+                value={email}
+                onChange={handleEmailChange}
                 className="
                   min-w-full border-none p-2 md:min-w-80 md:min-h-full bg-black
                   focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
@@ -55,11 +67,11 @@ export default function App() {
               <Button
                 variant="secondary"
                 size="lg"
-                className="w-full md:w-auto"
+                className="w-full md:w-auto text-lg"
               >
                 Sign up
               </Button>
-            </div>
+            </form>
             <h6 className="font-inter md:text-xl text-center">
               Sign up for early access and get{' '}
               <span className="font-bold text-electric-violet">50%</span> off
