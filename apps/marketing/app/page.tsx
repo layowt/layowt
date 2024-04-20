@@ -3,14 +3,27 @@ import { useState } from 'react';
 
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
+import { toast } from 'sonner';
+
 import Typewriter from 'typewriter-effect';
-import { prisma } from '~/database/index';
+import { signUp } from '@/utils/sign-up';
 
 export default function App() {
   const [email, setEmail] = useState('');
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+
+  const handleSignUp = async () => {
+    try {
+      await signUp(email);
+    } catch (e) {
+      console.error(e);
+      toast('An error occurred. Please try again.', {
+        description: e.message
+      });
+    }
   };
 
   return (
@@ -53,6 +66,7 @@ export default function App() {
               "
             onSubmit={(e) => {
               e.preventDefault();
+              handleSignUp();
             }}
           >
             <Input
@@ -71,6 +85,7 @@ export default function App() {
               variant="secondary"
               size="lg"
               className="w-full md:w-auto text-lg"
+              type="submit"
             >
               Sign up
             </Button>
