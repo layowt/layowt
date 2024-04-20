@@ -4,7 +4,6 @@ import SignUpContent from '@/components/sign-up/sign-up-content';
 export default function App() {
   return (
     <div className="min-w-[100vw] mx-auto h-screen overflow-hidden">
-      {/** Main content */}
       <div className="flex items-center flex-col justify-center px-3.5 md:px-10  py-4 w-full h-full font-inter">
         <h2
           className="

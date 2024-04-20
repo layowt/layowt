@@ -49,7 +49,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, special, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
     return (
-      <div className={special ? 'relative w-full' : 'w-auto'}>
+      <div className={special ? 'relative w-full' : 'w-full'}>
         <motion.div
           whileHover={{ scale: 1.03 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
