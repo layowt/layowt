@@ -9,7 +9,8 @@ export const TypewriterComponent = ({ strings }: { strings?: string[] }) => {
         autoStart: true,
         loop: true,
         deleteSpeed: 50,
-        cursorClassName: 'Typewriter__cursor text-[30px] md:text-[44px]'
+        cursorClassName:
+          'Typewriter__cursor text-[30px] md:text-[44px] text-gray-500'
       }}
     />
   );
