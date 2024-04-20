@@ -2,7 +2,7 @@ import './styles/globals.css';
 import { Cairo, Poppins, Kanit, Inter } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
-import SiteLogo from '@/components/logo';
+import SiteLogo from '~/components/logo';
 
 const CairoFont = Cairo({
   subsets: ['latin'],

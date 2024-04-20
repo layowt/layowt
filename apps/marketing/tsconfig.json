@@ -3,7 +3,9 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
       "@/*": ["./*"],
-      "@/components/*": ["./components/*"]
+      "@/components/*": ["./components/*"],
+      "~/*": ["../../packages/*"],
+      "~/components/*": ["../../packages/components/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -22,6 +24,16 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "../../packages/components/logo.tsx",
+    "../../packages/components/ui/background-beams.tsx",
+    "../../packages/components/ui/vortex.tsx",
+    "../../packages/components/ui/input.tsx",
+    "../../packages/components/ui/button.tsx"
+  ],
   "exclude": ["node_modules"]
 }
