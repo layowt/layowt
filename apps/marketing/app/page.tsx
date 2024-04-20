@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Button } from '~/components/ui/button';
 import Typewriter from 'typewriter-effect';
 
 export default function App() {
@@ -15,10 +15,17 @@ export default function App() {
   return (
     <div className="min-w-[100vw] mx-auto h-screen overflow-hidden">
       <div className="min-h-full w-full bg-[#05050A] bg-dot-white/[0.2] relative flex items-center justify-center">
+        {/** 'fade' background look */}
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-[#05050A] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
 
+        {/** Main content */}
         <div className="flex items-center flex-col justify-center px-3.5 md:px-10  py-4 w-full h-full font-inter">
-          <h2 className="text-white text-4xl md:text-6xl font-bold text-center z-20 bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text">
+          <h2
+            className="
+              animate-text text-4xl md:text-6xl font-bold text-center z-20 
+              bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text
+            "
+          >
             From idea to product, <br />
             <span className="flex items-center gap-x-3 justify-center mt-2">
               in
@@ -34,7 +41,7 @@ export default function App() {
               />
             </span>
           </h2>
-          <p className="text-white text-center mt-4 text-sm md:text-lg font-poppins w-3/5 md:w-auto">
+          <p className="text-white text-center mt-4 text-sm md:text-lg font-inter w-3/5 md:w-auto">
             A drag and drop website builder, that{'  '}
             <span className="font-semibold text-electric-violet italic">
               actually{'  '}
