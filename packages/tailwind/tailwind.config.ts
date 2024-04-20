@@ -14,7 +14,8 @@ const sharedConfig = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}'
+    './app/**/*.{ts,tsx}',
+    '../../packages/components/**/*{.js,.ts,.jsx,.tsx}',
   ],
   safelist: [
     {

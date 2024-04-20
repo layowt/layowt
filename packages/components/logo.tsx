@@ -14,7 +14,7 @@ export default function SiteLogo({
     <Link
       href="/dashboard"
       className={cn(
-        'flex gap-x-1 items-center hover:cursor-pointer group',
+        'flex gap-x-2 items-center hover:cursor-pointer group',
         className
       )}
     >
