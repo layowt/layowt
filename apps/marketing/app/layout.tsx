@@ -56,15 +56,17 @@ export default function RootLayout({
       >
         {/* <Theme className="bg-grid-white/[0.03]"> */}
         <Theme>
-          {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div> */}
-          <div className="flex flex-col relative">
-            <header className="flex items-center justify-between p-7 w-full text-white absolute top-0 z-30">
-              <SiteLogo
-                logoSize="size-7"
-                className="text-xl"
-              />
-            </header>
-            <main>{children}</main>
+          <div className="min-h-full w-full bg-[#05050A] bg-dot-white/[0.2] relative flex items-center justify-center">
+            <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-[#05050A] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+            <div className="flex flex-col relative">
+              <header className="flex items-center justify-between p-7 w-full text-white absolute top-0 z-30">
+                <SiteLogo
+                  logoSize="size-7"
+                  className="text-xl"
+                />
+              </header>
+              <main>{children}</main>
+            </div>
           </div>
         </Theme>
       </body>
