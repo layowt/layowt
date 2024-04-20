@@ -1,5 +1,5 @@
 {
-  "name": "draggle/tailwind-config",
+  "name": "@draggle/tailwind-config",
   "version": "1.0.0",
   "description": "Tailwind CSS configuration for Draggle",
   "main": "index.ts",
