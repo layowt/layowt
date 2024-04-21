@@ -10,15 +10,18 @@ export default function Socials() {
   const socials = [
     {
       href: 'https://github.com/Logannford/draggle',
-      icon: GitHubLogoIcon
+      icon: GitHubLogoIcon,
+      ariaLabel: 'GitHub'
     },
     {
       href: 'https://www.instagram.com/draggle.io/',
-      icon: InstagramLogoIcon
+      icon: InstagramLogoIcon,
+      ariaLabel: 'Instagram'
     },
     {
       href: '/',
-      icon: TwitterLogoIcon
+      icon: TwitterLogoIcon,
+      ariaLabel: 'Twitter'
     }
   ];
 
@@ -29,6 +32,7 @@ export default function Socials() {
           key={index}
           href={social.href}
           target="_blank"
+          aria-label={social.ariaLabel}
           className="size-6 hover:text-electric-violet hover:cursor-pointer duration-300"
         >
           <social.icon className="size-full" />
