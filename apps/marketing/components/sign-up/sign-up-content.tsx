@@ -5,24 +5,31 @@ import { signUp } from '@/utils/sign-up';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { toast } from 'sonner';
+import posthog from 'posthog-js';
+import { ReloadIcon } from '@radix-ui/react-icons';
 
 export default function SignUpContent() {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
   const handleSignUp = async () => {
+    setLoading(true);
     try {
       await signUp(email);
       toast('Signed up successfully! 🎉');
+      posthog.capture('signed_up', { email });
     } catch (e) {
       console.error(e);
       toast('An error occurred. Please try again.', {
         description: e.message
       });
+      posthog.capture('signed_up_error', { error: e.message });
     }
+    setLoading(false);
   };
 
   return (
@@ -45,11 +52,12 @@ export default function SignUpContent() {
             value={email}
             onChange={handleEmailChange}
             className="
-						min-w-full p-2 md:min-w-80 md:min-h-full bg-black
-						focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
-						text-white placeholder:text-white/85 placeholder:font-poppins placeholder:!leading-relaxed
-						md:max-w-40 text-lg border border-solid border-white/20 md:border-none h-14 md:h-10
-					"
+							min-w-full p-2 md:min-w-80 md:min-h-full bg-black
+							focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
+							text-white placeholder:text-white/85 placeholder:font-poppins placeholder:!leading-relaxed
+							md:max-w-40 text-lg border border-solid border-white/20 md:border-none h-14 md:h-10
+						"
+            autoComplete="email"
           />
           <Button
             variant="secondary"
@@ -57,7 +65,11 @@ export default function SignUpContent() {
             className="w-full md:w-auto text-lg"
             type="submit"
           >
-            Sign up
+            {loading ? (
+              <ReloadIcon className="size-4 animate-spin min-w-[61px]" />
+            ) : (
+              'Sign up'
+            )}
           </Button>
         </form>
       </div>
