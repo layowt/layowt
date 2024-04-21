@@ -11,6 +11,7 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 export default function SignUpContent() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -19,8 +20,13 @@ export default function SignUpContent() {
   const handleSignUp = async () => {
     setLoading(true);
     try {
+      // sign up
       await signUp(email);
+      // show toast message
       toast('Signed up successfully! 🎉');
+      // set sign up success to true
+      setSignUpSuccess(true);
+      // capture signed_up event
       posthog.capture('signed_up', { email });
     } catch (e) {
       console.error(e);
@@ -67,8 +73,10 @@ export default function SignUpContent() {
           >
             {loading ? (
               <ReloadIcon className="size-4 animate-spin min-w-[61px]" />
+            ) : signUpSuccess ? (
+              <span className="min-w-[61px]">🎉</span>
             ) : (
-              'Sign up'
+              'Sign Up'
             )}
           </Button>
         </form>
