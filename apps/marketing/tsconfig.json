@@ -33,7 +33,8 @@
     "../../packages/components/ui/background-beams.tsx",
     "../../packages/components/ui/vortex.tsx",
     "../../packages/components/ui/input.tsx",
-    "../../packages/components/ui/button.tsx"
+    "../../packages/components/ui/button.tsx",
+    "app/providers.ts"
   ],
   "exclude": ["node_modules"]
 }
