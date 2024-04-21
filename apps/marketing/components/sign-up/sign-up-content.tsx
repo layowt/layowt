@@ -61,11 +61,11 @@ export default function SignUpContent() {
           </Button>
         </form>
       </div>
-      <h6 className="font-inter md:text-xl text-center">
+      <h3 className="font-inter md:text-xl text-center">
         Sign up for early access and get{' '}
         <span className="font-bold text-electric-violet">50%</span> off your
         first month.
-      </h6>
+      </h3>
     </div>
   );
 }
