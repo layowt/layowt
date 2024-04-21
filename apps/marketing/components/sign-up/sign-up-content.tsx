@@ -1,27 +1,56 @@
 'use client';
 import { useState } from 'react';
 import { signUp } from '@/utils/sign-up';
+import posthog from 'posthog-js';
 
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { toast } from 'sonner';
-import posthog from 'posthog-js';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 export default function SignUpContent() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
+  const validEmail = (emailAddress: string) => {
+    return Boolean(!!emailAddress.match(/.+@.+/));
+  };
+
   const handleSignUp = async () => {
+    // reset all states
     setLoading(true);
+    setError(false);
+    setSignUpSuccess(false);
     try {
+      // check if email is valid
+      if (!validEmail(email)) {
+        setLoading(false);
+        setError(true);
+        return toast('Please enter a valid email address.', {
+          description: 'The email you entered is not valid. Please try again.'
+        });
+      }
+
       // sign up
-      await signUp(email);
+      const res = await signUp(email);
+
+      if (res === 409) {
+        // stop spinner
+        setLoading(false);
+        setError(true);
+        // show toast
+        return toast('Email already exists. Please try again.', {
+          description:
+            'You have already signed up with this email. Please try again with a different email.'
+        });
+      }
+
       // show toast message
       toast('Signed up successfully! 🎉');
       // set sign up success to true
@@ -36,6 +65,18 @@ export default function SignUpContent() {
       posthog.capture('signed_up_error', { error: e.message });
     }
     setLoading(false);
+  };
+
+  const handleButtonText = () => {
+    if (loading) {
+      return <ReloadIcon className="size-4 animate-spin min-w-[61px]" />;
+    } else if (signUpSuccess) {
+      return <span className="min-w-[61px]">🎉</span>;
+    } else if (error) {
+      return <span className="min-w-[61px]">❌</span>;
+    } else {
+      return 'Sign Up';
+    }
   };
 
   return (
@@ -71,13 +112,7 @@ export default function SignUpContent() {
             className="w-full md:w-auto text-lg"
             type="submit"
           >
-            {loading ? (
-              <ReloadIcon className="size-4 animate-spin min-w-[61px]" />
-            ) : signUpSuccess ? (
-              <span className="min-w-[61px]">🎉</span>
-            ) : (
-              'Sign Up'
-            )}
+            {handleButtonText()}
           </Button>
         </form>
       </div>
