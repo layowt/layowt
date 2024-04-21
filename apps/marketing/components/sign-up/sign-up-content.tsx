@@ -27,7 +27,7 @@ export default function SignUpContent() {
 
   return (
     <div className="flex flex-col gap-y-6 justify-center text-white z-20 w-full md:w-auto items-center">
-      <div className="relative flex max-w-fit md:w-auto justify-center">
+      <div className="relative flex w-5/6 sm:w-3/4 md:w-auto justify-center">
         <div className="absolute inset-0 bg-electric-violet-500 rounded-lg blur mt-8 hidden md:flex"></div>
         <form
           className="
