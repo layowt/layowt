@@ -1,5 +1,6 @@
 import { TypewriterComponent } from '@/components/sign-up/typewriter';
 import SignUpContent from '@/components/sign-up/sign-up-content';
+import Socials from '@/components/sign-up/socials';
 
 export default function App() {
   return (
@@ -26,6 +27,10 @@ export default function App() {
           requires no code.
         </p>
         <SignUpContent />
+        {/** socials at the bottom of the page */}
+        <div className="bottom-0 absolute m-5">
+          <Socials />
+        </div>
       </div>
     </div>
   );
