@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import NavigationItem from '@/components/layout/navigation-item';
+import NavigationItem from '@/components/layout/dashboard/navigation-item';
 
 // icon imports
 import MaterialSymbolsHomeOutlineRounded from '@/ui/icons/home';

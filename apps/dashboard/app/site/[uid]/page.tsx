@@ -1,4 +1,13 @@
+import type { Metadata } from 'next';
+
 import { getWebsite } from '@/utils/websites/website.get';
+
+const apiEndpoint = process.env.DRAGGLE_API_URL;
+
+export const metadata: Metadata = {
+  title: 'Draggle | Site Builder',
+  description: 'Where digital products come to life.'
+};
 
 export default async function Page({ params }: { params: { uid: string } }) {
   // get the uid from the params
@@ -11,11 +20,14 @@ export default async function Page({ params }: { params: { uid: string } }) {
   const website = await getWebsite({ websiteId: websiteUid });
 
   // we now need to hit our external api to get the site data
+  // const response = await fetch(`${apiEndpoint}/ping/${websiteUid}`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // });
 
-  return (
-    <div className="text-white">
-      <h6>{website.userId}</h6>
-      <h6>{website.websiteId}</h6>
-    </div>
-  );
+  //let responseData = await response.json();
+
+  return <div className="text-white"></div>;
 }
