@@ -1,49 +1,81 @@
 'use client';
-import React from 'react';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 import { MobileIcon, DesktopIcon, LaptopIcon } from '@radix-ui/react-icons';
+import { IconButton } from '@radix-ui/themes';
 
 interface Devices {
+  id: 'mobile' | 'laptop' | 'desktop';
   icon: React.ComponentType<{}>;
   screenSize: number;
   selected: boolean;
 }
 
 export default function ScreenSizeSwapper() {
+  // set here to change va
+  const width = 28 as const;
+  const height = 28 as const;
+
   // create array of devices
   const devices: Devices[] = [
     {
-      icon: MobileIcon,
+      id: 'mobile',
+      icon: () => (
+        <MobileIcon
+          width={width}
+          height={height}
+        />
+      ),
       screenSize: 680,
       selected: false
     },
     {
-      icon: LaptopIcon,
+      id: 'laptop',
+      icon: () => (
+        <LaptopIcon
+          width={width}
+          height={height}
+        />
+      ),
       screenSize: 1080,
       selected: false
     },
     {
-      icon: DesktopIcon,
+      id: 'desktop',
+      icon: () => (
+        <DesktopIcon
+          width={width}
+          height={height}
+        />
+      ),
       screenSize: 1440,
       selected: true // default this to true when the user loads onto the page builder for the first time
     }
   ];
 
+  const [selectedDevice, setSelectedDevice] =
+    useState<Devices['id']>('desktop');
+
   return (
-    <div className="text-white flex gap-x-4">
-      {devices.map((device, index) => (
-        <Button
-          key={index}
-          className="size-5"
-          variant="none"
-          padding="none"
-          size="icon"
-          hoverEffect={false}
-        >
-          <device.icon />
-        </Button>
-      ))}
-    </div>
+    <>
+      {selectedDevice.id}
+      <div className="text-white flex gap-x-3">
+        {devices.map((device) => (
+          <IconButton
+            key={device.id}
+            className={cn(
+              `
+						hover:bg-black-50 duration-300 hover:cursor-pointer rounded-md p-1.5
+				`,
+              selectedDevice === device.id ? 'bg-black-50' : 'bg-transparent'
+            )}
+            onClick={() => setSelectedDevice(device.id)}
+          >
+            <device.icon />
+          </IconButton>
+        ))}
+      </div>
+    </>
   );
 }
