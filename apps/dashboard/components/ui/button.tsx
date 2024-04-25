@@ -23,13 +23,16 @@ const buttonVariants = cva(
           'bg-electric-violet-500 text-white hover:bg-white hover:text-black duration-300',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        none: 'hover:bg-accent hover:text-accent-foreground hover:!bg-transparent hover:!text-none'
+        none: ''
       },
       size: {
         default: 'h-10 px-4',
         sm: 'h-7 rounded-md px-3 py-1',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10'
+      },
+      padding: {
+        none: '!p-0'
       }
     },
     defaultVariants: {
@@ -44,28 +47,49 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   special?: boolean;
+  hoverEffect?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, special, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      special,
+      hoverEffect = true,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <div className={special ? 'relative w-full' : ''}>
-        <motion.div
-          whileHover={{ scale: 1.03 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-        >
+        {/** Conditionally make the button have a spring hover effect */}
+        {hoverEffect ? (
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+          >
+            <Comp
+              className={cn(buttonVariants({ variant, size, className }))}
+              ref={ref}
+              {...props}
+            />
+            {special ? (
+              <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
+            ) : (
+              ''
+            )}
+          </motion.div>
+        ) : (
           <Comp
             className={cn(buttonVariants({ variant, size, className }))}
             ref={ref}
             {...props}
           />
-          {special ? (
-            <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
-          ) : (
-            ''
-          )}
-        </motion.div>
+        )}
       </div>
     );
   }
