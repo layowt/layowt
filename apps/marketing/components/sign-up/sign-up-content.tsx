@@ -8,13 +8,13 @@ import { Button } from '~/components/ui/button';
 import { toast } from 'sonner';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
+type status = 'loading' | 'success' | 'error' | 'idle';
+
 export default function SignUpContent() {
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [signUpSuccess, setSignUpSuccess] = useState(false);
-  const [error, setError] = useState(null);
+  const [state, setState] = useState<status>('idle');
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
@@ -24,14 +24,11 @@ export default function SignUpContent() {
 
   const handleSignUp = async () => {
     // reset all states
-    setLoading(true);
-    setError(false);
-    setSignUpSuccess(false);
+    setState('loading');
     try {
       // check if email is valid
       if (!validEmail(email)) {
-        setLoading(false);
-        setError(true);
+        setState('error');
         return toast('Please enter a valid email address.', {
           description: 'The email you entered is not valid. Please try again.'
         });
@@ -42,8 +39,7 @@ export default function SignUpContent() {
 
       if (res === 409) {
         // stop spinner
-        setLoading(false);
-        setError(true);
+        setState('error');
         // show toast
         return toast('Email already exists. Please try again.', {
           description:
@@ -54,7 +50,7 @@ export default function SignUpContent() {
       // show toast message
       toast('Signed up successfully! 🎉');
       // set sign up success to true
-      setSignUpSuccess(true);
+      setState('success');
       // capture signed_up event
       posthog.capture('signed_up', { email });
     } catch (e) {
@@ -64,15 +60,14 @@ export default function SignUpContent() {
       });
       posthog.capture('signed_up_error', { error: e.message });
     }
-    setLoading(false);
   };
 
   const handleButtonText = () => {
-    if (loading) {
+    if (state === 'loading') {
       return <ReloadIcon className="size-4 animate-spin min-w-[61px]" />;
-    } else if (signUpSuccess) {
+    } else if (state === 'success') {
       return <span className="min-w-[61px]">🎉</span>;
-    } else if (error) {
+    } else if (state === 'error') {
       return <span className="min-w-[61px]">❌</span>;
     } else {
       return 'Sign Up';
