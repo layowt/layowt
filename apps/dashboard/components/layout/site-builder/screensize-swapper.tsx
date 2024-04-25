@@ -1,19 +1,26 @@
 'use client';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import type { DeviceType } from '@/types/DeviceType';
+import { device, setDeviceType } from '@/store/slices/index';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 
 import { MobileIcon, DesktopIcon, LaptopIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
 
 interface Devices {
-  id: 'mobile' | 'laptop' | 'desktop';
+  id: DeviceType;
   icon: React.ComponentType<{}>;
   screenSize: number;
   selected: boolean;
 }
 
 export default function ScreenSizeSwapper() {
-  // set here to change va
+  // get device type
+  const selectedDeviceType = useAppSelector(device);
+  const dispatch = useAppDispatch();
+
+  // set here to change
   const width = 28 as const;
   const height = 28 as const;
 
@@ -57,20 +64,27 @@ export default function ScreenSizeSwapper() {
   const [selectedDevice, setSelectedDevice] =
     useState<Devices['id']>('desktop');
 
+  const setDevice = (deviceId: Devices['id']) => {
+    setSelectedDevice(deviceId);
+
+    // set the device in redux
+    dispatch(setDeviceType(deviceId));
+  };
+
   return (
     <>
-      {selectedDevice.id}
+      {selectedDeviceType}
       <div className="text-white flex gap-x-3">
         {devices.map((device) => (
           <IconButton
             key={device.id}
             className={cn(
               `
-						hover:bg-black-50 duration-300 hover:cursor-pointer rounded-md p-1.5
-				`,
+			hover:bg-black-50 duration-300 hover:cursor-pointer rounded-md p-1.5
+			`,
               selectedDevice === device.id ? 'bg-black-50' : 'bg-transparent'
             )}
-            onClick={() => setSelectedDevice(device.id)}
+            onClick={() => setDevice(device.id)}
           >
             <device.icon />
           </IconButton>

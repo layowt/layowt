@@ -9,7 +9,7 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 
 // redux imports
-import { billingPeriod } from '@/store/user-store';
+import { billingPeriod } from '@/store/slices/user-store';
 import { useAppSelector } from '@/lib/hooks';
 
 // action imports
