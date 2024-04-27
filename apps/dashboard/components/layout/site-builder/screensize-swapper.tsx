@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { DeviceType } from '@/types/DeviceType';
 import { device, setDeviceType } from '@/store/slices/index';
@@ -15,14 +14,14 @@ interface Devices {
   selected: boolean;
 }
 
+// set here to change
+const width = 28 as const;
+const height = 28 as const;
+
 export default function ScreenSizeSwapper() {
   // get device type
   const selectedDeviceType = useAppSelector(device);
   const dispatch = useAppDispatch();
-
-  // set here to change
-  const width = 28 as const;
-  const height = 28 as const;
 
   // create array of devices
   const devices: Devices[] = [
@@ -61,28 +60,24 @@ export default function ScreenSizeSwapper() {
     }
   ];
 
-  const [selectedDevice, setSelectedDevice] =
-    useState<Devices['id']>('desktop');
-
   const setDevice = (deviceId: Devices['id']) => {
-    setSelectedDevice(deviceId);
-
     // set the device in redux
     dispatch(setDeviceType(deviceId));
   };
 
   return (
     <>
-      {selectedDeviceType}
       <div className="text-white flex gap-x-3">
         {devices.map((device) => (
           <IconButton
             key={device.id}
             className={cn(
               `
-			hover:bg-black-50 duration-300 hover:cursor-pointer rounded-md p-1.5
-			`,
-              selectedDevice === device.id ? 'bg-black-50' : 'bg-transparent'
+							hover:bg-black-50 duration-300 hover:cursor-pointer rounded-md p-1.5
+							`,
+              selectedDeviceType === device.id
+                ? 'bg-black-50'
+                : 'bg-transparent'
             )}
             onClick={() => setDevice(device.id)}
           >
