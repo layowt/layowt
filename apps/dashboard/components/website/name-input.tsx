@@ -58,21 +58,17 @@ export default function WebsiteNameInput() {
 
   // Render the input component with associated event handlers
   return (
-    <>
-      <Input
-        padding="md"
-        type="text"
-        name="websiteNameInput"
-        value={siteName}
-        onChange={handleChange}
-        onKeyDown={handleKeyPress}
-        color="light-black"
-        variant="transparent"
-        placeholder=""
-        className="font-poppins"
-      />
-      {/* Display the current saving status */}
-      {isSaving ? 'Saving...' : 'Saved'}
-    </>
+    <Input
+      padding="md"
+      type="text"
+      name="websiteNameInput"
+      value={siteName}
+      onChange={handleChange}
+      onKeyDown={handleKeyPress}
+      color="light-black"
+      variant="transparent"
+      placeholder=""
+      className="font-poppins"
+    />
   );
 }

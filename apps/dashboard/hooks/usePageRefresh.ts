@@ -6,7 +6,6 @@ const usePageRefresh = (isSaving: boolean) => {
       if (isSaving) {
         // Prompt the user to confirm leaving the page
         event.preventDefault();
-        event.returnValue = "You have unsaved changes. Are you sure you want to leave?";
       }
     };
 
