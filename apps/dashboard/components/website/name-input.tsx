@@ -1,11 +1,11 @@
-'use client';
 // Import necessary dependencies
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@/ui/input';
 import { updateWebsite } from '@/utils/websites/website.post';
-import { useAppSelector } from '@/lib/hooks';
 import useDebounce from '@/hooks/useDebounce';
+import usePageRefresh from '@/hooks/usePageRefresh';
 import { website } from '@/store/slices/website-store';
+import { useAppSelector } from '@/lib/hooks';
 
 // Define the WebsiteNameInput component
 export default function WebsiteNameInput() {
@@ -14,39 +14,45 @@ export default function WebsiteNameInput() {
 
   // Local state to manage siteName input and its debounced value
   const [siteName, setSiteName] = useState(currentWebsite?.websiteName || '');
-  const debouncedSiteName = useDebounce(siteName, 500);
+  const [isSaving, setIsSaving] = useState(false); // Track saving state
+
+  // Use debounce to track changes in siteName
+  const debouncedSiteName = useDebounce(siteName, 1000);
+
+  // check if we have saved before we allow the user to refresh the page
+  const canRefresh = usePageRefresh(isSaving);
 
   // Handle input change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSiteName(e.target.value);
+    setIsSaving(false); // Indicate that changes are not yet saved
   };
 
-  let initialInit = false;
-  // Update siteName when currentWebsite changes
+  // Effect to update siteName when currentWebsite changes
   useEffect(() => {
-    if (initialInit) return;
-    initialInit = true;
     if (currentWebsite?.websiteName) {
       setSiteName(currentWebsite.websiteName);
     }
   }, [currentWebsite]);
 
-  let init = false;
-  // useEffect to handle saving debouncedSiteName to the database
+  // Effect to handle saving debouncedSiteName to the database
   useEffect(() => {
-    // init flag to check if we have fully mounted
-    if (!currentWebsite?.websiteId || init) return;
-    init = true;
-    updateWebsite(currentWebsite?.websiteId, {
-      websiteName: debouncedSiteName
-    });
-  }, [debouncedSiteName]);
+    if (debouncedSiteName && currentWebsite?.websiteId) {
+      setIsSaving(true); // Set saving state to true when saving starts
+
+      updateWebsite(currentWebsite.websiteId, {
+        websiteName: debouncedSiteName
+      }).then(() => {
+        setIsSaving(false); // Set saving state to false when saving is completed
+      });
+    }
+  }, [debouncedSiteName, currentWebsite]);
 
   // Handle Enter key press to save immediately
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      // Save immediately on pressing Enter key
-      updateWebsite(currentWebsite?.websiteId, { websiteName: siteName });
+    if (e.key === 'Enter' && currentWebsite?.websiteId) {
+      updateWebsite(currentWebsite.websiteId, { websiteName: siteName });
+      setIsSaving(true); // Indicate that saving is in progress
     }
   };
 
@@ -65,7 +71,8 @@ export default function WebsiteNameInput() {
         placeholder=""
         className="font-poppins"
       />
-      {/* Display the current website name */}
+      {/* Display the current saving status */}
+      {isSaving ? 'Saving...' : 'Saved'}
     </>
   );
 }
