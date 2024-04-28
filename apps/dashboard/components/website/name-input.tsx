@@ -68,7 +68,7 @@ export default function WebsiteNameInput() {
       color="light-black"
       variant="transparent"
       placeholder=""
-      className="font-poppins"
+      className="font-poppins pl-0"
     />
   );
 }

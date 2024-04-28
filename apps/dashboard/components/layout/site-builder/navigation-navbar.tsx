@@ -22,6 +22,7 @@ export default function SiteBuilderNavBar() {
         <Link href="/dashboard">
           <ArrowLeftIcon />
         </Link>
+        <div className="bg-white w-px h-5"></div>
         {/** Set / view site name */}
         <WebsiteNameInput />
       </div>
