@@ -19,14 +19,13 @@ export default function WebsiteNameInput() {
   const currentWebsite = useAppSelector(website);
 
   // Local state to manage siteName input and its debounced value
-  const [siteName, setSiteName] = useState(currentWebsite?.websiteName || '');
-  const [isSaving, setIsSaving] = useState(false); // Track saving state
+  const [siteName, setSiteName] = useState('');
 
   // Use debounce to track changes in siteName
   const debouncedSiteName = useDebounce(siteName, 1000);
 
   // check if we have saved before we allow the user to refresh the page
-  const canRefresh = usePageRefresh(savingValue);
+  usePageRefresh(savingValue);
 
   // Handle input change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

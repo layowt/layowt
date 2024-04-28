@@ -18,7 +18,7 @@ export default function SiteBuilderNavBar() {
   return (
     <nav className="p-4 border-b border-black-50 flex items-center justify-between">
       {/* <SiteLogo className="text-white" /> */}
-      <div className="flex items-center gap-x-4">
+      <div className="flex items-center gap-x-4 w-1/3">
         <Link href="/dashboard">
           <ArrowLeftIcon />
         </Link>
@@ -26,10 +26,12 @@ export default function SiteBuilderNavBar() {
         {/** Set / view site name */}
         <WebsiteNameInput />
       </div>
-
-      <ScreenSizeSwapper />
-
-      <SiteBuilderSettings />
+      <div className="w-1/3 flex justify-center">
+        <ScreenSizeSwapper />
+      </div>
+      <div className="w-1/3 flex justify-end">
+        <SiteBuilderSettings />
+      </div>
     </nav>
   );
 }

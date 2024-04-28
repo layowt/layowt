@@ -57,6 +57,7 @@ export default function DashboardNavBar({
                 "
                 variant="none"
                 onClick={() => setOpen(!open)}
+                rounded="default"
               >
                 <MagnifyingGlassIcon className="absolute left-2 size-3" />
                 <span>Search</span>
