@@ -7,7 +7,11 @@ import {
   DropdownMenuGroup
 } from '@/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { ChevronDownIcon } from '@radix-ui/react-icons';
+import {
+  ChevronDownIcon,
+  Share2Icon,
+  EyeOpenIcon
+} from '@radix-ui/react-icons';
 import { motion } from 'framer-motion';
 import type { websites as Website } from '@prisma/client';
 
@@ -18,10 +22,22 @@ export default function SiteBuilderPublishModal({
 }) {
   const dropdownOptions = [
     {
-      name: 'Preview'
+      name: 'Preview',
+      icon: (
+        <EyeOpenIcon
+          width="auto"
+          height="auto"
+        />
+      )
     },
     {
-      name: 'Share'
+      name: 'Share',
+      icon: (
+        <Share2Icon
+          width="auto"
+          height="auto"
+        />
+      )
     }
   ];
 
@@ -59,8 +75,15 @@ export default function SiteBuilderPublishModal({
               key={index}
               className="list-none w-full"
             >
-              <button className="text-[0.65rem] font-normal px-2 py-1">
-                {item.name}
+              <button
+                key={index}
+                className="
+									px-2 py-1 hover:border-none hover:!ring-0 hover:bg-black-50 rounded w-full"
+              >
+                <div className="flex items-center gap-x-2">
+                  <div className="size-3">{item.icon}</div>
+                  <span className="text-[0.65rem]">{item.name}</span>
+                </div>
               </button>
             </motion.li>
           ))}
