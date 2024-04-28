@@ -1,53 +1,47 @@
 'use client';
+// Import necessary dependencies
 import { useState, useEffect } from 'react';
 import { Input } from '@/ui/input';
-import useDebounce from '@/hooks/useDebounce';
 import { updateWebsite } from '@/utils/websites/website.post';
-import { website } from '@/store/slices/website-store';
 import { useAppSelector } from '@/lib/hooks';
+import useDebounce from '@/hooks/useDebounce';
+import { website } from '@/store/slices/website-store';
 
-/**
- *
- * @returns Needs to:
- * - output an input element so a user can input the name of their site ✅
- * - Have a default value which iterates through adjectives with first part of email pre-pended
- * 	- e.g - logan's stunning site / logan's wonderful product
- * - debounce time of 2 second to save the name to the db
- * - can also be instantly saved via using the enter hotkey
- * - can pull the value from the database to output once changed
- */
+// Define the WebsiteNameInput component
 export default function WebsiteNameInput() {
+  // Retrieve currentWebsite from Redux store using useAppSelector
   const currentWebsite = useAppSelector(website);
-  const [siteName, setSiteName] = useState('');
-  const [debouncedSiteName, setDebouncedSiteName] = useState('');
 
+  // Local state to manage siteName input and its debounced value
+  const [siteName, setSiteName] = useState(currentWebsite?.websiteName || '');
+  const debouncedSiteName = useDebounce(siteName, 2000);
+
+  // Handle input change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSiteName(e.target.value);
   };
 
-  // every second, update the website name
-  // useEffect(() => {
-  //   const delayedInput = setTimeout(() => {
-  //     setDebouncedSiteName(siteName);
-  //   }, 1000);
-  //   return () => clearTimeout(delayedInput);
-  // }, [siteName, 1000]);
-
+  let init = false;
   // useEffect to handle saving debouncedSiteName to the database
   useEffect(() => {
-    // Ensure debouncedSiteName is not empty before updating the database
-    if (debouncedSiteName) {
-      updateWebsite('', { websiteName: siteName });
-    }
+    // init flag to check if we have fully mounted
+    if (!currentWebsite?.websiteId || init) return;
+    init = true;
+
+    updateWebsite(currentWebsite?.websiteId, {
+      websiteName: debouncedSiteName
+    });
   }, [debouncedSiteName]);
 
+  // Handle Enter key press to save immediately
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       // Save immediately on pressing Enter key
-      updateWebsite('', { websiteName: siteName });
+      updateWebsite(currentWebsite?.websiteId, { websiteName: siteName });
     }
   };
 
+  // Render the input component with associated event handlers
   return (
     <>
       <Input
@@ -59,9 +53,10 @@ export default function WebsiteNameInput() {
         color="light-black"
         variant="transparent"
         placeholder=""
-        onKeyDown={handleKeyPress}
+        className="font-poppins"
       />
-      {currentWebsite?.websiteId}
+      {/* Display the current website name */}
+      {currentWebsite}
     </>
   );
 }
