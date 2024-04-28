@@ -48,4 +48,11 @@ model websites {
   
   owner                                       users @relation(fields: [userId], references: [uid])
   userId                                      String
+  websiteName                                 String
+}
+
+model earlyAccess {
+  email                                      String @id 
+  createdAt                                  DateTime @default(now())
+  updatedAt                                  DateTime @updatedAt
 }
