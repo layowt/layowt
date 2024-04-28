@@ -14,12 +14,22 @@ export default function WebsiteNameInput() {
 
   // Local state to manage siteName input and its debounced value
   const [siteName, setSiteName] = useState(currentWebsite?.websiteName || '');
-  const debouncedSiteName = useDebounce(siteName, 2000);
+  const debouncedSiteName = useDebounce(siteName, 500);
 
   // Handle input change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSiteName(e.target.value);
   };
+
+  let initialInit = false;
+  // Update siteName when currentWebsite changes
+  useEffect(() => {
+    if (initialInit) return;
+    initialInit = true;
+    if (currentWebsite?.websiteName) {
+      setSiteName(currentWebsite.websiteName);
+    }
+  }, [currentWebsite]);
 
   let init = false;
   // useEffect to handle saving debouncedSiteName to the database
@@ -27,7 +37,6 @@ export default function WebsiteNameInput() {
     // init flag to check if we have fully mounted
     if (!currentWebsite?.websiteId || init) return;
     init = true;
-
     updateWebsite(currentWebsite?.websiteId, {
       websiteName: debouncedSiteName
     });
@@ -50,13 +59,13 @@ export default function WebsiteNameInput() {
         name="websiteNameInput"
         value={siteName}
         onChange={handleChange}
+        onKeyDown={handleKeyPress}
         color="light-black"
         variant="transparent"
         placeholder=""
         className="font-poppins"
       />
       {/* Display the current website name */}
-      {currentWebsite}
     </>
   );
 }
