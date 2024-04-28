@@ -36,7 +36,7 @@ const buttonVariants = cva(
       },
       rounded: {
         default: 'rounded-2xl hover:rounded-xl',
-        sm: 'rounded-md hover:rounded-sm'
+        sm: 'rounded-md'
       }
     },
     defaultVariants: {
