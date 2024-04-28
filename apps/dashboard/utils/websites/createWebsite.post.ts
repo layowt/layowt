@@ -4,6 +4,7 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 	const response = await prisma.websites.create({
 		data: {
 			websiteId: websiteId,
+			websiteName: '', // Add the required 'websiteName' property with a default value
 			owner: {
 				connect: {
 					uid: userId,
