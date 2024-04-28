@@ -14,7 +14,7 @@ import { EyeOpenIcon } from '@radix-ui/react-icons';
 export default function SiteBuilderSettings() {
   return (
     <div className="flex items-center gap-x-4">
-      <EyeOpenIcon className="border border-black-50" />
+      <EyeOpenIcon />
       <Button variant="tertiary">Publish</Button>
       <UserDropdownMenu className="!size-10 text-sm" />
     </div>

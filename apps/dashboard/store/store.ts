@@ -3,12 +3,14 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import userSliceReducer from '@/store/slices/user-store';
 import deviceTypeReducer from '@/store/slices/index'
+import websiteSlice from '@/store/slices/website-store'
 
 // exported function to crate the stores
 export const store = configureStore({
   reducer: {
     user: userSliceReducer,
-    device: deviceTypeReducer
+    device: deviceTypeReducer,
+    website: websiteSlice
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>
