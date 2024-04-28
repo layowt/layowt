@@ -2,13 +2,19 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/ui/input';
 import { updateWebsite } from '@/utils/websites/website.post';
+
+// hooks
 import useDebounce from '@/hooks/useDebounce';
 import usePageRefresh from '@/hooks/usePageRefresh';
-import { website } from '@/store/slices/website-store';
-import { useAppSelector } from '@/lib/hooks';
+
+// redux
+import { website, saving, setSavingState } from '@/store/slices/website-store';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 
 // Define the WebsiteNameInput component
 export default function WebsiteNameInput() {
+  const dispatch = useAppDispatch();
+  const savingValue = useAppSelector(saving);
   // Retrieve currentWebsite from Redux store using useAppSelector
   const currentWebsite = useAppSelector(website);
 
@@ -20,12 +26,12 @@ export default function WebsiteNameInput() {
   const debouncedSiteName = useDebounce(siteName, 1000);
 
   // check if we have saved before we allow the user to refresh the page
-  const canRefresh = usePageRefresh(isSaving);
+  const canRefresh = usePageRefresh(savingValue);
 
   // Handle input change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSiteName(e.target.value);
-    setIsSaving(false); // Indicate that changes are not yet saved
+    dispatch(setSavingState('idle'));
   };
 
   // Effect to update siteName when currentWebsite changes
@@ -38,12 +44,12 @@ export default function WebsiteNameInput() {
   // Effect to handle saving debouncedSiteName to the database
   useEffect(() => {
     if (debouncedSiteName && currentWebsite?.websiteId) {
-      setIsSaving(true); // Set saving state to true when saving starts
+      dispatch(setSavingState('saving'));
 
       updateWebsite(currentWebsite.websiteId, {
         websiteName: debouncedSiteName
       }).then(() => {
-        setIsSaving(false); // Set saving state to false when saving is completed
+        dispatch(setSavingState('idle'));
       });
     }
   }, [debouncedSiteName, currentWebsite]);
@@ -52,7 +58,7 @@ export default function WebsiteNameInput() {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && currentWebsite?.websiteId) {
       updateWebsite(currentWebsite.websiteId, { websiteName: siteName });
-      setIsSaving(true); // Indicate that saving is in progress
+      dispatch(setSavingState('saving'));
     }
   };
 

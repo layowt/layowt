@@ -1,16 +1,17 @@
 import { useEffect } from "react";
+import type { SavingState } from '@/store/slices/website-store' 
 
-const usePageRefresh = (isSaving: boolean) => {
+const usePageRefresh = (isSaving: SavingState) => {
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (isSaving) {
+      if (isSaving === 'saving') {
         // Prompt the user to confirm leaving the page
         event.preventDefault();
       }
     };
 
     // Add the event listener when changes are unsaved
-    if (isSaving) {
+    if (isSaving === 'saving') {
       window.addEventListener("beforeunload", handleBeforeUnload);
     } else {
       // If changes are saved, remove the event listener
