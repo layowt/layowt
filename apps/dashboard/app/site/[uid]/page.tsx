@@ -13,8 +13,6 @@ export default async function Page({ params }: { params: { uid: string } }) {
   // once we have the websiteUid, we can fetch all of its data from the db
   const website = await getWebsite({ websiteId: websiteId });
 
-  console.log(website);
-
   // we now need to hit our external api to get the site data
   // const response = await fetch(`${apiEndpoint}/ping/${websiteUid}`, {
   //   method: 'GET',
@@ -25,5 +23,6 @@ export default async function Page({ params }: { params: { uid: string } }) {
 
   //let responseData = await response.json();
 
+  // pass the website to the client component so I can set it on redux
   return <SiteBuilderClient website={website} />;
 }

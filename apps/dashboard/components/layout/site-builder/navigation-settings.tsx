@@ -1,4 +1,5 @@
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
+import LoadingSpinner from '@/components/saving';
 import { Button } from '@/components/ui/button';
 import { EyeOpenIcon } from '@radix-ui/react-icons';
 
@@ -14,7 +15,8 @@ import { EyeOpenIcon } from '@radix-ui/react-icons';
 export default function SiteBuilderSettings() {
   return (
     <div className="flex items-center gap-x-4">
-      <EyeOpenIcon />
+      <LoadingSpinner />
+      {/* <EyeOpenIcon /> */}
       <Button variant="tertiary">Publish</Button>
       <UserDropdownMenu className="!size-10 text-sm" />
     </div>

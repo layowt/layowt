@@ -17,7 +17,6 @@ export default function SiteBuilderLayout({
   return (
     <div className="h-screen text-white">
       <SiteBuilderNavBar />
-      {selectedDevice}
       {children}
     </div>
   );
