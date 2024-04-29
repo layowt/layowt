@@ -52,7 +52,7 @@ export default function NavigationItems({ className, ...props }) {
       nested: [
         ...websites.map((website) => ({
           name: website.websiteName,
-          link: `/site/${website.websiteId}`,
+          link: `/dashboard/${website.websiteId}`,
           icon: <CornerBottomLeftIcon />
         })),
         {

@@ -95,13 +95,6 @@ export default function DashboardNavBar({
                   </Tooltip>
                 </TooltipProvider>
               </Toggle>
-              <Button
-                className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white bg-black-75"
-                variant="none"
-                size="sm"
-              >
-                Feedback
-              </Button>
               <UserDropdownMenu />
             </div>
           </div>
