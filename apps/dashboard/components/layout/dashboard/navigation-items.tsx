@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import NavigationItem from '@/components/layout/dashboard/navigation-item';
@@ -11,11 +12,31 @@ import {
   BarChartIcon,
   ChatBubbleIcon,
   DesktopIcon,
-  PlusIcon
+  PlusIcon,
+  CornerBottomLeftIcon
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
+import { getWebsite } from '@/utils/websites/website.get';
+import getClientUser from '@/utils/user/user-client-session';
+import { useEffect, useState } from 'react';
+import type { websites } from '@prisma/client';
 
 export default function NavigationItems({ className, ...props }) {
+  // get the users websites
+  const [websites, setWebsites] = useState<websites[]>([]);
+
+  useEffect(() => {
+    const getUserWebsites = async () => {
+      const user = await getClientUser();
+      const fetchedWebsites = await getWebsite<websites[]>(
+        { userId: user.data.user.id },
+        true
+      );
+      setWebsites(fetchedWebsites);
+    };
+    getUserWebsites();
+  }, []);
+
   const navItems = [
     {
       name: 'Overview',
@@ -25,10 +46,15 @@ export default function NavigationItems({ className, ...props }) {
     },
     {
       name: 'Sites',
-      link: '/dashboard/test',
+      link: '/dashboard/',
       icon: <DesktopIcon />,
       expanded: false,
       nested: [
+        ...websites.map((website) => ({
+          name: website.websiteName,
+          link: `/site/${website.websiteId}`,
+          icon: <CornerBottomLeftIcon />
+        })),
         {
           name: 'New Site',
           link: '/site/',
@@ -37,8 +63,8 @@ export default function NavigationItems({ className, ...props }) {
       ]
     },
     {
-      name: 'Site Builder',
-      link: '/site-builder',
+      name: 'Products',
+      link: '/',
       icon: <MaterialSymbolsBuildOutlineRounded />,
       expanded: false
     },
@@ -46,12 +72,6 @@ export default function NavigationItems({ className, ...props }) {
       name: 'Analytics',
       link: '/analytics',
       icon: <BarChartIcon />,
-      expanded: false
-    },
-    {
-      name: 'Logs',
-      link: '/logs',
-      icon: <ActivityLogIcon />,
       expanded: false
     },
     {
@@ -97,7 +117,7 @@ export default function NavigationItems({ className, ...props }) {
           )
         )}
       </ul>
-      <div className="">
+      <div>
         <motion.div
           className="py-3"
           initial={{ opacity: 0, x: 0 }}
