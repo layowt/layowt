@@ -56,7 +56,7 @@ export default function RootLayout({
       >
         {/* className="bg-gradient-to-b from-black-200 to-electric-violet-950  min-h-screen" */}
         <body
-          className="bg-[#05050A] min-h-screen"
+          className="light:bg-white dark:bg-[#05050A] min-h-screen"
           suppressHydrationWarning={true}
         >
           <UserAuthentication>

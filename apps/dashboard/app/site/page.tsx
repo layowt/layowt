@@ -2,7 +2,7 @@
 // utils
 import { getUserFromSession } from '@/utils/user/user-session';
 import { getUserFromDb } from '@/utils/user/user.get';
-import { createWebsite } from '@/utils/database/websites';
+import { createWebsite } from '@/utils/websites/createWebsite.post';
 import { getWebsite } from '@/utils/websites/website.get';
 import { getUserSubscription } from '@/utils/subscriptions/subscriptions.get';
 import type { websites } from '@prisma/client';
@@ -24,11 +24,14 @@ export default async function CreateNewSite() {
     return;
   }
 
-  // get the user from the db
-  const user = await getUserFromDb(userSession?.data?.user?.id);
+  let user;
 
-  // TODO: HANDLE THIS BETTER
-  if (!user) throw new Error('User not found');
+  try {
+    // get the user from the db
+    user = await getUserFromDb(userSession?.data?.user?.id);
+  } catch (e) {
+    console.log(e);
+  }
 
   //before we generate a new site, check if the user is eligible
   const userSubscription = await getUserSubscription(user.uid);

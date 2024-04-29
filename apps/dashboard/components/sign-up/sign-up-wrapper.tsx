@@ -24,6 +24,7 @@ export default function SignUpComponent() {
     setSelectedFeature(feature);
   };
 
+  // TODO: MAKE THIS CMSABLE
   const features = [
     {
       id: 1,
@@ -44,15 +45,6 @@ export default function SignUpComponent() {
     },
     {
       id: 3,
-      label: 'Self Hosting',
-      slug: 'self-hosting',
-      component: 'SelfHosting',
-      description:
-        'Host your website on your own server, or use our hosting service.',
-      icon: 'server'
-    },
-    {
-      id: 4,
       label: 'AI assistance',
       slug: 'ai-assistance',
       component: 'AIAssistance',
@@ -60,7 +52,7 @@ export default function SignUpComponent() {
       icon: 'robot'
     },
     {
-      id: 5,
+      id: 4,
       label: 'Analytics',
       slug: 'analytics',
       component: 'Analytics',
@@ -78,7 +70,7 @@ export default function SignUpComponent() {
         <div className="flex flex-col gap-y-8 max-h-[316px] w-80 lg:w-[500px]">
           <div className="">
             <div className="flex flex-col gap-y-3">
-              <h1 className="{Cairo}text-xl font-cairo md:text-3xl lg:text-5xl xl:text-7xl font-semibold">
+              <h1 className="text-xl font-inter md:text-3xl lg:text-6xl font-semibold">
                 Starting your online journey has never been <br />
                 easier.
               </h1>
