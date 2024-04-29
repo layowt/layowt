@@ -79,7 +79,7 @@ export default function NavigationItem({
               key={nestedItem.name}
             >
               <motion.li
-                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer group truncate 
+                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer group truncate
 								${
                   pathname === nestedItem.link
                     ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
@@ -96,7 +96,7 @@ export default function NavigationItem({
                     <div className="size-3 opacity-0 group-hover:opacity-100 duration-100">
                       {nestedItem.icon}
                     </div>
-                    <span className="text-base">{nestedItem.name}</span>
+                    <span className="text-xs">{nestedItem.name}</span>
                   </div>
                 </div>
               </motion.li>

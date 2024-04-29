@@ -7,7 +7,7 @@ export default function DashboardSidebar() {
   return (
     <section
       className="
-					min-w-48 min-h-screen flex flex-col gap-y-6 text-white font-poppins border-r border-black-50
+					min-w-48 min-h-screen flex flex-col text-white font-poppins
 				"
     >
       <div className="border-b border-black-50 relative -top-px">
@@ -21,7 +21,7 @@ export default function DashboardSidebar() {
           </div>
         </motion.div>
       </div>
-      <NavigationItems className="px-2 h-full" />
+      <NavigationItems className="px-2 h-full border-r border-black-50 pt-6" />
     </section>
   );
 }
