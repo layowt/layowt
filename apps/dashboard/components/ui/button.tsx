@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'relative w-full inline-flex items-center font-kanit justify-center whitespace-nowrap rounded-2xl hover:rounded-xl duration-300 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'relative w-full inline-flex items-center font-kanit justify-center whitespace-nowrap duration-300 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -23,13 +23,20 @@ const buttonVariants = cva(
           'bg-electric-violet-500 text-white hover:bg-white hover:text-black duration-300',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        none: 'hover:bg-accent hover:text-accent-foreground hover:!bg-transparent hover:!text-none'
+        none: 'rounded-none'
       },
       size: {
         default: 'h-10 px-4',
-        sm: 'h-7 rounded-md px-3 py-1',
+        sm: 'h-8 rounded-md px-3 py-1',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10'
+      },
+      padding: {
+        none: '!p-0'
+      },
+      rounded: {
+        default: 'rounded-2xl hover:rounded-xl',
+        sm: 'rounded-md'
       }
     },
     defaultVariants: {
@@ -44,28 +51,52 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   special?: boolean;
+  hoverEffect?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, special, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      special,
+      hoverEffect = true,
+      rounded,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <div className={special ? 'relative w-full' : ''}>
-        <motion.div
-          whileHover={{ scale: 1.03 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-        >
+        {/** Conditionally make the button have a spring hover effect */}
+        {hoverEffect ? (
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+          >
+            <Comp
+              className={cn(buttonVariants({ variant, size, className }))}
+              ref={ref}
+              {...props}
+            />
+            {special ? (
+              <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
+            ) : (
+              ''
+            )}
+          </motion.div>
+        ) : (
           <Comp
-            className={cn(buttonVariants({ variant, size, className }))}
+            className={cn(
+              buttonVariants({ variant, size, className, rounded })
+            )}
             ref={ref}
             {...props}
           />
-          {special ? (
-            <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
-          ) : (
-            ''
-          )}
-        </motion.div>
+        )}
       </div>
     );
   }

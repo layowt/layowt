@@ -1,21 +1,28 @@
 import { getWebsite } from '@/utils/websites/website.get';
+import SiteBuilderClient from './page-client';
+
+const apiEndpoint = process.env.DRAGGLE_API_URL;
 
 export default async function Page({ params }: { params: { uid: string } }) {
   // get the uid from the params
-  const { uid: websiteUid } = params;
+  const { uid: websiteId } = params;
 
   // TODO: HANDLE BETTER
-  if (!websiteUid) throw new Error('Website UID not found');
+  if (!websiteId) throw new Error('Website UID not found');
 
   // once we have the websiteUid, we can fetch all of its data from the db
-  const website = await getWebsite({ websiteId: websiteUid });
+  const website = await getWebsite({ websiteId: websiteId });
 
   // we now need to hit our external api to get the site data
+  // const response = await fetch(`${apiEndpoint}/ping/${websiteUid}`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // });
 
-  return (
-    <div className="text-white">
-      <h6>{website.userId}</h6>
-      <h6>{website.websiteId}</h6>
-    </div>
-  );
+  //let responseData = await response.json();
+
+  // pass the website to the client component so I can set it on redux
+  return <SiteBuilderClient website={website} />;
 }

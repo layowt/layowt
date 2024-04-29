@@ -1,5 +1,5 @@
 'use client';
-import NavigationItems from '@/components/layout/navigation-items';
+import NavigationItems from '@/components/layout/dashboard/navigation-items';
 import SiteLogo from '@/components/logo';
 import { motion } from 'framer-motion';
 

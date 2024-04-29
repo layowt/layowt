@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 
 // redux imports
 import { useAppDispatch } from '@/lib/hooks';
-import { createUser, deleteUser } from '@/store/user-store';
+import { createUser, deleteUser } from '@/store/slices/user-store';
 
 export default function SignUpForm() {
   // redux
@@ -142,7 +142,7 @@ export default function SignUpForm() {
                 <g
                   fill="none"
                   stroke="currentColor"
-                  stroke-inecap="round"
+                  stroke-linecap="round"
                   strokeLinejoin="round"
                 >
                   <path d="M11 5.5H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1m-.5 0V4a3.5 3.5 0 1 0-7 0v1.5"></path>
@@ -185,14 +185,16 @@ export default function SignUpForm() {
                   <Button
                     type="submit"
                     className="
-                        bg-white text-black rounded-lg px-4 py-1 w-full hover:bg-white/75 
-                        duration-300 disabled:cursor-not-allowed flex gap-x-2 items-center
+                       rounded-lg px-4 py-1 w-full
+                        duration-300 disabled:cursor-not-allowed 
+                        flex gap-x-2 items-center
                       "
                     disabled={
                       !validEmail(state.userEmail) ||
                       !isValidPassword(state.userPassword) ||
                       !acceptedTerms
                     }
+                    variant="secondary"
                   >
                     {isLoading ? (
                       <ReloadIcon className="w-3 h-3 animate-spin" />

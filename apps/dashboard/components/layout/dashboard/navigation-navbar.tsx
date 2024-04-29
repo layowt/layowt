@@ -17,7 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/ui/tooltip';
-import Breadcrumbs from '@/components/layout/breadcrumbs';
+import Breadcrumbs from '@/components/layout/dashboard/breadcrumbs';
 import { Toggle } from '@/ui/toggle';
 
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
@@ -57,6 +57,7 @@ export default function DashboardNavBar({
                 "
                 variant="none"
                 onClick={() => setOpen(!open)}
+                rounded="default"
               >
                 <MagnifyingGlassIcon className="absolute left-2 size-3" />
                 <span>Search</span>

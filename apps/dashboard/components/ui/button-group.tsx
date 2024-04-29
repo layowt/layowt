@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 import { useAppDispatch } from '../../lib/hooks';
-import { setBillingPeriod } from '../../store/user-store';
+import { setBillingPeriod } from '../../store/slices/user-store';
 
 type Tab = {
   title: string;
