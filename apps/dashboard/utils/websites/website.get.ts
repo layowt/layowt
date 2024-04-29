@@ -1,3 +1,4 @@
+'use server'
 import { prisma } from '@/utils/prisma';
 import type { websites as website } from '@prisma/client';
 
