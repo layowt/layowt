@@ -19,7 +19,7 @@ export default async function Dashboard() {
             Here's what's happened whilst you were away
           </span>
         </div>
-        <div className="flex gap-10 w-1/2">
+        <div className="flex gap-10 w-1/2 grid grid-cols-2">
           {websites.map((website) => (
             <WebsiteCard
               key={website.websiteId}
