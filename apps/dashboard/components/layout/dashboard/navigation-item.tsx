@@ -68,7 +68,7 @@ export default function NavigationItem({
       </motion.div>
       {isExpanded && (
         <motion.ul
-          className="flex flex-col gap-y-1 ml-2 mt-1"
+          className="flex flex-col gap-y-1 mt-1"
           initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
@@ -79,7 +79,7 @@ export default function NavigationItem({
               key={nestedItem.name}
             >
               <motion.li
-                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer
+                className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer group truncate 
 								${
                   pathname === nestedItem.link
                     ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
@@ -93,7 +93,9 @@ export default function NavigationItem({
                   className={`flex items-center font-kanit leading-loose justify-between w-full`}
                 >
                   <div className="flex gap-x-2 items-center">
-                    <div className="size-3">{nestedItem.icon}</div>
+                    <div className="size-3 opacity-0 group-hover:opacity-100 duration-100">
+                      {nestedItem.icon}
+                    </div>
                     <span className="text-base">{nestedItem.name}</span>
                   </div>
                 </div>

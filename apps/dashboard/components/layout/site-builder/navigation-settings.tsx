@@ -1,7 +1,6 @@
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 import LoadingSpinner from '@/components/saving';
 import { Button } from '@/components/ui/button';
-import { EyeOpenIcon } from '@radix-ui/react-icons';
 import SiteBuilderPublishModal from './navigation-publish-dropdown';
 
 import { useAppSelector } from '@/lib/hooks';
