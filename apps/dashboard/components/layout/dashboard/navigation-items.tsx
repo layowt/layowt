@@ -12,7 +12,8 @@ import {
   BarChartIcon,
   ChatBubbleIcon,
   DesktopIcon,
-  PlusIcon
+  PlusIcon,
+  CornerBottomLeftIcon
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
 import { getWebsite } from '@/utils/websites/website.get';
@@ -52,7 +53,7 @@ export default function NavigationItems({ className, ...props }) {
         ...websites.map((website) => ({
           name: website.websiteName,
           link: `/site/${website.websiteId}`,
-          icon: <DesktopIcon />
+          icon: <CornerBottomLeftIcon />
         })),
         {
           name: 'New Site',
@@ -62,8 +63,8 @@ export default function NavigationItems({ className, ...props }) {
       ]
     },
     {
-      name: 'Site Builder',
-      link: '/site-builder',
+      name: 'Products',
+      link: '/',
       icon: <MaterialSymbolsBuildOutlineRounded />,
       expanded: false
     },
@@ -71,12 +72,6 @@ export default function NavigationItems({ className, ...props }) {
       name: 'Analytics',
       link: '/analytics',
       icon: <BarChartIcon />,
-      expanded: false
-    },
-    {
-      name: 'Logs',
-      link: '/logs',
-      icon: <ActivityLogIcon />,
       expanded: false
     },
     {
