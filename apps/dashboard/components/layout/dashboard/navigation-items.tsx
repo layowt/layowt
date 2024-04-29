@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import NavigationItem from '@/components/layout/dashboard/navigation-item';
@@ -14,8 +15,29 @@ import {
   PlusIcon
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
+import { getWebsite } from '@/utils/websites/website.get';
+import getClientUser from '@/utils/user/user-client-session';
+import { useEffect } from 'react';
 
 export default function NavigationItems({ className, ...props }) {
+  // get the users websites
+  let websites = [];
+
+  let init = false;
+  useEffect(() => {
+    if (init) return;
+    init = true;
+
+    const getUserWebsites = async () => {
+      const user = await getClientUser();
+      websites = await getWebsite({ userId: user.data.user.id }, true);
+      console.log(websites);
+    };
+    getUserWebsites();
+  }, []);
+
+  console.log(websites);
+
   const navItems = [
     {
       name: 'Overview',
@@ -97,7 +119,7 @@ export default function NavigationItems({ className, ...props }) {
           )
         )}
       </ul>
-      <div className="">
+      <div>
         <motion.div
           className="py-3"
           initial={{ opacity: 0, x: 0 }}
