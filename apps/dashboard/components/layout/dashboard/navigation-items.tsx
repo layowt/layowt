@@ -17,26 +17,24 @@ import {
 import { cn } from '@/lib/utils';
 import { getWebsite } from '@/utils/websites/website.get';
 import getClientUser from '@/utils/user/user-client-session';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import type { websites } from '@prisma/client';
 
 export default function NavigationItems({ className, ...props }) {
   // get the users websites
-  let websites = [];
+  const [websites, setWebsites] = useState<websites[]>([]);
 
-  let init = false;
   useEffect(() => {
-    if (init) return;
-    init = true;
-
     const getUserWebsites = async () => {
       const user = await getClientUser();
-      websites = await getWebsite({ userId: user.data.user.id }, true);
-      console.log(websites);
+      const fetchedWebsites = await getWebsite<websites[]>(
+        { userId: user.data.user.id },
+        true
+      );
+      setWebsites(fetchedWebsites);
     };
     getUserWebsites();
   }, []);
-
-  console.log(websites);
 
   const navItems = [
     {
@@ -47,10 +45,15 @@ export default function NavigationItems({ className, ...props }) {
     },
     {
       name: 'Sites',
-      link: '/dashboard/test',
+      link: '/dashboard/',
       icon: <DesktopIcon />,
       expanded: false,
       nested: [
+        ...websites.map((website) => ({
+          name: website.websiteName,
+          link: `/site/${website.websiteId}`,
+          icon: <DesktopIcon />
+        })),
         {
           name: 'New Site',
           link: '/site/',
