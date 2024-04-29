@@ -10,7 +10,8 @@ import { Button } from '@/components/ui/button';
 import {
   ChevronDownIcon,
   Share2Icon,
-  EyeOpenIcon
+  EyeOpenIcon,
+  QuestionMarkCircledIcon
 } from '@radix-ui/react-icons';
 import { motion } from 'framer-motion';
 import type { websites as Website } from '@prisma/client';
@@ -34,6 +35,18 @@ export default function SiteBuilderPublishModal({
       name: 'Share',
       icon: (
         <Share2Icon
+          width="auto"
+          height="auto"
+        />
+      )
+    },
+    {
+      name: 'separator'
+    },
+    {
+      name: 'Get Support',
+      icon: (
+        <QuestionMarkCircledIcon
           width="auto"
           height="auto"
         />
@@ -64,7 +77,7 @@ export default function SiteBuilderPublishModal({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <DropdownMenuLabel className="text-xs font-semibold">
+          <DropdownMenuLabel className="text-base font-normal">
             {website?.websiteName}
           </DropdownMenuLabel>
         </motion.div>
@@ -73,18 +86,28 @@ export default function SiteBuilderPublishModal({
           {dropdownOptions.map((item, index) => (
             <motion.li
               key={index}
+              initial={{ opacity: 0, x: 0 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2, delay: index * 0.1 }}
               className="list-none w-full"
             >
-              <button
-                key={index}
-                className="
-									px-2 py-1 hover:border-none hover:!ring-0 hover:bg-black-50 rounded w-full"
-              >
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3">{item.icon}</div>
-                  <span className="text-[0.65rem]">{item.name}</span>
-                </div>
-              </button>
+              {item.name === 'separator' ? (
+                <DropdownMenuSeparator
+                  key={index}
+                  className="!bg-black-50"
+                />
+              ) : (
+                <button
+                  key={index}
+                  className="
+									px-2 py-1 hover:border-none focus:!ring-0 hover:!ring-0 hover:bg-black-50 rounded w-full"
+                >
+                  <div className="flex items-center gap-x-2">
+                    <div className="size-5">{item.icon}</div>
+                    <span className="text-sm">{item.name}</span>
+                  </div>
+                </button>
+              )}
             </motion.li>
           ))}
         </DropdownMenuGroup>

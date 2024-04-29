@@ -13,6 +13,7 @@ import IcRoundLogOut from '@/ui/icons/logout';
 import IcOutlineDarkMode from '@/ui/icons/darkmode';
 import IcSharpHelpOutline from '@/ui/icons/help';
 import { cn } from '@/lib/utils';
+import useCurrentTheme from '@/hooks/useCurrentTheme';
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
@@ -48,6 +49,8 @@ export default function UserDropdownMenu({ className = '' }) {
     getCurrentUser();
   }, []);
 
+  const { theme, toggleTheme } = useCurrentTheme();
+
   const items = [
     {
       name: 'Account Settings',
@@ -55,7 +58,12 @@ export default function UserDropdownMenu({ className = '' }) {
     },
     {
       name: 'Theme',
-      icon: <IcOutlineDarkMode />
+      icon: theme === 'dark' ? <IcOutlineDarkMode /> : '🌞',
+      onClick: () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        toggleTheme();
+        document.documentElement.classList.toggle('dark', newTheme === 'dark');
+      }
     },
     {
       name: 'Help',
@@ -102,8 +110,8 @@ export default function UserDropdownMenu({ className = '' }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <DropdownMenuLabel className="text-[0.65rem] font-normal">
-            {user?.email}
+          <DropdownMenuLabel className="text-sm font-normal">
+            {user?.email} {theme}
           </DropdownMenuLabel>
         </motion.div>
         <DropdownMenuSeparator className="!bg-black-50" />
@@ -126,10 +134,11 @@ export default function UserDropdownMenu({ className = '' }) {
                   key={index}
                   className="
 									px-2 py-1 hover:border-none hover:!ring-0 hover:bg-black-50 rounded w-full"
+                  onClick={item.onClick}
                 >
                   <div className="flex items-center gap-x-2">
-                    <div className="size-3">{item.icon}</div>
-                    <span className="text-[0.65rem]">{item.name}</span>
+                    <div className="size-5">{item.icon}</div>
+                    <span className="text-sm">{item.name}</span>
                   </div>
                 </button>
               )}
