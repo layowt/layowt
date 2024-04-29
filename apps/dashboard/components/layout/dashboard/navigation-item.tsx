@@ -68,7 +68,7 @@ export default function NavigationItem({
       </motion.div>
       {isExpanded && (
         <motion.ul
-          className="flex flex-col gap-y-1 ml-2 mt-1"
+          className="flex flex-col gap-y-1 mt-1"
           initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}

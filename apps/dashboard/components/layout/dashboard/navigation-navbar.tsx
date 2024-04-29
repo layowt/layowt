@@ -74,13 +74,6 @@ export default function DashboardNavBar({
               </Button>
             </motion.div>
             <div className="flex items-center gap-x-2.5 text-white/60 absolute right-2">
-              <Button
-                className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white bg-black-75"
-                variant="none"
-                size="sm"
-              >
-                Feedback
-              </Button>
               <Toggle
                 className="
                   hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center
@@ -102,6 +95,13 @@ export default function DashboardNavBar({
                   </Tooltip>
                 </TooltipProvider>
               </Toggle>
+              <Button
+                className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white bg-black-75"
+                variant="none"
+                size="sm"
+              >
+                Feedback
+              </Button>
               <UserDropdownMenu />
             </div>
           </div>
