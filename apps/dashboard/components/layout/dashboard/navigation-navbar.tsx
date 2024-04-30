@@ -27,6 +27,7 @@ import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import useKeyboard from '@/hooks/useKeyboard';
 import { motion } from 'framer-motion';
+import WebsiteSwitcher from './website-switcher';
 
 export default function DashboardNavBar({
   children
@@ -43,7 +44,7 @@ export default function DashboardNavBar({
       <div className="flex flex-col w-full h-full">
         <div className="w-full h-16 border-b border-black-50">
           <div className="flex justify-center items-center size-full relative">
-            <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" />
+            {/* <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" /> */}
             <motion.div
               className="h-full relative flex items-center"
               initial={{ opacity: 0, y: -10 }}
@@ -95,7 +96,7 @@ export default function DashboardNavBar({
                   </Tooltip>
                 </TooltipProvider>
               </Toggle>
-              <UserDropdownMenu />
+              <WebsiteSwitcher />
             </div>
           </div>
           {/** Entry point for page */}
