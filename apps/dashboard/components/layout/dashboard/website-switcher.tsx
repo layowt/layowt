@@ -16,31 +16,25 @@ import { User } from '@supabase/supabase-js';
 export default function WebsiteSwitcher() {
   const currentWebsite = useAppSelector(website);
   const [user, setUser] = useState<User | null>(null);
-  const [userWebsites, setUserWebsites] = useState<websites[] | null>(null);
+  const userWebsites = useUserWebsites<websites[]>(user?.id ?? '');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const user = await getClientUser();
-        console.log(user.data.user.id);
         setUser(user.data.user);
-        const fetchedWebsites = await useUserWebsites<websites[]>(
-          user.data.user.id
-        );
-        setUserWebsites(fetchedWebsites);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
-
-    fetchData();
+    fetchData(); // Fetch user data on initial render
   }, []);
 
-  if (!user || !userWebsites) {
+  if (!user) {
     return <div>Loading...</div>;
   }
 
-  if (userWebsites.length === 1) {
+  if (userWebsites.length === 1 || currentWebsite === null) {
     return <UserDropdownMenu />;
   }
 
