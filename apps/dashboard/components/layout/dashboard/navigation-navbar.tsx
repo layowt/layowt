@@ -100,7 +100,7 @@ export default function DashboardNavBar({
             </div>
           </div>
           {/** Entry point for page */}
-          <div className="container py-5">{children}</div>
+          <div className="px-10 py-5">{children}</div>
         </div>
       </div>
       <CommandDialog

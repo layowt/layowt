@@ -3,6 +3,7 @@ import { getUserFromSession } from '@/utils/user/user-session';
 import { getUserFromDb } from '@/utils/user/user.get';
 import { getWebsite } from '@/utils/websites/website.get';
 import { websites } from '@prisma/client';
+import PageClient from './page-client';
 
 export default async function Dashboard() {
   const userId = await (await getUserFromSession()).data.user.id;
@@ -10,8 +11,9 @@ export default async function Dashboard() {
   const user = await getUserFromDb(userId);
 
   const websites = await getWebsite<websites[]>({ userId: user.uid }, true);
+
   return (
-    <>
+    <PageClient>
       <div className="text-2xl flex flex-col gap-y-10 font-semibold font-inter text-white">
         <div className="flex flex-col gap-y-2">
           Welcome back {user?.firstName || user?.email}!
@@ -28,6 +30,6 @@ export default async function Dashboard() {
           ))}
         </div>
       </div>
-    </>
+    </PageClient>
   );
 }
