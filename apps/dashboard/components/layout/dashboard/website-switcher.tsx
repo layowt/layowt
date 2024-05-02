@@ -8,9 +8,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuGroup
 } from '@/ui/dropdown-menu';
-import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { ReloadIcon, SunIcon } from '@radix-ui/react-icons';
 import IcRoundLogOut from '@/components/ui/icons/logout';
 import IcOutlineDarkMode from '@/components/ui/icons/darkmode';
 import IcSharpHelpOutline from '@/components/ui/icons/help';
@@ -28,11 +27,12 @@ import useCurrentTheme from '@/hooks/useCurrentTheme';
 import { createClient } from '@/utils/supabase/client';
 import getClientUser from '@/utils/user/user-client-session';
 import { cn } from '@/lib/utils';
+import { User } from '@supabase/supabase-js';
 
 export default function WebsiteSwitcher() {
   const supabase = createClient();
   const currentWebsite = useAppSelector(website);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>(null);
   const userWebsites = useUserWebsites(user?.id ?? '');
 
   useEffect(() => {
@@ -79,14 +79,14 @@ export default function WebsiteSwitcher() {
       html: (
         <button
           onClick={() => toggleTheme()}
-          className="px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start text-xs"
+          className="px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start text-sm"
         >
-          <div className="flex w-full justify-between">
+          <div className="flex items-center w-full justify-between">
             <div className="flex items-center gap-x-2">
               {theme === 'dark' ? (
-                '🌞'
+                <SunIcon className="size-6" />
               ) : (
-                <IcOutlineDarkMode className="size-4" />
+                <IcOutlineDarkMode className="size-6" />
               )}
               <span>Theme</span>
             </div>
@@ -103,10 +103,33 @@ export default function WebsiteSwitcher() {
       )
     },
     {
+      name: 'Feedback'
+    },
+    {
+      name: 'Support'
+    },
+    {
       name: 'separator'
     },
     {
-      name: 'Logged in as:'
+      name: 'Account Settings',
+      html: (
+        <button className="flex gap-x-2 px-2 py-1 items-center hover:bg-black-50 duration-300 w-full rounded">
+          <div className="bg-electric-violet px-2.5 py-1 rounded-full flex justify-center items-center text-[10px]">
+            {user?.email ? user?.email.charAt(0).toUpperCase() : '🔄'}
+          </div>
+          <div className="flex flex-col gap-y-1 items-start">
+            <span className="text-[10px]">Logged in as:</span>
+            <span className="text-[15px]">{user?.email}</span>
+          </div>
+        </button>
+      )
+    },
+    {
+      name: 'Upgrade to pro'
+    },
+    {
+      name: 'separator'
     },
     {
       name: 'Logout',
@@ -168,7 +191,7 @@ export default function WebsiteSwitcher() {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="font-poppins border border-black-50 !bg-black-75 text-white/80 w-48"
+        className="font-poppins border border-black-50 !bg-black-75 text-white/80 w-64"
         side="bottom"
         align="end"
       >
@@ -177,7 +200,7 @@ export default function WebsiteSwitcher() {
             item.name === 'separator' ? (
               <div
                 key={`${item.name}-${index}`}
-                className="w-auto h-px bg-black-50 -mx-2 my-1"
+                className="w-auto h-px bg-black-50 -mx-2 my-2"
               />
             ) : 'html' in item ? (
               <div key={item.name}>{item.html}</div>
@@ -185,14 +208,13 @@ export default function WebsiteSwitcher() {
               <button
                 key={index}
                 className={cn(
-                  'px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start',
-                  item.name === currentWebsite.websiteName ? 'bg-black-50' : ''
+                  'px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start'
                 )}
                 onClick={item.onClick}
               >
                 <div className="flex items-center gap-x-2">
-                  <div className="size-4">{item.icon}</div>
-                  <span className="text-xs">{item.name}</span>
+                  <div className="size-6">{item.icon}</div>
+                  <span className="text-sm">{item.name}</span>
                 </div>
               </button>
             )
