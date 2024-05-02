@@ -16,8 +16,8 @@ export default function DashboardSidebar() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.1 }}
         >
-          <div className="px-2">
-            <SiteLogo />
+          <div className="px-4">
+            <SiteLogo className="py-3" />
           </div>
         </motion.div>
       </div>
