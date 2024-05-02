@@ -3,6 +3,10 @@ import { prisma } from '@/utils/prisma';
 export const createWebsite = async (userId: string, websiteId: string) => {
 	const response = await prisma.websites.create({
 		data: {
+			websiteLogo: '',
+			websitePrimaryColor: '#ffffff',
+			websiteSecondaryColor: '#000000',
+			websiteUrl: '',
 			websiteId: websiteId,
 			//TODO: GENERATE NAME FOR HERE
 			websiteName: '', // Add the required 'websiteName' property with a default value

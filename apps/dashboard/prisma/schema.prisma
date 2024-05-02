@@ -49,6 +49,10 @@ model websites {
   owner                                       users @relation(fields: [userId], references: [uid])
   userId                                      String
   websiteName                                 String
+  websiteUrl                                  String @unique
+  websiteLogo                                 String
+  websitePrimaryColor                         String 
+  websiteSecondaryColor                       String
 }
 
 model earlyAccess {

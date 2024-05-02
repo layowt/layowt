@@ -98,46 +98,44 @@ export default function UserAuthModal({
   if (searchParams.get('access_token')) return '';
 
   return isClient && currentUserObject === null ? (
-    <>
-      <Dialog
-        modal={true}
-        defaultOpen={true}
-        open={showModal}
+    <Dialog
+      modal={true}
+      defaultOpen={true}
+      open={showModal}
+    >
+      <Toaster
+        closeButton
+        className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
+      />
+      <DialogContent
+        hidden={false}
+        className="bg-black-100 border-2 border-black-200 rounded-lg max-w-[23rem] py-8"
+        showCloseButton={false}
       >
-        <Toaster
-          closeButton
-          className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
-        />
-        <DialogContent
-          hidden={false}
-          className="bg-black-100 border-2 border-black-200 rounded-lg max-w-[23rem] py-8"
-          showCloseButton={false}
-        >
-          {hasSignedUp ? (
-            <WaitingForAuth supabase={supabase} />
-          ) : (
-            <div className="flex flex-col gap-y-3 items-center text-white">
-              <h2 className="text-3xl font-bold text-center">
-                You need to log in
-              </h2>
-              <p className="text-center">Click the button below to log in.</p>
-              <Button
-                className="border border-white w-fit px-6 bg-black"
-                onClick={() => {
-                  setLoading(true);
-                  router.push('/sign-up');
-                }}
-              >
-                {loading ? (
-                  <ReloadIcon className="w-3 h-3 animate-spin" />
-                ) : (
-                  'Log in'
-                )}
-              </Button>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-    </>
+        {hasSignedUp ? (
+          <WaitingForAuth supabase={supabase} />
+        ) : (
+          <div className="flex flex-col gap-y-3 items-center text-white">
+            <h2 className="text-3xl font-bold text-center">
+              You need to log in
+            </h2>
+            <p className="text-center">Click the button below to log in.</p>
+            <Button
+              className="border border-white w-fit px-6 bg-black"
+              onClick={() => {
+                setLoading(true);
+                router.push('/sign-up');
+              }}
+            >
+              {loading ? (
+                <ReloadIcon className="w-3 h-3 animate-spin" />
+              ) : (
+                'Log in'
+              )}
+            </Button>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
   ) : null;
 }
