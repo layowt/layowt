@@ -6,10 +6,19 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-  DropdownMenuGroup
+  DropdownMenuGroup,
+  DropdownMenuShortcut
 } from '@/ui/dropdown-menu';
 import { Switch } from '@/components/ui/switch';
-import { ReloadIcon, SunIcon } from '@radix-ui/react-icons';
+import {
+  ReloadIcon,
+  SunIcon,
+  GearIcon,
+  PersonIcon,
+  ChatBubbleIcon,
+  DoubleArrowDownIcon,
+  ChevronDownIcon
+} from '@radix-ui/react-icons';
 import IcRoundLogOut from '@/components/ui/icons/logout';
 import IcOutlineDarkMode from '@/components/ui/icons/darkmode';
 import IcSharpHelpOutline from '@/components/ui/icons/help';
@@ -28,6 +37,13 @@ import { createClient } from '@/utils/supabase/client';
 import getClientUser from '@/utils/user/user-client-session';
 import { cn } from '@/lib/utils';
 import { User } from '@supabase/supabase-js';
+import {
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger
+} from '@radix-ui/react-dropdown-menu';
+import Link from 'next/link';
 
 export default function WebsiteSwitcher() {
   const supabase = createClient();
@@ -49,15 +65,6 @@ export default function WebsiteSwitcher() {
 
   const { theme, toggleTheme } = useCurrentTheme();
 
-  /**
-   * SITES
-   * -----
-   * SETTINGS (NOT DIRECTLY USER SETTINGS)
-   * -----
-   * OPTION TO UPGRADE PLAN (IF THE USER IS NOT ON THE HIGHEST PLAN)
-   * -----
-   * USER SETTINGS
-   */
   interface DropdownItem {
     name: string;
     icon?: any;
@@ -70,8 +77,13 @@ export default function WebsiteSwitcher() {
       name: 'separator'
     },
     {
-      name: 'Feedback',
-      icon: <IcSharpHelpOutline />
+      name: 'Settings',
+      icon: (
+        <GearIcon
+          width="auto"
+          height="auto"
+        />
+      )
     },
     // TODO: change to a toggle
     {
@@ -82,11 +94,11 @@ export default function WebsiteSwitcher() {
           className="px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start text-sm"
         >
           <div className="flex items-center w-full justify-between">
-            <div className="flex items-center gap-x-2">
+            <div className="flex items-center gap-x-4">
               {theme === 'dark' ? (
-                <SunIcon className="size-6" />
+                <SunIcon className="size-5" />
               ) : (
-                <IcOutlineDarkMode className="size-6" />
+                <IcOutlineDarkMode className="size-5" />
               )}
               <span>Theme</span>
             </div>
@@ -103,10 +115,17 @@ export default function WebsiteSwitcher() {
       )
     },
     {
-      name: 'Feedback'
+      name: 'Feedback',
+      icon: (
+        <ChatBubbleIcon
+          width="auto"
+          height="auto"
+        />
+      )
     },
     {
-      name: 'Support'
+      name: 'Support',
+      icon: <IcSharpHelpOutline />
     },
     {
       name: 'separator'
@@ -114,7 +133,7 @@ export default function WebsiteSwitcher() {
     {
       name: 'Account Settings',
       html: (
-        <button className="flex gap-x-2 px-2 py-1 items-center hover:bg-black-50 duration-300 w-full rounded">
+        <button className="flex gap-x-4 px-2 py-1 items-center hover:bg-black-50 duration-300 w-full rounded">
           <div className="bg-electric-violet px-2.5 py-1 rounded-full flex justify-center items-center text-[10px]">
             {user?.email ? user?.email.charAt(0).toUpperCase() : '🔄'}
           </div>
@@ -126,7 +145,13 @@ export default function WebsiteSwitcher() {
       )
     },
     {
-      name: 'Upgrade to pro'
+      name: 'Upgrade to pro',
+      icon: (
+        <PersonIcon
+          width="auto"
+          height="auto"
+        />
+      )
     },
     {
       name: 'separator'
@@ -163,28 +188,73 @@ export default function WebsiteSwitcher() {
   userWebsites.unshift(currentWebsiteObj);
 
   // add the userWebsites to the dropdownItems
-  dropdownItems.unshift(
-    ...userWebsites.map((site) => ({
-      name: site.websiteName,
-      icon: '',
-      onClick: () => {
-        console.log('Switching to:', site.websiteName);
-      }
-    }))
-  );
+  dropdownItems.unshift({
+    name: currentWebsite.websiteName,
+    html: (
+      <DropdownMenuSub>
+        <DropdownMenuSubTrigger asChild>
+          <button className="px-2 py-1 rounded w-full flex items-center justify-between group hover:bg-black-50 duration-300">
+            <div className="flex items-center gap-x-2">
+              <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
+                {currentWebsite.websiteName.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex flex-col gap-y-0.5 items-start">
+                <span>{currentWebsite.websiteName}</span>
+                <span className="text-[10px]">www.testing.com</span>
+              </div>
+            </div>
+
+            <button className="hover:bg-black-50 p-1 rounded-sm">
+              <DoubleArrowDownIcon className="group-hover:rotate-90 duration-300" />
+            </button>
+          </button>
+        </DropdownMenuSubTrigger>
+        <DropdownMenuSubContent
+          sideOffset={15}
+          className="bg-black-75 border border-black-50 rounded-lg font-inter flex flex-col gap-y-0.5 text-white/80 w-56 p-2"
+        >
+          {userWebsites.map((site) =>
+            site.websiteName === currentWebsite.websiteName ? (
+              ''
+            ) : (
+              <DropdownMenuItem key={site.websiteId}>
+                <Link
+                  className="text-xs px-2 py-1.5 rounded w-full flex items-center justify-between hover:bg-black-50 duration-300"
+                  href={`/dashboard/${site.websiteId}`}
+                >
+                  <div className="flex items-center gap-x-2">
+                    <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
+                      {site.websiteName.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex flex-col gap-y-0.5 items-start">
+                      <span>{site.websiteName}</span>
+                      <span className="text-[10px]">www.testing.com</span>
+                    </div>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+            )
+          )}
+        </DropdownMenuSubContent>
+      </DropdownMenuSub>
+    )
+  });
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
           className="
-            bg-electric-violet text-xs px-2 py-1.5 rounded-lg 
+            bg-electric-violet text-xs px-4 py-1.5 rounded-lg 
             border border-electric-violet font-semibold font-inter
             hover:bg-electric-violet-400 duration-300 text-white
           "
         >
           {currentWebsite?.websiteName ? (
-            currentWebsite.websiteName
+            <div className="flex gap-x-2 items-center">
+              <span>{currentWebsite.websiteName}</span>
+              <ChevronDownIcon className="size-3" />
+            </div>
           ) : (
             <ReloadIcon className="size-2 my-1 animate-spin" />
           )}
@@ -200,7 +270,7 @@ export default function WebsiteSwitcher() {
             item.name === 'separator' ? (
               <div
                 key={`${item.name}-${index}`}
-                className="w-auto h-px bg-black-50 -mx-2 my-2"
+                className="w-auto h-px bg-black-50 -mx-2 my-1.5"
               />
             ) : 'html' in item ? (
               <div key={item.name}>{item.html}</div>
@@ -208,12 +278,12 @@ export default function WebsiteSwitcher() {
               <button
                 key={index}
                 className={cn(
-                  'px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start'
+                  'p-2 hover:bg-black-50 rounded w-full flex justify-start'
                 )}
                 onClick={item.onClick}
               >
-                <div className="flex items-center gap-x-2">
-                  <div className="size-6">{item.icon}</div>
+                <div className="flex items-center gap-x-4">
+                  <div className="size-5">{item.icon}</div>
                   <span className="text-sm">{item.name}</span>
                 </div>
               </button>
