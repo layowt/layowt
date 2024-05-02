@@ -28,16 +28,19 @@ export default async function CreateNewSite() {
 
   try {
     // get the user from the db
-    user = await getUserFromDb(userSession?.data?.user?.id);
+    user = await getUserFromDb(userSession.data.user.id);
   } catch (e) {
     console.log(e);
   }
 
   //before we generate a new site, check if the user is eligible
-  const userSubscription = await getUserSubscription(user.uid);
+  const userSubscription = await getUserSubscription(userSession.data.user.id);
 
   // get the number of sites the use has
-  const userSites = await getWebsite<websites[]>({ userId: user.uid }, true);
+  const userSites = await getWebsite<websites[]>(
+    { userId: userSession.data.user.id },
+    true
+  );
 
   // compare the number of sites the user has to the limit
   if (userSites.length >= userSubscription?.numOfWebsites) {
@@ -52,7 +55,7 @@ export default async function CreateNewSite() {
   const siteUid = uniqid();
 
   // // add this value to the db
-  const newWebsite = await createWebsite(user.uid, siteUid);
+  const newWebsite = await createWebsite(userSession.data.user.id, siteUid);
 
   // TODO: REDIRECT WITH AN APPROPRIATE MESSAGE
   // either -
