@@ -27,6 +27,7 @@ import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import useKeyboard from '@/hooks/useKeyboard';
 import { motion } from 'framer-motion';
+import WebsiteSwitcher from './website-switcher';
 
 export default function DashboardNavBar({
   children
@@ -41,9 +42,9 @@ export default function DashboardNavBar({
   return (
     <>
       <div className="flex flex-col w-full h-full">
-        <div className="w-full h-16 border-b border-black-50">
+        <div className="w-full h-12 border-b border-black-50">
           <div className="flex justify-center items-center size-full relative">
-            <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" />
+            {/* <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" /> */}
             <motion.div
               className="h-full relative flex items-center"
               initial={{ opacity: 0, y: -10 }}
@@ -76,7 +77,7 @@ export default function DashboardNavBar({
             <div className="flex items-center gap-x-2.5 text-white/60 absolute right-2">
               <Toggle
                 className="
-                  hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center
+                  hover:bg-black-50 duration-300 rounded-lg size-8 flex items-center justify-center
                   data-[state=on]:bg-black-50 data-[state=on]:text-white/80
                 "
                 size="sm"
@@ -85,28 +86,24 @@ export default function DashboardNavBar({
                   <Tooltip>
                     <TooltipTrigger
                       asChild
-                      className="size-3.5"
+                      className="!size-5"
                     >
-                      <BellIcon />
+                      <BellIcon
+                        width="auto"
+                        height="auto"
+                      />
                     </TooltipTrigger>
-                    <TooltipContent className="text-[0.55rem] m-2 bg-black-75 text-white border border-black font-poppins">
+                    <TooltipContent className="text-[0.55rem] m-2.5 bg-black-75 text-white border border-black font-poppins">
                       <p>Up to date!</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               </Toggle>
-              <Button
-                className="border border-black-50 !py-0 !px-2 !text-[0.65rem] hover:!text-white bg-black-75"
-                variant="none"
-                size="sm"
-              >
-                Feedback
-              </Button>
-              <UserDropdownMenu />
+              <WebsiteSwitcher />
             </div>
           </div>
           {/** Entry point for page */}
-          <div className="container py-5">{children}</div>
+          <div className="px-10 py-5">{children}</div>
         </div>
       </div>
       <CommandDialog

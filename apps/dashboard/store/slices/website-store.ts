@@ -19,7 +19,8 @@ const websiteSlice = createSlice({
 	name: 'website',
 	initialState,
 	reducers: {
-		setWebsite: (state, action: PayloadAction<Website>) => {
+		setWebsite: (state, action: PayloadAction<Website | null>) => {
+			if(action.payload === null) state.website = null
 			state.website = action.payload
 		},
 		setSavingState: (state, action: PayloadAction<SavingState>) => {
