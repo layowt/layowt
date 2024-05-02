@@ -41,13 +41,23 @@ export default function NavigationItems({ className, ...props }) {
     {
       name: 'Overview',
       link: '/dashboard',
-      icon: <MaterialSymbolsHomeOutlineRounded />,
+      icon: (
+        <MaterialSymbolsHomeOutlineRounded
+          width="auto"
+          height="auto"
+        />
+      ),
       expanded: false
     },
     {
       name: 'Sites',
       link: '/dashboard/',
-      icon: <DesktopIcon />,
+      icon: (
+        <DesktopIcon
+          width="auto"
+          height="auto"
+        />
+      ),
       expanded: false,
       nested: [
         ...websites.map((website) => ({
@@ -65,13 +75,23 @@ export default function NavigationItems({ className, ...props }) {
     {
       name: 'Products',
       link: '/',
-      icon: <MaterialSymbolsBuildOutlineRounded />,
+      icon: (
+        <MaterialSymbolsBuildOutlineRounded
+          width="auto"
+          height="auto"
+        />
+      ),
       expanded: false
     },
     {
       name: 'Analytics',
       link: '/analytics',
-      icon: <BarChartIcon />,
+      icon: (
+        <BarChartIcon
+          width="auto"
+          height="auto"
+        />
+      ),
       expanded: false
     },
     {
@@ -80,7 +100,12 @@ export default function NavigationItems({ className, ...props }) {
     {
       name: 'Support',
       link: '/support',
-      icon: <ChatBubbleIcon />,
+      icon: (
+        <ChatBubbleIcon
+          width="auto"
+          height="auto"
+        />
+      ),
       expanded: false
     }
   ];
@@ -89,7 +114,7 @@ export default function NavigationItems({ className, ...props }) {
     <nav
       className={cn(
         className,
-        'font-poppins h-full flex flex-col justify-between'
+        'font-inter h-full flex flex-col justify-between'
       )}
       {...props}
     >

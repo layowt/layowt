@@ -111,7 +111,7 @@ export default function UserDropdownMenu({ className = '' }) {
           transition={{ duration: 0.3 }}
         >
           <DropdownMenuLabel className="text-sm font-normal">
-            {user?.email} {theme}
+            {user?.email}
           </DropdownMenuLabel>
         </motion.div>
         <DropdownMenuSeparator className="!bg-black-50" />
