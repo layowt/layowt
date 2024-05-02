@@ -37,7 +37,7 @@ export default function NavigationItem({
         }`}
         >
           <div className="flex gap-x-2 items-center">
-            <div className="size-3">{icon}</div>
+            <div className="size-4">{icon}</div>
             <span className="text-base">{name}</span>
           </div>
           {nested && nested.length && (
