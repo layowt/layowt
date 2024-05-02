@@ -8,8 +8,10 @@ export default function SiteBuilderClient({ website }: { website: Website }) {
   // 'server' page - we can now set the website here so it can be used globally
   setWebsite(website);
 
-  if (!website.websiteName) {
-    <UserSiteData />;
+  console.log(website.websiteName);
+
+  if (!website.websiteName.length) {
+    return <UserSiteData />;
   }
 
   return '';
