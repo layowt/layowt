@@ -18,12 +18,12 @@ const buttonVariants = cva(
         outline:
           'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
-          'bg-electric-violet-500 hover:bg-electric-violet-600 text-white border-2 border-electric-violet-300',
+          'bg-electric-violet-500 hover:bg-electric-violet-600 text-white border-2 border-electric-violet-300 rounded-xl hover:rounded-lg',
         tertiary:
-          'bg-electric-violet-500 text-white hover:bg-white hover:text-black duration-300',
+          'bg-white hover:bg-white hover:text-black duration-300 text-black rounded-xl hover:rounded-lg',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        none: 'rounded-none'
+        none: '!rounded-none'
       },
       size: {
         default: 'h-10 px-4',
