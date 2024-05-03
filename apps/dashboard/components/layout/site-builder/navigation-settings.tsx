@@ -20,10 +20,9 @@ export default function SiteBuilderSettings() {
   return (
     <div className="flex items-center gap-x-4">
       <LoadingSpinner />
-      {/* <EyeOpenIcon /> */}
       <div className="flex group">
         <Button
-          variant="tertiary"
+          variant="secondary"
           className="!rounded-br-none !rounded-tr-none group-hover:!bg-white group-hover:text-black text-xs"
           rounded="sm"
           size="sm"

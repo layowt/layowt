@@ -228,6 +228,7 @@ export default function WebsiteSwitcher() {
                     </div>
                     <div className="flex flex-col gap-y-0.5 items-start">
                       <span>{site.websiteName}</span>
+                      {/** TODO: MAKE THIS COME FROM THE DB */}
                       <span className="text-[10px]">www.testing.com</span>
                     </div>
                   </div>
@@ -282,6 +283,7 @@ export default function WebsiteSwitcher() {
                 )}
                 onClick={item.onClick}
               >
+                {/** TODO: make the button either a 'link' or 'button' based on what it required */}
                 <div className="flex items-center gap-x-4">
                   <div className="size-5">{item.icon}</div>
                   <span className="text-sm">{item.name}</span>
