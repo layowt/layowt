@@ -49,7 +49,7 @@ model websites {
   owner                                       users @relation(fields: [userId], references: [uid])
   userId                                      String
   websiteName                                 String
-  websiteUrl                                  String @unique
+  websiteUrl                                  String
   websiteLogo                                 String
   websitePrimaryColor                         String 
   websiteSecondaryColor                       String
