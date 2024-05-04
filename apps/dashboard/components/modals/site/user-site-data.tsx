@@ -10,8 +10,8 @@ import { Input } from '@/components/ui/input';
 import SiteOnboardingTitle from './modal-title';
 
 // redux
-import { useAppSelector } from '@/lib/hooks';
-import { website } from '@/store/slices/website-store';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { setWebsite, website } from '@/store/slices/website-store';
 
 // misc / utils
 import type { websites as Website } from '@prisma/client';
@@ -19,6 +19,7 @@ import { updateWebsite } from '@/utils/websites/website.post';
 import type { SavingState } from '@/types/state';
 import ModalPrimaryColor from './modal-primary-color';
 import ModalSecondaryColor from './modal-secondary-color';
+import { ReloadIcon } from '@radix-ui/react-icons';
 
 type NewWebsiteData = Pick<
   Website,
@@ -29,6 +30,7 @@ type NewWebsiteData = Pick<
 >;
 
 export default function UserSiteData() {
+  const dispatch = useAppDispatch();
   const currentSite = useAppSelector(website);
 
   const [state, setState] = useState<NewWebsiteData>({
@@ -39,6 +41,7 @@ export default function UserSiteData() {
   });
 
   const [status, setStatus] = useState<SavingState>('idle');
+  const [openModal, setOpenModal] = useState<boolean>(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
@@ -64,7 +67,20 @@ export default function UserSiteData() {
   const saveSiteData = async (siteId: string, Data: NewWebsiteData) => {
     setStatus('saving');
     try {
+      // Update the website with the new data in the db
       await updateWebsite(siteId, Data);
+
+      // update our redux store with the new data
+      dispatch(
+        setWebsite({
+          ...currentSite,
+          websiteName: Data.websiteName,
+          websitePrimaryColor: Data.websitePrimaryColor,
+          websiteSecondaryColor: Data.websiteSecondaryColor
+        })
+      );
+      // close the modal
+      setOpenModal(false);
     } catch (e) {
       setStatus('error');
     }
@@ -75,6 +91,7 @@ export default function UserSiteData() {
     <Dialog
       modal={true}
       defaultOpen={true}
+      open={openModal}
     >
       <DialogContent
         showCloseButton={false}
@@ -91,7 +108,7 @@ export default function UserSiteData() {
                 htmlFor="websiteName"
                 className="text-white/80 text-sm pl-1"
               >
-                Site Name: {currentSite.websiteId}
+                Site Name
               </label>
               <Input
                 type="text"
@@ -130,7 +147,13 @@ export default function UserSiteData() {
                   variant="secondary"
                   onClick={() => saveSiteData(currentSite.websiteId, state)}
                 >
-                  Save
+                  {status === 'saving' ? (
+                    <div className="w-6 flex items-center">
+                      <ReloadIcon className="animate-spin" />
+                    </div>
+                  ) : (
+                    'Save'
+                  )}
                 </Button>
               </div>
             </div>
