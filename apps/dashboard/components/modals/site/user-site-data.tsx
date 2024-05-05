@@ -11,7 +11,6 @@ import SiteOnboardingTitle from './modal-title';
 // redux
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import { setWebsite, website } from '@/store/slices/website-store';
-import { user } from '@/store/slices/user-store';
 
 // misc / utils
 import type { websites as Website } from '@prisma/client';
@@ -110,7 +109,7 @@ export default function UserSiteData() {
           <div className="flex flex-col gap-y-2">
             <SiteOnboardingTitle
               userId={currentSite?.userId}
-              websiteId={currentSite?.websiteId}
+              website={currentSite}
             />
             <div className="flex flex-col gap-4 mt-6">
               <div className="flex flex-col gap-y-1 relative">
