@@ -17,7 +17,7 @@ export default function SignUpLayout({
           <SiteLogo className="text-white z-20 hover:cursor-auto" />
           <div className="z-20 text-white flex items-center text-sm gap-x-4 font-inter font-semibold">
             {pathname === '/login' ? (
-              <span>Don't have an account?</span>
+              <span>Don&apos;t have an account?</span>
             ) : (
               <span>Already building?</span>
             )}
