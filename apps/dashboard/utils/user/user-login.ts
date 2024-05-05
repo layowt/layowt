@@ -2,7 +2,6 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '../supabase/server';
 import { prisma } from '@/utils/prisma';
-import { redirect } from 'next/navigation';
 
 export const login = async (email: string, password: string) => {
 	const supabase = createClient();
@@ -28,6 +27,8 @@ export const login = async (email: string, password: string) => {
 				lastLogin: new Date()
 			}
 		});
+		
+		// clear the cache for the layout page
 		revalidatePath('/', 'layout')
   	
 		return user;

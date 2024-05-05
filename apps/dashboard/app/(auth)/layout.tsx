@@ -1,14 +1,24 @@
 'use client';
 import SiteLogo from '@/components/logo';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 
-export default function SignUpLayout({
+export default async function SignUpLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = createClient();
   const pathname = usePathname();
+
+  // if the user is logged in, redirect them to the dashboard
+  const user = await supabase.auth.getUser();
+
+  if (user?.data?.user?.id) {
+    redirect('/dashboard');
+  }
+
   return (
     <>
       <div className="min-h-full w-full bg-grid-small-white/5 relative flex items-center justify-center">

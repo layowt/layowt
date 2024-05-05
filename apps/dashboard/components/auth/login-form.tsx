@@ -66,19 +66,20 @@ export default function LoginForm() {
           >
             Email Address
           </Label>
-          <div className="flex h-10 items-center rounded-md border border-black-50 bg-transparent pl-3 text-sm">
-            <EnvelopeClosedIcon className="w-4 h-4 text-white/50" />
+          <div className="flex h-10 items-center rounded-md bg-transparent text-sm relative">
+            <EnvelopeClosedIcon className="size-4 text-white/50 absolute ml-3" />
             <Input
               id="email"
               type="email"
               name="userEmail"
               placeholder="hello@draggle.com"
               className="
-                bg-transparent w-full border-none p-2 placeholder:text-white/50
-                focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
+                bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
+                focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
               "
               value={state.userEmail}
               onChange={handleChange}
+              autoComplete="email"
             />
           </div>
         </div>
@@ -89,22 +90,23 @@ export default function LoginForm() {
           >
             Password
           </Label>
-          <div className="flex h-10 items-center rounded-md border border-black-50 bg-transparent pl-3 text-sm">
-            <LockClosedIcon className="w-4 h-4 text-white/50" />
+          <div className="flex h-10 items-center rounded-md bg-transparent text-sm relative">
+            <LockClosedIcon className="size-4 text-white/50 absolute ml-3" />
             <Input
               id="password"
               type={showPassword ? 'text' : 'password'}
               placeholder="password"
               name="userPassword"
               className="
-                bg-transparent w-full border-none p-2 placeholder:text-white/50 focus-visible:outline-none 
-                disabled:cursor-not-allowed disabled:opacity-50
+              bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
+              focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
               "
               value={state.userPassword}
               onChange={handleChange}
+              autoComplete="current-password"
             />
             <button
-              className="cursor-pointer px-4 transition-all duration-300"
+              className="cursor-pointer px-4 transition-all duration-300 absolute right-0"
               onClick={(e) => {
                 e.preventDefault();
                 setShowPassword(!showPassword);
