@@ -1,18 +1,15 @@
 // react
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // components
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-  DropdownMenuGroup,
-  DropdownMenuShortcut
+  DropdownMenuGroup
 } from '@/ui/dropdown-menu';
-import { Switch } from '@/components/ui/switch';
 import {
   ReloadIcon,
-  SunIcon,
   GearIcon,
   PersonIcon,
   ChatBubbleIcon,
@@ -20,7 +17,6 @@ import {
   ChevronDownIcon
 } from '@radix-ui/react-icons';
 import IcRoundLogOut from '@/components/ui/icons/logout';
-import IcOutlineDarkMode from '@/components/ui/icons/darkmode';
 import IcSharpHelpOutline from '@/components/ui/icons/help';
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 
@@ -30,7 +26,6 @@ import { website } from '@/store/slices/website-store';
 
 // hooks
 import useUserWebsites from '@/hooks/useUserWebsites';
-import useCurrentTheme from '@/hooks/useCurrentTheme';
 
 // misc
 import { createClient } from '@/utils/supabase/client';
@@ -44,6 +39,7 @@ import {
   DropdownMenuSubTrigger
 } from '@radix-ui/react-dropdown-menu';
 import Link from 'next/link';
+import ThemeSwitcherModal from '@/components/modals/dashboard/theme-switcher';
 
 export default function WebsiteSwitcher() {
   const supabase = createClient();
@@ -62,8 +58,6 @@ export default function WebsiteSwitcher() {
     };
     fetchData();
   }, []);
-
-  const { theme, toggleTheme } = useCurrentTheme();
 
   interface DropdownItem {
     name: string;
@@ -88,31 +82,7 @@ export default function WebsiteSwitcher() {
     // TODO: change to a toggle
     {
       name: 'Theme',
-      html: (
-        <button
-          onClick={() => toggleTheme()}
-          className="px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start text-sm"
-        >
-          <div className="flex items-center w-full justify-between">
-            <div className="flex items-center gap-x-4">
-              {theme === 'dark' ? (
-                <SunIcon className="size-5" />
-              ) : (
-                <IcOutlineDarkMode className="size-5" />
-              )}
-              <span>Theme</span>
-            </div>
-            <Switch
-              checked={theme === 'light'}
-              className="w-8 h-4 !bg-black-50"
-              thumbClasses="
-                size-3 data-[state=checked]:translate-x-4 data-[state=unchecked]:bg-electric-violet
-                data-[state=unchecked]:translate-x-0.5
-              "
-            />
-          </div>
-        </button>
-      )
+      html: <ThemeSwitcherModal />
     },
     {
       name: 'Feedback',

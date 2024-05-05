@@ -9,10 +9,8 @@ export default function SiteBuilderLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const selectedDevice = useAppSelector(device);
-  const currentWebsite = useAppSelector(website);
-
-  console.log(currentWebsite);
+  //const selectedDevice = useAppSelector(device);
+  //const currentWebsite = useAppSelector(website);
 
   return (
     <div className="h-screen text-white">
