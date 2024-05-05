@@ -1,24 +1,28 @@
 import { supabase } from '@/lib/supabase';
 import { NextRequest, NextResponse } from 'next/server';
+import uniqid from 'uniqid';
 
 export async function POST(req: NextRequest) {
 	const formData = await req.formData();
 
 	// Remember to enforce type here and after use some lib like zod.js to check it
-	const files = formData.get('files') as File;
-	const userId = formData.get('userId') as string;
+	const files = formData.getAll('files') as File[];
 	const websiteId = formData.get('siteId') as string;
+
+	const fileLocation = `${websiteId}/logo.png`;
 
 	// Upload the files to the storage
 	// The file will be stored in the user-sites bucket with the key `websiteId/logo`
-	const { data: upload, error } = await supabase.storage
+	// upsert set to true so the user can replace the logo if they want to
+	const { error } = await supabase.storage
 		.from('user-sites')
 		.upload(
-			`${websiteId}/logo.png`,
+			fileLocation,
 			files[0],
 			{ 
 				cacheControl: '3600',
-				upsert: false
+				upsert: true,
+				contentType: 'image/png'
 			},
 		);
 
@@ -27,10 +31,19 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({ message: error.message });
 	}
 
+	// get the public url for the newly uploaded file
+	const { data: url } = await supabase.storage
+		.from('user-sites')
+		.getPublicUrl(
+			fileLocation,
+		);
+
+	// append a unique id to the url to refetch the image every time we upload it
+	// this is to prevent the browser from caching the image
 	return NextResponse.json(
 		{ 
 			message: 'Files Created',
-			logoUrl: upload.path
+			logoUrl: `${url.publicUrl}?u=${uniqid()}`
 		}
 	);
 }

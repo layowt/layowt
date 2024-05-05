@@ -1,23 +1,41 @@
+'use client';
+
 import { DialogTitle } from '@/components/ui/dialog';
+import { websites } from '@prisma/client';
 import { CameraIcon } from '@radix-ui/react-icons';
+import { useAppDispatch } from '@/lib/hooks';
+import { setWebsite } from '@/store/slices/website-store';
+import { cn } from '@/lib/utils';
 
 export default function SiteOnboardingTitle({
   userId,
-  websiteId
+  website
 }: {
   userId: string;
-  websiteId: string;
+  website: websites;
 }) {
+  const dispatch = useAppDispatch();
+
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append('files', data.target.value);
+    formData.append('files', data.target.files[0]);
     formData.append('userId', userId);
-    formData.append('siteId', websiteId);
+    formData.append('siteId', website?.websiteId);
 
-    await fetch('/api/upload', {
-      method: 'POST',
-      body: formData
-    });
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const { logoUrl } = await res.json();
+
+      // Update the website with the new logo
+      dispatch(setWebsite({ ...website, websiteLogo: logoUrl }));
+
+      //TODO: ADD SONNER TO SHOW THE USER THAT THE LOGO WAS UPLOADED
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -27,12 +45,20 @@ export default function SiteOnboardingTitle({
         <div className="col-span-2">
           <label
             htmlFor="logo-file-upload"
-            className=" 
-              size-14 rounded-full bg-white border border-black  
-              text-white cursor-pointer flex items-center justify-center
-            "
+            className={cn(
+              'size-14 rounded-full border border-black text-white cursor-pointer flex items-center justify-center',
+              website.websiteLogo ? 'bg-transparent' : 'bg-white'
+            )}
           >
-            <CameraIcon className="size-5 text-black-50" />
+            {website.websiteLogo ? (
+              <img
+                src={website.websiteLogo}
+                alt="logo"
+                className="size-full rounded-full object-cover"
+              />
+            ) : (
+              <CameraIcon className="w-6 h-6" />
+            )}
           </label>
           <input
             id="logo-file-upload"
