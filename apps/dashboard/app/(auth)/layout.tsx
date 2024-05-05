@@ -1,12 +1,14 @@
 'use client';
 import SiteLogo from '@/components/logo';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function SignUpLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   return (
     <>
       <div className="min-h-full w-full bg-grid-small-white/5 relative flex items-center justify-center">
@@ -14,15 +16,19 @@ export default function SignUpLayout({
         <div className="w-full flex justify-between p-5 absolute top-0">
           <SiteLogo className="text-white z-20 hover:cursor-auto" />
           <div className="z-20 text-white flex items-center text-sm gap-x-4 font-inter font-semibold">
-            <span>Already building?</span>
+            {pathname === '/login' ? (
+              <span>Don't have an account?</span>
+            ) : (
+              <span>Already building?</span>
+            )}
             <Link
-              href="/login"
+              href={pathname === '/login' ? '/sign-up' : '/login'}
               className="
                 cursor-pointer bg-electric-violet hover:bg-electric-violet-600 
                 duration-300 px-4 py-2 rounded-sm shadow-md shadow-electric-violet-700
               "
             >
-              Login
+              {pathname === '/login' ? 'Sign Up' : 'Login'}
             </Link>
           </div>
         </div>

@@ -29,7 +29,7 @@ export default function NavigationItems({ className, ...props }) {
     const getUserWebsites = async () => {
       const user = await getClientUser();
       const fetchedWebsites = await getWebsite<websites[]>(
-        { userId: user.data.user.id },
+        { userId: user.data?.user?.id },
         true
       );
       setWebsites(fetchedWebsites);
