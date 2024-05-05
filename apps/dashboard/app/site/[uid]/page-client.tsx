@@ -17,6 +17,7 @@ export default async function SiteBuilderClient({
   );
   // set the user in redux using this hook
   useUser();
+  setWebsite(website);
 
   // if we do not have a site name, try to fetch the site from the db
   if (website.websiteName.length < 1) {
