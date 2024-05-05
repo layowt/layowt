@@ -2,24 +2,35 @@
 import { useState } from 'react';
 
 // ui imports
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Checkbox } from '../ui/checkbox';
-import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { Input } from '@/ui/input';
+import { Label } from '@/ui/label';
+import { Checkbox } from '@/ui/checkbox';
+import { Button } from '@/ui/button';
+import {
+  ReloadIcon,
+  EnvelopeClosedIcon,
+  LockClosedIcon,
+  EyeClosedIcon,
+  EyeOpenIcon
+} from '@radix-ui/react-icons';
 
 // utils
-import { signUp } from '../../utils/supabase';
+import { signUp } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
 import { useAppDispatch } from '@/lib/hooks';
 import { createUser, deleteUser } from '@/store/slices/user-store';
+import { toast } from 'sonner';
 
 export default function SignUpForm() {
   // redux
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [state, setState] = useState({
     userEmail: '',
@@ -32,14 +43,6 @@ export default function SignUpForm() {
       [e.target.name]: e.target.value
     });
   };
-
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-
-  // other states
-  const [isLoading, setIsLoading] = useState(false);
-
-  // router
-  const router = useRouter();
 
   const validEmail = (emailAddress: string) => {
     return Boolean(!!emailAddress.match(/.+@.+/));
@@ -63,8 +66,6 @@ export default function SignUpForm() {
         return;
       }
 
-      // push the user to the desired location
-
       // delete the existing user in the store
       // so we can create the new one
       if (user) {
@@ -85,7 +86,7 @@ export default function SignUpForm() {
       setIsLoading(false);
     } catch (e) {
       // TODO: add sonner here on error
-      console.error(e);
+      toast.error('An error occurred while creating your account');
     }
   };
 
@@ -95,128 +96,135 @@ export default function SignUpForm() {
         e.preventDefault();
         handleRegistration();
       }}
-      className="flex flex-col font-cairo gap-y-8 bg-white/5 rounded-xl p-7 w-80 lg:w-96"
+      className="flex flex-col gap-y-8 bg-[#05050A] border border-black-50 rounded-xl py-12 px-8 w-80 lg:w-[450px]"
     >
-      <h3 className="text-3xl flex justify-center w-full">Create an account</h3>
+      <h3 className="animate-text text-3xl flex justify-center w-full text-center font-semibold bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text">
+        Your businesses future, starting today.
+      </h3>
       {/* input area */}
-      <div className="flex flex-col gap-y-10">
-        <div className="flex flex-col gap-y-6">
-          <div className="flex flex-col gap-y-1.5">
-            <Label htmlFor="email">Email Address</Label>
-            <div className="flex h-10 items-center rounded-md border border-input bg-transparent pl-3 text-sm ring-offset-background focus-within:ring-1 focus-within:ring-ring focus-within:ring-offset-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1.5em"
-                height="1.5em"
-                viewBox="0 0 24 24"
+      <div className="flex flex-col gap-y-6">
+        <div className="flex flex-col gap-y-1.5">
+          <Label
+            htmlFor="email"
+            className="text-white/80 text-xs font-inter"
+          >
+            Email Address
+          </Label>
+          <div className="flex h-10 items-center rounded-md border border-black-50 bg-transparent pl-3 text-sm">
+            <EnvelopeClosedIcon className="w-4 h-4 text-white/50" />
+            <Input
+              id="email"
+              type="email"
+              name="userEmail"
+              placeholder="hello@draggle.com"
+              className="
+                bg-transparent w-full border-none p-2 placeholder:text-white/50
+                focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
+              "
+              value={state.userEmail}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-1.5">
+          <Label
+            htmlFor="password"
+            className="text-white/80 text-xs font-inter"
+          >
+            Password
+          </Label>
+          <div className="flex h-10 items-center rounded-md border border-black-50 bg-transparent pl-3 text-sm">
+            <LockClosedIcon className="w-4 h-4 text-white/50" />
+            <Input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="password"
+              name="userPassword"
+              className="
+                bg-transparent w-full border-none p-2 placeholder:text-white/50 focus-visible:outline-none 
+                disabled:cursor-not-allowed disabled:opacity-50
+              "
+              value={state.userPassword}
+              onChange={handleChange}
+            />
+            <button
+              className="cursor-pointer px-4 transition-all duration-300"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(!showPassword);
+              }}
+            >
+              {showPassword ? (
+                <EyeOpenIcon className="w-4 h-4" />
+              ) : (
+                <EyeClosedIcon className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Terms and conditions */}
+        <div className="flex flex-col gap-y-10 mt-5">
+          <div className="flex flex-col gap-y-3">
+            <div className="flex gap-x-2">
+              <Checkbox
+                id="terms"
+                className="border border-white rounded-[0.25rem] mt-[2px]"
+                checked={acceptedTerms}
+                onCheckedChange={(e) => {
+                  setAcceptedTerms(!acceptedTerms);
+                }}
+                required
+              />
+              <Label
+                htmlFor="terms"
+                className="text-xs text-white/80"
               >
-                <path
-                  fill="currentColor"
-                  d="M4.615 19q-.69 0-1.152-.462Q3 18.075 3 17.385V6.615q0-.69.463-1.152Q3.925 5 4.615 5h14.77q.69 0 1.152.463q.463.462.463 1.152v10.77q0 .69-.462 1.152q-.463.463-1.153.463zM20 6.885l-7.552 4.944q-.106.056-.214.093T12 11.96q-.125 0-.234-.038t-.214-.093L4 6.885v10.5q0 .269.173.442t.442.173h14.77q.269 0 .442-.173t.173-.442zM12 11l7.692-5H4.308zM4 6.885v.211v-.811v.034V6v.32v-.052v.828zV18z"
-                ></path>
-              </svg>
-              <Input
-                id="email"
-                type="email"
-                name="userEmail"
-                placeholder="hello@draggle.com"
+                By checking this box, you are agreeing to our terms and
+                conditions.
+              </Label>
+            </div>
+            <div className="flex gap-x-2">
+              <Checkbox
+                id="terms"
+                className="border border-white rounded-[0.25rem] mt-[2px]"
+                checked={acceptedTerms}
+                required
+              />
+              <Label
+                htmlFor="terms"
+                className="text-xs text-white/80"
+              >
+                By checking this box, you are agreeing to receive marketing
+                emails for draggle
+              </Label>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-y-8">
+            {/* submit button */}
+            <div className="w-full">
+              <Button
+                type="submit"
                 className="
-                    bg-transparent w-full border-none p-2 placeholder:text-muted-foreground 
-                    focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50
-                  "
-                value={state.userEmail}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          {/* password */}
-          <div className="flex flex-col gap-y-1.5">
-            <Label htmlFor="password">Password</Label>
-            <div className="flex h-10 items-center rounded-md border border-input bg-transparent pl-3 text-sm ring-offset-background focus-within:ring-1 focus-within:ring-ring focus-within:ring-offset-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1em"
-                height="1em"
-                viewBox="0 0 14 14"
+                  rounded-lg px-4 py-1 w-full
+                  duration-300 disabled:cursor-not-allowed 
+                  flex gap-x-2 items-center
+                "
+                disabled={
+                  !validEmail(state.userEmail) ||
+                  !isValidPassword(state.userPassword) ||
+                  !acceptedTerms
+                }
+                variant="secondary"
               >
-                <g
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M11 5.5H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1m-.5 0V4a3.5 3.5 0 1 0-7 0v1.5"></path>
-                  <path d="M7 10a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1"></path>
-                </g>
-              </svg>
-              <Input
-                id="password"
-                type="password"
-                placeholder="password"
-                name="userPassword"
-                className="bg-transparent w-full border-none p-2 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                value={state.userPassword}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          {/* Terms and conditions */}
-          <div className="flex flex-col gap-y-4">
-            <div className="flex flex-col gap-y-3">
-              <div className="flex gap-x-2 items-center">
-                <Checkbox
-                  id="terms"
-                  className="border border-white rounded-[0.25rem]"
-                  checked={acceptedTerms}
-                  onCheckedChange={(e) => {
-                    setAcceptedTerms(!acceptedTerms);
-                  }}
-                  required
-                />
-                <Label htmlFor="terms">
-                  I agree to the terms and conditions
-                </Label>
-              </div>
-
-              <div className="flex flex-col gap-y-8">
-                {/* submit button */}
-                <div className="w-full">
-                  <Button
-                    type="submit"
-                    className="
-                       rounded-lg px-4 py-1 w-full
-                        duration-300 disabled:cursor-not-allowed 
-                        flex gap-x-2 items-center
-                      "
-                    disabled={
-                      !validEmail(state.userEmail) ||
-                      !isValidPassword(state.userPassword) ||
-                      !acceptedTerms
-                    }
-                    variant="secondary"
-                  >
-                    {isLoading ? (
-                      <ReloadIcon className="w-3 h-3 animate-spin" />
-                    ) : (
-                      ''
-                    )}
-                    Sign Up
-                  </Button>
-                </div>
-
-                {/* separator */}
-                <div className="flex flex-col gap-y-3 justify-center">
-                  <Separator className="bg-white/30" />
-
-                  <Button
-                    variant="link"
-                    className="text-white font-thin"
-                  >
-                    Already have an account?
-                  </Button>
-                </div>
-              </div>
+                {isLoading ? (
+                  <ReloadIcon className="w-3 h-3 animate-spin" />
+                ) : (
+                  ''
+                )}
+                Get Started!
+              </Button>
             </div>
           </div>
         </div>
