@@ -11,6 +11,7 @@ import SiteOnboardingTitle from './modal-title';
 // redux
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import { setWebsite, website } from '@/store/slices/website-store';
+import { user } from '@/store/slices/user-store';
 
 // misc / utils
 import type { websites as Website } from '@prisma/client';
@@ -35,8 +36,8 @@ export default function UserSiteData() {
   const [state, setState] = useState<NewWebsiteData>({
     websiteName: '',
     websiteLogo: '',
-    websitePrimaryColor: '',
-    websiteSecondaryColor: ''
+    websitePrimaryColor: 'ffffff',
+    websiteSecondaryColor: '6725f2'
   });
 
   const [status, setStatus] = useState<SavingState>('idle');
@@ -107,7 +108,10 @@ export default function UserSiteData() {
           }}
         >
           <div className="flex flex-col gap-y-2">
-            <SiteOnboardingTitle />
+            <SiteOnboardingTitle
+              userId={currentSite?.userId}
+              websiteId={currentSite?.websiteId}
+            />
             <div className="flex flex-col gap-4 mt-6">
               <div className="flex flex-col gap-y-1 relative">
                 <label
@@ -142,6 +146,7 @@ export default function UserSiteData() {
                   <Button
                     variant="secondary"
                     onClick={() => saveSiteData(currentSite.websiteId, state)}
+                    disabled={state.websiteName === '' || status === 'saving'}
                   >
                     {status === 'saving' ? (
                       <div className="w-6 flex items-center">
