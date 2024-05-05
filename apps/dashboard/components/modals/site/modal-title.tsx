@@ -35,7 +35,7 @@ export default function SiteOnboardingTitle({
             Welcome to the site builder!
           </h1>
           <p className="text-white/80 text-xs font-poppins font-light">
-            You're digital journey begins here, we just need a few details
+            You&apos;re digital journey begins here, we just need a few details
             before we can continue.
           </p>
         </div>
