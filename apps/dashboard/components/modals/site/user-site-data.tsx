@@ -23,9 +23,9 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 type NewWebsiteData = Pick<
   Website,
   | 'websiteName'
-  | 'websiteLogo'
   | 'websitePrimaryColor'
   | 'websiteSecondaryColor'
+  | 'websiteLogo'
 >;
 
 export default function UserSiteData() {
@@ -33,10 +33,10 @@ export default function UserSiteData() {
   const currentSite = useAppSelector(website);
 
   const [state, setState] = useState<NewWebsiteData>({
-    websiteName: '',
-    websiteLogo: '',
-    websitePrimaryColor: 'ffffff',
-    websiteSecondaryColor: '6725f2'
+    websiteLogo: currentSite?.websiteLogo || '',
+    websiteName: currentSite?.websiteName || '',
+    websitePrimaryColor: currentSite?.websitePrimaryColor || '#ffffff',
+    websiteSecondaryColor: currentSite?.websiteSecondaryColor || '#6725f2'
   });
 
   const [status, setStatus] = useState<SavingState>('idle');
@@ -63,25 +63,33 @@ export default function UserSiteData() {
     });
   };
 
-  const saveSiteData = async (siteId: string, Data: NewWebsiteData) => {
+  const setLogo = (logoUrl: string) => {
+    setState({
+      ...state,
+      websiteLogo: logoUrl
+    });
+  };
+
+  const saveSiteData = async (siteId: string, data: NewWebsiteData) => {
     setStatus('saving');
     try {
       // check if the website name is empty
-      if (!Data.websiteName) {
+      if (!data.websiteName) {
         setStatus('error');
         return;
       }
 
       // Update the website with the new data in the db
-      await updateWebsite(siteId, Data);
+      await updateWebsite(siteId, data);
 
       // update our redux store with the new data
       dispatch(
         setWebsite({
           ...currentSite,
-          websiteName: Data.websiteName,
-          websitePrimaryColor: Data.websitePrimaryColor,
-          websiteSecondaryColor: Data.websiteSecondaryColor
+          websiteLogo: data.websiteLogo,
+          websiteName: data.websiteName,
+          websitePrimaryColor: data.websitePrimaryColor,
+          websiteSecondaryColor: data.websiteSecondaryColor
         })
       );
       // close the modal
@@ -110,6 +118,7 @@ export default function UserSiteData() {
             <SiteOnboardingTitle
               userId={currentSite?.userId}
               website={currentSite}
+              onLogoChange={setLogo}
             />
             <div className="flex flex-col gap-4 mt-6">
               <div className="flex flex-col gap-y-1 relative">
