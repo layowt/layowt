@@ -82,7 +82,16 @@ export default function UserDropdownMenu({
     {
       name: 'Logout',
       icon: <IcRoundLogOut />,
-      onClick: () => supabase.auth.signOut()
+      onClick: () => {
+        supabase.auth
+          .signOut()
+          .then(() => {
+            router.push('/login');
+          })
+          .catch((error) => {
+            console.error('Error signing out:', error.message);
+          });
+      }
     }
   ];
 
