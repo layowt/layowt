@@ -1,4 +1,5 @@
 import { DialogTitle } from '@/components/ui/dialog';
+import { CameraIcon } from '@radix-ui/react-icons';
 
 export default function SiteOnboardingTitle({
   userId,
@@ -23,13 +24,25 @@ export default function SiteOnboardingTitle({
     <div className="flex flex-col gap-y-0.5">
       <DialogTitle className="mt-2 grid grid-cols-12 gap-x-4 items-center">
         {/** upload icon */}
-        <input
-          type="file"
-          onChange={() => {
-            onSubmit(event);
-          }}
-          className="size-10 bg-white rounded-full"
-        />
+        <div className="col-span-2">
+          <label
+            htmlFor="logo-file-upload"
+            className=" 
+              size-14 rounded-full bg-white border border-black  
+              text-white cursor-pointer flex items-center justify-center
+            "
+          >
+            <CameraIcon className="size-5 text-black-50" />
+          </label>
+          <input
+            id="logo-file-upload"
+            type="file"
+            onChange={() => {
+              onSubmit(event);
+            }}
+            className="!hidden"
+          />
+        </div>
         <div className="flex flex-col gap-y-1 col-span-10">
           <h1 className="text-2xl font-semibold text-white font-poppins">
             Welcome to the site builder!
