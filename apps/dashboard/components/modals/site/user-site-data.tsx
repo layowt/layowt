@@ -1,5 +1,4 @@
 'use client';
-
 // react
 import { useState } from 'react';
 
@@ -67,6 +66,12 @@ export default function UserSiteData() {
   const saveSiteData = async (siteId: string, Data: NewWebsiteData) => {
     setStatus('saving');
     try {
+      // check if the website name is empty
+      if (!Data.websiteName) {
+        setStatus('error');
+        return;
+      }
+
       // Update the website with the new data in the db
       await updateWebsite(siteId, Data);
 
@@ -88,78 +93,70 @@ export default function UserSiteData() {
   };
 
   return (
-    <Dialog
-      modal={true}
-      defaultOpen={true}
-      open={openModal}
-    >
-      <DialogContent
-        showCloseButton={false}
-        className="bg-black-75 border border-black-50 focus:outline-none rounded-lg shadow-lg sm:rounded-lg p-6 w-full max-w-lg"
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
+    <>
+      <Dialog
+        modal={true}
+        defaultOpen={true}
+        open={openModal}
       >
-        <div className="flex flex-col gap-y-2">
-          <SiteOnboardingTitle />
-          <div className="flex flex-col gap-4 mt-6">
-            <div className="flex flex-col gap-y-1 relative">
-              <label
-                htmlFor="websiteName"
-                className="text-white/80 text-sm pl-1"
-              >
-                Site Name
-              </label>
-              <Input
-                type="text"
-                className="w-full peer"
-                placeholder=""
-                id="websiteName"
-                value={state.websiteName}
-                onChange={handleChange}
-                name="websiteName"
-              />
-            </div>
-            {/** Site primary / secondary brand color */}
-            <div className="flex gap-4 mt-2">
-              <ModalPrimaryColor
-                primaryColor={state.websitePrimaryColor}
-                onColorChange={(color) => setPrimaryColor(color)}
-              />
-              <ModalSecondaryColor
-                secondaryColor={state.websiteSecondaryColor}
-                onColorChange={(color) => setSecondaryColor(color)}
-              />
-            </div>
-            {/** The user has to enter the site name in order to continue */}
-            <div className="w-full flex justify-between items-center mt-2">
-              <Button variant="none">Clear</Button>
-              <div className="flex gap-x-4">
-                <Button
-                  variant="tertiary"
-                  disabled={
-                    state.websiteName.length === 0 || state.websiteName === null
-                  }
+        <DialogContent
+          showCloseButton={false}
+          className="bg-black-75 border border-black-50 focus:outline-none rounded-lg shadow-lg sm:rounded-lg p-6 w-full max-w-lg"
+          onInteractOutside={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <div className="flex flex-col gap-y-2">
+            <SiteOnboardingTitle />
+            <div className="flex flex-col gap-4 mt-6">
+              <div className="flex flex-col gap-y-1 relative">
+                <label
+                  htmlFor="websiteName"
+                  className="text-white/80 text-sm pl-1"
                 >
-                  Skip for now
-                </Button>
-                <Button
-                  variant="secondary"
-                  onClick={() => saveSiteData(currentSite.websiteId, state)}
-                >
-                  {status === 'saving' ? (
-                    <div className="w-6 flex items-center">
-                      <ReloadIcon className="animate-spin" />
-                    </div>
-                  ) : (
-                    'Save'
-                  )}
-                </Button>
+                  Site Name
+                </label>
+                <Input
+                  type="text"
+                  className="w-full peer"
+                  placeholder=""
+                  id="websiteName"
+                  value={state.websiteName}
+                  onChange={handleChange}
+                  name="websiteName"
+                />
+              </div>
+              <div className="flex gap-4 mt-2">
+                <ModalPrimaryColor
+                  primaryColor={state.websitePrimaryColor}
+                  onColorChange={(color) => setPrimaryColor(color)}
+                />
+                <ModalSecondaryColor
+                  secondaryColor={state.websiteSecondaryColor}
+                  onColorChange={(color) => setSecondaryColor(color)}
+                />
+              </div>
+              <div className="w-full flex justify-between items-center mt-2">
+                <Button variant="none">Clear</Button>
+                <div className="flex gap-x-4">
+                  <Button
+                    variant="secondary"
+                    onClick={() => saveSiteData(currentSite.websiteId, state)}
+                  >
+                    {status === 'saving' ? (
+                      <div className="w-6 flex items-center">
+                        <ReloadIcon className="animate-spin" />
+                      </div>
+                    ) : (
+                      'Save'
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
