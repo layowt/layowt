@@ -1,18 +1,21 @@
 'use client';
 import SiteBuilderNavBar from '@/components/layout/site-builder/navigation-navbar';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import { device } from '@/store/slices';
-import { website } from '@/store/slices/website-store';
+import { setWebsite, website } from '@/store/slices/website-store';
 
 export default function SiteBuilderLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const selectedDevice = useAppSelector(device);
+  const dispatch = useAppDispatch();
+  //const selectedDevice = useAppSelector(device);
   const currentWebsite = useAppSelector(website);
 
-  console.log(currentWebsite);
+  // set the current site in redux here
+  // this is the top level of the site builder
+  dispatch(setWebsite(currentWebsite));
 
   return (
     <div className="h-screen text-white">

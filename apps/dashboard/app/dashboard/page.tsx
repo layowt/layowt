@@ -6,12 +6,13 @@ import { websites } from '@prisma/client';
 import PageClient from './page-client';
 
 export default async function Dashboard() {
-  const userId = await (await getUserFromSession()).data.user.id;
-  if (!userId) throw new Error('No user id found');
+  const userId = await (await getUserFromSession())?.data?.user?.id;
+
+  if (!userId) return;
+
+  const websites = await getWebsite<websites[]>({ userId }, true);
+
   const user = await getUserFromDb(userId);
-
-  const websites = await getWebsite<websites[]>({ userId: user.uid }, true);
-
   return (
     <PageClient>
       <div className="text-2xl flex flex-col gap-y-10 font-semibold font-inter text-white">

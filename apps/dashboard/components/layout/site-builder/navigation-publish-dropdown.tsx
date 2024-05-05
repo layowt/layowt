@@ -58,7 +58,7 @@ export default function SiteBuilderPublishModal({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="tertiary"
+          variant="secondary"
           className="!rounded-bl-none !rounded-tl-none group-hover:!bg-white group-hover:text-black px-2"
           rounded="sm"
           size="sm"

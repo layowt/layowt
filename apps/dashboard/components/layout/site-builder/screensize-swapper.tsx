@@ -73,10 +73,10 @@ export default function ScreenSizeSwapper() {
             key={device.id}
             className={cn(
               `
-							hover:bg-black-50 duration-300 hover:cursor-pointer rounded-md p-1.5
+							hover:!bg-black-50 duration-300 hover:cursor-pointer rounded-md !p-1.5 !bg-transparent
 							`,
               selectedDeviceType === device.id
-                ? 'bg-black-50'
+                ? '!bg-black-50'
                 : 'bg-transparent'
             )}
             onClick={() => setDevice(device.id)}

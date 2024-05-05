@@ -53,8 +53,9 @@ export default function DashboardNavBar({
             >
               <Button
                 className="
-                  flex justify-start items-center border border-black-50 rounded-lg w-64 h-3/4 py-1.5 
+                  flex justify-start items-center border border-black-50 w-64 h-3/4 py-1.5 
                   pl-6 font-poppins hover:text-white text-white/60 group text-[0.65rem] bg-black-75
+                  rounded-lg hover:!rounded-md
                 "
                 variant="none"
                 onClick={() => setOpen(!open)}
