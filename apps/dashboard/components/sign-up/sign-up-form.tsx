@@ -15,7 +15,7 @@ import {
 } from '@radix-ui/react-icons';
 
 // utils
-import { signUp } from '../../utils/supabase';
+import { signUp } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
@@ -126,7 +126,6 @@ export default function SignUpForm() {
             />
           </div>
         </div>
-        {/* password */}
         <div className="flex flex-col gap-y-1.5">
           <Label
             htmlFor="password"
