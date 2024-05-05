@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
-export function middleware(request: Request) {
-
+export async function middleware(req: Request) {
   // Store current request url in a custom header, which you can read later
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('next-url', request.url);
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set('next-url', req.url);
+
 
   return NextResponse.next({
     request: {

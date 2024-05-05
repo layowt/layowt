@@ -1,3 +1,4 @@
+'use server';
 import { createClient } from '../utils/supabase/server';
 import UserAuthModal from './modals/user-auth';
 
@@ -12,7 +13,7 @@ export default async function UserAuthentication({
   // if the user is not logged in, show a modal to allow the user to log in
   return (
     <>
-      {<UserAuthModal currentUserObject={user.user} />}
+      <UserAuthModal currentUserObject={user.user} />
       {children}
     </>
   );

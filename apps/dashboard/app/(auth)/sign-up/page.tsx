@@ -1,9 +1,5 @@
-import SignUpComponent from '@/components/sign-up/sign-up-wrapper';
+import SignUpComponent from '@/components/auth/sign-up-wrapper';
 
 export default function Signup() {
-  return (
-    <div className="font-karla">
-      <SignUpComponent />
-    </div>
-  );
+  return <SignUpComponent />;
 }
