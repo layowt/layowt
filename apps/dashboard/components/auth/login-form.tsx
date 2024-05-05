@@ -35,7 +35,7 @@ export default function LoginForm() {
   const handleLogin = async () => {
     setIsLoading(true);
     try {
-      const { user, error } = await login(state.userEmail, state.userPassword);
+      const user = await login(state.userEmail, state.userPassword);
 
       // redirect to the dashboard if the user is logged in
       toast.success('Welcome back, ' + user?.user.email + '!');

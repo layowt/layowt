@@ -60,7 +60,7 @@ export async function updateSession(request: NextRequest) {
 
   await supabase.auth.getUser();
 
-  console.log(await supabase.auth.getUser());
+  console.log('ran', await supabase.auth.getUser());
 
   return response;
 }
