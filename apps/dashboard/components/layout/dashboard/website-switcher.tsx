@@ -1,18 +1,15 @@
 // react
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // components
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-  DropdownMenuGroup,
-  DropdownMenuShortcut
+  DropdownMenuGroup
 } from '@/ui/dropdown-menu';
-import { Switch } from '@/components/ui/switch';
 import {
   ReloadIcon,
-  SunIcon,
   GearIcon,
   PersonIcon,
   ChatBubbleIcon,
@@ -20,7 +17,6 @@ import {
   ChevronDownIcon
 } from '@radix-ui/react-icons';
 import IcRoundLogOut from '@/components/ui/icons/logout';
-import IcOutlineDarkMode from '@/components/ui/icons/darkmode';
 import IcSharpHelpOutline from '@/components/ui/icons/help';
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 
@@ -30,7 +26,6 @@ import { website } from '@/store/slices/website-store';
 
 // hooks
 import useUserWebsites from '@/hooks/useUserWebsites';
-import useCurrentTheme from '@/hooks/useCurrentTheme';
 
 // misc
 import { createClient } from '@/utils/supabase/client';
@@ -44,6 +39,7 @@ import {
   DropdownMenuSubTrigger
 } from '@radix-ui/react-dropdown-menu';
 import Link from 'next/link';
+import ThemeSwitcherModal from '@/components/modals/dashboard/theme-switcher';
 
 export default function WebsiteSwitcher() {
   const supabase = createClient();
@@ -62,8 +58,6 @@ export default function WebsiteSwitcher() {
     };
     fetchData();
   }, []);
-
-  const { theme, toggleTheme } = useCurrentTheme();
 
   interface DropdownItem {
     name: string;
@@ -88,31 +82,7 @@ export default function WebsiteSwitcher() {
     // TODO: change to a toggle
     {
       name: 'Theme',
-      html: (
-        <button
-          onClick={() => toggleTheme()}
-          className="px-2 py-1 hover:bg-black-50 rounded w-full flex justify-start text-sm"
-        >
-          <div className="flex items-center w-full justify-between">
-            <div className="flex items-center gap-x-4">
-              {theme === 'dark' ? (
-                <SunIcon className="size-5" />
-              ) : (
-                <IcOutlineDarkMode className="size-5" />
-              )}
-              <span>Theme</span>
-            </div>
-            <Switch
-              checked={theme === 'light'}
-              className="w-8 h-4 !bg-black-50"
-              thumbClasses="
-                size-3 data-[state=checked]:translate-x-4 data-[state=unchecked]:bg-electric-violet
-                data-[state=unchecked]:translate-x-0.5
-              "
-            />
-          </div>
-        </button>
-      )
+      html: <ThemeSwitcherModal />
     },
     {
       name: 'Feedback',
@@ -195,47 +165,58 @@ export default function WebsiteSwitcher() {
         <DropdownMenuSubTrigger asChild>
           <button className="px-2 py-1 rounded w-full flex items-center justify-between group hover:bg-black-50 duration-300">
             <div className="flex items-center gap-x-2">
-              <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
-                {currentWebsite.websiteName.charAt(0).toUpperCase()}
-              </div>
+              <img
+                src={currentWebsiteObj?.websiteLogo}
+                alt="website logo"
+                className="w-8 h-8 rounded-sm object-cover"
+              />
               <div className="flex flex-col gap-y-0.5 items-start">
                 <span>{currentWebsite.websiteName}</span>
                 <span className="text-[10px]">www.testing.com</span>
               </div>
             </div>
 
-            <button className="hover:bg-black-50 p-1 rounded-sm">
-              <DoubleArrowDownIcon className="group-hover:rotate-90 duration-300" />
-            </button>
+            {userWebsites.length > 1 ? (
+              <button className="hover:bg-black-50 p-1 rounded-sm">
+                <DoubleArrowDownIcon className="group-hover:rotate-90 duration-300" />
+              </button>
+            ) : (
+              ''
+            )}
           </button>
         </DropdownMenuSubTrigger>
-        <DropdownMenuSubContent
-          sideOffset={15}
-          className="bg-black-75 border border-black-50 rounded-lg font-inter flex flex-col gap-y-0.5 text-white/80 w-56 p-2"
-        >
-          {userWebsites.map((site) =>
-            site.websiteName === currentWebsite.websiteName ? (
-              ''
-            ) : (
-              <DropdownMenuItem key={site.websiteId}>
-                <Link
-                  className="text-xs px-2 py-1.5 rounded w-full flex items-center justify-between hover:bg-black-50 duration-300"
-                  href={`/dashboard/${site.websiteId}`}
-                >
-                  <div className="flex items-center gap-x-2">
-                    <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
-                      {site.websiteName.charAt(0).toUpperCase()}
+        {userWebsites.length > 1 ? (
+          <DropdownMenuSubContent
+            sideOffset={15}
+            className="bg-black-75 border border-black-50 rounded-lg font-inter flex flex-col gap-y-0.5 text-white/80 w-56 p-2"
+          >
+            {userWebsites.map((site) =>
+              site.websiteName === currentWebsite.websiteName ? (
+                ''
+              ) : (
+                <DropdownMenuItem key={site.websiteId}>
+                  <Link
+                    className="text-xs px-2 py-1.5 rounded w-full flex items-center justify-between hover:bg-black-50 duration-300"
+                    href={`/dashboard/${site.websiteId}`}
+                  >
+                    <div className="flex items-center gap-x-2">
+                      <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
+                        {site.websiteName.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex flex-col gap-y-0.5 items-start">
+                        <span>{site.websiteName}</span>
+                        {/** TODO: MAKE THIS COME FROM THE DB */}
+                        <span className="text-[10px]">www.testing.com</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-y-0.5 items-start">
-                      <span>{site.websiteName}</span>
-                      <span className="text-[10px]">www.testing.com</span>
-                    </div>
-                  </div>
-                </Link>
-              </DropdownMenuItem>
-            )
-          )}
-        </DropdownMenuSubContent>
+                  </Link>
+                </DropdownMenuItem>
+              )
+            )}
+          </DropdownMenuSubContent>
+        ) : (
+          ''
+        )}
       </DropdownMenuSub>
     )
   });
@@ -282,6 +263,7 @@ export default function WebsiteSwitcher() {
                 )}
                 onClick={item.onClick}
               >
+                {/** TODO: make the button either a 'link' or 'button' based on what it required */}
                 <div className="flex items-center gap-x-4">
                   <div className="size-5">{item.icon}</div>
                   <span className="text-sm">{item.name}</span>

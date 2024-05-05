@@ -17,9 +17,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<User>) => {
       // get the user from the supabase db via its uid
-      console.log(state.user);
+      state.user = action.payload;
     },
     createUser: (state, action: PayloadAction<User>) => {
       // Only set the user if it's currently null
@@ -36,7 +36,7 @@ const userSlice = createSlice({
 
 // export the actions
 export const {
-  getUser,
+  setUser,
   createUser,
   deleteUser,
   setBillingPeriod
