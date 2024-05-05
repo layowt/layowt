@@ -1,7 +1,4 @@
 'use client';
-import { useState } from 'react';
-import Marquee from 'react-fast-marquee';
-import { Button } from '../ui/button';
 import SignUpForm from './sign-up-form';
 
 /**
@@ -10,95 +7,12 @@ import SignUpForm from './sign-up-form';
  * @returns The sign-up component JSX.
  */
 export default function SignUpComponent() {
-  // useState will infer the type based on the initial value
-  const [featureClicked, setFeatureClicked] = useState(false);
-  const [selectedFeature, setSelectedFeature] = useState('');
-
-  const handleFeatureClick = (feature: string) => {
-    if (featureClicked && feature === selectedFeature) {
-      setFeatureClicked(false);
-      setSelectedFeature('');
-      return;
-    }
-    setFeatureClicked(true);
-    setSelectedFeature(feature);
-  };
-
-  // TODO: MAKE THIS CMSABLE
-  const features = [
-    {
-      id: 1,
-      label: 'No domain needed',
-      slug: 'no-domain-needed',
-      component: 'NoDomainNeeded',
-      description: 'Get started with a free subdomain and no upfront costs.',
-      icon: 'domain'
-    },
-    {
-      id: 2,
-      label: 'Page Builder',
-      slug: 'page-builder',
-      component: 'PageBuilder',
-      description:
-        'Create beautiful, responsive websites with our drag and drop builder.',
-      icon: 'page'
-    },
-    {
-      id: 3,
-      label: 'AI assistance',
-      slug: 'ai-assistance',
-      component: 'AIAssistance',
-      description: 'Get help from our AI to build your website.',
-      icon: 'robot'
-    },
-    {
-      id: 4,
-      label: 'Analytics',
-      slug: 'analytics',
-      component: 'Analytics',
-      description: "Track your website's performance with our analytics tools.",
-      icon: 'analytics'
-    }
-  ];
-
-  let buttonClasses =
-    'mx-5 bg-transparent border border-white rounded-lg px-4 py-2';
-
   return (
-    <div className="flex h-screen gap-x-20 items-center justify-center text-white px-10">
-      <div className="flex gap-x-20">
-        <div className="flex flex-col gap-y-8 max-h-[316px] w-80 lg:w-[500px]">
-          <div className="">
-            <div className="flex flex-col gap-y-3">
-              <h1 className="text-xl font-inter md:text-3xl lg:text-6xl font-semibold">
-                Starting your online journey has never been <br />
-                easier.
-              </h1>
-              <span>
-                Everything you need to kickstart your business, in one
-                application.
-              </span>
-            </div>
-          </div>
-          <div className="max-w-[44rem]">
-            <Marquee pauseOnHover>
-              {features.map((feature) => (
-                <Button
-                  key={feature.id}
-                  className={
-                    buttonClasses +
-                    (selectedFeature === feature.component ? ' bg-red-500' : '')
-                  }
-                  onClick={() => handleFeatureClick(feature.component)}
-                >
-                  <span>{feature.label}</span>
-                </Button>
-              ))}
-            </Marquee>
-          </div>
-        </div>
-        <SignUpForm />
-      </div>
+    <div className="flex flex-col gap-y-4 h-screen items-center justify-center text-white px-10">
+      <SignUpForm />
+      <span className="text-white/60 text-xs">
+        See why people love draggle!
+      </span>
     </div>
   );
 }
