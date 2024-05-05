@@ -1,8 +1,12 @@
 'use server';
-import { supabase } from '@/lib/supabase';
+import { revalidatePath } from 'next/cache'
+import { createClient } from '../supabase/server';
 import { prisma } from '@/utils/prisma';
+import { redirect } from 'next/navigation';
 
 export const login = async (email: string, password: string) => {
+	const supabase = createClient();
+
 	if(!supabase) throw new Error('No supabase client found')
 
 	if(!email || !password) throw new Error('Email and password are required')
@@ -24,8 +28,9 @@ export const login = async (email: string, password: string) => {
 				lastLogin: new Date()
 			}
 		});
-		
-		return { user, error };
+		revalidatePath('/', 'layout')
+  	
+		return user;
 	} catch (error) {
 		console.error('Error logging in:', error);
 		return null;
