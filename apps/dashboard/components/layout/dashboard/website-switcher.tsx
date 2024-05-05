@@ -165,48 +165,58 @@ export default function WebsiteSwitcher() {
         <DropdownMenuSubTrigger asChild>
           <button className="px-2 py-1 rounded w-full flex items-center justify-between group hover:bg-black-50 duration-300">
             <div className="flex items-center gap-x-2">
-              <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
-                {currentWebsite.websiteName.charAt(0).toUpperCase()}
-              </div>
+              <img
+                src={currentWebsiteObj?.websiteLogo}
+                alt="website logo"
+                className="w-8 h-8 rounded-sm object-cover"
+              />
               <div className="flex flex-col gap-y-0.5 items-start">
                 <span>{currentWebsite.websiteName}</span>
                 <span className="text-[10px]">www.testing.com</span>
               </div>
             </div>
 
-            <button className="hover:bg-black-50 p-1 rounded-sm">
-              <DoubleArrowDownIcon className="group-hover:rotate-90 duration-300" />
-            </button>
+            {userWebsites.length > 1 ? (
+              <button className="hover:bg-black-50 p-1 rounded-sm">
+                <DoubleArrowDownIcon className="group-hover:rotate-90 duration-300" />
+              </button>
+            ) : (
+              ''
+            )}
           </button>
         </DropdownMenuSubTrigger>
-        <DropdownMenuSubContent
-          sideOffset={15}
-          className="bg-black-75 border border-black-50 rounded-lg font-inter flex flex-col gap-y-0.5 text-white/80 w-56 p-2"
-        >
-          {userWebsites.map((site) =>
-            site.websiteName === currentWebsite.websiteName ? (
-              ''
-            ) : (
-              <DropdownMenuItem key={site.websiteId}>
-                <Link
-                  className="text-xs px-2 py-1.5 rounded w-full flex items-center justify-between hover:bg-black-50 duration-300"
-                  href={`/dashboard/${site.websiteId}`}
-                >
-                  <div className="flex items-center gap-x-2">
-                    <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
-                      {site.websiteName.charAt(0).toUpperCase()}
+        {userWebsites.length > 1 ? (
+          <DropdownMenuSubContent
+            sideOffset={15}
+            className="bg-black-75 border border-black-50 rounded-lg font-inter flex flex-col gap-y-0.5 text-white/80 w-56 p-2"
+          >
+            {userWebsites.map((site) =>
+              site.websiteName === currentWebsite.websiteName ? (
+                ''
+              ) : (
+                <DropdownMenuItem key={site.websiteId}>
+                  <Link
+                    className="text-xs px-2 py-1.5 rounded w-full flex items-center justify-between hover:bg-black-50 duration-300"
+                    href={`/dashboard/${site.websiteId}`}
+                  >
+                    <div className="flex items-center gap-x-2">
+                      <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
+                        {site.websiteName.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex flex-col gap-y-0.5 items-start">
+                        <span>{site.websiteName}</span>
+                        {/** TODO: MAKE THIS COME FROM THE DB */}
+                        <span className="text-[10px]">www.testing.com</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-y-0.5 items-start">
-                      <span>{site.websiteName}</span>
-                      {/** TODO: MAKE THIS COME FROM THE DB */}
-                      <span className="text-[10px]">www.testing.com</span>
-                    </div>
-                  </div>
-                </Link>
-              </DropdownMenuItem>
-            )
-          )}
-        </DropdownMenuSubContent>
+                  </Link>
+                </DropdownMenuItem>
+              )
+            )}
+          </DropdownMenuSubContent>
+        ) : (
+          ''
+        )}
       </DropdownMenuSub>
     )
   });
