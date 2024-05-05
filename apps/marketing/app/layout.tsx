@@ -68,6 +68,7 @@ export default function RootLayout({
                 </header>
                 <main>{children}</main>
                 <Toaster
+                  richColors
                   closeButton
                   className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
                 />

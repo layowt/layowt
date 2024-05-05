@@ -19,6 +19,7 @@ import type { SavingState } from '@/types/state';
 import ModalPrimaryColor from './modal-primary-color';
 import ModalSecondaryColor from './modal-secondary-color';
 import { ReloadIcon } from '@radix-ui/react-icons';
+import { toast } from 'sonner';
 
 type NewWebsiteData = Pick<
   Website,
@@ -94,6 +95,8 @@ export default function UserSiteData() {
       );
       // close the modal
       setOpenModal(false);
+
+      toast.success('Website data saved successfully! 🎉');
     } catch (e) {
       setStatus('error');
     }
