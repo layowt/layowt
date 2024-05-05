@@ -64,7 +64,7 @@ export default function SiteOnboardingTitle({
             htmlFor="logo-file-upload"
             className={cn(
               'size-14 rounded-full border border-black text-black-75 cursor-pointer flex items-center justify-center',
-              website.websiteLogo ? 'bg-transparent' : 'bg-white'
+              website?.websiteLogo ? 'bg-transparent' : 'bg-white'
             )}
           >
             {website.websiteLogo ? (

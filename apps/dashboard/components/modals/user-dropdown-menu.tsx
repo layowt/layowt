@@ -21,7 +21,14 @@ import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
 import { motion } from 'framer-motion';
 
-export default function UserDropdownMenu({ className = '' }) {
+export default function UserDropdownMenu({
+  className = '',
+  siteLogo,
+  ...props
+}: {
+  className?: string;
+  siteLogo?: string;
+}) {
   // new supabase client instance so we can get the current user data;
   const supabase = createClient();
   const router = useRouter();
@@ -80,7 +87,7 @@ export default function UserDropdownMenu({ className = '' }) {
   ];
 
   return (
-    <DropdownMenu>
+    <DropdownMenu {...props}>
       <DropdownMenuTrigger asChild>
         <div
           className={cn(
@@ -88,20 +95,28 @@ export default function UserDropdownMenu({ className = '' }) {
             'hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center'
           )}
         >
-          <button
-            className="
+          {siteLogo?.length > 0 ? (
+            <img
+              src={siteLogo}
+              alt="site logo"
+              className="rounded-full"
+            />
+          ) : (
+            <button
+              className="
 								size-full flex gap-x-0.5 items-center justify-center 
                 bg-electric-violet-500 rounded-full px-[0.55rem] py-1 min-w-6 min-h-6
 							"
-          >
-            <span className="flex items-center justify-center text-[0.65rem]">
-              {user?.email ? (
-                user?.email.charAt(0).toUpperCase()
-              ) : (
-                <ReloadIcon className="size-2 my-1 animate-spin" />
-              )}
-            </span>
-          </button>
+            >
+              <span className="flex items-center justify-center text-[0.65rem]">
+                {user?.email ? (
+                  user?.email.charAt(0).toUpperCase()
+                ) : (
+                  <ReloadIcon className="size-2 my-1 animate-spin" />
+                )}
+              </span>
+            </button>
+          )}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="font-poppins border border-black-50 !bg-black-75 text-white/80 m-1">
