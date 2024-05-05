@@ -2,15 +2,16 @@
 import { useState } from 'react';
 
 // ui imports
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Checkbox } from '../ui/checkbox';
-import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
+import { Input } from '@/ui/input';
+import { Label } from '@/ui/label';
+import { Checkbox } from '@/ui/checkbox';
+import { Button } from '@/ui/button';
 import {
   ReloadIcon,
   EnvelopeClosedIcon,
-  LockClosedIcon
+  LockClosedIcon,
+  EyeClosedIcon,
+  EyeOpenIcon
 } from '@radix-ui/react-icons';
 
 // utils
@@ -29,6 +30,7 @@ export default function SignUpForm() {
 
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [state, setState] = useState({
     userEmail: '',
@@ -96,7 +98,7 @@ export default function SignUpForm() {
       }}
       className="flex flex-col gap-y-8 bg-[#05050A] border border-black-50 rounded-xl py-12 px-8 w-80 lg:w-[450px]"
     >
-      <h3 className="text-3xl flex justify-center w-full text-center font-semibold">
+      <h3 className="animate-text text-3xl flex justify-center w-full text-center font-semibold bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text">
         Your businesses future, starting today.
       </h3>
       {/* input area */}
@@ -108,8 +110,8 @@ export default function SignUpForm() {
           >
             Email Address
           </Label>
-          <div className="flex h-10 items-center rounded-md border border-input bg-transparent pl-3 text-sm ring-offset-background focus-within:ring-1 focus-within:ring-ring focus-within:ring-offset-2">
-            <EnvelopeClosedIcon className="w-4 h-4" />
+          <div className="flex h-10 items-center rounded-md border border-black-50 bg-transparent pl-3 text-sm">
+            <EnvelopeClosedIcon className="w-4 h-4 text-white/50" />
             <Input
               id="email"
               type="email"
@@ -132,11 +134,11 @@ export default function SignUpForm() {
           >
             Password
           </Label>
-          <div className="flex h-10 items-center rounded-md border border-input bg-transparent pl-3 text-sm ring-offset-background focus-within:ring-1 focus-within:ring-ring focus-within:ring-offset-2">
-            <LockClosedIcon className="w-4 h-4" />
+          <div className="flex h-10 items-center rounded-md border border-black-50 bg-transparent pl-3 text-sm">
+            <LockClosedIcon className="w-4 h-4 text-white/50" />
             <Input
               id="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="password"
               name="userPassword"
               className="
@@ -146,6 +148,19 @@ export default function SignUpForm() {
               value={state.userPassword}
               onChange={handleChange}
             />
+            <button
+              className="cursor-pointer px-4 transition-all duration-300"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(!showPassword);
+              }}
+            >
+              {showPassword ? (
+                <EyeOpenIcon className="w-4 h-4" />
+              ) : (
+                <EyeClosedIcon className="w-4 h-4" />
+              )}
+            </button>
           </div>
         </div>
 
