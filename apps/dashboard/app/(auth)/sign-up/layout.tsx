@@ -1,6 +1,6 @@
-import { Karla } from 'next/font/google';
-
-const karla = Karla({ subsets: ['latin'] });
+'use client';
+import SiteLogo from '@/components/logo';
+import { Button } from '@/components/ui/button';
 
 export default function SignUpLayout({
   children
@@ -9,16 +9,21 @@ export default function SignUpLayout({
 }) {
   return (
     <>
-      <div className="flex flex-col">
-        {/** No nav shown on the sign up page */}
-        <div
-          className={
-            karla.className + ` text-white text-3xl font-bold py-3 px-10`
-          }
-        >
-          draggle
+      <div className="min-h-full w-full bg-grid-small-white/5 relative flex items-center justify-center">
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_80%,black)]"></div>
+        <div className="w-full flex justify-between p-5 absolute top-0">
+          <SiteLogo className="text-white z-20" />
+          <div className="z-20 text-white flex items-center text-sm gap-x-4 font-inter font-semibold">
+            <span>Already building?</span>
+            <Button
+              variant="secondary"
+              rounded="sm"
+            >
+              Login
+            </Button>
+          </div>
         </div>
-        <div className="">{children}</div>
+        {children}
       </div>
     </>
   );
