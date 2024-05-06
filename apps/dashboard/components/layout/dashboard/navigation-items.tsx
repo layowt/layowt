@@ -76,9 +76,14 @@ export default function NavigationItems({ className, ...props }) {
     }
   ];
 
-  // TODO: SORT INTO LAST EDITED ORDER
+  const sortedSites = websites.sort((a, b) => {
+    return (
+      new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+    );
+  });
+
   const siteDropdowns = [
-    ...websites.map((website) => ({
+    ...sortedSites.map((website) => ({
       name: website.websiteName || 'Untitled',
       link: `/dashboard/${website.websiteId}`,
       icon: website.websiteLogo ? (

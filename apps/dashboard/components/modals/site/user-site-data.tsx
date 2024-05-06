@@ -90,7 +90,8 @@ export default function UserSiteData() {
           websiteLogo: data.websiteLogo,
           websiteName: data.websiteName,
           websitePrimaryColor: data.websitePrimaryColor,
-          websiteSecondaryColor: data.websiteSecondaryColor
+          websiteSecondaryColor: data.websiteSecondaryColor,
+          lastUpdated: new Date()
         })
       );
       // close the modal
