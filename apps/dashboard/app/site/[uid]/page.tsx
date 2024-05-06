@@ -1,8 +1,6 @@
 import { getWebsite } from '@/utils/websites/website.get';
 import SiteBuilderClient from './page-client';
 
-const apiEndpoint = process.env.DRAGGLE_API_URL;
-
 export default async function Page({ params }: { params: { uid: string } }) {
   // get the uid from the params
   const { uid: websiteId } = params;
