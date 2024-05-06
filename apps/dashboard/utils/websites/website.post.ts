@@ -22,7 +22,8 @@ export const updateWebsite = async (
 			websiteId
 		},
 		data: {
-			...options	
+			...options,
+			lastUpdated: new Date()
 		}
 	})
 	return siteToUpdate;

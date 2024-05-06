@@ -17,10 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/ui/tooltip';
-import Breadcrumbs from '@/components/layout/dashboard/breadcrumbs';
 import { Toggle } from '@/ui/toggle';
-
-import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 
 import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 
