@@ -9,12 +9,12 @@ import Link from 'next/link';
 export default function Socials() {
   const socials = [
     {
-      href: 'https://github.com/Logannford/draggle',
+      href: 'https://github.com/Logannford/layowt',
       icon: GitHubLogoIcon,
       ariaLabel: 'GitHub'
     },
     {
-      href: 'https://www.instagram.com/draggle.io/',
+      href: 'https://www.instagram.com/layowt.app/',
       icon: InstagramLogoIcon,
       ariaLabel: 'Instagram'
     },

@@ -1,7 +1,7 @@
 {
-  "name": "@draggle/tailwind-config",
+  "name": "@layowt/tailwind-config",
   "version": "1.0.0",
-  "description": "Tailwind CSS configuration for Draggle",
+  "description": "Tailwind CSS configuration for Layowt",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

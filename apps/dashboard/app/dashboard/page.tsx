@@ -16,12 +16,7 @@ export default async function Dashboard() {
   return (
     <PageClient>
       <div className="text-2xl flex flex-col gap-y-10 font-semibold font-inter text-white">
-        <div className="flex flex-col gap-y-2">
-          Welcome back {user?.firstName || user?.email}!
-          <span className="font-poppins text-xs font-light">
-            Here&apos;s what&apos;s happened whilst you were away
-          </span>
-        </div>
+        <div className="flex flex-col gap-y-2">Overview</div>
         <div className="gap-10 w-1/2 grid grid-cols-2">
           {websites.map((website) => (
             <WebsiteCard

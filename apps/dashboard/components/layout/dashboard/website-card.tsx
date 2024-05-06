@@ -6,7 +6,7 @@ export default function WebsiteCard(website: Website) {
   return (
     <Link
       key={website.websiteId}
-      className="flex flex-col gap-y-2 border border-black-50 rounded-lg p-5 w-full"
+      className="flex flex-col gap-y-2 border border-black-50 bg-[#05050A] rounded-lg p-5 w-full"
       href={`/site/${website.websiteId}`}
     >
       <span className="text-base font-poppins text-white">
