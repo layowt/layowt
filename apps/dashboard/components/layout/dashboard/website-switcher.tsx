@@ -173,7 +173,7 @@ export default function WebsiteSwitcher() {
                 />
               ) : (
                 <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
-                  {currentWebsiteObj.websiteName.charAt(0).toUpperCase()}
+                  {currentWebsiteObj.websiteName.charAt(0).toUpperCase() ?? 'U'}
                 </div>
               )}
               <div className="flex flex-col gap-y-0.5 items-start">

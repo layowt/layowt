@@ -54,6 +54,7 @@ model websites {
   websiteLogo                                 String
   websitePrimaryColor                         String 
   websiteSecondaryColor                       String
+  lastUpdated                                 DateTime @updatedAt
 }
 
 model earlyAccess {

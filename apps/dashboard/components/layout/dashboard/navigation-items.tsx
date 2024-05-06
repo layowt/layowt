@@ -85,10 +85,10 @@ export default function NavigationItems({ className, ...props }) {
         <img
           src={website.websiteLogo}
           alt={website.websiteName}
-          className="size-4 rounded-full"
+          className="size-4 rounded-sm"
         />
       ) : (
-        <div className="border border-white size-4 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
+        <div className="size-4 bg-electric-violet rounded-sm flex items-center justify-center text-[10px]">
           {website.websiteName?.charAt(0).toUpperCase()}
         </div>
       )
