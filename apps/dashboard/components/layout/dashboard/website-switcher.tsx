@@ -165,11 +165,17 @@ export default function WebsiteSwitcher() {
         <DropdownMenuSubTrigger asChild>
           <button className="px-2 py-1 rounded w-full flex items-center justify-between group hover:bg-black-50 duration-300">
             <div className="flex items-center gap-x-2">
-              <img
-                src={currentWebsiteObj?.websiteLogo}
-                alt="website logo"
-                className="w-8 h-8 rounded-sm object-cover"
-              />
+              {currentWebsiteObj?.websiteLogo ? (
+                <img
+                  src={currentWebsiteObj?.websiteLogo}
+                  alt="website logo"
+                  className="w-8 h-8 rounded-sm object-cover"
+                />
+              ) : (
+                <div className="size-8 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
+                  {currentWebsiteObj.websiteName.charAt(0).toUpperCase() ?? 'U'}
+                </div>
+              )}
               <div className="flex flex-col gap-y-0.5 items-start">
                 <span>{currentWebsite.websiteName}</span>
                 <span className="text-[10px]">www.testing.com</span>

@@ -90,7 +90,8 @@ export default function UserSiteData() {
           websiteLogo: data.websiteLogo,
           websiteName: data.websiteName,
           websitePrimaryColor: data.websitePrimaryColor,
-          websiteSecondaryColor: data.websiteSecondaryColor
+          websiteSecondaryColor: data.websiteSecondaryColor,
+          lastUpdated: new Date()
         })
       );
       // close the modal
@@ -151,7 +152,7 @@ export default function UserSiteData() {
                   onColorChange={(color) => setSecondaryColor(color)}
                 />
               </div>
-              <div className="w-full flex justify-between items-center mt-2">
+              <div className="w-full flex justify-between items-center mt-2 text-white">
                 <Button variant="none">Clear</Button>
                 <div className="flex gap-x-4">
                   <Button
