@@ -9,7 +9,7 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 			websiteUrl: '',
 			websiteId: websiteId,
 			//TODO: GENERATE NAME FOR HERE
-			websiteName: '', 
+			websiteName: 'Untitled', 
 			owner: {
 				connect: {
 					uid: userId,

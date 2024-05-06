@@ -176,7 +176,6 @@ export default function SignUpForm() {
                 onCheckedChange={(e) => {
                   setAcceptedTerms(!acceptedTerms);
                 }}
-                required
               />
               <Label
                 htmlFor="terms"
@@ -190,8 +189,6 @@ export default function SignUpForm() {
               <Checkbox
                 id="terms"
                 className="border border-white rounded-[0.25rem] mt-[2px]"
-                checked={acceptedTerms}
-                required
               />
               <Label
                 htmlFor="terms"
