@@ -41,8 +41,8 @@ export default function DashboardNavBar({
 
   return (
     <>
-      <div className="flex flex-col w-full h-full">
-        <div className="w-full h-12 border-b border-black-50">
+      <div className="flex flex-col w-full h-full bg-[#05050A]">
+        <div className="w-full h-14 border-b border-black-50">
           <div className="flex justify-center items-center size-full relative">
             {/* <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" /> */}
             <motion.div
@@ -104,7 +104,7 @@ export default function DashboardNavBar({
             </div>
           </div>
           {/** Entry point for page */}
-          <div className="px-10 py-5">{children}</div>
+          <div className="p-10">{children}</div>
         </div>
       </div>
       <CommandDialog
