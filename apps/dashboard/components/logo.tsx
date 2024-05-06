@@ -34,7 +34,7 @@ export default function SiteLogo({
       </svg>
       {showName && (
         <h1 className="font-bold font-poppins group-hover:text-white/60 duration-300">
-          Draggle
+          Layowt
         </h1>
       )}
     </Link>

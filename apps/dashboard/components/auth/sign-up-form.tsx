@@ -116,7 +116,7 @@ export default function SignUpForm() {
               id="email"
               type="email"
               name="userEmail"
-              placeholder="hello@draggle.com"
+              placeholder="hello@layowt.com"
               className="
                 bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
                 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
@@ -198,7 +198,7 @@ export default function SignUpForm() {
                 className="text-xs text-white/80"
               >
                 By checking this box, you are agreeing to receive marketing
-                emails for draggle
+                emails for Layowt
               </Label>
             </div>
           </div>

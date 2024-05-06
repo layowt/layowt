@@ -10,7 +10,7 @@ import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Draggle | Site Builder',
+  title: 'Site Builder | Layowt',
   description: 'Where digital products come to life.'
 };
 
