@@ -32,7 +32,7 @@ export const signUp = async (
     // REMEMBER EMAIL AUTH IS OFF!
 
     // if the user sign up is successful, add the user to the database
-    const newUser = await prisma.users.create({
+    await prisma.users.create({
       data: {
         uid: user.id,
         email: user.email,
@@ -43,8 +43,6 @@ export const signUp = async (
         hasAuthenticatedEmail: false
       }
     });
-
-    console.log('New user:', newUser);
 
     // return the user object so we can extract the user.id on the front end
     return user;

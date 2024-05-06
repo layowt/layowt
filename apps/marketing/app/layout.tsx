@@ -38,7 +38,7 @@ const InterFont = Inter({
 });
 
 export const metadata = {
-  title: 'Draggle'
+  title: 'Layowt'
 };
 
 export default function RootLayout({

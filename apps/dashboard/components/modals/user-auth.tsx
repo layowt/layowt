@@ -70,8 +70,6 @@ export default function UserAuthModal({
       )
       .subscribe();
 
-    //console.log(channel.joinPush.payload.config.postgres_changes[0]);
-
     return () => {
       channel.unsubscribe();
     };
@@ -92,8 +90,11 @@ export default function UserAuthModal({
     }
   }, [pathname, searchParams]);
 
+  console.log(currentUserObject);
+
   // do not display the modal if the user is on the sign-up page
-  if (pathname === '/sign-up' || currentUserObject) return '';
+  if (pathname === '/sign-up' || currentUserObject || pathname === '/login')
+    return '';
 
   if (searchParams.get('access_token')) return '';
 

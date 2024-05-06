@@ -73,4 +73,13 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    border: 1px solid rgb(45 45 45);
+    -webkit-text-fill-color: rgb(235 235 235 / 0.5);
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 }

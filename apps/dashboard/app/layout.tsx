@@ -40,7 +40,7 @@ const InterFont = Inter({
 });
 
 export const metadata = {
-  title: 'Dashboard | Draggle'
+  title: 'Dashboard | Layowt'
 };
 
 export default function RootLayout({

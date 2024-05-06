@@ -7,7 +7,7 @@ export default function DashboardSidebar() {
   return (
     <section
       className="
-					min-w-48 min-h-screen flex flex-col text-white font-poppins
+					min-w-48 min-h-screen flex flex-col text-white font-poppins bg-[#05050A]
 				"
     >
       <div className="border-b border-black-50 relative -top-px">
@@ -17,7 +17,7 @@ export default function DashboardSidebar() {
           transition={{ duration: 0.1 }}
         >
           <div className="px-4">
-            <SiteLogo className="py-3" />
+            <SiteLogo className="py-4" />
           </div>
         </motion.div>
       </div>
