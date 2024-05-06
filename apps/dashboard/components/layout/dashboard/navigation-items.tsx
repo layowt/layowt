@@ -50,29 +50,6 @@ export default function NavigationItems({ className, ...props }) {
       expanded: false
     },
     {
-      name: 'Sites',
-      link: '/dashboard/',
-      icon: (
-        <DesktopIcon
-          width="auto"
-          height="auto"
-        />
-      ),
-      expanded: false,
-      nested: [
-        ...websites.map((website) => ({
-          name: website.websiteName,
-          link: `/dashboard/${website.websiteId}`,
-          icon: <CornerBottomLeftIcon />
-        })),
-        {
-          name: 'New Site',
-          link: '/site/',
-          icon: <PlusIcon />
-        }
-      ]
-    },
-    {
       name: 'Products',
       link: '/',
       icon: (
@@ -96,17 +73,35 @@ export default function NavigationItems({ className, ...props }) {
     },
     {
       name: 'separator'
-    },
+    }
+  ];
+
+  // TODO: SORT INTO LAST EDITED ORDER
+  const siteDropdowns = [
+    ...websites.map((website) => ({
+      name: website.websiteName || 'Untitled',
+      link: `/dashboard/${website.websiteId}`,
+      icon: website.websiteLogo ? (
+        <img
+          src={website.websiteLogo}
+          alt={website.websiteName}
+          className="size-4 rounded-full"
+        />
+      ) : (
+        <div className="border border-white size-4 bg-electric-violet rounded-sm flex items-center justify-center text-sm">
+          {website.websiteName?.charAt(0).toUpperCase()}
+        </div>
+      )
+    })),
     {
-      name: 'Support',
-      link: '/support',
+      name: 'New Website',
+      link: '/site',
       icon: (
-        <ChatBubbleIcon
+        <PlusIcon
           width="auto"
           height="auto"
         />
-      ),
-      expanded: false
+      )
     }
   ];
 
@@ -131,7 +126,7 @@ export default function NavigationItems({ className, ...props }) {
           item.name === 'separator' ? (
             <div
               key={`${item.name}-${index}`}
-              className="w-auto h-px bg-black-50 my-3 mx-2"
+              className="w-auto h-px bg-black-50 my-3 mx-2 pr-10"
             />
           ) : (
             <NavigationItem
@@ -141,6 +136,22 @@ export default function NavigationItems({ className, ...props }) {
             />
           )
         )}
+        <motion.a
+          className="text-xs uppercase text-white/50 mx-2 mb-2"
+          initial={{ opacity: 0, x: 0 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.2 }}
+          href="/dashboard"
+        >
+          All Websites
+        </motion.a>
+        {siteDropdowns.map((item, index) => (
+          <NavigationItem
+            key={`${item.name}-${index}`}
+            index={index}
+            opts={item}
+          />
+        ))}
       </ul>
       <div>
         <motion.div
