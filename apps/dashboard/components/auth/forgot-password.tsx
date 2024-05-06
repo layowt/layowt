@@ -78,7 +78,7 @@ export default function PasswordRestForm() {
             id="forgotPasswordEmail"
             type="email"
             name="forgotPasswordEmail"
-            placeholder="hello@draggle.com"
+            placeholder="hello@layowt.com"
             className="
               bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
               focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
