@@ -13,6 +13,7 @@ import { Button } from '../ui/button';
 import { toast } from 'sonner';
 import { login } from '@/utils/user/user-login';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -76,6 +77,7 @@ export default function LoginForm() {
               className="
                 bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
                 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
+                hover:border-white/50
               "
               value={state.userEmail}
               onChange={handleChange}
@@ -100,6 +102,7 @@ export default function LoginForm() {
               className="
               bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
               focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
+              hover:border-white/50
               "
               value={state.userPassword}
               onChange={handleChange}
@@ -119,6 +122,12 @@ export default function LoginForm() {
               )}
             </button>
           </div>
+          <Link
+            href="/forgot-password"
+            className="text-xs text-white/80 hover:text-white"
+          >
+            <span>Forgot your password?</span>
+          </Link>
           <div className="flex flex-col gap-y-8 mt-6">
             {/* submit button */}
             <div className="w-full">
