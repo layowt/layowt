@@ -1,5 +1,5 @@
 {
-  "name": "draggle-monorepo",
+  "name": "layowt-monorepo",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "dev": "turbo dev",
-    "dev:dashboard": "turbo dev --filter=draggle-dashboard",
-    "dev:marketing": "turbo dev --filter=draggle-marketing",
+    "dev:dashboard": "turbo dev --filter=layowt-dashboard",
+    "dev:marketing": "turbo dev --filter=layowt-marketing",
     "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
