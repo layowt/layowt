@@ -20,6 +20,7 @@ import { getWebsite } from '@/utils/websites';
 import getClientUser from '@/utils/user/user-client-session';
 import { useEffect, useState } from 'react';
 import type { websites } from '@prisma/client';
+import { revalidateTag } from 'next/cache';
 
 export default function NavigationItems({ className, ...props }) {
   // get the users websites
@@ -33,6 +34,8 @@ export default function NavigationItems({ className, ...props }) {
         true
       );
       setWebsites(fetchedWebsites);
+
+      //revalidateTag('websites');
     };
     getUserWebsites();
   }, []);

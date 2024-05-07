@@ -7,6 +7,10 @@ import {
   DropdownMenuGroup
 } from '@/ui/dropdown-menu';
 import { DropdownMenuPortal } from '@radix-ui/react-dropdown-menu';
+import { deleteWebsite } from '@/utils/websites';
+import { toast } from 'sonner';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { useState } from 'react';
 
 /**
  * This needs to allow the user to:
@@ -18,6 +22,27 @@ import { DropdownMenuPortal } from '@radix-ui/react-dropdown-menu';
  * - favorite the site(?)
  */
 export default function WebsiteCardModal({ website }: { website: Website }) {
+  const [state, setState] = useState({
+    isDeleting: false
+  });
+
+  const handleSiteDelete = async () => {
+    setState({ ...state, isDeleting: true });
+    try {
+      await deleteWebsite(website.websiteId);
+
+      // update the local copy of the sites
+
+      toast.success('Website deleted successfully');
+    } catch (e) {
+      toast.error(
+        'An error occurred while deleting the website. Please try again or contact support.'
+      );
+    }
+
+    setState({ ...state, isDeleting: false });
+  };
+
   const dropdownItems = [
     {
       label: 'Open in new tab',
@@ -27,8 +52,8 @@ export default function WebsiteCardModal({ website }: { website: Website }) {
     },
     {
       label: 'Delete',
-      onClick: () => {
-        console.log('Delete');
+      onClick: async () => {
+        await handleSiteDelete();
       }
     },
     {
@@ -44,7 +69,7 @@ export default function WebsiteCardModal({ website }: { website: Website }) {
       }
     },
     {
-      label: 'Favorite',
+      label: 'Favourite',
       onClick: () => {
         console.log('Favorite');
       }

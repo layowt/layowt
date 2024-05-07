@@ -1,3 +1,4 @@
+'use server';
 import WebsiteCard from '@/components/layout/dashboard/website-card';
 import { getUserFromSession } from '@/utils/user/user-session';
 import { getUserFromDb } from '@/utils/user/user.get';
