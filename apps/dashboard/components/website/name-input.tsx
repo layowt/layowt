@@ -30,7 +30,6 @@ export default function WebsiteNameInput() {
   // Handle input change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSiteName(e.target.value);
-    dispatch(setSavingState('idle'));
   };
 
   // Effect to update siteName when currentWebsite changes

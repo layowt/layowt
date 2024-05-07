@@ -8,16 +8,17 @@ import {
 import { websites as Website } from '@prisma/client';
 import Link from 'next/link';
 import WebsiteCardModal from '@/components/modals/dashboard/website-card-modal';
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { motion } from 'framer-motion';
 
+
 export default function WebsiteCard(website: Website, index: number) {
+
   return (
     <motion.div
       key={website.websiteId}
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
       className="relative"

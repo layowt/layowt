@@ -1,6 +1,8 @@
 'use server'
+import { supabase } from '@/lib/supabase';
 import { prisma } from '@/utils/prisma';
 import type { websites as Website } from '@prisma/client'
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 /**
  * 
@@ -10,11 +12,18 @@ import type { websites as Website } from '@prisma/client'
  * @returns 'ok'
  */
 export const deleteWebsite = async(websiteId: string) => {
+	// delete the site from the db
 	await prisma.websites.delete({
 		where: {
 			websiteId
 		}
 	})
+
+	// delete the site bucket from the storage
+	//await supabase.storage.from('websites').remove([]);
+
+	// god. send. 🤩.
+	revalidateTag('websites');
 
 	return 'ok'
 }
@@ -43,6 +52,7 @@ export const updateWebsite = async (
 			lastUpdated: new Date()
 		}
 	})
+
 	return siteToUpdate;
 }
 
@@ -64,24 +74,26 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 	options: WebsiteOptions,
 	returnMany: boolean = false
 ): Promise<T> => {
-    const { userId, websiteId } = options;
+	const { userId, websiteId } = options;
 
-		// create a new object to pass to the prisma query
-		const opts = {
-			where: {
-				...(userId && { userId }), // Only include userId in where clause if it's provided
-				...(websiteId && { websiteId }) // Only include websiteId in where clause if it's provided
-			}
-		};
+	// create a new object to pass to the prisma query
+	const opts = {
+		where: {
+			...(userId && { userId }), // Only include userId in where clause if it's provided
+			...(websiteId && { websiteId }) // Only include websiteId in where clause if it's provided
+		}
+	};
 
-		let websiteData: Website | Website[] = [];
+	let websiteData: Website | Website[] = [];
 
-		if(!returnMany)
-			websiteData = await prisma.websites.findUnique(opts);
-		else
-			websiteData = await prisma.websites.findMany(opts);
+	if(!returnMany)
+		websiteData = await prisma.websites.findUnique(opts);
+	else
+		websiteData = await prisma.websites.findMany(opts);
 
-		return websiteData as T;
+	revalidateTag('websites');
+
+	return websiteData as T;
 };
 
 export const createWebsite = async (userId: string, websiteId: string) => {
@@ -103,6 +115,8 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 	});
 
 	if(!response) throw new Error('Failed to create website');
+
+	revalidatePath('/dashboard');
 
 	// return a boolean value of the response so we can
 	// check for a value when calling this function
