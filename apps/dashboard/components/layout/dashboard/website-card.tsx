@@ -11,10 +11,17 @@ import WebsiteCardModal from '@/components/modals/dashboard/website-card-modal';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+import { motion } from 'framer-motion';
 
-export default function WebsiteCard(website: Website) {
+export default function WebsiteCard(website: Website, index: number) {
   return (
-    <>
+    <motion.div
+      key={website.websiteId}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: index * 0.1 }}
+      className="relative"
+    >
       <Link
         key={website.websiteId}
         className="flex flex-col gap-y-2 border border-black-50 bg-black-75 rounded-lg p-5 w-full relative group"
@@ -54,6 +61,6 @@ export default function WebsiteCard(website: Website) {
           </DropdownMenu>
         </div>
       </Link>
-    </>
+    </motion.div>
   );
 }

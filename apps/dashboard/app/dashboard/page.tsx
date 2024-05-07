@@ -18,7 +18,7 @@ export default async function Dashboard() {
       <div className="text-2xl flex flex-col gap-y-10 font-semibold font-inter text-white">
         <div className="flex flex-col gap-y-2">Overview</div>
         <div className="gap-10 w-1/2 grid grid-cols-2">
-          {websites.map((website) => (
+          {websites.map((website, index) => (
             <WebsiteCard
               key={website.websiteId}
               {...website}
