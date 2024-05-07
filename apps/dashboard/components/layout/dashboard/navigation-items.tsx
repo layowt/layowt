@@ -16,7 +16,7 @@ import {
   CornerBottomLeftIcon
 } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
-import { getWebsite } from '@/utils/websites/website.get';
+import { getWebsite } from '@/utils/websites';
 import getClientUser from '@/utils/user/user-client-session';
 import { useEffect, useState } from 'react';
 import type { websites } from '@prisma/client';
