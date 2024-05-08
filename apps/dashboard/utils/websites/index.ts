@@ -25,12 +25,19 @@ export const deleteWebsite = async(websiteId: string) => {
 		}
 	})
 
-	// delete the site bucket from the storage
-	//await supabase.storage.from('websites').remove([]);
+	const websiteUploads = await supabase.storage.from('user-sites').list();
+
+	// delete the site's files from the storage
+	const websiteFiles = websiteUploads.data.filter((file) => file.name.includes(websiteId));
+
+
+	websiteFiles.forEach(async (file) => {
+		await supabase.storage.from('websites').remove([file.name]);
+	});
 
 	// god. send. 🤩.
 	revalidateTag('websites');
-	//revalidatePath('/dashboard');
+	// revalidatePath('/dashboard');
 	return 'ok'
 }
 

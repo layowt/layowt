@@ -20,9 +20,7 @@ export default async function DashboardSidebar() {
 				"
     >
       <div className="border-b border-black-50 relative -top-px">
-        <div className="px-4">
-          <SiteLogo className="py-4" />
-        </div>
+        <SiteLogo className="py-4 px-4" />
       </div>
       <NavigationItems
         websites={websites}
