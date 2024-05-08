@@ -1,16 +1,12 @@
 'use client';
 import { websites as Website } from '@prisma/client';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuGroup
-} from '@/ui/dropdown-menu';
+import { DropdownMenuContent, DropdownMenuGroup } from '@/ui/dropdown-menu';
 import { DropdownMenuPortal } from '@radix-ui/react-dropdown-menu';
 import { deleteWebsite } from '@/utils/websites';
 import { toast } from 'sonner';
-import { revalidatePath, revalidateTag } from 'next/cache';
 import { useState } from 'react';
+import { useAppDispatch } from '@/lib/hooks';
+import { removeWebsite } from '@/store/slices/website-store';
 
 /**
  * This needs to allow the user to:
@@ -22,6 +18,8 @@ import { useState } from 'react';
  * - favorite the site(?)
  */
 export default function WebsiteCardModal({ website }: { website: Website }) {
+  const dispatch = useAppDispatch();
+
   const [state, setState] = useState({
     isDeleting: false
   });
@@ -32,6 +30,7 @@ export default function WebsiteCardModal({ website }: { website: Website }) {
       await deleteWebsite(website.websiteId);
 
       // update the local copy of the sites
+      dispatch(removeWebsite(website));
 
       toast.success('Website deleted successfully');
     } catch (e) {

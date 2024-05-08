@@ -58,7 +58,7 @@ export default function NavigationItems({
     }
   ];
 
-  const sortedSites = websites.sort((a, b) => {
+  const sortedSites = websites?.sort((a, b) => {
     return (
       new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
     );
