@@ -1,9 +1,18 @@
-'use client';
+'use server';
+import { getUserFromSession } from '@/utils/user/user-session';
+import { getWebsite } from '@/utils/websites';
+import type { websites } from '@prisma/client';
+
 import NavigationItems from '@/components/layout/dashboard/navigation-items';
 import SiteLogo from '@/components/logo';
-import { motion } from 'framer-motion';
 
-export default function DashboardSidebar() {
+export default async function DashboardSidebar() {
+  const userId = await (await getUserFromSession())?.data?.user?.id;
+
+  if (!userId) return;
+
+  const websites = await getWebsite<websites[]>({ userId }, true);
+
   return (
     <section
       className="
@@ -11,17 +20,14 @@ export default function DashboardSidebar() {
 				"
     >
       <div className="border-b border-black-50 relative -top-px">
-        <motion.div
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.1 }}
-        >
-          <div className="px-4">
-            <SiteLogo className="py-4" />
-          </div>
-        </motion.div>
+        <div className="px-4">
+          <SiteLogo className="py-4" />
+        </div>
       </div>
-      <NavigationItems className="px-2 h-full border-r border-black-50 pt-6" />
+      <NavigationItems
+        websites={websites}
+        className="px-2 h-full border-r border-black-50 pt-6"
+      />
     </section>
   );
 }
