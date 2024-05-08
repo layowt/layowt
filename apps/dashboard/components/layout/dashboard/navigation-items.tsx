@@ -7,39 +7,18 @@ import NavigationItem from '@/components/layout/dashboard/navigation-item';
 import MaterialSymbolsHomeOutlineRounded from '@/ui/icons/home';
 import MaterialSymbolsSettingsOutlineRounded from '@/ui/icons/settings';
 import MaterialSymbolsBuildOutlineRounded from '@/ui/icons/build';
-import {
-  ActivityLogIcon,
-  BarChartIcon,
-  ChatBubbleIcon,
-  DesktopIcon,
-  PlusIcon,
-  CornerBottomLeftIcon
-} from '@radix-ui/react-icons';
+import { BarChartIcon, PlusIcon } from '@radix-ui/react-icons';
 import { cn } from '@/lib/utils';
-import { getWebsite } from '@/utils/websites';
-import getClientUser from '@/utils/user/user-client-session';
-import { useEffect, useState } from 'react';
 import type { websites } from '@prisma/client';
-import { revalidateTag } from 'next/cache';
 
-export default function NavigationItems({ className, ...props }) {
-  // get the users websites
-  const [websites, setWebsites] = useState<websites[]>([]);
-
-  useEffect(() => {
-    const getUserWebsites = async () => {
-      const user = await getClientUser();
-      const fetchedWebsites = await getWebsite<websites[]>(
-        { userId: user.data?.user?.id },
-        true
-      );
-      setWebsites(fetchedWebsites);
-
-      //revalidateTag('websites');
-    };
-    getUserWebsites();
-  }, []);
-
+export default function NavigationItems({
+  websites,
+  className,
+  ...props
+}: {
+  websites: websites[];
+  className?: string;
+}) {
   const navItems = [
     {
       name: 'Overview',

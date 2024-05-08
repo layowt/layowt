@@ -1,4 +1,10 @@
 'use server'
+
+/**
+ * This file contains all of the server actions related 
+ * to websites that need to mutate data on the server.
+*/
+
 import { supabase } from '@/lib/supabase';
 import { prisma } from '@/utils/prisma';
 import type { websites as Website } from '@prisma/client'
@@ -24,7 +30,7 @@ export const deleteWebsite = async(websiteId: string) => {
 
 	// god. send. 🤩.
 	revalidateTag('websites');
-
+	//revalidatePath('/dashboard');
 	return 'ok'
 }
 
@@ -120,5 +126,5 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 
 	// return a boolean value of the response so we can
 	// check for a value when calling this function
-	return !!response;
+	return 'ok';
 }
