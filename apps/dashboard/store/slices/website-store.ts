@@ -6,13 +6,15 @@ import type { websites as Website } from "@prisma/client";
 export type SavingState = 'idle' | 'saving' | 'error'
 
 type WebsiteTypeState = {
-	website: Website | null
+	website: Website | null // singular site
+	websites: Website[] | null // multiple sites
 	saving: SavingState
 }
 
 const initialState: WebsiteTypeState = {
 	website: null,
-	saving: 'idle'
+	websites: [],
+	saving: 'idle',
 }
 
 const websiteSlice = createSlice({
@@ -25,13 +27,21 @@ const websiteSlice = createSlice({
 		},
 		setSavingState: (state, action: PayloadAction<SavingState>) => {
 			state.saving = action.payload
+		},
+		setWebsites: (state, action: PayloadAction<Website[]>) => {
+			state.websites = action.payload
+		},
+		removeWebsite: (state, action: PayloadAction<Website>) => {
+			state.websites = state.websites?.filter(website => website.websiteId !== action.payload.websiteId)
 		}
 	}
 })
 
 export const {
 	setWebsite,
-	setSavingState
+	setSavingState,
+	setWebsites,
+	removeWebsite
 } = websiteSlice.actions
 
 export const website = (state: RootState) => state.website.website
