@@ -14,7 +14,7 @@ import { setWebsite, website } from '@/store/slices/website-store';
 
 // misc / utils
 import type { websites as Website } from '@prisma/client';
-import { updateWebsite } from '@/utils/websites/website.post';
+import { updateWebsite } from '@/utils/websites';
 import type { SavingState } from '@/types/state';
 import ModalPrimaryColor from './modal-primary-color';
 import ModalSecondaryColor from './modal-secondary-color';

@@ -68,7 +68,7 @@ export default function SiteBuilderPublishModal({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="font-inter border border-black-50 !bg-black-75 text-white/80 m-1"
+        className="font-inter border border-black-50 !bg-black text-white/80 m-1"
         side="bottom"
         align="end"
       >

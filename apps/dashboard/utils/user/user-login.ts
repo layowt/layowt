@@ -28,9 +28,6 @@ export const login = async (email: string, password: string) => {
 			}
 		});
 		
-		// clear the cache for the layout page
-		revalidatePath('/', 'layout')
-  	
 		return user;
 	} catch (error) {
 		console.error('Error logging in:', error);
