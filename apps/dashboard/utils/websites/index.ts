@@ -25,6 +25,9 @@ export const deleteWebsite = async(websiteId: string) => {
 		}
 	})
 
+	// TODO: CHANGE HOW WE UPLOAD USER FILES - MAKE THERE OWN BUCKET PER USER 
+	// SO WE CAN EMPTY THE BUCKET, THEN DELETE THE BUCKET WHEN THE
+	// USER DELETES THE SITE
 	const websiteUploads = await supabase.storage.from('user-sites').list();
 
 	// delete the site's files from the storage
