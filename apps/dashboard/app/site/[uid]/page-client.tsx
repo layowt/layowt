@@ -4,6 +4,7 @@ import { setWebsite } from '@/utils/websites/setWebsite';
 import dynamic from 'next/dynamic';
 import { useUser } from '@/hooks/useUser';
 import { getWebsite } from '@/utils/websites';
+import SiteBuilderCanvas from '@/components/website/builder/canvas';
 
 export default async function SiteBuilderClient({
   website
@@ -29,5 +30,9 @@ export default async function SiteBuilderClient({
   }
 
   // entry point for the site builder page
-  return '';
+  return (
+    <>
+      <SiteBuilderCanvas />
+    </>
+  );
 }
