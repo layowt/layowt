@@ -47,31 +47,36 @@ export default function WebsiteCardModal({ website }: { website: Website }) {
       label: 'Open in new tab',
       onClick: () => {
         window.open(`/site/${website.websiteId}`, '_blank');
-      }
-    },
-    {
-      label: 'Delete',
-      onClick: async () => {
-        await handleSiteDelete();
-      }
+      },
+      isButton: true
     },
     {
       label: 'Preview',
       onClick: () => {
         console.log('Preview');
-      }
+      },
+      isButton: true
     },
     {
       label: 'Edit',
       onClick: () => {
         console.log('Edit');
-      }
+      },
+      isButton: true
     },
     {
       label: 'Favourite',
       onClick: () => {
         console.log('Favorite');
-      }
+      },
+      isButton: true
+    },
+    {
+      label: 'Delete',
+      onClick: async () => {
+        await handleSiteDelete();
+      },
+      isButton: true
     }
   ];
 
@@ -86,13 +91,21 @@ export default function WebsiteCardModal({ website }: { website: Website }) {
       >
         {dropdownItems.map((item, index) => (
           <DropdownMenuGroup key={index}>
-            <a
-              href="#"
-              className="block p-2 hover:bg-black-75"
-              onClick={item.onClick}
-            >
-              {item.label}
-            </a>
+            {item.isButton ? (
+              <button
+                className="block p-2 hover:bg-black-75 w-full text-start"
+                onClick={item.onClick}
+              >
+                {item.label}
+              </button>
+            ) : (
+              <a
+                target="_blank"
+                className="block p-2 hover:bg-black-75 w-full text-start"
+              >
+                {item.label}
+              </a>
+            )}
           </DropdownMenuGroup>
         ))}
       </DropdownMenuContent>
