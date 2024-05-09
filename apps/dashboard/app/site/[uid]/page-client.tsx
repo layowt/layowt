@@ -2,15 +2,9 @@
 import type { websites as Website } from '@prisma/client';
 import { setWebsite } from '@/utils/websites/setWebsite';
 import dynamic from 'next/dynamic';
-import { useUser } from '@/hooks/useUser';
-import { getWebsite } from '@/utils/websites';
 import SiteBuilderCanvas from '@/components/website/builder/canvas';
 
-export default async function SiteBuilderClient({
-  website
-}: {
-  website: Website;
-}) {
+export default function SiteBuilderClient({ website }: { website: Website }) {
   // prevent ssr for this component
   const NoSSR = dynamic(
     () => import('@/components/modals/site/user-site-data'),
@@ -30,9 +24,5 @@ export default async function SiteBuilderClient({
   }
 
   // entry point for the site builder page
-  return (
-    <>
-      <SiteBuilderCanvas />
-    </>
-  );
+  return <SiteBuilderCanvas />;
 }
