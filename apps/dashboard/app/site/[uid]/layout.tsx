@@ -25,7 +25,7 @@ export default function SiteBuilderLayout({
       <div className="flex justify-center relative">
         {/** Left side column on dashboard (placeholder for now) */}
         <div className="bg-black-75 h-screen w-1/5 fixed left-0 border-r border-black-50"></div>
-        <div className="w-3/5 h-screen flex justify-center items-center">
+        <div className="w-3/5 h-screen flex justify-center items-center fixed overflow-hidden">
           {children}
         </div>
         {/** Right side column on dashboard (placeholder for now) */}
