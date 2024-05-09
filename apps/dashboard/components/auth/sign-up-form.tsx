@@ -72,9 +72,6 @@ export default function SignUpForm() {
         dispatch(deleteUser());
       }
 
-      // dispatch the user to the store
-      //dispatch(createUser(user.data.user));
-
       if (!user) return;
 
       // create the user in the redux store

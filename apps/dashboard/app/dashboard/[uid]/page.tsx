@@ -1,4 +1,4 @@
-import { getWebsite } from '@/utils/websites/website.get';
+import { getWebsite } from '@/utils/websites';
 import PageClient from './page-client';
 
 export default async function Page({ params }: { params: { uid: string } }) {

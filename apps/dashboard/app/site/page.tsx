@@ -2,8 +2,8 @@
 // utils
 import { getUserFromSession } from '@/utils/user/user-session';
 import { getUserFromDb } from '@/utils/user/user.get';
-import { createWebsite } from '@/utils/websites/createWebsite.post';
-import { getWebsite } from '@/utils/websites/website.get';
+import { createWebsite } from '@/utils/websites';
+import { getWebsite } from '@/utils/websites';
 import { getUserSubscription } from '@/utils/subscriptions/subscriptions.get';
 import type { websites } from '@prisma/client';
 

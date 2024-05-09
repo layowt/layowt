@@ -1,7 +1,7 @@
 // Import necessary dependencies
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/ui/input';
-import { updateWebsite } from '@/utils/websites/website.post';
+import { updateWebsite } from '@/utils/websites';
 
 // hooks
 import useDebounce from '@/hooks/useDebounce';
@@ -30,7 +30,6 @@ export default function WebsiteNameInput() {
   // Handle input change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSiteName(e.target.value);
-    dispatch(setSavingState('idle'));
   };
 
   // Effect to update siteName when currentWebsite changes
