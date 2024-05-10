@@ -3,6 +3,7 @@ import type { websites as Website } from '@prisma/client';
 import { setWebsite } from '@/utils/websites/setWebsite';
 import dynamic from 'next/dynamic';
 import SiteBuilderCanvas from '@/components/website/builder/canvas';
+import { useUser } from '@/hooks/useUser';
 
 export default function SiteBuilderClient({ website }: { website: Website }) {
   // prevent ssr for this component
@@ -11,7 +12,7 @@ export default function SiteBuilderClient({ website }: { website: Website }) {
     { ssr: false }
   );
   // set the user in redux using this hook
-  //useUser();
+  useUser();
   setWebsite(website);
 
   // if we do not have a site name, try to fetch the site from the db
