@@ -1,8 +1,9 @@
 'use client';
 import SiteBuilderNavBar from '@/components/layout/site-builder/navigation-navbar';
+import SiteBuilderCanvas from '@/components/website/builder/canvas';
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
-import { device } from '@/store/slices';
 import { setWebsite, website } from '@/store/slices/website-store';
+import { useEffect, useRef } from 'react';
 
 export default function SiteBuilderLayout({
   children
@@ -24,12 +25,10 @@ export default function SiteBuilderLayout({
       </div>
       <div className="flex justify-center relative">
         {/** Left side column on dashboard (placeholder for now) */}
-        <div className="bg-black-75 h-screen w-1/5 fixed left-0 border-r border-black-50"></div>
-        <div className="w-3/5 h-screen flex justify-center items-center fixed overflow-hidden">
-          {children}
-        </div>
+        <div className="bg-black-75 h-screen w-1/6 fixed left-0 border-r border-black-50"></div>
+        <SiteBuilderCanvas />
         {/** Right side column on dashboard (placeholder for now) */}
-        <div className="bg-black-75 h-screen w-1/5 fixed right-0 border-l border-black-50"></div>
+        <div className="bg-black-75 h-screen w-1/6 fixed right-0 border-l border-black-50"></div>
       </div>
     </div>
   );
