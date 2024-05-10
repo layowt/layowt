@@ -35,6 +35,7 @@ export default function NavigationItem({
             ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
             : 'text-white/80'
         }`}
+          prefetch
         >
           <div className="flex gap-x-2 items-center">
             {icon && <div className="size-4">{icon}</div>}
@@ -77,6 +78,7 @@ export default function NavigationItem({
             <Link
               href={nestedItem.link}
               key={nestedItem.name}
+              prefetch
             >
               <motion.li
                 className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer group truncate

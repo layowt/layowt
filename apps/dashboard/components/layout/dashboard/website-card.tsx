@@ -12,9 +12,7 @@ import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { motion } from 'framer-motion';
 
-
 export default function WebsiteCard(website: Website, index: number) {
-
   return (
     <motion.div
       key={website.websiteId}
@@ -27,6 +25,7 @@ export default function WebsiteCard(website: Website, index: number) {
         key={website.websiteId}
         className="flex flex-col gap-y-2 border border-black-50 bg-black-75 rounded-lg p-5 w-full relative group"
         href={`/site/${website.websiteId}`}
+        prefetch
       >
         <div className="absolute top-3 left-3 border-4 border-black-75 rounded-sm">
           {website.websiteLogo ? (
