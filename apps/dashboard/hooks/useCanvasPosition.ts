@@ -1,11 +1,16 @@
 import { useEffect, useRef } from "react";
 
-const useDragger = (id: string, {
-	maxTop
-}: {
-	maxTop: number
-}) => {
-	console.log(maxTop);
+interface Window {
+	windowWidth: number;
+	windowHeight: number;
+	elementWidth?: number;
+	elementHeight?: number;
+}
+
+const useDragger = (id: string, opts: Window) => {
+
+	const { windowWidth, windowHeight, elementHeight, elementWidth } = opts
+
   const isClicked = useRef<boolean>(false);
 
   const coords = useRef<{
@@ -35,16 +40,27 @@ const useDragger = (id: string, {
     }
 
     const onMouseUp = (e: MouseEvent) => {
-      isClicked.current = false;
-      coords.current.lastX = target.offsetLeft;
-      coords.current.lastY = target.offsetTop;
+			isClicked.current = false;
+			coords.current.lastX = target.offsetLeft;
+			coords.current.lastY = target.offsetTop;
+
+			const maxTop = windowHeight - elementHeight;
+			const maxBottom = windowHeight - elementHeight;
+
 
 			// if the current top value of the canvas is less than the max top value
 			// of the canvasContainer (the element that is holding the entire 'page')
 			// we need to reset the value to the max top value
 			if (coords.current.lastY < maxTop) {
 				target.style.top = `${maxTop + 20}px`;
-				coords.current.lastY = maxTop;
+				coords.current.lastY = maxTop + 20;
+			}
+
+			// if the element's top value is greater than its entire height 
+			// 
+			if(coords.current.lastY > maxBottom){
+				target.style.top = `${maxBottom}px`;
+				coords.current.lastY = maxBottom;
 			}
     }
 
@@ -69,10 +85,8 @@ const useDragger = (id: string, {
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('mouseleave', onMouseUp);
     }
-
     return cleanup;
-  }, [id])
-
+  }, [id, windowWidth, windowHeight])
 }
 
 export default useDragger;
