@@ -46,21 +46,54 @@ const useDragger = (id: string, opts: Window) => {
 
 			const maxTop = windowHeight - elementHeight;
 			const maxBottom = windowHeight - elementHeight;
+			const maxLeft = elementWidth - (windowWidth - elementWidth);
+			const maxRight = windowWidth - elementWidth;
 
 
 			// if the current top value of the canvas is less than the max top value
 			// of the canvasContainer (the element that is holding the entire 'page')
 			// we need to reset the value to the max top value
 			if (coords.current.lastY < maxTop) {
+				// add the transition back to smoothly recenter the canvas
+				target.style.transition = 'top 0.5s';
 				target.style.top = `${maxTop + 20}px`;
 				coords.current.lastY = maxTop + 20;
+
+				// remove the transition after the animation is complete
+				setTimeout(() => {
+					target.style.transition = 'none';
+				}, 500);
 			}
 
 			// if the element's top value is greater than its entire height 
-			// 
+			// minus the height of the canvasContainer, we need to reset the value
+			// as it's outside of the viewport
 			if(coords.current.lastY > maxBottom){
+				// add the transition back to smoothly recenter the canvas
+				target.style.transition = 'top 0.5s';
 				target.style.top = `${maxBottom}px`;
 				coords.current.lastY = maxBottom;
+
+				// remove the transition after the animation is complete
+				setTimeout(() => {
+					target.style.transition = 'none';
+				}, 500);
+			}
+
+			if(coords.current.lastX < maxLeft){
+				// add the transition back to smoothly recenter the canvas
+				target.style.transition = 'left 0.5s';
+				target.style.left = `${maxLeft}px`;
+				coords.current.lastX = maxLeft;
+				// remove the transition after the animation is complete
+				setTimeout(() => {
+					target.style.transition = 'none';
+				}, 500);
+			}
+
+			if(coords.current.lastX > maxRight){
+				target.style.left = `${maxRight}px`;
+				coords.current.lastX = maxRight;
 			}
     }
 
