@@ -81,9 +81,8 @@ interface WebsiteOptions {
  * Function to retrieve a website from the database 
  * via passing in data
  * 
- * @param options An object containing properties:
- *                - userId: The ID of the user.
- *                - websiteId: The ID of the website.
+ * @param userId userId: The ID of the user.
+ * @param websiteId websiteId: The ID of the website.
  * @returns A Promise resolving to an array of websites.
  */
 export const getWebsite = async <T extends Website | Website[] = Website>(
