@@ -3,13 +3,13 @@ import { useEffect, useRef } from "react";
 interface Window {
 	windowWidth: number;
 	windowHeight: number;
+	elementWrapperWidth?: number
 	elementWidth?: number;
 	elementHeight?: number;
 }
 
 const useDragger = (id: string, opts: Window) => {
-
-	const { windowWidth, windowHeight, elementHeight, elementWidth } = opts
+	const { windowWidth, windowHeight, elementHeight, elementWidth, elementWrapperWidth } = opts
 
   const isClicked = useRef<boolean>(false);
 
@@ -46,9 +46,8 @@ const useDragger = (id: string, opts: Window) => {
 
 			const maxTop = windowHeight - elementHeight;
 			const maxBottom = windowHeight - elementHeight;
-			const maxLeft = elementWidth - (windowWidth - elementWidth);
-			const maxRight = windowWidth - elementWidth;
-
+			const minLeft = elementWidth - (windowWidth - elementWidth);
+			const maxLeft = windowWidth - (elementWrapperWidth + minLeft);
 
 			// if the current top value of the canvas is less than the max top value
 			// of the canvasContainer (the element that is holding the entire 'page')
@@ -80,20 +79,29 @@ const useDragger = (id: string, opts: Window) => {
 				}, 500);
 			}
 
-			if(coords.current.lastX < maxLeft){
+			
+			if(coords.current.lastX < minLeft){
 				// add the transition back to smoothly recenter the canvas
 				target.style.transition = 'left 0.5s';
-				target.style.left = `${maxLeft}px`;
-				coords.current.lastX = maxLeft;
+				target.style.left = `${minLeft}px`;
+				coords.current.lastX = minLeft;
 				// remove the transition after the animation is complete
 				setTimeout(() => {
 					target.style.transition = 'none';
 				}, 500);
 			}
 
-			if(coords.current.lastX > maxRight){
-				target.style.left = `${maxRight}px`;
-				coords.current.lastX = maxRight;
+			// 'maxRight' is the maximum value that 'left' can be
+			if(coords.current.lastX > maxLeft){
+				// add the transition back to smoothly recenter the canvas
+				target.style.transition = 'left 0.5s';
+				target.style.left = `${minLeft}px`;
+				coords.current.lastX = minLeft;
+
+				// remove the transition after the animation is complete
+				setTimeout(() => {
+					target.style.transition = 'none';
+				}, 500);
 			}
     }
 
@@ -119,7 +127,7 @@ const useDragger = (id: string, opts: Window) => {
       container.removeEventListener('mouseleave', onMouseUp);
     }
     return cleanup;
-  }, [id, windowWidth, windowHeight])
+  }, [id, windowWidth, windowHeight, elementHeight, elementWidth, elementWrapperWidth])
 }
 
 export default useDragger;
