@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 
-function useDragger(id: string): void {
-
+const useDragger = (id: string, {
+	maxTop
+}: {
+	maxTop: number
+}) => {
+	console.log(maxTop);
   const isClicked = useRef<boolean>(false);
 
   const coords = useRef<{
@@ -24,8 +28,6 @@ function useDragger(id: string): void {
     const container = target.parentElement;
     if (!container) throw new Error("target element must have a parent");
 
-
-
     const onMouseDown = (e: MouseEvent) => {
       isClicked.current = true;
       coords.current.startX = e.clientX;
@@ -36,6 +38,17 @@ function useDragger(id: string): void {
       isClicked.current = false;
       coords.current.lastX = target.offsetLeft;
       coords.current.lastY = target.offsetTop;
+
+			// if the element is out of bounds, reset it to the bounds
+			if (coords.current.lastY < 0) {
+				target.style.top = maxTop + 'px';
+				coords.current.lastY = 0;
+			}
+
+			if (coords.current.lastY > maxTop) {
+				target.style.top = `${maxTop}px`;
+				coords.current.lastY = maxTop;
+			}
     }
 
     const onMouseMove = (e: MouseEvent) => {

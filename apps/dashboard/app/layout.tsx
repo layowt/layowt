@@ -7,6 +7,7 @@ import { Toaster } from '@/ui/sonner';
 
 import StoreProvider from '@/store/store-provider';
 import UserAuthentication from '@/components/user-auth';
+import { Metadata } from 'next';
 
 const CairoFont = Cairo({
   subsets: ['latin'],
@@ -39,7 +40,7 @@ const InterFont = Inter({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard | Layowt'
 };
 
@@ -54,6 +55,10 @@ export default function RootLayout({
         lang="en"
         className={`${CairoFont.variable} ${PoppinsFont.variable} ${KanitFont.variable} ${InterFont.variable}`}
       >
+        <meta
+          name="viewport"
+          content="width=device-width, height=device-height, initial-scale:1, user-scalable=no"
+        />
         {/* className="bg-gradient-to-b from-black-200 to-electric-violet-950  min-h-screen" */}
         <body
           className="bg-[#05050A] min-h-screen"
