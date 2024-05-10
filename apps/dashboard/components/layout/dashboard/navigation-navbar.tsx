@@ -1,16 +1,6 @@
 'use client';
 import { Button } from '@/ui/button';
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut
-} from '@/ui/command';
+import { CommandDialog, CommandInput } from '@/ui/command';
 import {
   Tooltip,
   TooltipContent,
