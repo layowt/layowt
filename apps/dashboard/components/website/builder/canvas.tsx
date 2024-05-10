@@ -40,7 +40,9 @@ export default function SiteBuilderCanvas() {
     });
   }, [currentDevice]);
 
-  useDragger('canvas-container', { maxTop: canvasPosition.height + 90 });
+  // pass in the max top value of the wrapper canvas to prevent the user from
+  // being able to drag the canvas above that point (outside the viewport)
+  useDragger('canvas-container', { maxTop: canvasPosition.height || 73 });
 
   // useEffect(() => {
   //   const foo = document.getElementById('testing-canvas');
@@ -102,7 +104,8 @@ export default function SiteBuilderCanvas() {
           transformOrigin: 'left top',
           scale: 0.5,
           width: deviceSize.width,
-          height: deviceSize.height
+          height: deviceSize.height,
+          top: 93
         }}
         id="canvas-container"
       >

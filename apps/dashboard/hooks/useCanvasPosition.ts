@@ -39,14 +39,11 @@ const useDragger = (id: string, {
       coords.current.lastX = target.offsetLeft;
       coords.current.lastY = target.offsetTop;
 
-			// if the element is out of bounds, reset it to the bounds
-			if (coords.current.lastY < 0) {
-				target.style.top = maxTop + 'px';
-				coords.current.lastY = 0;
-			}
-
-			if (coords.current.lastY > maxTop) {
-				target.style.top = `${maxTop}px`;
+			// if the current top value of the canvas is less than the max top value
+			// of the canvasContainer (the element that is holding the entire 'page')
+			// we need to reset the value to the max top value
+			if (coords.current.lastY < maxTop) {
+				target.style.top = `${maxTop + 20}px`;
 				coords.current.lastY = maxTop;
 			}
     }
