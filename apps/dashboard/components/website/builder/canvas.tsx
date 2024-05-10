@@ -8,25 +8,34 @@ import useElementSize from '@/hooks/useElementSize';
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
   const currentDevice = useAppSelector(device);
+  const canvasContainerWrapper = useRef<HTMLDivElement>(null);
 
+  // setting the size of the canvas via the deviceType
   const [deviceSize, setDeviceSize] = useState({
     width: 1024,
     height: 650
   });
+  // get the size of the window
+  const windowSize = useWindowSize();
 
   // change the device width based on the current device
   useEffect(() => {
+    if (!canvasContainerWrapper.current) return;
+
     const deviceWidthMap = {
       desktop: {
-        width: 1024,
+        width:
+          (canvasContainerWrapper.current.offsetWidth / (1024 + 50)) * 1000,
         height: 1000
       },
       laptop: {
-        width: 768,
+        width:
+          (canvasContainerWrapper.current.offsetWidth / (1350 + 50)) * 1000,
         height: 1000
       },
       mobile: {
-        width: 464,
+        width:
+          (canvasContainerWrapper.current.offsetWidth / (1600 + 50)) * 1000,
         height: 1000
       }
     };
@@ -38,11 +47,6 @@ export default function SiteBuilderCanvas() {
     });
   }, [currentDevice]);
 
-  const canvasContainerWrapper = useRef<HTMLDivElement>(null);
-
-  // get the size of the window
-  const windowSize = useWindowSize();
-
   // get the width and height of the canvas wrapper element
   // this is needed to prevent the user from dragging the canvas
   // outside of the viewport
@@ -53,6 +57,7 @@ export default function SiteBuilderCanvas() {
   useDragger('canvas-container', {
     windowWidth: windowSize.width,
     windowHeight: windowSize.height,
+    elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,
     elementHeight: height,
     elementWidth: width
   });
@@ -73,6 +78,7 @@ export default function SiteBuilderCanvas() {
           cursor: 'grab',
           transformOrigin: 'left top',
           width: deviceSize.width,
+          left: width - (windowSize.width - width),
           height: '90vh',
           top: 93
         }}
@@ -84,11 +90,7 @@ export default function SiteBuilderCanvas() {
             maxWidth: deviceSize.width
           }}
           id="canvas"
-        >
-          {width}
-          <br />
-          {height}
-        </div>
+        ></div>
       </div>
     </div>
   );

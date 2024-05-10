@@ -1,8 +1,8 @@
 import { DeviceType } from "@/types/DeviceType";
 import { useEffect, useState } from "react";
 
-const useElementSize = (id: string, deviceType: DeviceType) => {
-	console.log(deviceType);
+const useElementSize = (id: string, deviceType?: DeviceType) => {
+
   const [size, setSize] = useState({ width: 0, height: 0 });
 
 	// check the size of the element upon the id & the device type
@@ -31,7 +31,7 @@ const useElementSize = (id: string, deviceType: DeviceType) => {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
-  }, [deviceType]);
+  }, [deviceType ?? '']);
 
   return size;
 };
