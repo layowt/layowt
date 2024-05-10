@@ -1,7 +1,9 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, use } from 'react';
 import { device } from '@/store/slices/index';
 import { useAppSelector } from '@/lib/hooks';
 import useDragger from '@/hooks/useCanvasPosition';
+import useWindowSize from '@/hooks/useWindowSize';
+import useElementSize from '@/hooks/useElementSize';
 
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
@@ -10,10 +12,6 @@ export default function SiteBuilderCanvas() {
   const [deviceSize, setDeviceSize] = useState({
     width: 1024,
     height: 650
-  });
-  const [canvasPosition, setCanvasPosition] = useState({
-    width: 0,
-    height: 0
   });
 
   // change the device width based on the current device
@@ -40,52 +38,24 @@ export default function SiteBuilderCanvas() {
     });
   }, [currentDevice]);
 
-  // pass in the max top value of the wrapper canvas to prevent the user from
-  // being able to drag the canvas above that point (outside the viewport)
-  useDragger('canvas-container', { maxTop: canvasPosition.height || 73 });
-
-  // useEffect(() => {
-  //   const foo = document.getElementById('testing-canvas');
-
-  //   foo.addEventListener(
-  //     'wheel',
-  //     (e) => {
-  //       // prevent the default behavior of the scroll event
-  //       e.preventDefault();
-
-  //       console.log(e.deltaZ);
-
-  //       // get the zoom level
-  //       const scale = 0.5 + e.deltaZ * 0.01;
-
-  //       // apply the zoom level to the canvas
-  //       document.getElementById('canvas-container').style.scale = `${scale}`;
-  //     },
-  //     {
-  //       passive: false
-  //     }
-  //   );
-  // }, []);
-
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
+
+  // get the size of the window
+  const windowSize = useWindowSize();
 
   // get the width and height of the canvas wrapper element
   // this is needed to prevent the user from dragging the canvas
   // outside of the viewport
-  useEffect(() => {
-    // get the width and height of the screen
-    const { width: bodyWidth, height: bodyHeight } =
-      document.body.getBoundingClientRect();
+  const { width, height } = useElementSize('canvas-container', currentDevice);
 
-    const { width, height } =
-      canvasContainerWrapper.current.getBoundingClientRect();
-
-    const canvasPosition = {
-      width: bodyWidth - width,
-      height: bodyHeight - height
-    };
-    setCanvasPosition(canvasPosition);
-  }, []);
+  // pass in the max top value of the wrapper canvas to prevent the user from
+  // being able to drag the canvas above that point (outside the viewport)
+  useDragger('canvas-container', {
+    windowWidth: windowSize.width,
+    windowHeight: windowSize.height,
+    elementHeight: height,
+    elementWidth: width
+  });
 
   return (
     <div
@@ -94,7 +64,7 @@ export default function SiteBuilderCanvas() {
     >
       <div
         className="
-				size-0 fixed w-[calc(100%-2rem)] h-[calc(100%-2rem)] bg-white 
+				size-0 fixed bg-white 
 				border border-black-50 overflow-hidden
 			"
         style={{
@@ -102,9 +72,8 @@ export default function SiteBuilderCanvas() {
           willChange: 'transform',
           cursor: 'grab',
           transformOrigin: 'left top',
-          scale: 0.5,
           width: deviceSize.width,
-          height: deviceSize.height,
+          height: '90vh',
           top: 93
         }}
         id="canvas-container"
@@ -114,7 +83,12 @@ export default function SiteBuilderCanvas() {
           style={{
             maxWidth: deviceSize.width
           }}
-        ></div>
+          id="canvas"
+        >
+          {width}
+          <br />
+          {height}
+        </div>
       </div>
     </div>
   );
