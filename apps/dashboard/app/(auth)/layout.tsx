@@ -37,6 +37,7 @@ export default async function SignUpLayout({
                 cursor-pointer bg-electric-violet hover:bg-electric-violet-600 
                 duration-300 px-4 py-2 rounded-sm shadow-md shadow-electric-violet-700
               "
+              prefetch
             >
               {pathname === '/login' ? 'Sign Up' : 'Login'}
             </Link>
