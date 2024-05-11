@@ -69,6 +69,8 @@ export const updateWebsite = async (
 		}
 	})
 
+	revalidateTag('websites');
+
 	return siteToUpdate;
 }
 
