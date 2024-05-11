@@ -1,3 +1,4 @@
+'use client';
 import type { Metadata } from 'next';
 
 // components
@@ -16,10 +17,13 @@ export const metadata: Metadata = {
 
 export default function SiteBuilderNavBar() {
   return (
-    <nav className="p-4 border-b border-black-75 flex items-center justify-between">
+    <nav className="p-4 border-b border-black-50 bg-[#05050A] flex items-center justify-between relative">
       {/* <SiteLogo className="text-white" /> */}
       <div className="flex items-center gap-x-4 w-1/3">
-        <Link href="/dashboard">
+        <Link
+          href="/dashboard"
+          prefetch
+        >
           <ArrowLeftIcon />
         </Link>
         <div className="bg-black-75 w-px h-5"></div>

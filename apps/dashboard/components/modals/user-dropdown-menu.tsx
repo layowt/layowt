@@ -15,7 +15,7 @@ import IcSharpHelpOutline from '@/ui/icons/help';
 import { cn } from '@/lib/utils';
 import useCurrentTheme from '@/hooks/useCurrentTheme';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
@@ -35,11 +35,11 @@ export default function UserDropdownMenu({
 
   const [user, setUser] = useState<User>(null);
 
-  let init = false;
+  let init = useRef(false);
   // on mount get the user data
   useEffect(() => {
-    if (init) return;
-    init = true;
+    if (init.current) return;
+    init.current = true;
     const getCurrentUser = async () => {
       const { data: user, error } = await supabase.auth.getUser();
       // exit early if error

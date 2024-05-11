@@ -22,7 +22,7 @@ export default function WebsiteNameInput() {
   const [siteName, setSiteName] = useState('');
 
   // Use debounce to track changes in siteName
-  const debouncedSiteName = useDebounce(siteName, 1000);
+  //const debouncedSiteName = useDebounce(siteName, 1000);
 
   // check if we have saved before we allow the user to refresh the page
   usePageRefresh(savingValue);
@@ -40,17 +40,17 @@ export default function WebsiteNameInput() {
   }, [currentWebsite]);
 
   // Effect to handle saving debouncedSiteName to the database
-  useEffect(() => {
-    if (debouncedSiteName && currentWebsite?.websiteId) {
-      dispatch(setSavingState('saving'));
+  // useEffect(() => {
+  //   if (debouncedSiteName && currentWebsite?.websiteId) {
+  //     dispatch(setSavingState('saving'));
 
-      updateWebsite(currentWebsite.websiteId, {
-        websiteName: debouncedSiteName
-      }).then(() => {
-        dispatch(setSavingState('idle'));
-      });
-    }
-  }, [debouncedSiteName, currentWebsite]);
+  //     updateWebsite(currentWebsite.websiteId, {
+  //       websiteName: debouncedSiteName
+  //     }).then(() => {
+  //       dispatch(setSavingState('idle'));
+  //     });
+  //   }
+  // }, [debouncedSiteName, currentWebsite]);
 
   // Handle Enter key press to save immediately
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

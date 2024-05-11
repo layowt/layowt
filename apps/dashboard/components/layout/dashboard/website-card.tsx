@@ -12,9 +12,7 @@ import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { motion } from 'framer-motion';
 
-
 export default function WebsiteCard(website: Website, index: number) {
-
   return (
     <motion.div
       key={website.websiteId}
