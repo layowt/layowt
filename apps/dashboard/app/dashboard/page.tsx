@@ -6,10 +6,6 @@ import { getWebsite } from '@/utils/websites';
 import { websites } from '@prisma/client';
 import PageClient from './page-client';
 
-export const preload = async ({ userId }: { userId: string }) => {
-  void getWebsite({ userId });
-};
-
 export default async function Dashboard() {
   const userId = await (await getUserFromSession())?.data?.user?.id;
 
