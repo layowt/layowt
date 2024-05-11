@@ -8,6 +8,7 @@ import { Toaster } from '@/ui/sonner';
 import StoreProvider from '@/store/store-provider';
 import UserAuthentication from '@/components/user-auth';
 import { Metadata } from 'next';
+import { createClient } from '../utils/supabase/server';
 
 const CairoFont = Cairo({
   subsets: ['latin'],
@@ -44,11 +45,15 @@ export const metadata: Metadata = {
   title: 'Dashboard | Layowt'
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
+  // try to get the user from supabase
+  const supabase = createClient();
+  const { data: user, error } = await supabase.auth.getUser();
+
   return (
     <StoreProvider>
       <html
@@ -59,15 +64,15 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, height=device-height, initial-scale:1, user-scalable=no"
         />
-        {/* className="bg-gradient-to-b from-black-200 to-electric-violet-950  min-h-screen" */}
         <body
           className="bg-[#05050A] min-h-screen"
           suppressHydrationWarning={true}
         >
-          <UserAuthentication>
-            {/* <Theme className="bg-grid-white/[0.03]"> */}
+          <UserAuthentication
+            currentUserObject={user.user}
+            error={error}
+          >
             <Theme>
-              {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div> */}
               <div className="flex flex-col relative">
                 <main>{children}</main>
                 <Toaster

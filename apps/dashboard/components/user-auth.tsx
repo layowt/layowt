@@ -1,19 +1,21 @@
 'use server';
-import { createClient } from '../utils/supabase/server';
+import { User } from '@supabase/supabase-js';
 import UserAuthModal from './modals/user-auth';
 
 export default async function UserAuthentication({
-  children
+  children,
+  currentUserObject,
+  error
 }: {
   children: React.ReactNode;
+  currentUserObject: User | null;
+  error?: Error;
 }) {
-  const supabase = createClient();
-  const { data: user, error } = await supabase.auth.getUser();
   // if the user is not logged in, show a modal to allow the user to log in
+
   return (
     <>
-      {!user?.user?.id ||
-        (error && <UserAuthModal currentUserObject={user.user} />)}
+      <UserAuthModal currentUserObject={currentUserObject} />
       {children}
     </>
   );

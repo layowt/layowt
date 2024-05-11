@@ -42,6 +42,7 @@ export default function UserAuthModal({
   }, []);
 
   useEffect(() => {
+    if (!supabase) return;
     // create a subscription to the user object
     const channel = supabase
       .channel('User Email Authenticated')
@@ -93,7 +94,12 @@ export default function UserAuthModal({
   console.log(currentUserObject);
 
   // do not display the modal if the user is on the sign-up page
-  if (pathname === '/sign-up' || currentUserObject || pathname === '/login')
+  if (
+    pathname === '/sign-up' ||
+    currentUserObject ||
+    pathname === '/login' ||
+    pathname === '/forgot-password'
+  )
     return '';
 
   if (searchParams.get('access_token')) return '';
