@@ -91,8 +91,6 @@ export default function UserAuthModal({
     }
   }, [pathname, searchParams]);
 
-  console.log(currentUserObject);
-
   // do not display the modal if the user is on the sign-up page
   if (
     pathname === '/sign-up' ||
