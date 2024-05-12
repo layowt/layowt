@@ -44,8 +44,7 @@ export async function middleware(req: NextRequest) {
   }`
 
   // if we are developing locally or on the root domain, do not redirect
-  if(hostname === 'localhost:4343' || hostname === publicRootDomain) {
-    console.log('ran');
+  if(hostname === 'localhost:4343' || hostname === publicRootDomain || hostname === 'app.layout.com') {
     // if we are on the root domain, we need to do user auth checks
     const session = await updateSession(req)
 
