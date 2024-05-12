@@ -64,20 +64,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  // if the user is trying to access 'username.layowt.com', redirect them to 'subdomain.app.layout.com'
-  if(hostname !== publicRootDomain) {
-    return NextResponse.rewrite(
-      new URL(
-        '/',
-        'http://' + hostname
-      )
-    )
-  }
-
   // rewrite everything else to 'subdomain.app.layout.com'
   return NextResponse.rewrite(
     new URL(
-      '/',
+      `/${hostname}`,
       req.url
     )
   )
