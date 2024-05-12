@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Loading from '../loading';
+import Loading from '../../loading';
 
 import DashboardNavBar from '@/components/layout/dashboard/navigation-navbar';
 import DashboardSidebar from '@/components/layout/dashboard/navigation-sidebar';
