@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import Loading from '../app/loading';
+import Loading from '../loading';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
