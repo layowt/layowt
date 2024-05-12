@@ -5,6 +5,7 @@ import SiteBuilderPublishModal from './navigation-publish-dropdown';
 
 import { useAppSelector } from '@/lib/hooks';
 import { website } from '@/store/slices/website-store';
+import { publishSite } from '@/utils/websites';
 
 export default function SiteBuilderSettings() {
   const websiteObj = useAppSelector(website);
@@ -19,6 +20,7 @@ export default function SiteBuilderSettings() {
           rounded="sm"
           size="sm"
           hoverEffect={false}
+          onClick={() => publishSite(websiteObj.websiteId)}
         >
           Publish
         </Button>
