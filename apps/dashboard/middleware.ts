@@ -1,6 +1,19 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { updateSession } from './utils/supabase/middleware';
 
+export const config = {
+  matcher: [
+    /*
+     * Match all paths except for:
+     * 1. /api routes
+     * 2. /_next (Next.js internals)
+     * 3. /_static (inside /public)
+     * 4. all root files inside /public (e.g. /favicon.ico)
+     */
+    "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
+  ],
+};
+
 // runs on every request
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
@@ -65,22 +78,6 @@ export async function middleware(req: NextRequest) {
   }
 
   // rewrite everything else to 'subdomain.app.layout.com'
-  return NextResponse.rewrite(
-    new URL(
-      `/${hostname}`,
-      req.url
-    )
-  )
-}
+  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'
-  ]
-};
+}
