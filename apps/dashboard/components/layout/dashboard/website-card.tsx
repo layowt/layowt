@@ -43,14 +43,20 @@ export default function WebsiteCard(website: Website, index: number) {
           <CameraIcon className="size-8 text-white/50 group-hover:size-10 transition-all duration-300" />
         </div>
         <div className="flex w-full justify-between items-center mt-8">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-y-2">
             <div className="flex gap-x-2 items-center">
               <span className="text-xl font-inter text-white">
                 {website.websiteName}
               </span>
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
-            <p className="text-xs text-white/50">www.testing.com</p>
+            <a
+              href={website.websiteUrl || '#'}
+              onClick={(e) => e.preventDefault()}
+              className="text-xs text-white/50"
+            >
+              {website.websiteUrl || 'Not Published'}
+            </a>
           </div>
           <DropdownMenu key={website?.websiteId}>
             <DropdownMenuTrigger asChild>

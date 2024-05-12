@@ -6,9 +6,11 @@
 */
 
 import { supabase } from '@/lib/supabase';
+import { user } from '@/store/slices/user-store';
 import { prisma } from '@/utils/prisma';
 import type { websites as Website } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 
 /**
  * 
@@ -114,6 +116,8 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 };
 
 export const createWebsite = async (userId: string, websiteId: string) => {
+	console.log(userId);
+	if(!userId) throw new Error('No user ID specified');
 	const response = await prisma.websites.create({
 		data: {
 			websiteLogo: '',
@@ -123,6 +127,9 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 			websiteId: websiteId,
 			//TODO: GENERATE NAME FOR HERE
 			websiteName: 'Untitled', 
+			createdAt: new Date(),
+			lastUpdated: new Date(),
+			hasBeenPublished: false,
 			owner: {
 				connect: {
 					uid: userId,
@@ -138,4 +145,37 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 	// return a boolean value of the response so we can
 	// check for a value when calling this function
 	return 'ok';
+}
+
+export const publishSite = async(
+	websiteId: string
+) => {
+	const env = process.env.NODE_ENV
+	// get the website data
+	const websiteData = await getWebsite({ websiteId });
+
+	await updateWebsite(websiteId, {
+		hasBeenPublished: true,
+		lastUpdated: new Date(),
+		websiteUrl: `${websiteData.websiteName.toLowerCase().replace(/\s/g, '-')}.app.${env === 'production' ? 'layowt.com' : 'localhost:4343'}`,
+	});
+
+	revalidateTag('websites');
+
+	return 'ok';
+}
+
+/**
+ * 
+ * @param websiteDomain - The domain of the website (passed into [domain])
+ * @returns 
+ */
+export const getDynamicSite = async(
+	websiteDomain: string
+) => {
+	return await prisma.websites.findFirst({
+		where: {
+			websiteUrl: websiteDomain,
+		},
+	})
 }

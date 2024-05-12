@@ -5,7 +5,7 @@ import type { users as user } from '@prisma/client';
 export const getUserFromDb = async (id: string): Promise<user> => {
 	if(!id) throw new Error('No id provided')
 
-	const user  = await prisma.users.findFirst({
+	const user = await prisma.users.findFirst({
 		where: {
 			uid: {
 				equals: id

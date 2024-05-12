@@ -55,7 +55,6 @@ export default function SignUpForm() {
   const handleRegistration = async () => {
     // set the loading spinner to true
     setIsLoading(true);
-
     // try to create the user
     try {
       const user = await signUp(state.userEmail, state.userPassword);
@@ -71,14 +70,9 @@ export default function SignUpForm() {
       if (user) {
         dispatch(deleteUser());
       }
-
-      if (!user) return;
-
       // create the user in the redux store
       dispatch(createUser(user));
-
       router.push(`/dashboard?uid=${user.id}` ?? '/');
-
       // reset the loading state
       setIsLoading(false);
     } catch (e) {
@@ -121,6 +115,7 @@ export default function SignUpForm() {
               "
               value={state.userEmail}
               onChange={handleChange}
+              autoComplete="email"
             />
           </div>
         </div>
@@ -145,6 +140,7 @@ export default function SignUpForm() {
               "
               value={state.userPassword}
               onChange={handleChange}
+              autoComplete="current-password"
             />
             <button
               className="cursor-pointer px-4 transition-all duration-300 absolute right-0"
@@ -184,7 +180,7 @@ export default function SignUpForm() {
             </div>
             <div className="flex gap-x-2">
               <Checkbox
-                id="terms"
+                id="email-terms"
                 className="border border-white rounded-[0.25rem] mt-[2px]"
               />
               <Label
@@ -209,8 +205,7 @@ export default function SignUpForm() {
                 "
                 disabled={
                   !validEmail(state.userEmail) ||
-                  !isValidPassword(state.userPassword) ||
-                  !acceptedTerms
+                  !isValidPassword(state.userPassword)
                 }
                 variant="secondary"
               >

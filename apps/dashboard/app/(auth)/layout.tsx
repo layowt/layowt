@@ -15,8 +15,8 @@ export default async function SignUpLayout({
   // if the user is logged in, redirect them to the dashboard
   const user = await supabase.auth.getUser();
 
-  if (user?.data?.user?.id) {
-    redirect('/dashboard');
+  if (!user) {
+    throw new Error('User is not logged in');
   }
 
   return (

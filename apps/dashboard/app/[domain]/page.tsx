@@ -1,9 +1,15 @@
 import { prisma } from '@/utils/prisma';
+import { notFound } from 'next/navigation';
+
+import { getDynamicSite } from '@/utils/websites';
 
 //export async function generateStaticParams() {}
 
-export default function Page({ params }: { params: { domain: string } }) {
+export default async function Page({ params }: { params: { domain: string } }) {
   const domain = decodeURIComponent(params.domain);
 
-  return <div className="text-white">hello from {domain}</div>;
+  const websiteData = await getDynamicSite(domain);
+  if (!websiteData) return notFound();
+
+  return <div className="text-white">hello from {websiteData.websiteName}</div>;
 }

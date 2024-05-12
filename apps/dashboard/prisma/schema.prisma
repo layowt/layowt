@@ -45,16 +45,20 @@ model subscription {
 }
 
 model websites {
-  websiteId                                   String @id
-  
   owner                                       users @relation(fields: [userId], references: [uid])
   userId                                      String
+
+  websiteId                                   String @id
   websiteName                                 String
-  websiteUrl                                  String
+  websiteUrl                                  String @unique
   websiteLogo                                 String
   websitePrimaryColor                         String 
   websiteSecondaryColor                       String
+  hasBeenPublished                            Boolean @default(false)
+
+  createdAt                                   DateTime @default(now())
   lastUpdated                                 DateTime @updatedAt
+
 }
 
 model earlyAccess {

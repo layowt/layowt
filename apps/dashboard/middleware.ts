@@ -38,16 +38,12 @@ export async function middleware(req: NextRequest) {
   }
 
   const searchParams = req.nextUrl.searchParams.toString()
-
   const path = `${url.pathname}${
     searchParams.toString().length > 0 ? `?${searchParams.toString()}` : ''
   }`
 
   // get the first part of the hostname
   const existingSubDomain = hostname.split('.')[0]
-
-  console.log(existingSubDomain);
-
   // if we are developing locally or on the root domain, do not redirect
   if(
     hostname === 'localhost:4343' || 
@@ -81,11 +77,9 @@ export async function middleware(req: NextRequest) {
         new URL('/dashboard', req.url)
       )
     }
-
     // other wise, the user is authenticated, trying to access the root site (app.layowt.com), and is allowed to access the page
     return NextResponse.next()
   }
-
   // rewrite everything else to 'subdomain.app.layout.com'
   return NextResponse.rewrite(new URL(`/${hostname}`, req.url));
 
