@@ -68,20 +68,15 @@ export default async function RootLayout({
           className="bg-[#05050A] min-h-screen"
           suppressHydrationWarning={true}
         >
-          <UserAuthentication
-            currentUserObject={user.user}
-            error={error}
-          >
-            <Theme>
-              <div className="flex flex-col relative">
-                <main>{children}</main>
-                <Toaster
-                  closeButton
-                  className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
-                />
-              </div>
-            </Theme>
-          </UserAuthentication>
+          <Theme>
+            <div className="flex flex-col relative">
+              <main>{children}</main>
+              <Toaster
+                closeButton
+                className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
+              />
+            </div>
+          </Theme>
         </body>
       </html>
     </StoreProvider>

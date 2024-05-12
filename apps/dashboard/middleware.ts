@@ -10,9 +10,20 @@ export async function middleware(req: NextRequest) {
     publicRootDomain = 'app.layout.com'
   }
 
-  let hostname = req.headers.get('host')!.replace(
-    'localhost:4343', publicRootDomain  
-  )
+  let hostname = req.headers.get('host')
+  
+  //!.replace('localhost:4343', 'localhost:4343'  
+
+  // special case for Vercel preview deployment URLs
+  if (
+    hostname.includes("---") &&
+    hostname.endsWith(`.${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
+  ) {
+    hostname = `${hostname.split("---")[0]}.${
+      process.env.NEXT_PUBLIC_ROOT_DOMAIN
+    }`;
+  }
+
   const searchParams = req.nextUrl.searchParams.toString()
 
   const path = `${url.pathname}${
@@ -21,26 +32,54 @@ export async function middleware(req: NextRequest) {
 
   // if we are developing locally or on the root domain, do not redirect
   if(hostname === 'localhost:4343' || hostname === publicRootDomain) {
+    console.log('ran');
     // if we are on the root domain, we need to do user auth checks
     const session = await updateSession(req)
 
     // if there is no user, and they are trying to access a page that requires auth
-    // redirect them
+    // redirect them to the dashboard with a not-authenticated message
+    // so on the /login route we can display a message to the user
     if(
-        !session && 
-        path !== '/login' && 
-        path !== '/signup' && 
-        path !== '/forgot-password'
+      !session && 
+      path !== '/login' && 
+      path !== '/signup' && 
+      path !== '/forgot-password'
     ){
-      return NextResponse.redirect('/login')
+      return NextResponse.rewrite(
+        new URL(
+          '/login?r=not-authenticated',
+          req.url
+        )
+      )
+    }
+
+    // if the user is authenticated, and trying to access '/', make the dashboard the root page
+    if(session && path === '/') {
+      return NextResponse.rewrite(
+        new URL('/dashboard', req.url)
+      )
     }
 
     // other wise, the user is authenticated, trying to access the root site (app.layowt.com), and is allowed to access the page
     return NextResponse.next()
   }
 
+  // if the user is trying to access 'username.layowt.com', redirect them to 'subdomain.app.layout.com'
+  if(hostname !== publicRootDomain) {
+    return NextResponse.rewrite(
+      new URL(
+        '/',
+        'http://' + hostname
+      )
+    )
+  }
+
+  // rewrite everything else to 'subdomain.app.layout.com'
   return NextResponse.rewrite(
-    new URL(`${hostname}${path}`, req.url)
+    new URL(
+      '/',
+      req.url
+    )
   )
 }
 
