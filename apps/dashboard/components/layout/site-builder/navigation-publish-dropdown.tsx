@@ -12,6 +12,7 @@ import { motion } from 'framer-motion';
 import type { websites as Website } from '@prisma/client';
 import Link from 'next/link';
 import { getEnv, getTimeStamp } from '@/utils/index';
+import { publishSite } from '@/utils/websites';
 
 export default function SiteBuilderPublishModal({
   website
@@ -24,13 +25,14 @@ export default function SiteBuilderPublishModal({
     {
       name: 'lastUpdated',
       html: (
-        <div className="flex items-center gap-x-2 text-xs p-2">
+        <div className="flex flex-col gap-y-1 text-xs p-2">
           <span className="flex items-center gap-x-1">
             Last updated
             <p className="bg-black-50 p-1 rounded">
               {getTimeStamp(website?.lastUpdated)}
             </p>
           </span>
+          <div className="">By 'Unknown'</div>
         </div>
       )
     },
@@ -38,14 +40,27 @@ export default function SiteBuilderPublishModal({
       name: 'separator'
     },
     {
-      name: 'publish',
+      name: 'publish-unpublish',
       html: (
-        <Button
-          variant="secondary"
-          className="p-2"
-        >
-          <span className="">Publish</span>
-        </Button>
+        <div className="grid grid-cols-2 gap-x-2 items-center w-full font-inter mt-2">
+          <Button
+            variant="secondary"
+            className="p-2"
+            onClick={() => {
+              publishSite(website?.websiteId, {
+                ...website
+              });
+            }}
+          >
+            <span>Publish</span>
+          </Button>
+          <Button
+            variant="destructive"
+            className="p-2 rounded-xl border-2 border-red-600 hover:rounded-lg"
+          >
+            <span>Unpublish</span>
+          </Button>
+        </div>
       )
     }
   ];
