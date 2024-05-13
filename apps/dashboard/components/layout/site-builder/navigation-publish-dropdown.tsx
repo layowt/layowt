@@ -7,49 +7,45 @@ import {
   DropdownMenuGroup
 } from '@/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import {
-  ChevronDownIcon,
-  Share2Icon,
-  EyeOpenIcon,
-  QuestionMarkCircledIcon
-} from '@radix-ui/react-icons';
+import { ChevronDownIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import { motion } from 'framer-motion';
 import type { websites as Website } from '@prisma/client';
+import Link from 'next/link';
+import { getEnv, getTimeStamp } from '@/utils/index';
 
 export default function SiteBuilderPublishModal({
   website
 }: {
   website: Website;
 }) {
+  const env = getEnv() === 'production' ? 'https' : 'http';
+
   const dropdownOptions = [
     {
-      name: 'Preview',
-      icon: (
-        <EyeOpenIcon
-          width="auto"
-          height="auto"
-        />
-      )
-    },
-    {
-      name: 'Share',
-      icon: (
-        <Share2Icon
-          width="auto"
-          height="auto"
-        />
+      name: 'lastUpdated',
+      html: (
+        <div className="flex items-center gap-x-2 text-xs p-2">
+          <span className="flex items-center gap-x-1">
+            Last updated
+            <p className="bg-black-50 p-1 rounded">
+              {getTimeStamp(website?.lastUpdated)}
+            </p>
+          </span>
+        </div>
       )
     },
     {
       name: 'separator'
     },
     {
-      name: 'Get Support',
-      icon: (
-        <QuestionMarkCircledIcon
-          width="auto"
-          height="auto"
-        />
+      name: 'publish',
+      html: (
+        <Button
+          variant="secondary"
+          className="p-2"
+        >
+          <span className="">Publish</span>
+        </Button>
       )
     }
   ];
@@ -68,7 +64,7 @@ export default function SiteBuilderPublishModal({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="font-inter border border-black-50 !bg-black text-white/80 m-1"
+        className="font-inter border border-black-50 !bg-black text-white/80 m-2 w-80"
         side="bottom"
         align="end"
       >
@@ -77,39 +73,44 @@ export default function SiteBuilderPublishModal({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <DropdownMenuLabel className="text-base font-normal">
-            {website?.websiteName}
+          <DropdownMenuLabel className="text-base font-normal flex flex-col gap-y-1 font-inter">
+            <span className="text-xs text-white/60">Site Domain</span>
+            {website?.websiteUrl ? (
+              <Link
+                className="text-sm text-white group flex items-center gap-x-1 hover:underline"
+                href={`${env}://${website?.websiteUrl}`}
+                prefetch
+              >
+                {website?.websiteUrl || 'Not Published'}
+                <span>
+                  <ArrowRightIcon className="relative size-3 opacity-0 group-hover:opacity-100 -left-2 group-hover:left-0 duration-300 transition-all" />
+                </span>
+              </Link>
+            ) : (
+              <span className="text-sm text-white">Not Published</span>
+            )}
           </DropdownMenuLabel>
         </motion.div>
         <DropdownMenuSeparator className="!bg-black-50" />
         <DropdownMenuGroup>
-          {dropdownOptions.map((item, index) => (
-            <motion.li
-              key={index}
-              initial={{ opacity: 0, x: 0 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.2, delay: index * 0.1 }}
-              className="list-none w-full"
-            >
-              {item.name === 'separator' ? (
-                <DropdownMenuSeparator
-                  key={index}
-                  className="!bg-black-50"
-                />
-              ) : (
-                <button
-                  key={index}
-                  className="
-									px-2 py-1 hover:border-none focus:!ring-0 hover:!ring-0 hover:bg-black-50 rounded w-full"
-                >
-                  <div className="flex items-center gap-x-2">
-                    <div className="size-5">{item.icon}</div>
-                    <span className="text-sm">{item.name}</span>
-                  </div>
-                </button>
-              )}
-            </motion.li>
-          ))}
+          {dropdownOptions.map((option, index) =>
+            option.name === 'separator' ? (
+              <DropdownMenuSeparator
+                key={index}
+                className="!bg-black-50"
+              />
+            ) : (
+              <motion.li
+                key={option.name}
+                initial={{ opacity: 0, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
+                className="list-none w-full"
+              >
+                {option.html}
+              </motion.li>
+            )
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
