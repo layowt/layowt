@@ -21,7 +21,7 @@ import IcSharpHelpOutline from '@/components/ui/icons/help';
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 
 // redux
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
 
 // hooks
@@ -30,7 +30,7 @@ import useUserWebsites from '@/hooks/useUserWebsites';
 // misc
 import { createClient } from '@/utils/supabase/client';
 import getClientUser from '@/utils/user/user-client-session';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/index';
 import { User } from '@supabase/supabase-js';
 import {
   DropdownMenuItem,

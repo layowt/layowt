@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, use } from 'react';
 import { device } from '@/store/slices/index';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '@/utils/index';
 import useDragger from '@/hooks/useCanvasPosition';
 import useWindowSize from '@/hooks/useWindowSize';
 import useElementSize from '@/hooks/useElementSize';

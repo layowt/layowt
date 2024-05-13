@@ -12,7 +12,7 @@ import MaterialSymbolsSettingsOutlineRounded from '@/ui/icons/settings';
 import IcRoundLogOut from '@/ui/icons/logout';
 import IcOutlineDarkMode from '@/ui/icons/darkmode';
 import IcSharpHelpOutline from '@/ui/icons/help';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/index';
 import useCurrentTheme from '@/hooks/useCurrentTheme';
 
 import { useState, useEffect, useRef } from 'react';

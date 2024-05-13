@@ -11,6 +11,7 @@ import { prisma } from '@/utils/prisma';
 import type { websites as Website } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { unstable_cache } from 'next/cache';
+import { getEnv } from '@/utils/index';
 
 /**
  * 
@@ -151,12 +152,12 @@ export const publishSite = async(
 	websiteId: string
 ) => {
 	// get the current environment to determine the website url (localhost or layowt)
-	const env = process.env.NODE_ENV
+	const env = getEnv() === 'production' ? 'app.layowt.com' : 'app.localhost:4343';
 
 	// get the website data
 	const websiteData = await getWebsite({ websiteId });
 
-	let websiteName = `${websiteData?.websiteName.toLowerCase().replace(/\s/g, '-')}.app.${env === 'production' ? 'layowt.com' : 'localhost:4343'}`;
+	let websiteName = `${websiteData?.websiteName.toLowerCase().replace(/\s/g, '-')}.app.${env}`;
 
 	// check if the name has been taken already
 	const websiteNameExists = await prisma.websites.findFirst({
@@ -167,7 +168,7 @@ export const publishSite = async(
 
 	// if the site already exists, append the websiteId to the name to the subdomain
 	if(websiteNameExists) {
-		websiteName = websiteName.split('.')[0] + `-${websiteId}.app.${env === 'production' ? 'layowt.com' : 'localhost:4343'}`;
+		websiteName = websiteName.split('.')[0] + `-${websiteId}.${env}`;
 	}
 
 	await updateWebsite(websiteId, {

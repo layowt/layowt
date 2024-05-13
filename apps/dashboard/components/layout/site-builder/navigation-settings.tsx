@@ -3,7 +3,7 @@ import LoadingSpinner from '@/components/saving';
 import { Button } from '@/components/ui/button';
 import SiteBuilderPublishModal from './navigation-publish-dropdown';
 
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
 import { publishSite } from '@/utils/websites';
 
