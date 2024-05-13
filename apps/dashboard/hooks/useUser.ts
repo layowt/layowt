@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from "react";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/utils/index";
 import { setUser, user } from "@/store/slices/user-store";
 import { createClient } from "@/utils/supabase/client";
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '../../lib/utils';
-import { useAppDispatch } from '../../lib/hooks';
+import { cn } from '@/utils/index';
+import { useAppDispatch } from '@/utils/index';
 import { setBillingPeriod } from '../../store/slices/user-store';
 
 type Tab = {

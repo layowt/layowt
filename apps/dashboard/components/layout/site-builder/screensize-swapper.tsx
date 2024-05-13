@@ -1,8 +1,8 @@
 'use client';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/index';
 import type { DeviceType } from '@/types/DeviceType';
 import { device, setDeviceType } from '@/store/slices/index';
-import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { useAppSelector, useAppDispatch } from '@/utils/index';
 
 import { MobileIcon, DesktopIcon, LaptopIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';

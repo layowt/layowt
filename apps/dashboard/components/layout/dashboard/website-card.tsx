@@ -11,6 +11,7 @@ import WebsiteCardModal from '@/components/modals/dashboard/website-card-modal';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { motion } from 'framer-motion';
+import { redirect } from 'next/navigation';
 
 export default function WebsiteCard(website: Website, index: number) {
   return (
@@ -21,10 +22,9 @@ export default function WebsiteCard(website: Website, index: number) {
       transition={{ duration: 0.3, delay: index * 0.1 }}
       className="relative"
     >
-      <Link
+      <div
         key={website.websiteId}
         className="flex flex-col gap-y-2 border border-black-50 bg-black-75 rounded-lg p-5 w-full relative group"
-        href={`/site/${website.websiteId}`}
       >
         <div className="absolute top-3 left-3 border-4 border-black-75 rounded-sm">
           {website.websiteLogo ? (
@@ -39,18 +39,28 @@ export default function WebsiteCard(website: Website, index: number) {
             </div>
           )}
         </div>
-        <div className="bg-black-50 w-full lg:h-64 rounded-sm flex justify-center items-center">
+        <Link
+          className="bg-black-50 w-full lg:h-64 rounded-sm flex justify-center items-center"
+          href={`/site/${website.websiteId}`}
+          prefetch
+        >
           <CameraIcon className="size-8 text-white/50 group-hover:size-10 transition-all duration-300" />
-        </div>
+        </Link>
         <div className="flex w-full justify-between items-center mt-8">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-y-2">
             <div className="flex gap-x-2 items-center">
               <span className="text-xl font-inter text-white">
                 {website.websiteName}
               </span>
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
-            <p className="text-xs text-white/50">www.testing.com</p>
+            <Link
+              href={`http://${website.websiteUrl}` || '#'}
+              className="text-xs text-white/50 hover:underline"
+              prefetch
+            >
+              {website.websiteUrl || 'Not Published'}
+            </Link>
           </div>
           <DropdownMenu key={website?.websiteId}>
             <DropdownMenuTrigger asChild>
@@ -59,7 +69,7 @@ export default function WebsiteCard(website: Website, index: number) {
             <WebsiteCardModal website={website} />
           </DropdownMenu>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }
