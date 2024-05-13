@@ -4,16 +4,16 @@ import { getUserFromSession } from '@/utils/user/user-session';
 
 export default async function App() {
   // get the user
-  const user = await getUserFromSession();
+  // const user = await getUserFromSession();
 
-  if (!user.data?.user?.id) {
-    return;
-  }
+  // if (!user.data?.user?.id) {
+  //   return;
+  // }
 
-  // redirect to the dashboard
-  if (user.data) {
-    redirect('/dashboard');
-  }
+  // // redirect to the dashboard
+  // if (user.data) {
+  //   redirect('/dashboard');
+  // }
 
   return (
     <div className="w-full h-screen text-white font-poppins flex justify-center">

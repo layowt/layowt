@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { getEnv, getTimeStamp } from '@/utils/index';
 import { updateWebsite } from '@/utils/websites';
 import { toast } from 'sonner';
+import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
 
 export default function SiteBuilderPublishModal({
   website
@@ -43,10 +44,18 @@ export default function SiteBuilderPublishModal({
     {
       name: 'publish-unpublish',
       html: (
-        <div className="grid grid-cols-2 gap-x-2 items-center w-full font-inter mt-2">
+        <div className="flex flex-col w-full gap-2 items-center font-inter mt-2 [&>div]:w-full">
+          <Button
+            variant="destructive"
+            className="p-2 border-2 border-red-600 hover:rounded-lg"
+            rounded="sm"
+          >
+            <span>Unpublish</span>
+          </Button>
           <Button
             variant="secondary"
             className="p-2"
+            rounded="sm"
             onClick={() => {
               updateWebsite(website?.websiteId, {
                 ...website
@@ -57,12 +66,7 @@ export default function SiteBuilderPublishModal({
           >
             <span>Publish</span>
           </Button>
-          <Button
-            variant="destructive"
-            className="p-2 rounded-xl border-2 border-red-600 hover:rounded-lg"
-          >
-            <span>Unpublish</span>
-          </Button>
+          <ModalDeleteSite siteId={website?.websiteId} />
         </div>
       )
     }
@@ -100,6 +104,7 @@ export default function SiteBuilderPublishModal({
                 className="text-sm text-white group flex items-center gap-x-1 hover:underline"
                 href={`${env}://${website?.websiteUrl}`}
                 prefetch
+                target="_blank"
               >
                 {website?.websiteUrl || 'Not Published'}
                 <span>
