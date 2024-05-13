@@ -5,10 +5,24 @@ import SiteBuilderPublishModal from './navigation-publish-dropdown';
 
 import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
-import { publishSite } from '@/utils/websites';
+import { publishSite, updateWebsite } from '@/utils/websites';
+import { toast } from 'sonner';
 
-export default function SiteBuilderSettings() {
+export default async function SiteBuilderSettings() {
   const websiteObj = useAppSelector(website);
+
+  // either update the website or publish it depending on if its been published before
+  const handleWebsitePublish = async () => {
+    if (websiteObj.hasBeenPublished) {
+      updateWebsite(websiteObj.websiteId, {
+        ...websiteObj
+      });
+      toast.success('Website updated successfully');
+    } else {
+      publishSite(websiteObj.websiteId);
+      toast.success('Website published successfully');
+    }
+  };
 
   return (
     <div className="flex items-center gap-x-4">
@@ -20,7 +34,9 @@ export default function SiteBuilderSettings() {
           rounded="sm"
           size="sm"
           hoverEffect={false}
-          onClick={() => publishSite(websiteObj.websiteId)}
+          onClick={async () => {
+            await handleWebsitePublish();
+          }}
         >
           Publish
         </Button>
