@@ -5,7 +5,7 @@ import { DropdownMenuPortal } from '@radix-ui/react-dropdown-menu';
 import { deleteWebsite } from '@/utils/websites';
 import { toast } from 'sonner';
 import { useState } from 'react';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/utils/index';
 import { removeWebsite } from '@/store/slices/website-store';
 
 /**

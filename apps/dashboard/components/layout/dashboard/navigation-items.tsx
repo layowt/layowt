@@ -8,7 +8,7 @@ import MaterialSymbolsHomeOutlineRounded from '@/ui/icons/home';
 import MaterialSymbolsSettingsOutlineRounded from '@/ui/icons/settings';
 import MaterialSymbolsBuildOutlineRounded from '@/ui/icons/build';
 import { BarChartIcon, PlusIcon } from '@radix-ui/react-icons';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/index';
 import type { websites } from '@prisma/client';
 
 export default function NavigationItems({

@@ -6,9 +6,12 @@
 */
 
 import { supabase } from '@/lib/supabase';
+import { user } from '@/store/slices/user-store';
 import { prisma } from '@/utils/prisma';
 import type { websites as Website } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { unstable_cache } from 'next/cache';
+import { getEnv } from '@/utils/index';
 
 /**
  * 
@@ -114,6 +117,8 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 };
 
 export const createWebsite = async (userId: string, websiteId: string) => {
+	console.log(userId);
+	if(!userId) throw new Error('No user ID specified');
 	const response = await prisma.websites.create({
 		data: {
 			websiteLogo: '',
@@ -123,6 +128,9 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 			websiteId: websiteId,
 			//TODO: GENERATE NAME FOR HERE
 			websiteName: 'Untitled', 
+			createdAt: new Date(),
+			lastUpdated: new Date(),
+			hasBeenPublished: false,
 			owner: {
 				connect: {
 					uid: userId,
@@ -138,4 +146,53 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 	// return a boolean value of the response so we can
 	// check for a value when calling this function
 	return 'ok';
+}
+
+export const publishSite = async(
+	websiteId: string
+) => {
+	// get the current environment to determine the website url (localhost or layowt)
+	const env = getEnv() === 'production' ? 'app.layowt.com' : 'app.localhost:4343';
+
+	// get the website data
+	const websiteData = await getWebsite({ websiteId });
+
+	let websiteName = `${websiteData?.websiteName.toLowerCase().replace(/\s/g, '-')}.app.${env}`;
+
+	// check if the name has been taken already
+	const websiteNameExists = await prisma.websites.findFirst({
+		where: {
+			websiteUrl: websiteName
+		},
+	});
+
+	// if the site already exists, append the websiteId to the name to the subdomain
+	if(websiteNameExists) {
+		websiteName = websiteName.split('.')[0] + `-${websiteId}.${env}`;
+	}
+
+	await updateWebsite(websiteId, {
+		hasBeenPublished: true,
+		lastUpdated: new Date(),
+		websiteUrl: websiteName
+	});
+
+	revalidateTag('websites');
+
+	return 'ok';
+}
+
+/**
+ * 
+ * @param websiteDomain - The domain of the website (passed into [domain])
+ * @returns 
+ */
+export const getDynamicSite = async(
+	websiteDomain: string
+) => {
+	return await prisma.websites.findFirst({
+		where: {
+			websiteUrl: websiteDomain,
+		},
+	})
 }

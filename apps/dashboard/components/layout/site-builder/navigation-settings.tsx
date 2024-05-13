@@ -3,8 +3,9 @@ import LoadingSpinner from '@/components/saving';
 import { Button } from '@/components/ui/button';
 import SiteBuilderPublishModal from './navigation-publish-dropdown';
 
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
+import { publishSite } from '@/utils/websites';
 
 export default function SiteBuilderSettings() {
   const websiteObj = useAppSelector(website);
@@ -19,6 +20,7 @@ export default function SiteBuilderSettings() {
           rounded="sm"
           size="sm"
           hoverEffect={false}
+          onClick={() => publishSite(websiteObj.websiteId)}
         >
           Publish
         </Button>

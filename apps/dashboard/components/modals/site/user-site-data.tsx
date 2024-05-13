@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import SiteOnboardingTitle from './modal-title';
 
 // redux
-import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { useAppSelector, useAppDispatch } from '@/utils/index';
 import { setWebsite, website } from '@/store/slices/website-store';
 
 // misc / utils

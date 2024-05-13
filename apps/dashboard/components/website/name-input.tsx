@@ -9,7 +9,7 @@ import usePageRefresh from '@/hooks/usePageRefresh';
 
 // redux
 import { website, saving, setSavingState } from '@/store/slices/website-store';
-import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { useAppSelector, useAppDispatch } from '@/utils/index';
 
 // Define the WebsiteNameInput component
 export default function WebsiteNameInput() {

@@ -3,9 +3,9 @@
 import { DialogTitle } from '@/components/ui/dialog';
 import { websites } from '@prisma/client';
 import { CameraIcon } from '@radix-ui/react-icons';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/utils/index';
 import { setWebsite } from '@/store/slices/website-store';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/index';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
