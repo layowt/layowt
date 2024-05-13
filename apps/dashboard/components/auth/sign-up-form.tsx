@@ -19,7 +19,7 @@ import { signUp } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 
 // redux imports
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/utils/index';
 import { createUser, deleteUser } from '@/store/slices/user-store';
 import { toast } from 'sonner';
 

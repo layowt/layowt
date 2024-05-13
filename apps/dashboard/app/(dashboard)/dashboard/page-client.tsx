@@ -1,5 +1,5 @@
 'use client';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch } from '@/utils/index';
 import { setWebsite } from '@/store/slices/website-store';
 
 export default function PageClient({

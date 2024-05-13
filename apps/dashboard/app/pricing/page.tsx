@@ -10,7 +10,7 @@ import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 
 // redux imports
 import { billingPeriod } from '@/store/slices/user-store';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '@/utils/index';
 
 // action imports
 import { StripeProducts } from '@/utils/stripe/stripe-products';
