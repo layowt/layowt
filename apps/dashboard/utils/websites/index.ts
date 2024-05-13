@@ -150,14 +150,30 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 export const publishSite = async(
 	websiteId: string
 ) => {
+	// get the current environment to determine the website url (localhost or layowt)
 	const env = process.env.NODE_ENV
+
 	// get the website data
 	const websiteData = await getWebsite({ websiteId });
+
+	let websiteName = `${websiteData?.websiteName.toLowerCase().replace(/\s/g, '-')}.app.${env === 'production' ? 'layowt.com' : 'localhost:4343'}`;
+
+	// check if the name has been taken already
+	const websiteNameExists = await prisma.websites.findFirst({
+		where: {
+			websiteUrl: websiteName
+		},
+	});
+
+	// if the site already exists, append the websiteId to the name to the subdomain
+	if(websiteNameExists) {
+		websiteName = websiteName.split('.')[0] + `-${websiteId}.app.${env === 'production' ? 'layowt.com' : 'localhost:4343'}`;
+	}
 
 	await updateWebsite(websiteId, {
 		hasBeenPublished: true,
 		lastUpdated: new Date(),
-		websiteUrl: `${websiteData.websiteName.toLowerCase().replace(/\s/g, '-')}.app.${env === 'production' ? 'layowt.com' : 'localhost:4343'}`,
+		websiteUrl: websiteName
 	});
 
 	revalidateTag('websites');
