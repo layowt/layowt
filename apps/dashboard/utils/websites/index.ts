@@ -149,7 +149,8 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 }
 
 export const publishSite = async(
-	websiteId: string
+	websiteId: string,
+	opts?: Partial<Website>
 ) => {
 	// get the current environment to determine the website url (localhost or layowt)
 	const env = getEnv() === 'production' ? 'app.layowt.com' : 'app.localhost:4343';
@@ -172,6 +173,7 @@ export const publishSite = async(
 	}
 
 	await updateWebsite(websiteId, {
+		...opts,
 		hasBeenPublished: true,
 		lastUpdated: new Date(),
 		websiteUrl: websiteName
