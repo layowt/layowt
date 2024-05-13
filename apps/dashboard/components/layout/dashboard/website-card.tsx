@@ -11,9 +11,11 @@ import WebsiteCardModal from '@/components/modals/dashboard/website-card-modal';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { motion } from 'framer-motion';
-import { redirect } from 'next/navigation';
+import { getEnv } from '@/utils/index';
 
 export default function WebsiteCard(website: Website, index: number) {
+  const env = getEnv() === 'production' ? 'https' : 'http';
+
   return (
     <motion.div
       key={website.websiteId}
@@ -55,7 +57,7 @@ export default function WebsiteCard(website: Website, index: number) {
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
             <Link
-              href={`http://${website.websiteUrl}` || '#'}
+              href={`${env}://${website.websiteUrl}` || '#'}
               className="text-xs text-white/50 hover:underline"
               prefetch
             >
