@@ -16,7 +16,7 @@ export default function SiteBuilderSettings() {
       <div className="flex group">
         <Button
           variant="secondary"
-          className="!rounded-br-none !rounded-tr-none group-hover:!bg-white group-hover:text-black text-xs"
+          className="!rounded-br-none !rounded-tr-none group-hover:!bg-white group-hover:text-black text-xs -right-1 !border-0"
           rounded="sm"
           size="sm"
           hoverEffect={false}
@@ -24,7 +24,6 @@ export default function SiteBuilderSettings() {
         >
           Publish
         </Button>
-        <div className="w-px h-full bg-black-50"></div>
         <SiteBuilderPublishModal website={websiteObj} />
       </div>
       <UserDropdownMenu

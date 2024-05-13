@@ -12,7 +12,8 @@ import { motion } from 'framer-motion';
 import type { websites as Website } from '@prisma/client';
 import Link from 'next/link';
 import { getEnv, getTimeStamp } from '@/utils/index';
-import { publishSite } from '@/utils/websites';
+import { updateWebsite } from '@/utils/websites';
+import { toast } from 'sonner';
 
 export default function SiteBuilderPublishModal({
   website
@@ -47,9 +48,11 @@ export default function SiteBuilderPublishModal({
             variant="secondary"
             className="p-2"
             onClick={() => {
-              publishSite(website?.websiteId, {
+              updateWebsite(website?.websiteId, {
                 ...website
               });
+
+              toast.success('Website published successfully');
             }}
           >
             <span>Publish</span>
@@ -70,7 +73,7 @@ export default function SiteBuilderPublishModal({
       <DropdownMenuTrigger asChild>
         <Button
           variant="secondary"
-          className="!rounded-bl-none !rounded-tl-none group-hover:!bg-white group-hover:text-black px-2"
+          className="!rounded-bl-none !rounded-tl-none group-hover:!bg-white group-hover:text-black px-2 !border-0"
           rounded="sm"
           size="sm"
           hoverEffect={false}
@@ -89,7 +92,9 @@ export default function SiteBuilderPublishModal({
           transition={{ duration: 0.3 }}
         >
           <DropdownMenuLabel className="text-base font-normal flex flex-col gap-y-1 font-inter">
-            <span className="text-xs text-white/60">Site Domain</span>
+            <span className="text-xs text-white/60">
+              {website?.websiteName}
+            </span>
             {website?.websiteUrl ? (
               <Link
                 className="text-sm text-white group flex items-center gap-x-1 hover:underline"
