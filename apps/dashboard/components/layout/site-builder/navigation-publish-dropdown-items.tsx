@@ -37,7 +37,7 @@ export default function PublishDropdownItems({
               {getTimeStamp(website?.lastUpdated)}
             </p>
           </span>
-          <div className="">By 'Unknown'</div>
+          <div className="">By Unknown</div>
         </div>
       )
     },
