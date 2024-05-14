@@ -203,6 +203,18 @@ export const updateWebsiteUrlChange = async(
 	websiteId: string,
 	newName: string
 ) => {
+	// first check if the website name is already taken
+	const websiteExists = await prisma.websites.findFirst({
+		where: {
+			websiteUrl: newName
+		}
+	});
+
+	// if the website exists, return an error
+	if(websiteExists) {
+		return 409
+	}
+
 	await updateWebsite(websiteId, {
 		websiteUrl: newName
 	});
