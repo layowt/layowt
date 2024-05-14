@@ -85,7 +85,11 @@ export default function SiteBuilderPublishModal({
       <DropdownMenuTrigger asChild>
         <Button
           variant="secondary"
-          className="!rounded-bl-none !rounded-tl-none group-hover:!bg-white group-hover:text-black px-2 !border-0"
+          className="
+            !rounded-bl-none !rounded-tl-none group-hover:!bg-white 
+            group-hover:text-black px-2 !border-0 focus-visible:!outline-none
+            focus-visible:!ring-0 focus-within:border-none
+          "
           rounded="sm"
           size="sm"
           hoverEffect={false}
