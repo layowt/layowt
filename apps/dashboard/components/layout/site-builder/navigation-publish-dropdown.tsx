@@ -33,7 +33,7 @@ export default function SiteBuilderPublishModal({ website }) {
       // make an array of the website url and split it by '.'
       const websiteUrl = website?.websiteUrl.split('.');
       //change the first part of the array with the new websiteUrlEditable
-      websiteUrl[0] = websiteUrlEditable;
+      websiteUrl[0] = websiteUrlEditable.replace(/\s/g, '-');
       // join the array back together with a '.' in between
       const newUrl = websiteUrl.join('.');
 
