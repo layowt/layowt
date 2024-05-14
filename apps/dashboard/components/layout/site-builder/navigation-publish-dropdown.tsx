@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { updateWebsite, updateWebsiteUrlChange } from '@/utils/websites';
+import { updateWebsiteUrlChange } from '@/utils/websites';
 import {
   ChevronDownIcon,
   ArrowRightIcon,
@@ -16,31 +16,42 @@ import {
   DropdownMenuGroup
 } from '@/ui/dropdown-menu';
 import PublishDropdownItems from './navigation-publish-dropdown-items';
+import { toast } from 'sonner';
 
 export default function SiteBuilderPublishModal({ website }) {
   const [websiteUrlEditor, setWebsiteUrlEditor] = useState(false);
   const [websiteUrlEditable, setWebsiteUrlEditable] = useState('');
 
+  const env = getEnv() === 'production' ? 'https' : 'http';
+
   // useEffect to update the website url in the backend when websiteUrlEditor changes
   useEffect(() => {
     if (!website?.websiteId) return;
 
-    setWebsiteUrlEditable(website?.websiteUrl?.split('.')[0] || '');
+    const updateUrl = async () => {
+      setWebsiteUrlEditable(website?.websiteUrl?.split('.')[0] || '');
+      // make an array of the website url and split it by '.'
+      const websiteUrl = website?.websiteUrl.split('.');
+      //change the first part of the array with the new websiteUrlEditable
+      websiteUrl[0] = websiteUrlEditable;
+      // join the array back together with a '.' in between
+      const newUrl = websiteUrl.join('.');
 
-    // make an array of the website url and split it by '.'
-    const websiteUrl = website?.websiteUrl.split('.');
-    //change the first part of the array with the new websiteUrlEditable
-    websiteUrl[0] = websiteUrlEditable;
-    // join the array back together with a '.' in between
-    const newUrl = websiteUrl.join('.');
+      // Call the updateUrl function when websiteUrlEditor changes
+      if (!websiteUrlEditor) {
+        const { message, statusCode } = await updateWebsiteUrlChange(
+          website?.websiteId,
+          newUrl
+        );
 
-    // Call the updateUrl function when websiteUrlEditor changes
-    if (!websiteUrlEditor) {
-      updateWebsiteUrlChange(website.websiteId, newUrl);
-    }
+        if (statusCode === 409) {
+          toast.error(message);
+          return;
+        }
+      }
+    };
+    updateUrl();
   }, [websiteUrlEditor]);
-
-  const env = getEnv() === 'production' ? 'https' : 'http';
 
   return (
     <DropdownMenu>
@@ -62,10 +73,8 @@ export default function SiteBuilderPublishModal({ website }) {
         side="bottom"
         align="end"
       >
-        <div className="text-base font-normal flex flex-col gap-y-1 font-inter">
-          <span className="text-xs text-white/60">
-            {website?.websiteName}: {websiteUrlEditor}
-          </span>
+        <div className="text-base font-normal flex flex-col gap-y-1 font-inter p-1">
+          <span className="text-xs text-white/60">{website?.websiteName}</span>
           <div className="flex items-center justify-between w-full">
             {websiteUrlEditor ? (
               <input

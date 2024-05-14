@@ -49,6 +49,7 @@ export const getTimeStamp = (
   const years = Math.floor(months / 12);
 
   if (seconds < 60) return `Just now`;
+  if(minutes === 1) return `1 minute ago`;
   if (minutes < 60) return `${minutes} minutes ago`;
   if (hours < 24) return `${hours} hours ago`;
   if (days < 30) return `${days} days ago`;
