@@ -15,6 +15,8 @@ import { getEnv, getTimeStamp } from '@/utils/index';
 import { updateWebsite } from '@/utils/websites';
 import { toast } from 'sonner';
 import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { DialogContent } from '@radix-ui/react-dialog';
 
 export default function SiteBuilderPublishModal({
   website
@@ -45,16 +47,23 @@ export default function SiteBuilderPublishModal({
       name: 'publish-unpublish',
       html: (
         <div className="flex flex-col w-full gap-2 items-center font-inter mt-2 [&>div]:w-full">
-          <Button
-            variant="destructive"
-            className="p-2 border-2 border-red-600 hover:rounded-lg"
-            rounded="sm"
-          >
-            <span>Unpublish</span>
-          </Button>
+          <Dialog>
+            <DialogTrigger className="w-full">
+              <Button
+                variant="destructive"
+                className="p-2 group-hover:!bg-white group-hover:text-black text-xs !border-none"
+                rounded="sm"
+              >
+                <span className=" w-full">Delete</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <ModalDeleteSite siteId={website?.websiteId} />
+            </DialogContent>
+          </Dialog>
           <Button
             variant="secondary"
-            className="p-2"
+            className="p-2 group-hover:!bg-white group-hover:text-black text-xs !border-none"
             rounded="sm"
             onClick={() => {
               updateWebsite(website?.websiteId, {
@@ -66,7 +75,6 @@ export default function SiteBuilderPublishModal({
           >
             <span>Publish</span>
           </Button>
-          <ModalDeleteSite siteId={website?.websiteId} />
         </div>
       )
     }

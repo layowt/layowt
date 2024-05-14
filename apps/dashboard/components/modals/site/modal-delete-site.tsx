@@ -1,34 +1,45 @@
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { deleteWebsite } from '@/utils/websites';
+import { toast } from 'sonner';
 
-export default function ModalDeleteSite({ siteId }: { siteId: string }) {
+export default async function ModalDeleteSite({ siteId }: { siteId: string }) {
+  const handleWebsiteDelete = async () => {
+    try {
+      await deleteWebsite(siteId);
+      toast.success('Site deleted successfully');
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
+
   return (
-    <Dialog>
-      <DialogContent showCloseButton={true}>
-        <div className="flex flex-col gap-y-4">
-          <h2 className="text-lg font-bold">Delete Site</h2>
-          <p className="text-sm text-gray-500">
-            Are you sure you want to delete this site?
-          </p>
-          <div className="flex gap-x-4">
-            <button
-              onClick={() => {
-                // delete site
-              }}
-              className="px-4 py-2 bg-red-600 text-white rounded-md"
-            >
-              Delete
-            </button>
-            <button
-              onClick={() => {
-                // close modal
-              }}
-              className="px-4 py-2 bg-gray-200 text-gray-600 rounded-md"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <div className="flex flex-col gap-y-4">
+      <h2 className="text-lg font-bold">Delete Site</h2>
+      <p className="text-sm text-white flex items-center gap-x-1 font-inter">
+        This action is <p className="text-red-500">irreversible.</p> Are you
+        sure you want to delete this site?
+      </p>
+      <div className="flex gap-x-4">
+        <Button
+          onClick={async () => {
+            // delete site
+            await handleWebsiteDelete();
+          }}
+          variant="destructive"
+          rounded="sm"
+        >
+          Delete
+        </Button>
+        <Button
+          onClick={() => {
+            // close modal
+          }}
+          variant="tertiary"
+        >
+          Cancel
+        </Button>
+      </div>
+    </div>
   );
 }
