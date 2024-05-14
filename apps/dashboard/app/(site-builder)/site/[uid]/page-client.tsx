@@ -4,6 +4,7 @@ import { setWebsite } from '@/utils/websites/setWebsite';
 import dynamic from 'next/dynamic';
 import SiteBuilderCanvas from '@/components/website/builder/canvas';
 import { useUser } from '@/hooks/useUser';
+import { redirect } from 'next/navigation';
 
 export default function SiteBuilderClient({ website }: { website: Website }) {
   // prevent ssr for this component
@@ -15,8 +16,12 @@ export default function SiteBuilderClient({ website }: { website: Website }) {
   //useUser();
   setWebsite(website);
 
+  if (!website?.websiteId) {
+    redirect('/dashboard');
+  }
+
   // if we do not have a site name, try to fetch the site from the db
-  if (website.websiteName === 'Untitled') {
+  if (website?.websiteName === 'Untitled') {
     return <NoSSR />;
   } else {
     // otherwise we're all good - set the website in redux so we can use on all

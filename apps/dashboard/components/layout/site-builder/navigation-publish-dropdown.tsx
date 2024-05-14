@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 import type { websites as Website } from '@prisma/client';
 import Link from 'next/link';
 import { getEnv, getTimeStamp } from '@/utils/index';
-import { updateWebsite } from '@/utils/websites';
+import { publishSite, updateWebsite } from '@/utils/websites';
 import { toast } from 'sonner';
 import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
@@ -24,6 +24,19 @@ export default function SiteBuilderPublishModal({
   website: Website;
 }) {
   const env = getEnv() === 'production' ? 'https' : 'http';
+
+  // either update the website or publish it depending on if its been published before
+  const handleWebsitePublish = async () => {
+    if (website.hasBeenPublished) {
+      updateWebsite(website.websiteId, {
+        ...website
+      });
+      toast.success('Website updated successfully');
+    } else {
+      publishSite(website.websiteId);
+      toast.success('Website published successfully');
+    }
+  };
 
   const dropdownOptions = [
     {
@@ -47,33 +60,29 @@ export default function SiteBuilderPublishModal({
       name: 'publish-unpublish',
       html: (
         <div className="flex flex-col w-full gap-2 items-center font-inter mt-2 [&>div]:w-full">
-          <Dialog>
-            <DialogTrigger className="w-full">
+          <Dialog modal={true}>
+            <DialogTrigger
+              className="w-full"
+              asChild
+            >
               <Button
                 variant="destructive"
                 className="p-2 group-hover:!bg-white group-hover:text-black text-xs !border-none"
                 rounded="sm"
               >
-                <span className=" w-full">Delete</span>
+                <span className="w-full">Delete</span>
               </Button>
             </DialogTrigger>
-            <DialogContent>
-              <ModalDeleteSite siteId={website?.websiteId} />
-            </DialogContent>
+
+            <ModalDeleteSite siteId={website?.websiteId} />
           </Dialog>
           <Button
             variant="secondary"
             className="p-2 group-hover:!bg-white group-hover:text-black text-xs !border-none"
             rounded="sm"
-            onClick={() => {
-              updateWebsite(website?.websiteId, {
-                ...website
-              });
-
-              toast.success('Website published successfully');
-            }}
+            onClick={async () => await handleWebsitePublish()}
           >
-            <span>Publish</span>
+            <span>{website?.hasBeenPublished ? 'Update' : 'Publish'}</span>
           </Button>
         </div>
       )
