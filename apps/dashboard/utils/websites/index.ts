@@ -212,7 +212,10 @@ export const updateWebsiteUrlChange = async(
 
 	// if the website exists, return an error
 	if(websiteExists) {
-		return 409
+		return {
+			statusCode: 409,
+			message: 'Website name already exists'
+		}
 	}
 
 	await updateWebsite(websiteId, {
@@ -221,5 +224,8 @@ export const updateWebsiteUrlChange = async(
 
 	revalidateTag('websites');
 
-	return 'ok';
+	return {
+		statusCode: 200,
+		message: 'Website name updated successfully'
+	}
 }
