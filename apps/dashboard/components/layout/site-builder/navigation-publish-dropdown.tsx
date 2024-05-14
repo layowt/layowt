@@ -17,7 +17,8 @@ import type { websites as Website } from '@prisma/client';
 import Link from 'next/link';
 import { cn, getEnv } from '@/utils/index';
 import PublishDropdownItems from './navigation-publish-dropdown-items';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { updateWebsite } from '@/utils/websites';
 
 export default function SiteBuilderPublishModal({
   website
@@ -25,10 +26,19 @@ export default function SiteBuilderPublishModal({
   website: Website;
 }) {
   const [websiteUrlEditor, setWebsiteUrlEditor] = useState(false);
+  const [websiteUrlEditable, setWebsiteUrlEditable] = useState(
+    website?.websiteUrl?.split('.')[0]
+  );
+
+  // use effect to update the website url in the backend
+  useEffect(() => {
+    // update the website url in the backend
+    updateWebsite(website?.websiteId, {
+      websiteUrl: websiteUrlEditable
+    });
+  }, [websiteUrlEditor]);
 
   const env = getEnv() === 'production' ? 'https' : 'http';
-  // only allow the user to modify the first part of the website url
-  const websiteUrlEditable = website?.websiteUrl?.split('.')[0];
 
   return (
     <DropdownMenu>
@@ -69,7 +79,7 @@ export default function SiteBuilderPublishModal({
                     className="w-full text-white/80 bg-transparent focus-visible:outline-none placeholder:text-[10px]"
                     value={websiteUrlEditable}
                     onChange={(e) => {
-                      console.log(e.target.value);
+                      setWebsiteUrlEditable(e.target.value);
                     }}
                   />
                 ) : (
