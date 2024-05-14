@@ -8,11 +8,11 @@ import { website } from '@/store/slices/website-store';
 import { publishSite, updateWebsite } from '@/utils/websites';
 import { toast } from 'sonner';
 
-export default async function SiteBuilderSettings() {
+export default function SiteBuilderSettings() {
   const websiteObj = useAppSelector(website);
 
   // either update the website or publish it depending on if its been published before
-  const handleWebsitePublish = async () => {
+  const handleWebsitePublish = () => {
     if (websiteObj.hasBeenPublished) {
       updateWebsite(websiteObj.websiteId, {
         ...websiteObj
@@ -34,9 +34,7 @@ export default async function SiteBuilderSettings() {
           rounded="sm"
           size="sm"
           hoverEffect={false}
-          onClick={async () => {
-            await handleWebsitePublish();
-          }}
+          onClick={() => handleWebsitePublish()}
         >
           Publish
         </Button>
