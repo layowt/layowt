@@ -198,3 +198,16 @@ export const getDynamicSite = async(
 		},
 	})
 }
+
+export const updateWebsiteUrlChange = async(
+	websiteId: string,
+	newName: string
+) => {
+	await updateWebsite(websiteId, {
+		websiteUrl: newName
+	});
+
+	revalidateTag('websites');
+
+	return 'ok';
+}
