@@ -29,7 +29,7 @@ import useUserWebsites from '@/hooks/useUserWebsites';
 
 // misc
 import { createClient } from '@/utils/supabase/client';
-import getClientUser from '@/utils/user/user-client-session';
+import { getClientUser } from '@/utils/user';
 import { cn } from '@/utils/index';
 import { User } from '@supabase/supabase-js';
 import {

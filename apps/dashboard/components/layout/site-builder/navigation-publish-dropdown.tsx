@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
+// utils
 import { updateWebsiteUrlChange } from '@/utils/websites';
+import { getEnv } from '@/utils/index';
+import { getClientUser } from '@/utils/user';
+
+// components
 import {
   ChevronDownIcon,
   ArrowRightIcon,
-  Pencil1Icon
+  Pencil1Icon,
+  QuestionMarkCircledIcon
 } from '@radix-ui/react-icons';
-import { getEnv } from '@/utils/index';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,12 +21,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuGroup
 } from '@/ui/dropdown-menu';
-import PublishDropdownItems from './navigation-publish-dropdown-items';
 import { toast } from 'sonner';
+import PublishDropdownItems from './navigation-publish-dropdown-items';
+import { User } from '@supabase/supabase-js';
 
 export default function SiteBuilderPublishModal({ website }) {
   const [websiteUrlEditor, setWebsiteUrlEditor] = useState(false);
   const [websiteUrlEditable, setWebsiteUrlEditable] = useState('');
+  const [user, setUser] = useState<User>(null);
 
   const env = getEnv() === 'production' ? 'https' : 'http';
 
@@ -29,6 +37,13 @@ export default function SiteBuilderPublishModal({ website }) {
     if (!website?.websiteId) return;
 
     const updateUrl = async () => {
+
+      try{
+        const { data: user, error } = await getClientUser();
+        setUser(user.user);
+      } catch(e){
+        console.error('Error fetching user data:', e);
+      }
       setWebsiteUrlEditable(website?.websiteUrl?.split('.')[0] || '');
       // make an array of the website url and split it by '.'
       const websiteUrl = website?.websiteUrl.split('.');
@@ -41,7 +56,8 @@ export default function SiteBuilderPublishModal({ website }) {
       if (!websiteUrlEditor) {
         const { message, statusCode } = await updateWebsiteUrlChange(
           website?.websiteId,
-          newUrl
+          newUrl,
+          user?.id
         );
 
         if (statusCode === 409) {
@@ -69,12 +85,16 @@ export default function SiteBuilderPublishModal({ website }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="font-inter border border-black-50 !bg-black text-white/80 m-2 w-80"
+        className="font-inter border border-black-50 !bg-black text-white/80 my-2 w-80"
         side="bottom"
         align="end"
       >
         <div className="text-base font-normal flex flex-col gap-y-1 font-inter p-1">
-          <span className="text-xs text-white/60">{website?.websiteName}</span>
+          <div className="flex justify-between w-full items-center">
+            <span className="text-xs text-white/60">
+              {website?.websiteName}
+            </span>
+          </div>
           <div className="flex items-center justify-between w-full">
             {websiteUrlEditor ? (
               <input
@@ -87,7 +107,7 @@ export default function SiteBuilderPublishModal({ website }) {
               />
             ) : (
               <Link
-                className="text-sm text-white group flex items-center gap-x-1 hover:underline"
+                className="text-md text-white group flex items-center gap-x-1 hover:underline"
                 href={`${env}://${website?.websiteUrl}`}
                 prefetch
                 target="_blank"
@@ -96,18 +116,31 @@ export default function SiteBuilderPublishModal({ website }) {
                 <ArrowRightIcon className="relative size-3 opacity-0 group-hover:opacity-100 -left-2 group-hover:left-0 duration-300 transition-all" />
               </Link>
             )}
-            <button
-              onClick={() => {
-                setWebsiteUrlEditor(!websiteUrlEditor);
-              }}
-            >
-              <Pencil1Icon
-                className="cursor-pointer transition-colors duration-300"
-                style={{
-                  color: websiteUrlEditor ? '#6725f2' : '#ffffff'
+            <div className="flex gap-x-1 items-center">
+              <button
+                onClick={() => {
+                  setWebsiteUrlEditor(!websiteUrlEditor);
                 }}
-              />
-            </button>
+              >
+                <Pencil1Icon
+                  className="cursor-pointer transition-colors duration-300"
+                  style={{
+                    color: websiteUrlEditor ? '#6725f2' : '#ffffff'
+                  }}
+                />
+              </button>
+              {/* <Tooltip>
+                <TooltipTrigger
+                  asChild
+                  className="hover:bg-black-50 rounded-md"
+                >
+                  <QuestionMarkCircledIcon className="size-3 text-white/60" />
+                </TooltipTrigger>
+                <TooltipContent className="bg-black">
+                  <p></p>
+                </TooltipContent>
+              </Tooltip> */}
+            </div>
           </div>
         </div>
         <DropdownMenuSeparator className="!bg-black-50" />

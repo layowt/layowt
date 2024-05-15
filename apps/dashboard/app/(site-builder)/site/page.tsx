@@ -1,7 +1,7 @@
 'use server';
 // utils
-import { getUserFromSession } from '@/utils/user/user-session';
-import { getUserFromDb } from '@/utils/user/user.get';
+import { getUserFromSession } from '@/utils/user';
+import { getUserFromDb } from '@/utils/user';
 import { createWebsite } from '@/utils/websites';
 import { getWebsite } from '@/utils/websites';
 import { getUserSubscription } from '@/utils/subscriptions/subscriptions.get';
