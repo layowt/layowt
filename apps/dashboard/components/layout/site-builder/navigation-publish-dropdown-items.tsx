@@ -1,13 +1,15 @@
+// components
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
 import { motion } from 'framer-motion';
-
-import type { websites as Website } from '@prisma/client';
-import { publishSite, updateWebsite } from '@/utils/websites';
-import { getTimeStamp } from '@/utils/index';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+
+// utils
+import type { websites as Website } from '@prisma/client';
+import { getLastUpdatedUser, publishSite, updateWebsite } from '@/utils/websites';
+import { getTimeStamp } from '@/utils/index';
 
 export default function PublishDropdownItems({
   website

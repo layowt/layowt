@@ -11,7 +11,7 @@ import { Input } from '../ui/input';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { toast } from 'sonner';
-import { login } from '@/utils/user/user-login';
+import { login } from '@/utils/user/';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 

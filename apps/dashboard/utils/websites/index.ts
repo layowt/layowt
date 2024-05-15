@@ -12,6 +12,7 @@ import type { websites as Website } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { unstable_cache } from 'next/cache';
 import { getEnv } from '@/utils/index';
+import { getUserFromDb } from '../user';
 
 /**
  * 
@@ -116,6 +117,13 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 	return websiteData as T;
 };
 
+/**
+ * Create a new website
+ * 
+ * @param userId 
+ * @param websiteId 
+ * @returns 
+ */
 export const createWebsite = async (userId: string, websiteId: string) => {
 	console.log(userId);
 	if(!userId) throw new Error('No user ID specified');
@@ -148,6 +156,14 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 	return 'ok';
 }
 
+/**
+ * 
+ * Publish a website via its id
+ * 
+ * @param websiteId 
+ * @param opts 
+ * @returns 
+ */
 export const publishSite = async(
 	websiteId: string,
 	opts?: Partial<Website>
@@ -185,6 +201,7 @@ export const publishSite = async(
 }
 
 /**
+ * Get a website by its domain
  * 
  * @param websiteDomain - The domain of the website (passed into [domain])
  * @returns 
@@ -199,9 +216,20 @@ export const getDynamicSite = async(
 	})
 }
 
+/**
+ * 
+ * Update the URL of a website
+ * Check if the new name is already taken
+ * 
+ * @param websiteId 
+ * @param newName 
+ * @param userId 
+ * @returns 
+ */
 export const updateWebsiteUrlChange = async(
 	websiteId: string,
-	newName: string
+	newName: string,
+	userId: string
 ) => {
 	// first check if the website name is already taken
 	const websiteExists = await prisma.websites.findFirst({
@@ -224,7 +252,8 @@ export const updateWebsiteUrlChange = async(
 	}
 
 	await updateWebsite(websiteId, {
-		websiteUrl: newName
+		websiteUrl: newName,
+		lastUpdatedUid: userId
 	});
 
 	revalidateTag('websites');
@@ -233,4 +262,18 @@ export const updateWebsiteUrlChange = async(
 		statusCode: 200,
 		message: 'Website name updated successfully'
 	}
+}
+
+/**
+ * Get's the last user that updated the website
+ * 
+ * @param websiteId 
+ * @returns 
+ */
+export const getLastUpdatedUser = async (websiteId: string) => {
+	const { lastUpdatedUid } = await getWebsite({ websiteId });
+	if(!lastUpdatedUid) return null;
+
+	const user = await getUserFromDb(lastUpdatedUid);
+	return user
 }
