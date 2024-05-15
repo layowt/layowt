@@ -8,8 +8,9 @@ import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 
 // utils
 import type { websites as Website } from '@prisma/client';
-import { getLastUpdatedUser, publishSite, updateWebsite } from '@/utils/websites';
+import { publishSite, updateWebsite } from '@/utils/websites';
 import { getTimeStamp } from '@/utils/index';
+import UpdatedBy from './server-components/updated-by';
 
 export default function PublishDropdownItems({
   website
@@ -39,7 +40,7 @@ export default function PublishDropdownItems({
               {getTimeStamp(website?.lastUpdated)}
             </p>
           </span>
-          <div className="">By Unknown</div>
+          {website?.websiteId && <UpdatedBy websiteId={website?.websiteId} />}
         </div>
       )
     },

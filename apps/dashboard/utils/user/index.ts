@@ -3,8 +3,8 @@
 import { prisma } from '@/utils/prisma';
 import type { users as user } from '@prisma/client';
 
-import { createClient } from "../supabase/client";
-import { createClient as CreateServerClient } from "@/utils/supabase/server";
+import { createClient as createClientClient } from "../supabase/client";
+import { createClient as createServerClient } from "@/utils/supabase/server";
 import { UserResponse } from '@supabase/supabase-js';
 
 /**
@@ -35,10 +35,10 @@ export const getUserFromDb = async (id: string): Promise<user> => {
  * 
  * @returns UserResponse
  */
-export const getClientUser = (): Promise<UserResponse> => {
-	const supabase = createClient();
+export const getClientUser = async(): Promise<UserResponse> => {
+	const supabase = createClientClient();
 
-	return supabase.auth.getUser()
+	return await supabase.auth.getUser()
 }
 
 /**
@@ -49,7 +49,7 @@ export const getClientUser = (): Promise<UserResponse> => {
  * @returns 
  */
 export const login = async (email: string, password: string) => {
-	const supabase = createClient();
+	const supabase = createServerClient();
 
 	if(!supabase) throw new Error('No supabase client found')
 
@@ -87,7 +87,7 @@ export const login = async (email: string, password: string) => {
  * @returns 
  */
 export const passwordReset = async (email: string) => {
-	const supabase = createClient();
+	const supabase = createServerClient();
 
 	if(!supabase) throw new Error('No supabase client found')
 
@@ -112,7 +112,7 @@ export const passwordReset = async (email: string) => {
  * @returns 
  */
 export const getUserFromSession = () => {
-	const supabase = CreateServerClient();
+	const supabase = createServerClient();
 
 	return supabase?.auth?.getUser();
 }
