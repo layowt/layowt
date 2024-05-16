@@ -6,9 +6,7 @@ import { Theme } from '@radix-ui/themes';
 import { Toaster } from '@/ui/sonner';
 
 import StoreProvider from '@/store/store-provider';
-import UserAuthentication from '@/components/user-auth';
 import { Metadata } from 'next';
-import { createClient } from '../utils/supabase/server';
 
 const CairoFont = Cairo({
   subsets: ['latin'],
@@ -50,10 +48,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // try to get the user from supabase
-  const supabase = createClient();
-  const { data: user, error } = await supabase.auth.getUser();
-
   return (
     <StoreProvider>
       <html

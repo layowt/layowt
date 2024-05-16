@@ -5,10 +5,24 @@ import SiteBuilderPublishModal from './navigation-publish-dropdown';
 
 import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
-import { publishSite } from '@/utils/websites';
+import { publishSite, updateWebsite } from '@/utils/websites';
+import { toast } from 'sonner';
 
 export default function SiteBuilderSettings() {
   const websiteObj = useAppSelector(website);
+
+  // either update the website or publish it depending on if its been published before
+  const handleWebsitePublish = () => {
+    if (websiteObj.hasBeenPublished) {
+      updateWebsite(websiteObj.websiteId, {
+        ...websiteObj
+      });
+      toast.success('Website updated successfully');
+    } else {
+      publishSite(websiteObj.websiteId);
+      toast.success('Website published successfully');
+    }
+  };
 
   return (
     <div className="flex items-center gap-x-4">
@@ -16,15 +30,14 @@ export default function SiteBuilderSettings() {
       <div className="flex group">
         <Button
           variant="secondary"
-          className="!rounded-br-none !rounded-tr-none group-hover:!bg-white group-hover:text-black text-xs"
+          className="!rounded-br-none !rounded-tr-none group-hover:!bg-white group-hover:text-black text-xs -right-1 !border-0"
           rounded="sm"
           size="sm"
           hoverEffect={false}
-          onClick={() => publishSite(websiteObj.websiteId)}
+          onClick={() => handleWebsitePublish()}
         >
           Publish
         </Button>
-        <div className="w-px h-full bg-black-50"></div>
         <SiteBuilderPublishModal website={websiteObj} />
       </div>
       <UserDropdownMenu

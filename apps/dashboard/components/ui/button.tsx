@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/utils/index';
 
 const buttonVariants = cva(
-  'relative w-full inline-flex items-center font-kanit justify-center whitespace-nowrap duration-300 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'relative w-full inline-flex items-center font-kanit justify-center whitespace-nowrap duration-300 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -78,7 +78,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           >
             <Comp
-              className={cn(buttonVariants({ variant, size, className }))}
+              className={cn(
+                buttonVariants({ variant, size, className, rounded })
+              )}
               ref={ref}
               {...props}
             />

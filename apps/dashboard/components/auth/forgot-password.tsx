@@ -6,8 +6,7 @@ import { Label } from '@/ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { toast } from 'sonner';
-import { passwordReset } from '@/utils/user/user-password-reset';
-import { supabase } from '@/lib/supabase';
+import { passwordReset } from '@/utils/user';
 
 export default function PasswordRestForm() {
   const [state, setState] = useState({
@@ -37,22 +36,22 @@ export default function PasswordRestForm() {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event == 'PASSWORD_RECOVERY') {
-        console.log('ran');
-        const newPassword = prompt(
-          'What would you like your new password to be?'
-        );
-        const { data, error } = await supabase.auth.updateUser({
-          password: newPassword
-        });
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange(async (event, session) => {
+  //     if (event == 'PASSWORD_RECOVERY') {
+  //       console.log('ran');
+  //       const newPassword = prompt(
+  //         'What would you like your new password to be?'
+  //       );
+  //       const { data, error } = await supabase.auth.updateUser({
+  //         password: newPassword
+  //       });
 
-        if (data) alert('Password updated successfully!');
-        if (error) alert('There was an error updating your password.');
-      }
-    });
-  }, []);
+  //       if (data) alert('Password updated successfully!');
+  //       if (error) alert('There was an error updating your password.');
+  //     }
+  //   });
+  // }, []);
 
   return (
     <form
