@@ -4,7 +4,8 @@ import Link from 'next/link';
 // utils
 import { updateWebsiteUrlChange } from '@/utils/websites';
 import { getEnv } from '@/utils/index';
-import { getClientUser } from '@/utils/user';
+import { getUserFromSession } from '@/utils/user';
+import { getLastUpdatedUser, publishSite, updateWebsite } from '@/utils/websites';
 
 // components
 import {
@@ -29,6 +30,7 @@ export default function SiteBuilderPublishModal({ website }) {
   const [websiteUrlEditor, setWebsiteUrlEditor] = useState(false);
   const [websiteUrlEditable, setWebsiteUrlEditable] = useState('');
   const [user, setUser] = useState<User>(null);
+  const [lastUpdatedUser, setLastUpdatedUser] = useState(null);
 
   const env = getEnv() === 'production' ? 'https' : 'http';
 
@@ -39,7 +41,7 @@ export default function SiteBuilderPublishModal({ website }) {
     const updateUrl = async () => {
 
       try{
-        const { data: user, error } = await getClientUser();
+        const { data: user, error } = await getUserFromSession();
         setUser(user.user);
       } catch(e){
         console.error('Error fetching user data:', e);
@@ -68,6 +70,18 @@ export default function SiteBuilderPublishModal({ website }) {
     };
     updateUrl();
   }, [websiteUrlEditor]);
+
+
+  useEffect(() => {
+    const fetchLastUpdatedUser = async () => {
+      if(!website?.lastUpdatedUid) return;
+
+      const user = await getLastUpdatedUser(website?.websiteId)
+      setLastUpdatedUser(user);
+    }
+    console.log('called')
+    fetchLastUpdatedUser();
+  }, [website?.lastUpdatedUid])
 
   return (
     <DropdownMenu>
@@ -146,7 +160,10 @@ export default function SiteBuilderPublishModal({ website }) {
         <DropdownMenuSeparator className="!bg-black-50" />
         <DropdownMenuGroup>
           {/* You can include PublishDropdownItems here */}
-          <PublishDropdownItems website={website} />
+          <PublishDropdownItems 
+            website={website} 
+            lastUpdatedUser={lastUpdatedUser}
+          />
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

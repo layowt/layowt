@@ -10,12 +10,14 @@ import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import type { websites as Website } from '@prisma/client';
 import { publishSite, updateWebsite } from '@/utils/websites';
 import { getTimeStamp } from '@/utils/index';
-import UpdatedBy from './server-components/updated-by';
+import { User } from '@supabase/supabase-js';
 
 export default function PublishDropdownItems({
-  website
+  website,
+  lastUpdatedUser
 }: {
   website: Website;
+  lastUpdatedUser: User
 }) {
   const handleWebsitePublish = async () => {
     if (website.hasBeenPublished) {
@@ -28,6 +30,7 @@ export default function PublishDropdownItems({
       toast.success('Website published successfully');
     }
   };
+  
 
   const dropdownOptions = [
     {
@@ -40,7 +43,9 @@ export default function PublishDropdownItems({
               {getTimeStamp(website?.lastUpdated)}
             </p>
           </span>
-          {website?.websiteId && <UpdatedBy websiteId={website?.websiteId} />}
+          <div>
+            By {lastUpdatedUser?.email}
+          </div>
         </div>
       )
     },

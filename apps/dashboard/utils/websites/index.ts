@@ -274,6 +274,5 @@ export const getLastUpdatedUser = async (websiteId: string) => {
 	const { lastUpdatedUid } = await getWebsite({ websiteId });
 	if(!lastUpdatedUid) return null;
 
-	const user = await getUserFromDb(lastUpdatedUid);
-	return user
+	return await getUserFromDb(lastUpdatedUid);
 }
