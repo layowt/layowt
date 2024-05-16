@@ -89,7 +89,7 @@ interface WebsiteOptions {
  * 
  * @param userId userId: The ID of the user.
  * @param websiteId websiteId: The ID of the website.
- * @returns A Promise resolving to an array of websites.
+ * @returns A Promise resolving to an array of websites or a singular site.
  */
 export const getWebsite = async <T extends Website | Website[] = Website>(
 	options: WebsiteOptions,
