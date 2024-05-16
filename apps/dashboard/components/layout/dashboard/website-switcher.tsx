@@ -1,3 +1,4 @@
+'use client'
 // react
 import { useState, useEffect } from 'react';
 
@@ -29,7 +30,6 @@ import useUserWebsites from '@/hooks/useUserWebsites';
 
 // misc
 import { createClient } from '@/utils/supabase/client';
-import getClientUser from '@/utils/user/user-client-session';
 import { cn } from '@/utils/index';
 import { User } from '@supabase/supabase-js';
 import {
@@ -50,8 +50,8 @@ export default function WebsiteSwitcher() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = await getClientUser();
-        setUser(user.data.user);
+        const { data: user, error } = await supabase.auth.getUser();
+        setUser(user.user);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -79,7 +79,6 @@ export default function WebsiteSwitcher() {
         />
       )
     },
-    // TODO: change to a toggle
     {
       name: 'Theme',
       html: <ThemeSwitcherModal />

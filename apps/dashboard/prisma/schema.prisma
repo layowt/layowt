@@ -58,6 +58,7 @@ model websites {
 
   createdAt                                   DateTime @default(now())
   lastUpdated                                 DateTime @updatedAt
+  lastUpdatedUid                              String @default("")
 
 }
 

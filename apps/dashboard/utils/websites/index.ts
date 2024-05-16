@@ -12,6 +12,7 @@ import type { websites as Website } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { unstable_cache } from 'next/cache';
 import { getEnv } from '@/utils/index';
+import { getUserFromDb } from '../user';
 
 /**
  * 
@@ -88,7 +89,7 @@ interface WebsiteOptions {
  * 
  * @param userId userId: The ID of the user.
  * @param websiteId websiteId: The ID of the website.
- * @returns A Promise resolving to an array of websites.
+ * @returns A Promise resolving to an array of websites or a singular site.
  */
 export const getWebsite = async <T extends Website | Website[] = Website>(
 	options: WebsiteOptions,
@@ -116,6 +117,13 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 	return websiteData as T;
 };
 
+/**
+ * Create a new website
+ * 
+ * @param userId 
+ * @param websiteId 
+ * @returns 
+ */
 export const createWebsite = async (userId: string, websiteId: string) => {
 	console.log(userId);
 	if(!userId) throw new Error('No user ID specified');
@@ -148,8 +156,17 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 	return 'ok';
 }
 
+/**
+ * 
+ * Publish a website via its id
+ * 
+ * @param websiteId 
+ * @param opts 
+ * @returns 
+ */
 export const publishSite = async(
-	websiteId: string
+	websiteId: string,
+	opts?: Partial<Website>
 ) => {
 	// get the current environment to determine the website url (localhost or layowt)
 	const env = getEnv() === 'production' ? 'app.layowt.com' : 'app.localhost:4343';
@@ -172,6 +189,7 @@ export const publishSite = async(
 	}
 
 	await updateWebsite(websiteId, {
+		...opts,
 		hasBeenPublished: true,
 		lastUpdated: new Date(),
 		websiteUrl: websiteName
@@ -183,6 +201,7 @@ export const publishSite = async(
 }
 
 /**
+ * Get a website by its domain
  * 
  * @param websiteDomain - The domain of the website (passed into [domain])
  * @returns 
@@ -195,4 +214,65 @@ export const getDynamicSite = async(
 			websiteUrl: websiteDomain,
 		},
 	})
+}
+
+/**
+ * 
+ * Update the URL of a website
+ * Check if the new name is already taken
+ * 
+ * @param websiteId 
+ * @param newName 
+ * @param userId 
+ * @returns 
+ */
+export const updateWebsiteUrlChange = async(
+	websiteId: string,
+	newName: string,
+	userId: string
+) => {
+	// first check if the website name is already taken
+	const websiteExists = await prisma.websites.findFirst({
+		where: {
+			websiteUrl: newName,
+			AND: {
+				websiteId: {
+					not: websiteId
+				}
+			}
+		},
+	});
+
+	// if the website exists, return an error
+	if(websiteExists) {
+		return {
+			statusCode: 409,
+			message: 'Website name already exists'
+		}
+	}
+
+	await updateWebsite(websiteId, {
+		websiteUrl: newName,
+		lastUpdatedUid: userId
+	});
+
+	revalidateTag('websites');
+
+	return {
+		statusCode: 200,
+		message: 'Website name updated successfully'
+	}
+}
+
+/**
+ * Get's the last user that updated the website
+ * 
+ * @param websiteId 
+ * @returns 
+ */
+export const getLastUpdatedUser = async (websiteId: string) => {
+	const { lastUpdatedUid } = await getWebsite({ websiteId });
+	if(!lastUpdatedUid) return null;
+
+	return await getUserFromDb(lastUpdatedUid);
 }

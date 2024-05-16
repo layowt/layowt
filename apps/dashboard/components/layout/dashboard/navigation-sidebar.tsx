@@ -1,5 +1,5 @@
 'use server';
-import { getUserFromSession } from '@/utils/user/user-session';
+import { getUserFromSession } from '@/utils/user';
 import { getWebsite } from '@/utils/websites';
 import type { websites } from '@prisma/client';
 

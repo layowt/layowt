@@ -17,7 +17,7 @@ import { motion } from 'framer-motion';
 
 import useInterval from '@/hooks/useInterval';
 
-import { getUserFromDb } from '@/utils/user/user.get';
+import { getUserFromDb } from '@/utils/user';
 
 /** Modal content to display if we are waiting for the user to confirm the OTP */
 export default function WaitingForAuth({ supabase }: { supabase: any }) {
