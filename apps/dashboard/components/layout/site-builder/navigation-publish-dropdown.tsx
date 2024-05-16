@@ -46,7 +46,11 @@ export default function SiteBuilderPublishModal({ website }) {
       } catch(e){
         console.error('Error fetching user data:', e);
       }
-      setWebsiteUrlEditable(website?.websiteUrl?.split('.')[0] || '');
+      setWebsiteUrlEditable(website?.websiteUrl?.split('.')[0]);
+
+      // need to prevent on inital load resetting the original website url
+      if(!websiteUrlEditable || !setWebsiteUrlEditable.length) return;
+
       // make an array of the website url and split it by '.'
       const websiteUrl = website?.websiteUrl.split('.');
       //change the first part of the array with the new websiteUrlEditable
