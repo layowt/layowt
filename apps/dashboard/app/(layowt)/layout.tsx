@@ -1,5 +1,5 @@
-import './styles/globals.css';
-import { CairoFont, InterFont, PoppinsFont } from './styles/fonts'
+import '../styles/globals.css';
+import { CairoFont, InterFont, PoppinsFont } from '../styles/fonts'
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
@@ -7,13 +7,16 @@ import { Toaster } from '@/ui/sonner';
 
 import StoreProvider from '@/store/store-provider';
 import { Metadata } from 'next';
-import { cn } from '../utils';
+import { cn } from '@/utils/index';
 
 const title = 
-  'Layowt - The all-in-one platform for designing, creating, and managing your online products.'
+  'Layowt | Build your next digital product with ease'
+const description = 
+  'Layowt is the all-in-one platform for creating your next digital product'
 
 export const metadata: Metadata = {
-  title
+  title,
+  description
 };
 
 export default async function RootLayout({

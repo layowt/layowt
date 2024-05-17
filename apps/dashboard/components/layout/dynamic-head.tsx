@@ -1,23 +1,26 @@
-'use server'
 import { getDynamicSite } from '@/utils/websites';
 import { websites as Website } from '@prisma/client';
+import type { Metadata } from 'next';
 import Head from 'next/head';
 
-export async function generateMetaData({ params }){
-  const domain = decodeURIComponent(params.domain);
+export async function generateMetaData({ 
+  params 
+}): Promise<Metadata>{
+  const { domain } = params;
   const website = await getDynamicSite(domain);
+
   return {
-    metadata: {
-      title: website?.websiteName
-    }
-  }
+    title: website?.websiteName
+  } 
 }
 
-export default function DyanmicHead({ website }: { website: Website }) {
+export default function DyanmicHead() {
   return (
-    <Head>
-      <title>{website?.websiteName}</title>
-      <meta property='og:title' content={website?.websiteName} />
-    </Head>
+    <>
+      <Head>
+        <title>'test'</title>
+        <meta property='og:title' content="test" />
+      </Head>
+    </>
   )
 }
