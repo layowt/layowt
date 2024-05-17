@@ -18,7 +18,6 @@ export default function DyanmicHead() {
   return (
     <>
       <Head>
-        <title>'test'</title>
         <meta property='og:title' content="test" />
       </Head>
     </>
