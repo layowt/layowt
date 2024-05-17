@@ -20,20 +20,35 @@ export async function generateMetadata({
   const website = await getCurrentSite(domain);
 
   return {
-    title: website?.websiteName || 'Website'
+    title: website?.websiteName || 'Website | Website build with Layowt'
   }
 }
+
+/**
+ *  Generate a list of the websites
+ * 
+ * This allows us to statically generate the route at build
+ * time and not on demand at request time.
+ * 
+ */
+export async function generateStaticParams(){
+  const websites = await prisma.websites.findMany();
+
+  return websites.map((website) => ({
+    params: { domain: website.websiteUrl }
+  }));
+}
+
+type StaticParams = Awaited<ReturnType<typeof generateStaticParams>>[number]['params'];
 
 export default function Page({ 
   params 
 }: { 
-  params: { 
-    domain: string 
-  } 
+  params: StaticParams
 }) {
-  const domain = decodeURIComponent(params.domain);
+  const { domain } = params;
 
-  const websiteData = use(getCurrentSite(domain));
+  const websiteData = use(getCurrentSite(decodeURIComponent(domain)));
   if (!websiteData) return notFound();
 
   return <div>hello from {websiteData.websiteName}</div>;

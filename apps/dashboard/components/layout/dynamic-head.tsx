@@ -15,7 +15,6 @@ export async function generateMetaData({
 }
 
 export default function DyanmicHead() {
-  console.log('hello world')
   return (
     <>
       <Head>
