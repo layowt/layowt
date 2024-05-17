@@ -18,8 +18,6 @@ export const config = {
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
-  console.log(url)
-
   let publicRootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
   if(!publicRootDomain) {
