@@ -1,12 +1,12 @@
-import { Suspense } from 'react';
-import Loading from '../loading';
+import DyanmicHead from '@/components/layout/dynamic-head';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function SiteLayout({ children }: { children: React.ReactNode }){
   return (
-    <div className="h-screen">
-      <div className="flex text-white font-kanit">
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+    <>
+      <DyanmicHead website={website} />
+      <div className="h-screen"> 
+          {children}
       </div>
-    </div>
+    </>
   );
 }
