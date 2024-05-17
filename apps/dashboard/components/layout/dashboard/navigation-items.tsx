@@ -151,7 +151,7 @@ export default function NavigationItems({
             href="/pricing"
             className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
           >
-            <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
+            <div className="flex items-center gap-x-2 font-inter leading-loose text-white/80">
               <div className="size-4"></div>
               <span className="text-base">Plans</span>
             </div>
@@ -167,7 +167,7 @@ export default function NavigationItems({
             href="/settings"
             className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
           >
-            <div className="flex items-center gap-x-2 font-kanit leading-loose text-white/80">
+            <div className="flex items-center gap-x-2 font-inter leading-loose text-white/80">
               <div className="size-4">
                 <MaterialSymbolsSettingsOutlineRounded />
               </div>

@@ -55,7 +55,7 @@ export function PricingCard({
                     {isLoading ? (
                       <ReloadIcon className="w-3 h-3 animate-spin" />
                     ) : (
-                      <span className="text-4xl font-kanit">
+                      <span className="text-4xl font-inter">
                         {product.default_price?.unit_amount
                           ? product.default_price.unit_amount / 100
                           : 0}
@@ -64,7 +64,7 @@ export function PricingCard({
                   </div>
                   <span className="text-xs mt-2">/ {billingPeriod}</span>
                 </div>
-                <p className="text-xs font-kanit">{product.description}</p>
+                <p className="text-xs font-inter">{product.description}</p>
               </div>
             </div>
             {/** Feature list */}
