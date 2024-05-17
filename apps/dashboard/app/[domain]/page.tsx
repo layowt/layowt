@@ -11,5 +11,5 @@ export default async function Page({ params }: { params: { domain: string } }) {
   const websiteData = await getDynamicSite(domain);
   if (!websiteData) return notFound();
 
-  return <div className="text-white">hello from {websiteData.websiteName}</div>;
+  return <div className="">hello from {websiteData.websiteName}</div>;
 }
