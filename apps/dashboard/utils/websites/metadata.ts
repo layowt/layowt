@@ -2,10 +2,15 @@ import type { websites as Website } from '@prisma/client';
 import type { Metadata } from 'next';
 
 export const generateSiteMetadata = (
-  website: Website
+  website: Website,
+  opts: {
+    title?: string 
+  }
 ): Partial<Metadata> => {
+  const { title } = opts
+
   return {
-    title: website?.websiteName || 'Website | Website build with Layowt',
+    title: title || 'Website | Website build with Layowt',
     icons: [
       {
         url: website?.websiteLogo || '/favicon.ico',
