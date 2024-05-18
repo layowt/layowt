@@ -72,16 +72,13 @@ export async function middleware(req: NextRequest) {
       )
     }
 
-    // everything is nested inside /layowt/[path] 
-    // rewrite to remove the /layowt/ part
-    // if(session){
-    //   return NextResponse.rewrite(
-    //     new URL(
-    //       `/${path.replace('/layowt/', '')}`,
-    //       req.url
-    //     )
-    //   )
-    // }
+    // redirect the user to the dashboard if they are 
+    //authenticated and trying to access the login page
+    if(session && path === '/login') {
+      return NextResponse.redirect(
+        new URL('/dashboard', req.url)
+      )
+    }
 
     // if the user is authenticated, and trying to access '/', make the dashboard the root page
     if(session && path === '/') {
@@ -92,6 +89,7 @@ export async function middleware(req: NextRequest) {
     // other wise, the user is authenticated, trying to access the root site (app.layowt.com), and is allowed to access the page
     return NextResponse.next()
   }
+  
   // rewrite everything else to 'subdomain.app.layout.com'
   return NextResponse.rewrite(new URL(`/${hostname}/`, req.url));
 }
