@@ -38,7 +38,6 @@ const sharedConfig = {
       fontFamily: {
         cairo: ['var(--font-cairo)'],
         poppins: ['var(--font-poppins)'],
-        kanit: ['var(--font-kanit)'],
         inter: ['var(--font-inter)']
       },
       ...tailwindColors,

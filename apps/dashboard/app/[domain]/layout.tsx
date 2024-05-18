@@ -1,12 +1,13 @@
-import { Suspense } from 'react';
-import Loading from '../loading';
+import '../styles/globals.css';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function SiteLayout({ children }: { children: React.ReactNode }){
   return (
-    <div className="h-screen">
-      <div className="flex text-white font-kanit">
-        <Suspense fallback={<Loading />}>{children}</Suspense>
-      </div>
-    </div>
+    <html
+      lang="en"
+    >
+      <body className="h-screen text-black"> 
+        {children}
+      </body>
+    </html>
   );
 }

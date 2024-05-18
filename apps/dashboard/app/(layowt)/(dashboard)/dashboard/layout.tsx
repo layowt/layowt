@@ -11,7 +11,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="h-screen">
-      <div className="flex text-white font-kanit">
+      <div className="flex text-white">
         <DashboardSidebar />
         <DashboardNavBar>
           <Suspense fallback={<Loading />}>{children}</Suspense>
