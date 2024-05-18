@@ -3,11 +3,11 @@ import type { Metadata } from 'next';
 
 export const generateSiteMetadata = (
   website: Website,
-  opts: {
+  opts?: {
     title?: string 
   }
 ): Partial<Metadata> => {
-  const { title } = opts
+  const { title = "empty" } = opts || { title: website?.websiteName };
 
   return {
     title: title || 'Website | Website build with Layowt',
