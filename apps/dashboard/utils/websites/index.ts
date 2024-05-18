@@ -125,8 +125,9 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
  * @returns 
  */
 export const createWebsite = async (userId: string, websiteId: string) => {
-	console.log(userId);
+
 	if(!userId) throw new Error('No user ID specified');
+
 	const response = await prisma.websites.create({
 		data: {
 			websiteLogo: '',

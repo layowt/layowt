@@ -10,7 +10,7 @@ export const generateSiteMetadata = (
   const { title = "empty" } = opts || { title: website?.websiteName };
 
   return {
-    title: title || 'Website | Website build with Layowt',
+    title: title || 'Website | Built with Layowt',
     icons: [
       {
         url: website?.websiteLogo || '/favicon.ico',
@@ -23,6 +23,6 @@ export const generateSiteMetadata = (
         sizes: '32x32'
       }
     ],
-    applicationName: website?.websiteName || 'Website | Website build with Layowt',
+    applicationName: website?.websiteName || 'Website | Built with Layowt',
   }
 }
