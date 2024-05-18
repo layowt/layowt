@@ -38,6 +38,8 @@ export default function LoginForm() {
     try {
       const user = await login(state.userEmail, state.userPassword);
 
+      if(!user) throw new Error('No user found');
+
       // redirect to the dashboard if the user is logged in
       toast.success('Welcome back, ' + user?.user.email + '!');
 
