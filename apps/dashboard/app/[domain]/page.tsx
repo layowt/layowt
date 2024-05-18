@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getDynamicSite } from '@/utils/websites';
 import { Metadata } from 'next';
 import { use } from 'react';
+import { generateSiteMetadata } from '@/utils/websites/metadata';
 
 async function getCurrentSite(domain: string) {
   return await getDynamicSite(domain);
@@ -19,9 +20,7 @@ export async function generateMetadata({
   const domain = decodeURIComponent(params.domain);
   const website = await getCurrentSite(domain);
 
-  return {
-    title: website?.websiteName || 'Website | Website build with Layowt'
-  }
+  return generateSiteMetadata(website);
 }
 
 /**
@@ -51,5 +50,9 @@ export default function Page({
   const websiteData = use(getCurrentSite(decodeURIComponent(domain)));
   if (!websiteData) return notFound();
 
-  return <div>hello from {websiteData.websiteName}</div>;
+  return (
+    <>
+      <div>hello from {websiteData.websiteName}</div>
+    </>
+  )
 }
