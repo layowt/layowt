@@ -21,7 +21,6 @@ export async function generateMetadata({
 
   return generateSiteMetadata(website, {
     title: `${website?.websiteName} - Layowt Site Builder`
-  
   });
 }
 
