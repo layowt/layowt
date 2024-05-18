@@ -49,7 +49,7 @@ export async function middleware(req: NextRequest) {
   if(
     hostname === 'localhost:4343' || 
     hostname === publicRootDomain || 
-    hostname === 'app.layout.com' || 
+    hostname === 'app.layowt.com' || 
     existingSubDomain === 'app'
   ) {
     // if we are on the root domain, we need to do user auth checks

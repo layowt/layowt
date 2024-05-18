@@ -15,7 +15,7 @@ import { setWebsite, website } from '@/store/slices/website-store';
 // misc / utils
 import type { websites as Website } from '@prisma/client';
 import { updateWebsite } from '@/utils/websites';
-import type { SavingState } from '@/types/state';
+import type { SavingState } from '@/types/State';
 import ModalPrimaryColor from './modal-primary-color';
 import ModalSecondaryColor from './modal-secondary-color';
 import { ReloadIcon } from '@radix-ui/react-icons';
