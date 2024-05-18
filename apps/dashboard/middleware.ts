@@ -92,6 +92,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
   
+  console.log('hostname: ', hostname)
+  console.log('path: ', path)
+  
   // rewrite everything else to 'subdomain.app.layout.com'
-  return NextResponse.rewrite(new URL(`/${hostname}/`, req.url));
+  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }
