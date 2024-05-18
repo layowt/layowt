@@ -55,13 +55,15 @@ export async function middleware(req: NextRequest) {
     // if we are on the root domain, we need to do user auth checks
     const session = await updateSession(req)
 
+    console.log(session)
+
     // if there is no user, and they are trying to access a page that requires auth
     // redirect them to the dashboard with a not-authenticated message
     // so on the /login route we can display a message to the user
     if(
-      !session && 
-      path !== '/login' && 
-      path !== '/signup' && 
+      !session.ok &&
+      path !== '/login' &&
+      path !== '/sign-up' &&
       path !== '/forgot-password'
     ){
       return NextResponse.rewrite(
@@ -74,7 +76,7 @@ export async function middleware(req: NextRequest) {
 
     // redirect the user to the dashboard if they are 
     //authenticated and trying to access the login page
-    if(session && path === '/login') {
+    if(session.ok && path === '/login') {
       return NextResponse.redirect(
         new URL('/dashboard', req.url)
       )
