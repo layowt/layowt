@@ -97,13 +97,14 @@ export default function UserDropdownMenu({
 
   return (
     <DropdownMenu {...props}>
-      <DropdownMenuTrigger asChild>
-        <div
-          className={cn(
-            className,
-            'hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center'
-          )}
-        >
+      <DropdownMenuTrigger 
+        asChild 
+        className={cn(
+          className,
+          'hover:bg-black-50 duration-300 rounded-lg size-7 flex items-center justify-center'
+        )}
+      >
+        
           {siteLogo?.length > 0 ? (
             <img
               src={siteLogo}
@@ -126,7 +127,6 @@ export default function UserDropdownMenu({
               </span>
             </button>
           )}
-        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="font-inter border border-black-50 !bg-black text-white/80 m-1 w-60">
         <motion.div

@@ -17,6 +17,7 @@ export const config = {
 // runs on every request
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
+
   let publicRootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
   if(!publicRootDomain) {
@@ -71,6 +72,17 @@ export async function middleware(req: NextRequest) {
       )
     }
 
+    // everything is nested inside /layowt/[path] 
+    // rewrite to remove the /layowt/ part
+    // if(session){
+    //   return NextResponse.rewrite(
+    //     new URL(
+    //       `/${path.replace('/layowt/', '')}`,
+    //       req.url
+    //     )
+    //   )
+    // }
+
     // if the user is authenticated, and trying to access '/', make the dashboard the root page
     if(session && path === '/') {
       return NextResponse.rewrite(
@@ -81,6 +93,5 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
   // rewrite everything else to 'subdomain.app.layout.com'
-  return NextResponse.rewrite(new URL(`/${hostname}`, req.url));
-
+  return NextResponse.rewrite(new URL(`/${hostname}/`, req.url));
 }

@@ -11,6 +11,7 @@ import type { websites as Website } from '@prisma/client';
 import { publishSite, updateWebsite } from '@/utils/websites';
 import { getTimeStamp } from '@/utils/index';
 import { User } from '@supabase/supabase-js';
+import { useUser } from '@/hooks/useUser';
 
 export default function PublishDropdownItems({
   website,
@@ -19,18 +20,22 @@ export default function PublishDropdownItems({
   website: Website;
   lastUpdatedUser: User
 }) {
+  const user = useUser()
+
   const handleWebsitePublish = async () => {
     if (website.hasBeenPublished) {
       updateWebsite(website.websiteId, {
-        ...website
+        ...website,
+        lastUpdatedUid: user?.id
       });
       toast.success('Website updated successfully');
     } else {
-      publishSite(website.websiteId);
+      publishSite(website.websiteId, {
+        lastUpdatedUid: user?.id
+      });
       toast.success('Website published successfully');
     }
   };
-  
 
   const dropdownOptions = [
     {

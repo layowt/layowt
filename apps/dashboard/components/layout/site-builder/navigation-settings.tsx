@@ -1,4 +1,3 @@
-import UserDropdownMenu from '@/components/modals/user-dropdown-menu';
 import LoadingSpinner from '@/components/saving';
 import { Button } from '@/components/ui/button';
 import SiteBuilderPublishModal from './navigation-publish-dropdown';
@@ -7,8 +6,15 @@ import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
 import { publishSite, updateWebsite } from '@/utils/websites';
 import { toast } from 'sonner';
+import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 
 export default function SiteBuilderSettings() {
+  const NoSSR = dynamic(
+    () => import('@/components/modals/user-dropdown-menu'),
+    { ssr: false }
+  );
+  
   const websiteObj = useAppSelector(website);
 
   // either update the website or publish it depending on if its been published before
@@ -40,10 +46,12 @@ export default function SiteBuilderSettings() {
         </Button>
         <SiteBuilderPublishModal website={websiteObj} />
       </div>
-      <UserDropdownMenu
-        className="!size-8 text-sm"
-        siteLogo={websiteObj?.websiteLogo}
-      />
+      <div className="size-8">
+        <NoSSR
+          className="!size-8 text-sm"
+          siteLogo={websiteObj?.websiteLogo}
+        />
+        </div>
     </div>
   );
 }
