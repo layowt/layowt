@@ -53,15 +53,15 @@ export async function middleware(req: NextRequest) {
     existingSubDomain === 'app'
   ) {
     // if we are on the root domain, we need to do user auth checks
-    const session = await updateSession(req)
+    const { response: session, user } = await updateSession(req)
 
-    console.log(session)
+    const sessionCookie = session.headers.get('x-middleware-request-cookie')  
 
     // if there is no user, and they are trying to access a page that requires auth
     // redirect them to the dashboard with a not-authenticated message
     // so on the /login route we can display a message to the user
     if(
-      !session.ok &&
+      !sessionCookie &&
       path !== '/login' &&
       path !== '/sign-up' &&
       path !== '/forgot-password'
@@ -76,14 +76,14 @@ export async function middleware(req: NextRequest) {
 
     // redirect the user to the dashboard if they are 
     //authenticated and trying to access the login page
-    if(session.ok && path === '/login') {
+    if(sessionCookie && path === '/login') {
       return NextResponse.redirect(
         new URL('/dashboard', req.url)
       )
     }
 
     // if the user is authenticated, and trying to access '/', make the dashboard the root page
-    if(session && path === '/') {
+    if(sessionCookie && path === '/') {
       return NextResponse.rewrite(
         new URL('/dashboard', req.url)
       )
