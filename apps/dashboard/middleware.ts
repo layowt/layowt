@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { updateSession } from '@/utils/supabase/middleware';
-import { getBaseUrl } from './utils/misc/admin';
+import { getBaseUrl, getEnv } from './utils/';
 
 export const config = {
   matcher: [
@@ -14,6 +14,10 @@ export const config = {
     "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
   ],
 };
+
+const getRedirectUrl = (query: string) => {
+  return new URL(`/login?${query}`, 'https://app.layowt.com').href
+}
 
 // runs on every request
 export async function middleware(req: NextRequest) {
@@ -96,31 +100,20 @@ export async function middleware(req: NextRequest) {
   // query parameter so after login, we can redirect them back to the admin page
   // for that site
   if(path === '/admin'){
-    console.log(getBaseUrl())
-
     // try to get the siteId by using the subdomain
     const response = await fetch(`${getBaseUrl()}/api/website/${hostname}`, {
       method: 'GET'
     })
     const websiteId = await response.json()
 
-
-    // if we cannot find the site id, rediect the user to the login page with a query parameter
+    // if we cannot find the site id, redirect the user to the login page with a query parameter
     // so we can serve a message to the users
     if(!websiteId) {
-      return NextResponse.redirect(
-        new URL('/login?r=site-not-found', req.url)
-      )
+      return NextResponse.redirect(getRedirectUrl('r=site-not-found'))
     }
-
     // if we can find the site id, redirect the user to the login page with a query parameter
     // so we can redirect them back to the admin page after login
-    return NextResponse.redirect(
-      new URL(
-        `/login?r=admin&siteId=${websiteId}`, 
-        getBaseUrl()
-      )
-    )
+    return NextResponse.redirect(getRedirectUrl(`r=admin&siteId=${websiteId}`))
   }
   
   // rewrite everything else to 'subdomain.app.layout.com'

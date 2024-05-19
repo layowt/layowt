@@ -1,4 +1,3 @@
-import { prisma } from '@/utils/prisma'
 import { getWebsiteByDomain } from '@/utils/websites'
 import { NextResponse } from 'next/server'
 
