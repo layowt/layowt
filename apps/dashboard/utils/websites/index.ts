@@ -230,9 +230,9 @@ export const getWebsiteByDomain = async(
 ) => {
 	return await prisma.websites.findFirst({
 		where: {
-			websiteUrl: websiteDomain
-		},
-		...opts
+			websiteUrl: websiteDomain,
+			...opts
+		}
 	})
 }
 
