@@ -51,14 +51,14 @@ export default function WebsiteCard(website: Website, index: number) {
         <div className="flex w-full justify-between items-center mt-8">
           <div className="flex flex-col gap-y-2">
             <div className="flex gap-x-2 items-center">
-              <span className="text-xl font-inter text-white">
+              <span className="text-heading-xl text-white">
                 {website.websiteName}
               </span>
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
             <Link
               href={`${env}://${website.websiteUrl}` || '#'}
-              className="text-xs text-white/50 hover:underline"
+              className="text-xs text-white/50 hover:underline font-inter"
               prefetch
             >
               {website.websiteUrl || 'Not Published'}

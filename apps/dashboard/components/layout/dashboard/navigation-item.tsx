@@ -92,7 +92,7 @@ export default function NavigationItem({
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <div
-                  className={`flex items-center font-inter leading-loose justify-between w-full`}
+                  className={`flex items-center font-satoshi leading-loose justify-between w-full`}
                 >
                   <div className="flex gap-x-2 items-center">
                     <div className="size-3 opacity-0 group-hover:opacity-100 duration-100">

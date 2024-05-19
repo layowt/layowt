@@ -1,4 +1,5 @@
 import { Cairo, Poppins, Inter } from 'next/font/google';
+import localFont from 'next/font/local'
 
 export const CairoFont = Cairo({
   subsets: ['latin'],
@@ -22,3 +23,10 @@ export const InterFont = Inter({
   style: 'normal',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
+
+export const SatoshiFont = localFont({
+  src: './TTF/Satoshi-Variable.ttf',
+  variable: '--font-satoshi',
+  style: 'normal',
+  weight:'100 200 300 400 500 600 700 800 900'
+})
