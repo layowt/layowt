@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { updateSession } from './utils/supabase/middleware';
+import { updateSession } from '@/utils/supabase/middleware';
 
 export const config = {
   matcher: [
@@ -92,8 +92,15 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
   
-  console.log('hostname: ', hostname)
-  console.log('path: ', path)
+  console.log('ran')
+
+  // at this point, we are on a subdomain - so if the user tries to access
+  // '/admin', we need to redirect them to to login screen with an identifable
+  // query parameter so after login, we can redirect them back to the admin page
+  // for that site
+  if(path === '/admin'){
+    // try to get the siteId by using the subdomain
+  }
   
   // rewrite everything else to 'subdomain.app.layout.com'
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
