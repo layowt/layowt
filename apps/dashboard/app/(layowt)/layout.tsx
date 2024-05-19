@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-import { CairoFont, InterFont, PoppinsFont } from '../styles/fonts'
+import { CairoFont, InterFont, PoppinsFont, SatoshiFont } from '../styles/fonts'
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 
@@ -28,7 +28,7 @@ export default async function RootLayout({
     <StoreProvider>
       <html
         lang="en"
-        className={cn(CairoFont.variable, PoppinsFont.variable, InterFont.variable)}
+        className={cn(CairoFont.variable, PoppinsFont.variable, InterFont.variable, SatoshiFont.variable)}
       >
         <meta
           name="viewport"

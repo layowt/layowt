@@ -82,4 +82,56 @@
     -webkit-box-shadow: 0 0 0px 1000px #000 inset;
     transition: background-color 5000s ease-in-out 0s;
   }
+
+  .text-heading-3xl{
+    @apply font-satoshi font-semibold text-3xl
+  }
+
+  .text-heading-2xl {
+    @apply font-satoshi font-semibold text-2xl
+  }
+
+  .text-heading-xl{
+    @apply font-satoshi font-semibold text-xl
+  }
+
+  .text-heading-lg {
+    @apply font-satoshi font-semibold text-lg
+  }
+
+  .text-heading-md {
+    @apply font-satoshi font-semibold text-base
+  }
+
+  .text-heading-sm {
+    @apply font-satoshi font-semibold text-sm
+  }
+
+  .text-heading-xs {
+    @apply font-satoshi font-semibold text-xs
+  }
+
+  .inter-text-2xl {
+    @apply font-inter text-2xl
+  }
+
+  .inter-text-xl {
+    @apply font-inter text-xl
+  }
+
+  .inter-text-lg {
+    @apply font-inter text-lg
+  }
+
+  .inter-text-md {
+    @apply font-inter text-base
+  }
+
+  .inter-text-sm {
+    @apply font-inter text-sm
+  }
+
+  .inter-text-xs {
+    @apply font-inter text-xs
+  }
 }
