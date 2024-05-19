@@ -128,13 +128,13 @@ export default function UserDropdownMenu({
             </button>
           )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="font-inter border border-black-50 !bg-black text-white/80 m-1 w-60">
+      <DropdownMenuContent className="font-inter border border-black-50 !bg-black text-white/80 m-1 w-72">
         <motion.div
           initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <DropdownMenuLabel className="text-sm font-normal">
+          <DropdownMenuLabel className="text-sm font-inter">
             {user?.email}
           </DropdownMenuLabel>
         </motion.div>
