@@ -97,6 +97,22 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 ): Promise<T> => {
 	const { userId, websiteId } = options;
 
+	// if we have both userId and websiteId, we want to check the websiteId owner is the userId
+	if(userId && websiteId) {
+		const opts = {
+			where: {
+				websiteId,
+				AND: {
+					owner: { 
+						uid: userId
+					}
+				}
+			}
+		}
+
+		return await prisma.websites.findUnique(opts) as T;
+	}
+
 	// create a new object to pass to the prisma query
 	const opts = {
 		where: {

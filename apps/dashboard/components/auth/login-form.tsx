@@ -15,6 +15,9 @@ import { login } from '@/utils/user/';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
+import { useUser } from '@/hooks/useUser';
+import { prisma } from '@/utils/prisma';
+import { getWebsite } from '@/utils/websites';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -36,6 +39,28 @@ export default function LoginForm() {
     });
   };
 
+  const checkUserCanAccessSite = async(userId: string) => {
+    // at this point the user should have a session
+    // get the website the user is trying to access
+    const siteId = searchParams?.get('siteId');
+    if(!siteId) return;
+
+    // get the user's sites
+    const canAccessSite = await getWebsite({
+      websiteId: siteId,
+      userId
+    })
+
+
+    // if the user does not have access, push them to the dashboard and serve a message
+    if(!canAccessSite?.websiteId) {
+      // if the user cannot access the site, redirect them to the dashboard
+      // with a message
+      return router.push('/dashboard?r=unauthorized-site-access');
+    }
+    return router.push(`/site/${siteId}`)
+  }
+
   const handleLogin = async () => {
     setIsLoading(true);
 
@@ -50,7 +75,7 @@ export default function LoginForm() {
       toast.success('Welcome back, ' + user?.user.email + '!');
 
       if(reason === 'admin' && siteId){
-        return router.push(`/site/${siteId}`)
+        return await checkUserCanAccessSite(user.user.id);
       }
 
       router.push('/dashboard');
