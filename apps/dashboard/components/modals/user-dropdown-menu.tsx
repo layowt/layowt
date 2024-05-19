@@ -134,7 +134,7 @@ export default function UserDropdownMenu({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <DropdownMenuLabel className="text-sm font-normal">
+          <DropdownMenuLabel className="text-sm font-inter">
             {user?.email}
           </DropdownMenuLabel>
         </motion.div>
