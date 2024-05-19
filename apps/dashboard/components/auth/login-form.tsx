@@ -7,16 +7,22 @@ import {
   ReloadIcon
 } from '@radix-ui/react-icons';
 import { Label } from '@/ui/label';
-import { Input } from '../ui/input';
+import { Input } from '@/ui/input';
 import { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '@/ui/button';
 import { toast } from 'sonner';
 import { login } from '@/utils/user/';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation'
+import { useUser } from '@/hooks/useUser';
+import { prisma } from '@/utils/prisma';
+import { getWebsite } from '@/utils/websites';
 
 export default function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams()
+  const reason = searchParams?.get('r');
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,8 +39,33 @@ export default function LoginForm() {
     });
   };
 
+  const checkUserCanAccessSite = async(userId: string) => {
+    // at this point the user should have a session
+    // get the website the user is trying to access
+    const siteId = searchParams?.get('siteId');
+    if(!siteId) return;
+
+    // get the user's sites
+    const canAccessSite = await getWebsite({
+      websiteId: siteId,
+      userId
+    })
+
+
+    // if the user does not have access, push them to the dashboard and serve a message
+    if(!canAccessSite?.websiteId) {
+      // if the user cannot access the site, redirect them to the dashboard
+      // with a message
+      return router.push('/dashboard?r=unauthorized-site-access');
+    }
+    return router.push(`/site/${siteId}`)
+  }
+
   const handleLogin = async () => {
     setIsLoading(true);
+
+    // get the search params 
+    const siteId = searchParams?.get('siteId');
     try {
       const user = await login(state.userEmail, state.userPassword);
 
@@ -42,6 +73,10 @@ export default function LoginForm() {
 
       // redirect to the dashboard if the user is logged in
       toast.success('Welcome back, ' + user?.user.email + '!');
+
+      if(reason === 'admin' && siteId){
+        return await checkUserCanAccessSite(user.user.id);
+      }
 
       router.push('/dashboard');
     } catch (e) {
@@ -59,7 +94,7 @@ export default function LoginForm() {
       className="flex flex-col gap-y-8 bg-[#05050A] border border-black-50 rounded-xl py-12 px-8 w-80 lg:w-[450px]"
     >
       <h3 className="animate-text text-3xl flex justify-center w-full text-center font-semibold bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text">
-        Welcome back!
+        Welcome back{reason === 'admin' ? `  ${reason}` : ''}!
       </h3>
       <div className="flex flex-col gap-y-6">
         <div className="flex flex-col gap-y-1.5">
