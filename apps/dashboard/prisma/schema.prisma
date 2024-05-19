@@ -35,8 +35,8 @@ model subscription {
   subscriptionActive                          Boolean
   paymentEmail                                String
   planType                                    planType
-  dateOfPurchase                              DateTime   // Change to DateTime
-  dateOfExpiry                                DateTime   // Change to DateTime
+  dateOfPurchase                              DateTime  
+  dateOfExpiry                                DateTime   
 
   user                                        users      @relation(fields: [userId], references: [uid])
   userId                                      String     @unique
@@ -45,20 +45,20 @@ model subscription {
 }
 
 model websites {
-  owner                                       users @relation(fields: [userId], references: [uid])
+  owner                                       users         @relation(fields: [userId], references: [uid])
   userId                                      String
 
-  websiteId                                   String @id
-  websiteName                                 String
-  websiteUrl                                  String @unique
+  websiteId                                   String        @id
+  websiteName                                 String        
+  websiteUrl                                  String        
   websiteLogo                                 String
   websitePrimaryColor                         String 
   websiteSecondaryColor                       String
-  hasBeenPublished                            Boolean @default(false)
+  hasBeenPublished                            Boolean       @default(false)
 
-  createdAt                                   DateTime @default(now())
-  lastUpdated                                 DateTime @updatedAt
-  lastUpdatedUid                              String @default("")
+  createdAt                                   DateTime      @default(now())
+  lastUpdated                                 DateTime      @updatedAt
+  lastUpdatedUid                              String        @default("")
 
 }
 

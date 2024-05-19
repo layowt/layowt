@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { updateSession } from './utils/supabase/middleware';
+import { updateSession } from '@/utils/supabase/middleware';
+import { getBaseUrl, getEnv } from './utils/';
 
 export const config = {
   matcher: [
@@ -14,6 +15,10 @@ export const config = {
   ],
 };
 
+const getRedirectUrl = (query: string) => {
+  return new URL(`/login?${query}`, 'https://app.layowt.com').href
+}
+
 // runs on every request
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl;
@@ -21,13 +26,11 @@ export async function middleware(req: NextRequest) {
   let publicRootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
 
   if(!publicRootDomain) {
-    publicRootDomain = 'app.layout.com'
+    publicRootDomain = 'app.layowt.com'
   }
 
   let hostname = req.headers.get('host')
-  
-  //!.replace('localhost:4343', 'localhost:4343'  
-
+   
   // special case for Vercel preview deployment URLs
   if (
     hostname.includes("---") &&
@@ -92,6 +95,27 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
   
+  // at this point, we are on a subdomain - so if the user tries to access
+  // '/admin', we need to redirect them to to login screen with an identifable
+  // query parameter so after login, we can redirect them back to the admin page
+  // for that site
+  if(path === '/admin'){
+    // try to get the siteId by using the subdomain
+    const response = await fetch(`${getBaseUrl()}/api/website/${hostname}`, {
+      method: 'GET'
+    })
+    const websiteId = await response.json()
+
+    // if we cannot find the site id, redirect the user to the login page with a query parameter
+    // so we can serve a message to the users
+    if(!websiteId) {
+      return NextResponse.redirect(getRedirectUrl('r=site-not-found'))
+    }
+    // if we can find the site id, redirect the user to the login page with a query parameter
+    // so we can redirect them back to the admin page after login
+    return NextResponse.redirect(getRedirectUrl(`r=admin&siteId=${websiteId}`))
+  }
+  
   // rewrite everything else to 'subdomain.app.layout.com'
-  return NextResponse.rewrite(new URL(`/${hostname}/`, req.url));
+  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }

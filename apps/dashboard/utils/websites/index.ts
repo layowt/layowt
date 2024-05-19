@@ -97,6 +97,22 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 ): Promise<T> => {
 	const { userId, websiteId } = options;
 
+	// if we have both userId and websiteId, we want to check the websiteId owner is the userId
+	if(userId && websiteId) {
+		const opts = {
+			where: {
+				websiteId,
+				AND: {
+					owner: { 
+						uid: userId
+					}
+				}
+			}
+		}
+
+		return await prisma.websites.findUnique(opts) as T;
+	}
+
 	// create a new object to pass to the prisma query
 	const opts = {
 		where: {
@@ -125,8 +141,9 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
  * @returns 
  */
 export const createWebsite = async (userId: string, websiteId: string) => {
-	console.log(userId);
+
 	if(!userId) throw new Error('No user ID specified');
+
 	const response = await prisma.websites.create({
 		data: {
 			websiteLogo: '',
@@ -218,6 +235,25 @@ export const getDynamicSite = async(
 
 /**
  * 
+ * Get a websites data via its domain
+ * 
+ * @param websiteDomain 
+ * @returns 
+ */
+export const getWebsiteByDomain = async(
+	websiteDomain: string,
+	opts = {}
+) => {
+	return await prisma.websites.findFirst({
+		where: {
+			websiteUrl: websiteDomain,
+			...opts
+		}
+	})
+}
+
+/**
+ * 
  * Update the URL of a website
  * Check if the new name is already taken
  * 
@@ -232,15 +268,12 @@ export const updateWebsiteUrlChange = async(
 	userId: string
 ) => {
 	// first check if the website name is already taken
-	const websiteExists = await prisma.websites.findFirst({
-		where: {
-			websiteUrl: newName,
-			AND: {
-				websiteId: {
-					not: websiteId
-				}
+	const websiteExists = await getWebsiteByDomain(newName, {
+		AND: {
+			websiteId: {
+				not: websiteId
 			}
-		},
+		}
 	});
 
 	// if the website exists, return an error
