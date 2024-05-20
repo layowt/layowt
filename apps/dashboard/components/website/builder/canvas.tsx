@@ -63,6 +63,8 @@ export default function SiteBuilderCanvas() {
       canvasContainer.current.style.transform = `scale(${scale})`;
     }
     zoom = scale;
+
+    addPositionTagToElement(canvasContainer.current);
   };
 
   useEffect(() => {
@@ -86,11 +88,6 @@ export default function SiteBuilderCanvas() {
   //   elementWidth: width,
   //   zoom: zoom
   // });
-
-  useEffect(() => {
-    addPositionTagToElement(canvasContainer.current);
-
-  }, [canvasContainer.current?.getBoundingClientRect()])
 
   return (
     <div

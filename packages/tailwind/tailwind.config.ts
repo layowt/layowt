@@ -20,6 +20,9 @@ const sharedConfig = {
   safelist: [
     {
       pattern: /grid-cols-\d+/
+    },
+    {
+      pattern: /(top|left|right|bottom)-./
     }
   ],
   prefix: '',
