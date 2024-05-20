@@ -5,6 +5,7 @@ import useDragger from '@/hooks/useCanvasPosition';
 import useWindowSize from '@/hooks/useWindowSize';
 import useElementSize from '@/hooks/useElementSize';
 import { setCanvasZoom } from '@/utils/canvas/utils';
+import { addPositionTagToElement } from '@/utils/canvas/debug';
 
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
@@ -51,16 +52,6 @@ export default function SiteBuilderCanvas() {
   // Get the width and height of the canvas wrapper element
   const { width, height } = useElementSize('canvas-container', currentDevice);
 
-  // Pass in the max top value of the wrapper canvas to prevent the user from
-  // being able to drag the canvas above that point (outside the viewport)
-  useDragger('canvas-container', {
-    windowWidth: windowSize.width,
-    windowHeight: windowSize.height,
-    elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,
-    elementHeight: height,
-    elementWidth: width
-  });
-
   let zoom = 1;
 
   const handleWheel = (e) => {
@@ -85,6 +76,19 @@ export default function SiteBuilderCanvas() {
     }
   }, []);
 
+  // Pass in the max top value of the wrapper canvas to prevent the user from
+  // being able to drag the canvas above that point (outside the viewport)
+  // useDragger('canvas-container', {
+  //   windowWidth: windowSize.width,
+  //   windowHeight: windowSize.height,
+  //   elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,
+  //   elementHeight: height,
+  //   elementWidth: width,
+  //   zoom: zoom
+  // });
+
+  const debugTools = addPositionTagToElement(canvasContainer.current);
+
   return (
     <div
       className="w-4/6 h-[calc(100vh-73px)] fixed overflow-hidden block bottom-0"
@@ -93,7 +97,7 @@ export default function SiteBuilderCanvas() {
       <div
         className="
         size-0 fixed bg-white 
-        border border-black-50 overflow-hidden
+        border border-black-50
       "
         style={{
           isolation: 'isolate',
@@ -107,6 +111,8 @@ export default function SiteBuilderCanvas() {
         id="canvas-container"
         ref={canvasContainer}
       >
+        {/* <div className="absolute bg-black text-whtie border border-white"> testing left</div>
+        <div className="absolute bg-black text-whtie border border-white bottom-0 left-0"> testing bottom</div> */}
         <div
           className="bg-white h-[650px] transition-all duration-200 fixed text-black"
           style={{
@@ -114,7 +120,6 @@ export default function SiteBuilderCanvas() {
           }}
           id="canvas"
         >
-          {zoom}
         </div>
       </div>
     </div>
