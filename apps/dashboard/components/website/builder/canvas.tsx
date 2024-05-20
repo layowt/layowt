@@ -87,7 +87,10 @@ export default function SiteBuilderCanvas() {
   //   zoom: zoom
   // });
 
-  const debugTools = addPositionTagToElement(canvasContainer.current);
+  useEffect(() => {
+    addPositionTagToElement(canvasContainer.current);
+
+  }, [canvasContainer.current?.getBoundingClientRect()])
 
   return (
     <div
