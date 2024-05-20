@@ -43,8 +43,8 @@ export default function SiteBuilderCanvas() {
 
     setDeviceSize({
       ...deviceSize,
-      width: deviceWidthMap[currentDevice]['width'],
-      height: deviceWidthMap[currentDevice]['height']
+      width: deviceWidthMap[currentDevice].width,
+      height: deviceWidthMap[currentDevice].height
     });
   }, [currentDevice]);
 
@@ -61,19 +61,28 @@ export default function SiteBuilderCanvas() {
     elementWidth: width
   });
 
-  let zoom = 1
+  let zoom = 1;
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+
+    let scale = setCanvasZoom(e, zoom)
+
+    if (canvasContainer.current) {
+      canvasContainer.current.style.transform = `scale(${scale})`;
+    }
+    zoom = scale;
+  };
+
   useEffect(() => {
-    const handleWheel = (e) => {
-      e.preventDefault();
-
-      const scale = setCanvasZoom(e)
-      if (canvasContainer.current) {
-        canvasContainer.current.style.transform = `scale(${scale})`;
-      }
-      zoom = scale
-    };
-
-    canvasContainer.current.onwheel = handleWheel;
+    const currentCanvasContainer = canvasContainer.current;
+    if (currentCanvasContainer) {
+      currentCanvasContainer.addEventListener('wheel', handleWheel);
+      // Cleanup event listener on component unmount
+      return () => {
+        currentCanvasContainer.removeEventListener('wheel', handleWheel);
+      };
+    }
   }, []);
 
   return (
