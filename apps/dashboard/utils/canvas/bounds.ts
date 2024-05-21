@@ -33,7 +33,7 @@ export const detectCanvasOutOfBounds = (
 
   if(offsetLeft < wrapperLeft) {
     canvas.style.transition = 'left 0.5s'
-    canvas.style.left = `${wrapperLeft + 20}px`
+    //canvas.style.left = `${wrapperLeft + 20}px`
   }
 
   if(offsetTop + offsetHeight > wrapperHeight) {
@@ -43,6 +43,6 @@ export const detectCanvasOutOfBounds = (
 
   if(offsetLeft + offsetWidth > wrapperWidth) {
     canvas.style.transition = 'left 0.5s'
-    canvas.style.left = `${wrapperWidth - offsetWidth - 20}px`
+    //canvas.style.left = `${wrapperWidth - offsetWidth - 20}px`
   }
 }

@@ -51,7 +51,7 @@ export default function SiteBuilderCanvas() {
   }, [currentDevice]);
 
   // Get the width and height of the canvas wrapper element
-  const { width, height } = useElementSize('canvas-container', currentDevice);
+  //const { width, height } = useElementSize('canvas-container', currentDevice);
 
   let zoom = 1;
 
@@ -96,7 +96,7 @@ export default function SiteBuilderCanvas() {
 
   return (
     <div
-      className="w-4/6 h-[calc(100vh-73px)] fixed overflow-hidden block bottom-0"
+      className="w-4/6 h-[calc(100vh-73px)] fixed overflow-hidden flex justify-center items-center bottom-0"
       ref={canvasContainerWrapper}
     >
       <div
@@ -110,7 +110,7 @@ export default function SiteBuilderCanvas() {
           cursor: 'grab',
           width: deviceSize.width,
           top: canvasContainerWrapper.current?.offsetTop + 20,
-          left: canvasContainerWrapper.current?.offsetLeft + 20,
+          
           height: '90vh',
         }}
         id="canvas-container"
