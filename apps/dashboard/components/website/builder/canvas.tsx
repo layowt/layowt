@@ -48,6 +48,9 @@ export default function SiteBuilderCanvas() {
       width: deviceWidthMap[currentDevice].width,
       height: deviceWidthMap[currentDevice].height
     });
+
+    addPositionTagToElement(canvasContainer.current);
+
   }, [currentDevice]);
 
   // Get the width and height of the canvas wrapper element

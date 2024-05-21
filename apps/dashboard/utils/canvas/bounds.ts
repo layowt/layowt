@@ -45,4 +45,7 @@ export const detectCanvasOutOfBounds = (
     canvas.style.transition = 'left 0.5s'
     //canvas.style.left = `${wrapperWidth - offsetWidth - 20}px`
   }
+
+  // if any of the above conditions are met, we need to return true to show the recenter animation
+  return true
 }
