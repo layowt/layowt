@@ -7,12 +7,15 @@ import useElementSize from '@/hooks/useElementSize';
 import { setCanvasZoom } from '@/utils/canvas/utils';
 import { addPositionTagToElement } from '@/utils/canvas/debug';
 import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
-import { url } from '@/utils/canvas/utils';
+import { isDragged } from '@/store/slices/canvas';
+import { motion } from 'framer-motion';
 
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
   const currentDevice = useAppSelector(device);
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
+  const isElementDragged = useAppSelector(isDragged);
+
 
   // Setting the size of the canvas via the deviceType
   const [deviceSize, setDeviceSize] = useState({
@@ -87,7 +90,7 @@ export default function SiteBuilderCanvas() {
     }
   }, []);
 
-  const { width, height } = useElementSize('canvas-container', currentDevice);
+  const { width, height } = useElementSize(canvasContainer.current, currentDevice);
 
   // Pass in the max top value of the wrapper canvas to prevent the user from
   // being able to drag the canvas above that point (outside the viewport)
@@ -131,8 +134,25 @@ export default function SiteBuilderCanvas() {
           }}
           id="canvas"
         >
+          <span className='absolute top-20'>
+
+          </span>
         </div>
       </div>
+      {isElementDragged === true && (
+        <motion.button 
+          className="
+            bottom-5 bg-electric-violet-500 rounded-md absolute 
+            px-5 py-2 font-satoshi font-medium
+          "
+          aria-label='Recenter the canvas'
+          transition={{ duration: 0.25 }}
+          initial={{ bottom: -10 }}
+          animate={{ bottom: 10 }}
+        >
+          Recenter
+        </motion.button>
+      )}
     </div>
   );
 }

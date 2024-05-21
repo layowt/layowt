@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import { addPositionTagToElement } from "@/utils/canvas/debug";
+import { useAppDispatch } from "@/utils/index";
+import { setIsDragged } from "@/store/slices/canvas";
 
 interface Window {
 	windowWidth: number;
@@ -12,7 +14,10 @@ interface Window {
 const useDragger = (element: HTMLElement, opts: Window) => {
 	const { windowWidth, windowHeight, elementHeight, elementWidth, elementWrapperWidth } = opts
 
-  const isClicked = useRef<boolean>(false);
+	const dispatch = useAppDispatch();
+
+  const isClicked = useRef(false);
+	const isDragged = useRef(false);
 
   const coords = useRef<{
     startX: number,
@@ -20,8 +25,8 @@ const useDragger = (element: HTMLElement, opts: Window) => {
     lastX: number,
     lastY: number
   }>({
-    startX: 0,
-    startY: 0,
+    startX: 100,
+    startY: 100,
     lastX: 0,
     lastY: 0
   })
@@ -36,6 +41,8 @@ const useDragger = (element: HTMLElement, opts: Window) => {
       isClicked.current = true;
       coords.current.startX = e.clientX;
       coords.current.startY = e.clientY;
+
+			//console.log('e.clientX', e.clientX)
     }
 
     const onMouseUp = (e: MouseEvent) => {
@@ -104,8 +111,12 @@ const useDragger = (element: HTMLElement, opts: Window) => {
 			// }
     }
 
+		// issue is here
     const onMouseMove = (e: MouseEvent) => {
       if (!isClicked.current) return;
+
+			// set the dragged state to true
+			dispatch(setIsDragged(true));
 
       const nextX = e.clientX - coords.current.startX + coords.current.lastX;
       const nextY = e.clientY - coords.current.startY + coords.current.lastY;
@@ -129,6 +140,8 @@ const useDragger = (element: HTMLElement, opts: Window) => {
     }
     return cleanup;
   }, [element, windowWidth, windowHeight, elementHeight, elementWidth, elementWrapperWidth])
+
+	return { isDragged: isDragged.current };
 }
 
 export default useDragger;

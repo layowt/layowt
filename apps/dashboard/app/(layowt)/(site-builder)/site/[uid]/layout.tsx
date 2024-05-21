@@ -15,7 +15,7 @@ export default async function SiteBuilderLayout({
         {/** Left side column on dashboard (placeholder for now) */}
         <div className="bg-black-75 h-screen w-1/6 fixed left-0 border-r border-black-50"></div>
         {/** canvas entry point */}
-        {children}
+          {children}
         {/** Right side column on dashboard (placeholder for now) */}
         <div className="bg-black-75 h-screen w-1/6 fixed right-0 border-l border-black-50"></div>
       </div>

@@ -1,18 +1,13 @@
 import { DeviceType } from "@/types/DeviceType";
 import { useEffect, useState } from "react";
 
-const useElementSize = (id: string, deviceType?: DeviceType) => {
+const useElementSize = (element: HTMLElement, deviceType?: DeviceType) => {
 
   const [size, setSize] = useState({ width: 0, height: 0 });
 
 	// check the size of the element upon the id & the device type
   useEffect(() => {
-    const element = document.getElementById(id);
-
-    if (!element) {
-      console.warn(`Element with id '${id}' not found.`);
-      return;
-    }
+    if(!element) return;
 
     const handleWindowResize = () => {
       setSize({
