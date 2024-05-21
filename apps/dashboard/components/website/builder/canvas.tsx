@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { device } from '@/store/slices/index';
 import { useAppSelector } from '@/utils/index';
-import useDragger from '@/hooks/useCanvasPosition';
+import useDragger from '@/hooks/builder/useDragger';
 import useWindowSize from '@/hooks/useWindowSize';
 import useElementSize from '@/hooks/useElementSize';
 import { setCanvasZoom } from '@/utils/canvas/utils';
@@ -91,9 +91,7 @@ export default function SiteBuilderCanvas() {
 
   // Pass in the max top value of the wrapper canvas to prevent the user from
   // being able to drag the canvas above that point (outside the viewport)
-
-  // TODO: CLEAN THIS UP! DOCUMENT.GETELEMENTBYID IS AN ANTI-PATTERN!
-  useDragger('canvas-container', {
+  useDragger(canvasContainer.current, {
     windowWidth: windowSize.width,
     windowHeight: windowSize.height,
     elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,

@@ -9,7 +9,7 @@ interface Window {
 	elementHeight?: number;
 }
 
-const useDragger = (id: string, opts: Window) => {
+const useDragger = (element: HTMLElement, opts: Window) => {
 	const { windowWidth, windowHeight, elementHeight, elementWidth, elementWrapperWidth } = opts
 
   const isClicked = useRef<boolean>(false);
@@ -27,12 +27,10 @@ const useDragger = (id: string, opts: Window) => {
   })
 
   useEffect(() => {
+		if(!element) return;
 
-    const target = document.getElementById(id);
-    if (!target) throw new Error("Element with given id doesn't exist");
-
-    const container = target.parentElement;
-    if (!container) throw new Error("target element must have a parent");
+    const container = element.parentElement;
+    if (!container) throw new Error("element element must have a parent");
 
     const onMouseDown = (e: MouseEvent) => {
       isClicked.current = true;
@@ -42,8 +40,8 @@ const useDragger = (id: string, opts: Window) => {
 
     const onMouseUp = (e: MouseEvent) => {
 			isClicked.current = false;
-			coords.current.lastX = target.offsetLeft;
-			coords.current.lastY = target.offsetTop;
+			coords.current.lastX = element.offsetLeft;
+			coords.current.lastY = element.offsetTop;
 
 			// const maxTop = windowHeight - elementHeight;
 			// const maxBottom = windowHeight - elementHeight;
@@ -55,13 +53,13 @@ const useDragger = (id: string, opts: Window) => {
 			// we need to reset the value to the max top value
 			// if (coords.current.lastY < maxTop) {
 			// 	// add the transition back to smoothly recenter the canvas
-			// 	// target.style.transition = 'top 0.5s';
-			// 	// target.style.top = `${maxTop + 20}px`;
+			// 	// element.style.transition = 'top 0.5s';
+			// 	// element.style.top = `${maxTop + 20}px`;
 			// 	// coords.current.lastY = maxTop + 20;
 
 			// 	// // remove the transition after the animation is complete
 			// 	// setTimeout(() => {
-			// 	// 	target.style.transition = 'none';
+			// 	// 	element.style.transition = 'none';
 			// 	// }, 500);
 			// }
 
@@ -70,38 +68,38 @@ const useDragger = (id: string, opts: Window) => {
 			// // as it's outside of the viewport
 			// if(coords.current.lastY > maxBottom){
 			// 	// add the transition back to smoothly recenter the canvas
-			// 	// target.style.transition = 'top 0.5s';
-			// 	// target.style.top = `${maxBottom}px`;
+			// 	// element.style.transition = 'top 0.5s';
+			// 	// element.style.top = `${maxBottom}px`;
 			// 	// coords.current.lastY = maxBottom;
 
 			// 	// // remove the transition after the animation is complete
 			// 	// setTimeout(() => {
-			// 	// 	target.style.transition = 'none';
+			// 	// 	element.style.transition = 'none';
 			// 	// }, 500);
 			// }
 
 			
 			// if(coords.current.lastX < minLeft){
 			// 	// add the transition back to smoothly recenter the canvas
-			// 	// target.style.transition = 'left 0.5s';
-			// 	// target.style.left = `${minLeft}px`;
+			// 	// element.style.transition = 'left 0.5s';
+			// 	// element.style.left = `${minLeft}px`;
 			// 	// coords.current.lastX = minLeft;
 			// 	// // remove the transition after the animation is complete
 			// 	// setTimeout(() => {
-			// 	// 	target.style.transition = 'none';
+			// 	// 	element.style.transition = 'none';
 			// 	// }, 500);
 			// }
 
 			// // 'maxRight' is the maximum value that 'left' can be
 			// if(coords.current.lastX > maxLeft){
 			// 	// add the transition back to smoothly recenter the canvas
-			// 	// target.style.transition = 'left 0.5s';
-			// 	// target.style.left = `${minLeft}px`;
+			// 	// element.style.transition = 'left 0.5s';
+			// 	// element.style.left = `${minLeft}px`;
 			// 	// coords.current.lastX = minLeft;
 
 			// 	// // remove the transition after the animation is complete
 			// 	// setTimeout(() => {
-			// 	// 	target.style.transition = 'none';
+			// 	// 	element.style.transition = 'none';
 			// 	// }, 500);
 			// }
     }
@@ -112,25 +110,25 @@ const useDragger = (id: string, opts: Window) => {
       const nextX = e.clientX - coords.current.startX + coords.current.lastX;
       const nextY = e.clientY - coords.current.startY + coords.current.lastY;
 
-      target.style.top = `${nextY}px`;
-      target.style.left = `${nextX}px`;
+      element.style.top = `${nextY}px`;
+      element.style.left = `${nextX}px`;
 
-			addPositionTagToElement(target);
+			addPositionTagToElement(element);
     }
 
-    target.addEventListener('mousedown', onMouseDown);
-    target.addEventListener('mouseup', onMouseUp);
+    element.addEventListener('mousedown', onMouseDown);
+    element.addEventListener('mouseup', onMouseUp);
     container.addEventListener('mousemove', onMouseMove);
     container.addEventListener('mouseleave', onMouseUp);
 
     const cleanup = () => {
-      target.removeEventListener('mousedown', onMouseDown);
-      target.removeEventListener('mouseup', onMouseUp);
+      element.removeEventListener('mousedown', onMouseDown);
+      element.removeEventListener('mouseup', onMouseUp);
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('mouseleave', onMouseUp);
     }
     return cleanup;
-  }, [id, windowWidth, windowHeight, elementHeight, elementWidth, elementWrapperWidth])
+  }, [element, windowWidth, windowHeight, elementHeight, elementWidth, elementWrapperWidth])
 }
 
 export default useDragger;
