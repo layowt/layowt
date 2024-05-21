@@ -7,6 +7,7 @@ import useElementSize from '@/hooks/useElementSize';
 import { setCanvasZoom } from '@/utils/canvas/utils';
 import { addPositionTagToElement } from '@/utils/canvas/debug';
 import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
+import { url } from '@/utils/canvas/utils';
 
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
@@ -38,7 +39,7 @@ export default function SiteBuilderCanvas() {
       },
       mobile: {
         width:
-          (canvasContainerWrapper.current.offsetWidth / (1600 + 50)) * 1000,
+          390,
         height: 1000
       }
     };
@@ -99,6 +100,8 @@ export default function SiteBuilderCanvas() {
     elementHeight: height,
     elementWidth: width
   });
+
+  //const myUrl = url`user?name=John&age=30`
 
   return (
     <div

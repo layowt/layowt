@@ -5,3 +5,7 @@ export const setCanvasZoom = (
   zoom += event.deltaY * -0.01
   return Math.min(Math.max(0.125, zoom), 4)
 }
+
+export function url () {
+  return arguments[0]
+}
