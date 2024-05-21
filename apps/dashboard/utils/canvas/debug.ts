@@ -25,7 +25,7 @@ export const addPositionTagToElement = (element) => {
     <span>left: ${left}</span>
   `);
   
-  updateDebugTool('.debug-tool-top-right', 'top-0 left-full right-0', `
+  updateDebugTool('.debug-tool-top-right', 'top-0 right-0', `
     <span>top: ${top}</span>
     <span>right: ${right}</span>
   `);
@@ -35,7 +35,7 @@ export const addPositionTagToElement = (element) => {
     <span>left: ${left}</span>
   `);
   
-  updateDebugTool('.debug-tool-bottom-right', 'top-full bottom-0 bottom-0 right-0', `
+  updateDebugTool('.debug-tool-bottom-right', ' bottom-0 bottom-0 right-0', `
     <span>bottom: ${bottom}</span>
     <span>right: ${right}</span>
   `);

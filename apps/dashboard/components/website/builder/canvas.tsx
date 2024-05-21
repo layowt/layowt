@@ -6,6 +6,7 @@ import useWindowSize from '@/hooks/useWindowSize';
 import useElementSize from '@/hooks/useElementSize';
 import { setCanvasZoom } from '@/utils/canvas/utils';
 import { addPositionTagToElement } from '@/utils/canvas/debug';
+import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
 
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
@@ -69,7 +70,11 @@ export default function SiteBuilderCanvas() {
 
   useEffect(() => {
     const currentCanvasContainer = canvasContainer.current;
+
+    detectCanvasOutOfBounds(currentCanvasContainer, canvasContainerWrapper.current);
+
     if (currentCanvasContainer) {
+      addPositionTagToElement(currentCanvasContainer);
       currentCanvasContainer.addEventListener('wheel', handleWheel);
       // Cleanup event listener on component unmount
       return () => {
@@ -104,9 +109,9 @@ export default function SiteBuilderCanvas() {
           willChange: 'transform',
           cursor: 'grab',
           width: deviceSize.width,
-          left: width - (windowSize.width - width),
+          top: canvasContainerWrapper.current?.offsetTop + 20,
+          left: canvasContainerWrapper.current?.offsetLeft + 20,
           height: '90vh',
-          top: 93
         }}
         id="canvas-container"
         ref={canvasContainer}
