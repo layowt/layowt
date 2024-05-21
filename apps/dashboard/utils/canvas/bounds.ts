@@ -27,22 +27,22 @@ export const detectCanvasOutOfBounds = (
 
   // detect if the canvas is out of the wrapper element
   if((offsetTop - 93) < wrapperTop) {
-    canvas.style.transition = 'top 0.5s'
-    canvas.style.top = `${wrapperTop + 120}px`
+    //canvas.style.transition = 'top 0.5s'
+    //canvas.style.top = `${wrapperTop + 120}px`
   }
 
   if(offsetLeft < wrapperLeft) {
-    canvas.style.transition = 'left 0.5s'
+    //canvas.style.transition = 'left 0.5s'
     //canvas.style.left = `${wrapperLeft + 20}px`
   }
 
   if(offsetTop + offsetHeight > wrapperHeight) {
-    canvas.style.transition = 'top 0.5s'
-    canvas.style.top = `${wrapperHeight - offsetHeight - 20}px`
+    //canvas.style.transition = 'top 0.5s'
+    //canvas.style.top = `${wrapperHeight - offsetHeight - 20}px`
   }
 
   if(offsetLeft + offsetWidth > wrapperWidth) {
-    canvas.style.transition = 'left 0.5s'
+    //canvas.style.transition = 'left 0.5s'
     //canvas.style.left = `${wrapperWidth - offsetWidth - 20}px`
   }
 

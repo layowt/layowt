@@ -86,16 +86,19 @@ export default function SiteBuilderCanvas() {
     }
   }, []);
 
+  const { width, height } = useElementSize('canvas-container', currentDevice);
+
   // Pass in the max top value of the wrapper canvas to prevent the user from
   // being able to drag the canvas above that point (outside the viewport)
-  // useDragger('canvas-container', {
-  //   windowWidth: windowSize.width,
-  //   windowHeight: windowSize.height,
-  //   elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,
-  //   elementHeight: height,
-  //   elementWidth: width,
-  //   zoom: zoom
-  // });
+
+  // TODO: CLEAN THIS UP! DOCUMENT.GETELEMENTBYID IS AN ANTI-PATTERN!
+  useDragger('canvas-container', {
+    windowWidth: windowSize.width,
+    windowHeight: windowSize.height,
+    elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,
+    elementHeight: height,
+    elementWidth: width
+  });
 
   return (
     <div
@@ -113,7 +116,6 @@ export default function SiteBuilderCanvas() {
           cursor: 'grab',
           width: deviceSize.width,
           top: canvasContainerWrapper.current?.offsetTop + 20,
-          
           height: '90vh',
         }}
         id="canvas-container"

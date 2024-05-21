@@ -54,14 +54,14 @@ const useDragger = (id: string, opts: Window) => {
 			// we need to reset the value to the max top value
 			if (coords.current.lastY < maxTop) {
 				// add the transition back to smoothly recenter the canvas
-				target.style.transition = 'top 0.5s';
-				target.style.top = `${maxTop + 20}px`;
-				coords.current.lastY = maxTop + 20;
+				// target.style.transition = 'top 0.5s';
+				// target.style.top = `${maxTop + 20}px`;
+				// coords.current.lastY = maxTop + 20;
 
-				// remove the transition after the animation is complete
-				setTimeout(() => {
-					target.style.transition = 'none';
-				}, 500);
+				// // remove the transition after the animation is complete
+				// setTimeout(() => {
+				// 	target.style.transition = 'none';
+				// }, 500);
 			}
 
 			// if the element's top value is greater than its entire height 
@@ -69,39 +69,39 @@ const useDragger = (id: string, opts: Window) => {
 			// as it's outside of the viewport
 			if(coords.current.lastY > maxBottom){
 				// add the transition back to smoothly recenter the canvas
-				target.style.transition = 'top 0.5s';
-				target.style.top = `${maxBottom}px`;
-				coords.current.lastY = maxBottom;
+				// target.style.transition = 'top 0.5s';
+				// target.style.top = `${maxBottom}px`;
+				// coords.current.lastY = maxBottom;
 
-				// remove the transition after the animation is complete
-				setTimeout(() => {
-					target.style.transition = 'none';
-				}, 500);
+				// // remove the transition after the animation is complete
+				// setTimeout(() => {
+				// 	target.style.transition = 'none';
+				// }, 500);
 			}
 
 			
 			if(coords.current.lastX < minLeft){
 				// add the transition back to smoothly recenter the canvas
-				target.style.transition = 'left 0.5s';
-				target.style.left = `${minLeft}px`;
-				coords.current.lastX = minLeft;
-				// remove the transition after the animation is complete
-				setTimeout(() => {
-					target.style.transition = 'none';
-				}, 500);
+				// target.style.transition = 'left 0.5s';
+				// target.style.left = `${minLeft}px`;
+				// coords.current.lastX = minLeft;
+				// // remove the transition after the animation is complete
+				// setTimeout(() => {
+				// 	target.style.transition = 'none';
+				// }, 500);
 			}
 
 			// 'maxRight' is the maximum value that 'left' can be
 			if(coords.current.lastX > maxLeft){
 				// add the transition back to smoothly recenter the canvas
-				target.style.transition = 'left 0.5s';
-				target.style.left = `${minLeft}px`;
-				coords.current.lastX = minLeft;
+				// target.style.transition = 'left 0.5s';
+				// target.style.left = `${minLeft}px`;
+				// coords.current.lastX = minLeft;
 
-				// remove the transition after the animation is complete
-				setTimeout(() => {
-					target.style.transition = 'none';
-				}, 500);
+				// // remove the transition after the animation is complete
+				// setTimeout(() => {
+				// 	target.style.transition = 'none';
+				// }, 500);
 			}
     }
 
