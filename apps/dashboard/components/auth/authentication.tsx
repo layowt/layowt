@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import AuthenticationCardWrapper from './form-wrapper';
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Button } from '../ui/button';
+import { Button } from '@/ui/button';
 import { resendVerificationEmail } from '@/utils/user';
 import useInterval from '@/hooks/useInterval';
 import { toast } from 'sonner';
@@ -10,45 +10,46 @@ import { toast } from 'sonner';
 export default function AuthenticationCard(){
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<string>('');
   const [seconds, setSeconds] = useState(5);
-  
+
   const interval = useInterval(() => setSeconds((s) => s - 1), 1000);
 
-
   const handleAuthenticationSubmit = () => {
-
+    // Handle form submission
   }
 
   useEffect(() => {
-    const email = searchParams.get('email')
-
-    // if we do not have the email in the search params,
-    // we need to redirect the user back to the login
-    // page to start the authentication process again
-    if(!email) {
-      router.push('/login')
+    const emailParam = searchParams.get('email');
+    if (!emailParam) {
+      router.push('/login');
+    } else {
+      setEmail(emailParam);
     }
-    setEmail(email)
-  }, [])
+  }, [router, searchParams]);
 
-  const handleResendEmail = async (e) => {
+  const handleResendEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const { promise } = await resendVerificationEmail(email)
-    // start the interval countdown
-    interval.start();
-  
-    toast.promise(promise, {
-      loading: 'Sending verfication email...',
-      success: () => {
-        return `Check your inbox at ${email} to verify your email.`
-      },
-      classNames: {
-        toast: 'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto'
-      }
-    })
+    if (!email) {
+      toast.error('No email found');
+      return;
+    }
+    try {
+      const { promise } = await resendVerificationEmail(email);
+      interval.start();
+      toast.promise(promise, {
+        loading: 'Sending verification email...',
+        success: `Check your inbox at ${email} to verify your email.`,
+        error: 'Failed to send verification email.',
+        classNames: {
+          toast: 'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto'
+        }
+      });
+    } catch (error) {
+      toast.error('Error resending verification email');
+    }
   }
-  
+
   return (
     <AuthenticationCardWrapper 
       onSubmit={handleAuthenticationSubmit} 
@@ -64,7 +65,7 @@ export default function AuthenticationCard(){
         <Button 
           className='mt-4 w-full'
           variant='secondary'
-          onClick={(e) => handleResendEmail(e)}
+          onClick={handleResendEmail}
           special={false}
         >
           Resend email

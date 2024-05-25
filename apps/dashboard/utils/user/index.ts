@@ -5,6 +5,7 @@ import type { users as user } from '@prisma/client';
 
 import { createClient as createClientClient } from "../supabase/client";
 import { createClient as createServerClient } from "@/utils/supabase/server";
+import { createClient } from '@/utils/supabase/client'
 import { UserResponse } from '@supabase/supabase-js';
 
 const supabase = createServerClient();
@@ -114,6 +115,7 @@ export const getUserFromSession = () => {
 }
 
 export const resendVerificationEmail = async (email: string) => {
+	const supabase = createClient();
 	// var to hold the promise once resolved
 	let promise: Promise<void>;
 
