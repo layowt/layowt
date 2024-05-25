@@ -8,8 +8,6 @@ import { createClient as createServerClient } from "@/utils/supabase/server";
 import { createClient } from '@/utils/supabase/client'
 import { UserResponse } from '@supabase/supabase-js';
 
-const supabase = createServerClient();
-
 /**
  * 
  * Get a user from the database via a given id
@@ -52,6 +50,8 @@ export const getClientUser = async(): Promise<UserResponse> => {
  * @returns 
  */
 export const login = async (email: string, password: string) => {
+	const supabase = createServerClient();
+
 	if(!supabase) throw new Error('No supabase client found')
 
 	if(!email || !password) throw new Error('Email and password are required')
@@ -88,6 +88,8 @@ export const login = async (email: string, password: string) => {
  * @returns 
  */
 export const passwordReset = async (email: string) => {
+	const supabase = createServerClient();
+
 	if(!supabase) throw new Error('No supabase client found')
 
 	if(!email) throw new Error('Email is required')
@@ -111,6 +113,8 @@ export const passwordReset = async (email: string) => {
  * @returns 
  */
 export const getUserFromSession = () => {
+	const supabase = createServerClient();
+
 	return supabase?.auth?.getUser();
 }
 

@@ -46,7 +46,7 @@ export default function AuthenticationCard(){
         }
       });
     } catch (error) {
-      toast.error('Error resending verification email');
+      toast.error('Error resending verification email', error);
     }
   }
 
