@@ -7,6 +7,8 @@ import { createClient as createClientClient } from "../supabase/client";
 import { createClient as createServerClient } from "@/utils/supabase/server";
 import { UserResponse } from '@supabase/supabase-js';
 
+const supabase = createServerClient();
+
 /**
  * 
  * Get a user from the database via a given id
@@ -49,8 +51,6 @@ export const getClientUser = async(): Promise<UserResponse> => {
  * @returns 
  */
 export const login = async (email: string, password: string) => {
-	const supabase = createServerClient();
-
 	if(!supabase) throw new Error('No supabase client found')
 
 	if(!email || !password) throw new Error('Email and password are required')
@@ -87,8 +87,6 @@ export const login = async (email: string, password: string) => {
  * @returns 
  */
 export const passwordReset = async (email: string) => {
-	const supabase = createServerClient();
-
 	if(!supabase) throw new Error('No supabase client found')
 
 	if(!email) throw new Error('Email is required')
@@ -112,7 +110,32 @@ export const passwordReset = async (email: string) => {
  * @returns 
  */
 export const getUserFromSession = () => {
-	const supabase = createServerClient();
-
 	return supabase?.auth?.getUser();
+}
+
+export const resendVerificationEmail = async (email: string) => {
+	// var to hold the promise once resolved
+	let promise: Promise<void>;
+
+	try{
+		if(!email) throw new Error('No email provided')
+
+		promise = new Promise<void>(async(resolve) => {
+			await supabase.auth.resend({
+				type: 'signup',
+				email,
+				options: {
+					emailRedirectTo: '/dashboard'
+				}
+			});
+			resolve();
+		});
+	}catch(error){
+		console.error('Error resending verification email:', error)
+	}
+
+	return {
+		promise,
+		email
+	}
 }

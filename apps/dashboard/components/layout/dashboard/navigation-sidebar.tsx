@@ -15,9 +15,7 @@ export default async function DashboardSidebar() {
 
   return (
     <section
-      className="
-					min-w-48 min-h-screen flex flex-col text-white font-poppins bg-black-300
-				"
+      className="min-w-48 min-h-screen flex flex-col text-white font-poppins bg-black-300"
     >
       <div className="border-b border-black-50 relative -top-px">
         <SiteLogo className="py-4 px-4" />
