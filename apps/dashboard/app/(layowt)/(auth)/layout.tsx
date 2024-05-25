@@ -12,7 +12,7 @@ export default async function SignUpLayout({
 
   return (
     <div className="min-h-full w-full bg-grid-small-white/5 relative flex items-center justify-center">
-      <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-[#05050A] [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black-300 [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
       <div className="w-full flex justify-between p-5 absolute top-0">
         <SiteLogo className="text-white z-20 hover:cursor-auto" />
         <div className="z-20 text-white flex items-center text-sm gap-x-4 font-inter font-semibold">

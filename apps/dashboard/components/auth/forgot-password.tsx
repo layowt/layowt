@@ -59,7 +59,7 @@ export default function PasswordRestForm() {
         e.preventDefault();
         sendPasswordResetLink();
       }}
-      className="flex flex-col gap-y-8 bg-[#05050A] border border-black-50 rounded-xl py-12 px-8 w-80 lg:w-[450px]"
+      className="flex flex-col gap-y-8 bg-black-300 border border-black-50 rounded-xl py-12 px-8 w-80 lg:w-[450px]"
     >
       <h3 className="animate-text text-3xl flex justify-center w-full text-center font-semibold bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text">
         Reset your password
