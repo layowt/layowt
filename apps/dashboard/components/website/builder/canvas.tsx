@@ -25,7 +25,6 @@ export default function SiteBuilderCanvas() {
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
   const isElementDragged = useAppSelector(isDragged);
 
-
   // Setting the size of the canvas via the deviceType
   const [deviceSize, setDeviceSize] = useState({
     width: 1024,

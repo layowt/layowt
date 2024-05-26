@@ -1,8 +1,15 @@
-export const addPositionTagToElement = (element) => {
-  if (!element) return;
+'use client'
+import { showDebugTools as storeDebugTools } from '@/store/slices/canvas'
+import { useAppSelector } from '../index';
 
+export const addPositionTagToElement = (element) => {
+  const showDebugTools = useAppSelector(storeDebugTools);
+  // If the debug tools are not enabled, return early
+  if(!showDebugTools) return;
+
+  if (!element) return;
   // Get the bounding client rectangle of the element
-  const { left, top, right, bottom, width, height } = element.getBoundingClientRect();
+  const { left, top, right, bottom } = element.getBoundingClientRect();
 
   // Define a function to create or update debug tools
   const updateDebugTool = (selector, positionClass, content) => {

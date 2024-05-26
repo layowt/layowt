@@ -1,5 +1,6 @@
 'use server';
 import SiteBuilderNavBar from '@/components/layout/site-builder/navigation-navbar';
+import DebugTools from '@/components/website/builder/debug-tools';
 
 export default async function SiteBuilderLayout({
   children
@@ -19,6 +20,7 @@ export default async function SiteBuilderLayout({
         {/** Right side column on dashboard (placeholder for now) */}
         <div className="bg-black-75 h-screen w-1/6 fixed right-0 border-l border-black-50"></div>
       </div>
+      <DebugTools />
     </div>
   );
 }
