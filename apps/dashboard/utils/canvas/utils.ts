@@ -6,6 +6,23 @@ export const setCanvasZoom = (
   return Math.min(Math.max(0.125, zoom), 4)
 }
 
-export function url () {
-  return arguments[0]
+/**
+ * Util to center the canvas in the viewport
+ * 
+ * @param canvasContainer 
+ */
+export const recenterCanvas = (
+  canvasContainer: HTMLDivElement | null,
+) => {
+  if(!canvasContainer) return
+
+  // remove the left and top attributes on the canvasContainer
+  // this will recenter the canvas in the viewport
+
+  // reset the left and top attributes
+  canvasContainer.style.left = ''
+  canvasContainer.style.top = ''
+
+  // reset the zoom
+  canvasContainer.style.transform = 'scale(1)'
 }

@@ -1,14 +1,23 @@
+// react
 import { useRef, useEffect, useState } from 'react';
-import { device } from '@/store/slices/index';
-import { useAppSelector } from '@/utils/index';
+
+// hooks
 import useDragger from '@/hooks/builder/useDragger';
 import useWindowSize from '@/hooks/useWindowSize';
 import useElementSize from '@/hooks/useElementSize';
+
+// utils
 import { setCanvasZoom } from '@/utils/canvas/utils';
 import { addPositionTagToElement } from '@/utils/canvas/debug';
 import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
+import { useAppSelector } from '@/utils/index';
+
+// store
 import { isDragged } from '@/store/slices/canvas';
-import { motion } from 'framer-motion';
+import { device } from '@/store/slices/index';
+
+// framer motion
+import SiteBuilderRecenterButton from './recenter';
 
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
@@ -111,8 +120,7 @@ export default function SiteBuilderCanvas() {
     >
       <div
         className="
-        size-0 fixed bg-white 
-        border border-black-50
+        size-0 fixed bg-white border border-black-50
       "
         style={{
           isolation: 'isolate',
@@ -134,24 +142,11 @@ export default function SiteBuilderCanvas() {
           }}
           id="canvas"
         >
-          <span className='absolute top-20'>
-
-          </span>
         </div>
       </div>
+      {/* Show the recenter button when the canvas is dragged */}
       {isElementDragged === true && (
-        <motion.button 
-          className="
-            bottom-5 bg-electric-violet-500 rounded-md absolute 
-            px-5 py-2 font-satoshi font-medium
-          "
-          aria-label='Recenter the canvas'
-          transition={{ duration: 0.25 }}
-          initial={{ bottom: -10 }}
-          animate={{ bottom: 10 }}
-        >
-          Recenter
-        </motion.button>
+        <SiteBuilderRecenterButton canvasContainer={canvasContainer} />
       )}
     </div>
   );
