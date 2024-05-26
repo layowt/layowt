@@ -8,12 +8,12 @@ export default async function SiteBuilderLayout({
 }) {
   return (
     <div className="h-screen text-white overflow-hidden">
-      <div className="fixed top-0 right-0 left-0 box-content z-10">
+      <div className="fixed top-0 right-0 left-0 box-content z-50">
         <SiteBuilderNavBar />
       </div>
       <div className="flex justify-center relative">
         {/** Left side column on dashboard (placeholder for now) */}
-        <div className="bg-black-75 h-screen w-1/6 fixed left-0 border-r border-black-50"></div>
+        <div className="bg-black-75 h-screen w-1/6 fixed left-0 border-r border-black-50 z-40"></div>
         {/** canvas entry point */}
           {children}
         {/** Right side column on dashboard (placeholder for now) */}

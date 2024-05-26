@@ -35,7 +35,7 @@ export const addPositionTagToElement = (element) => {
     <span>left: ${left}</span>
   `);
   
-  updateDebugTool('.debug-tool-bottom-right', ' bottom-0 bottom-0 right-0', `
+  updateDebugTool('.debug-tool-bottom-right', 'bottom-0 right-0', `
     <span>bottom: ${bottom}</span>
     <span>right: ${right}</span>
   `);
