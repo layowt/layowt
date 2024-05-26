@@ -7,7 +7,6 @@ import { setShowDebugTools } from '@/store/slices/canvas'
 
 export default function DebugTools() {
   const dispatch = useAppDispatch();
-
   return (
     <div className="flex flex-col items-center gap-y-2 absolute top-full left-full bottom-5 right-5">
       <Label htmlFor="debug-tools">

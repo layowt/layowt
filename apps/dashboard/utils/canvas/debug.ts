@@ -1,9 +1,8 @@
 'use client'
-import { showDebugTools as storeDebugTools } from '@/store/slices/canvas'
-import { useAppSelector } from '../index';
+import useDebugTools from "@/hooks/builder/useDebugTools";
 
 export const addPositionTagToElement = (element) => {
-  const showDebugTools = useAppSelector(storeDebugTools);
+  const showDebugTools = useDebugTools();
   // If the debug tools are not enabled, return early
   if(!showDebugTools) return;
 
