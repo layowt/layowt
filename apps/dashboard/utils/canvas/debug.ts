@@ -2,9 +2,9 @@
 import useDebugTools from "@/hooks/builder/useDebugTools";
 
 export const addPositionTagToElement = (element) => {
-  const showDebugTools = useDebugTools();
+  //const showDebugTools = useDebugTools();
   // If the debug tools are not enabled, return early
-  if(!showDebugTools) return;
+  //if(!showDebugTools) return;
 
   if (!element) return;
   // Get the bounding client rectangle of the element
