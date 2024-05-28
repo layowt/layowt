@@ -52,7 +52,8 @@ export default function SignUpForm() {
     return Boolean(password.length > 8);
   };
 
-  const handleRegistration = async () => {
+  const handleRegistration = async (e) => {
+    e.preventDefault();
     // set the loading spinner to true
     setIsLoading(true);
     // try to create the user
@@ -84,10 +85,9 @@ export default function SignUpForm() {
   return (
     <form
       onSubmit={(e) => {
-        e.preventDefault();
-        handleRegistration();
+        handleRegistration(e)
       }}
-      className="flex flex-col gap-y-8 bg-[#05050A] border border-black-50 rounded-xl py-12 px-8 w-80 lg:w-[450px]"
+      className="flex flex-col gap-y-8 bg-black-300 border border-black-50 rounded-xl py-12 px-8 w-80 lg:w-[450px]"
     >
       <h3 className="animate-text text-3xl flex justify-center w-full text-center font-semibold bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text">
         Your businesses future, starting today.

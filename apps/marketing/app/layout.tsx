@@ -53,12 +53,12 @@ export default function RootLayout({
     >
       <CSPostHogProvider>
         <body
-          className="bg-[#05050A] min-h-screen max-h-screen flex justify-center items-center"
+          className="bg-black-300 min-h-screen max-h-screen flex justify-center items-center"
           suppressHydrationWarning={true}
         >
           <Theme>
-            <div className="min-h-full w-full bg-[#05050A] bg-dot-white/[0.2] relative flex items-center justify-center">
-              <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-[#05050A] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+            <div className="min-h-full w-full bg-black-300 bg-dot-white/[0.2] relative flex items-center justify-center">
+              <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black-300 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
               <div className="flex flex-col relative">
                 <header className="flex items-center justify-between p-7 w-full text-white absolute top-0 z-30">
                   <SiteLogo

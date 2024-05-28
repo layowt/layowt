@@ -37,7 +37,6 @@ export const deleteWebsite = async(websiteId: string) => {
 	// delete the site's files from the storage
 	const websiteFiles = websiteUploads.data.filter((file) => file.name.includes(websiteId));
 
-
 	websiteFiles.forEach(async (file) => {
 		await supabase.storage.from('websites').remove([file.name]);
 	});

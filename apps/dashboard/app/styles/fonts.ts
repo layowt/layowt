@@ -25,7 +25,7 @@ export const InterFont = Inter({
 });
 
 export const SatoshiFont = localFont({
-  src: './TTF/Satoshi-Variable.ttf',
+  src: './fonts/Satoshi-Variable.ttf',
   variable: '--font-satoshi',
   style: 'normal',
   weight:'100 200 300 400 500 600 700 800 900'
