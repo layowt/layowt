@@ -2,8 +2,7 @@
 import LoginNavigation from '@/components/auth/layout/login';
 import SignupNavigation from '@/components/auth/layout/sign-up';
 import SiteLogo from '@/components/logo';
-import Link from 'next/link';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export default async function SignUpLayout({
   children
