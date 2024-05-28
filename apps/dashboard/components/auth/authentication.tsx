@@ -98,9 +98,8 @@ export default function AuthenticationCard(){
             <Tooltip>
               <TooltipTrigger 
                 className={`
-                  bg-white text-black px-4 h-10
-                  duration-300 hover:bg-electric-violet-500/60 
-                  rounded-xl hover:rounded-xl font-satoshi
+                  bg-white text-black px-4 h-10 font-medium
+                  duration-300 rounded-xl hover:rounded-lg font-satoshi
                   ${
                     seconds == 0
                       ? 'hover:cursor-pointer'
@@ -127,6 +126,7 @@ export default function AuthenticationCard(){
             variant='secondary'
             className='w-full'
             special={false}
+            hoverEffect={false}
           >
             Confirm
           </Button>
