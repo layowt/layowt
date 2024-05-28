@@ -7,9 +7,17 @@ import {
 
 import { websites as Website } from '@prisma/client';
 import Link from 'next/link';
+
 import WebsiteCardModal from '@/components/modals/dashboard/website-card-modal';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/ui/tooltip';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+
 import { motion } from 'framer-motion';
 import { getEnv } from '@/utils/index';
 
@@ -51,9 +59,30 @@ export default function WebsiteCard(website: Website, index: number) {
         <div className="flex w-full justify-between items-center mt-8">
           <div className="flex flex-col gap-y-2">
             <div className="flex gap-x-2 items-center">
-              <span className="text-heading-xl text-white">
-                {website.websiteName}
-              </span>
+              <TooltipProvider delayDuration={0}>
+                <Tooltip>
+                  <TooltipTrigger className="group flex items-center gap-x-2">
+                    {website?.hasBeenPublished ? (
+                      <>
+                        <div className="bg-green-500 rounded-full size-2 animate-pulse"></div>
+                        <TooltipContent side="bottom" className='bg-black-75'> 
+                          <p className="text-xs">Website Published!</p>
+                        </TooltipContent>
+                      </>
+                    ) : (
+                      <>
+                      <div className="bg-red-500 rounded-full size-2 animate-pulse"></div>
+                      <TooltipContent side="bottom" className='bg-black-75'> 
+                        <p className="text-xs">Website not published - Publish</p>
+                      </TooltipContent>
+                      </>
+                    )}
+                    <span className="text-heading-xl text-white">
+                      {website.websiteName}
+                    </span>
+                  </TooltipTrigger>
+                </Tooltip>
+              </TooltipProvider>
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
             <Link
@@ -61,7 +90,7 @@ export default function WebsiteCard(website: Website, index: number) {
               className="text-xs text-white/50 hover:underline font-inter"
               prefetch
             >
-              {website.websiteUrl || 'Not Published'}
+              {website?.websiteUrl || 'Not Published'}
             </Link>
           </div>
           <DropdownMenu key={website?.websiteId}>
