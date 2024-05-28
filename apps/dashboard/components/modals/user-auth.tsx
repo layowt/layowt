@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 // use router as we are in a client component
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import WaitingForAuth from './modalContent/user-auth';
 // shadcn imports
 import { Dialog, DialogContent } from '@/ui/dialog';
 import { Button } from '@/ui/button';
