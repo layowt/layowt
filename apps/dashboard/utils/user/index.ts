@@ -1,5 +1,4 @@
 'use server'
-
 import { prisma } from '@/utils/prisma';
 import type { users as user } from '@prisma/client';
 
@@ -116,32 +115,4 @@ export const getUserFromSession = () => {
 	const supabase = createServerClient();
 
 	return supabase?.auth?.getUser();
-}
-
-export const resendVerificationEmail = async (email: string) => {
-	const supabase = createClient();
-	// var to hold the promise once resolved
-	let promise: Promise<void>;
-
-	try{
-		if(!email) throw new Error('No email provided')
-
-		promise = new Promise<void>(async(resolve) => {
-			await supabase.auth.resend({
-				type: 'signup',
-				email,
-				options: {
-					emailRedirectTo: '/dashboard'
-				}
-			});
-			resolve();
-		});
-	}catch(error){
-		console.error('Error resending verification email:', error)
-	}
-
-	return {
-		promise,
-		email
-	}
 }

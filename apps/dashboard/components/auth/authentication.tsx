@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import AuthenticationCardWrapper from './form-wrapper';
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from '@/ui/button';
-import { resendVerificationEmail } from '@/utils/user';
 import useInterval from '@/hooks/useInterval';
 import { toast } from 'sonner';
+import { createClient } from '@/utils/supabase/client'
+
 
 export default function AuthenticationCard(){
   const router = useRouter();
@@ -35,11 +36,23 @@ export default function AuthenticationCard(){
       return;
     }
     try {
-      const { promise } = await resendVerificationEmail(email);
-      interval.start();
+      const supabase = createClient();
+
+		  const promise = () => 
+		  	new Promise<void>(async(resolve) => {
+		  		await supabase.auth.resend({
+		  			type: 'signup',
+		  			email,
+		  			options: {
+		  				emailRedirectTo: '/dashboard'
+		  			}
+		  		});
+		  		resolve();
+		  	});
+	
       toast.promise(promise, {
         loading: 'Sending verification email...',
-        success: `Check your inbox at ${email} to verify your email.`,
+        success: () => `Check your inbox at ${email} to verify your email.`,
         error: 'Failed to send verification email.',
         classNames: {
           toast: 'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto'
@@ -56,20 +69,30 @@ export default function AuthenticationCard(){
       className="text-white font-satoshi justify-center items-center lg:w-[500px]"
     >
       <div className="flex flex-col gap-y-4 items-center">
-        <h1 className="text-heading-3xl">
+        <h1 className="text-heading-3xl text-center">
           Waiting for authentication
         </h1>
         <div className="flex flex-col gap-y-4 text-center inter-text-sm">
           In order to check you are a real human, please go to {email} and click the link in the email.
         </div>
-        <Button 
-          className='mt-4 w-full'
-          variant='secondary'
-          onClick={handleResendEmail}
-          special={false}
-        >
-          Resend email
-        </Button>
+        <div className="mt-4 w-full flex gap-x-2 items-center justify-center">
+          <Button 
+            className='w-full'
+            variant='tertiary'
+            onClick={handleResendEmail}
+            special={false}
+            >
+            Resend email
+          </Button>
+
+          <Button
+            variant='secondary'
+            className='w-full'
+            special={false}
+          >
+            Confirm
+          </Button>
+        </div>
       </div>
     </AuthenticationCardWrapper>
   )
