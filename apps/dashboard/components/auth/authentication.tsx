@@ -1,12 +1,23 @@
 'use client'
 import { useEffect, useState } from 'react';
-import AuthenticationCardWrapper from './form-wrapper';
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Button } from '@/ui/button';
-import useInterval from '@/hooks/useInterval';
-import { toast } from 'sonner';
-import { createClient } from '@/utils/supabase/client'
 
+// hooks
+import useInterval from '@/hooks/useInterval';
+
+// components
+import AuthenticationCardWrapper from './form-wrapper';
+import { Button } from '@/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/ui/tooltip';
+import { toast } from 'sonner';
+
+// utils
+import { createClient } from '@/utils/supabase/client'
 
 export default function AuthenticationCard(){
   const router = useRouter();
@@ -19,6 +30,11 @@ export default function AuthenticationCard(){
   const handleAuthenticationSubmit = () => {
     // Handle form submission
   }
+
+  useEffect(() => {
+    interval.start();
+    return interval.stop
+  }, [])
 
   useEffect(() => {
     const emailParam = searchParams.get('email');
@@ -49,7 +65,9 @@ export default function AuthenticationCard(){
 		  		});
 		  		resolve();
 		  	});
-	
+      setSeconds(5);
+
+      interval.start();
       toast.promise(promise, {
         loading: 'Sending verification email...',
         success: () => `Check your inbox at ${email} to verify your email.`,
@@ -76,14 +94,34 @@ export default function AuthenticationCard(){
           In order to check you are a real human, please go to {email} and click the link in the email.
         </div>
         <div className="mt-4 w-full flex gap-x-2 items-center justify-center">
-          <Button 
-            className='w-full'
-            variant='tertiary'
-            onClick={handleResendEmail}
-            special={false}
-            >
-            Resend email
-          </Button>
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger 
+                className={`
+                  bg-white text-black px-4 h-10
+                  duration-300 hover:bg-electric-violet-500/60 
+                  rounded-xl hover:rounded-xl font-satoshi
+                  ${
+                    seconds == 0
+                      ? 'hover:cursor-pointer'
+                      : 'hover:cursor-not-allowed'
+                  }
+                `}
+                autoFocus={false}
+                disabled={seconds != 0}
+                onClick={handleResendEmail}
+                >
+                Resend email
+              </TooltipTrigger>
+              {seconds != 0 ? (
+                <TooltipContent side="bottom">
+                  <p className="text-xs">Resend Email in {seconds} seconds</p>
+                </TooltipContent>
+                ) : (
+                  ''
+                )}
+            </Tooltip>
+          </TooltipProvider>
 
           <Button
             variant='secondary'
