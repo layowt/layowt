@@ -1,15 +1,24 @@
 import { GearIcon, LayoutIcon, FileIcon } from "@radix-ui/react-icons"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/ui/tooltip';
 
 export default function SiteBuilderOptions() {
   const items = [
     {
       icon: <FileIcon className="size-4" />,
+      toolTip: 'Pages'
     },
     {
       icon: <LayoutIcon className="size-4" />,
+      toolTip: 'Layout'
     },  
     {
       icon: <GearIcon className="size-4" />,
+      toolTip: 'Settings'
     }
   ]
 
@@ -45,12 +54,21 @@ export default function SiteBuilderOptions() {
           "
         >
           {items.map((item, index) => (
-            <button 
-              key={index} 
-              className="flex justify-center items-center w-full p-1 rounded-lg"
-            >
-              {item.icon}
-            </button>
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button 
+                    key={index} 
+                    className="flex justify-center items-center w-full p-1 rounded-lg"
+                    >
+                    {item.icon}
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-black-75 border border-black-50 z-[100]">
+                  {item.toolTip}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           ))}
         </div>
       </div>
