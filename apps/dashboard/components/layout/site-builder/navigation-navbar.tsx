@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function SiteBuilderNavBar() {
   return (
-    <nav className="p-4 border-b border-black-50 bg-black-300 flex items-center justify-between relative">
+    <nav className="p-4 border-b border-black-50 bg-black-300 flex items-center justify-between relative shadow-md shadow-black-100">
       {/* <SiteLogo className="text-white" /> */}
       <div className="flex items-center gap-x-4 w-1/3">
         <Link
