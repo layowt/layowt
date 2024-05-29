@@ -4,17 +4,20 @@ import { RootState } from "../store";
 import type { websites as Website } from "@prisma/client";
 
 export type SavingState = 'idle' | 'saving' | 'error'
+export type SectionState = 'pages' | 'layout' | 'settings'
 
 type WebsiteTypeState = {
 	website: Website | null // singular site
 	websites: Website[] | null // multiple sites
-	saving: SavingState
+	saving: SavingState,
+	currentSection: SectionState
 }
 
 const initialState: WebsiteTypeState = {
 	website: null,
 	websites: [],
 	saving: 'idle',
+	currentSection: 'pages'
 }
 
 const websiteSlice = createSlice({
@@ -33,6 +36,9 @@ const websiteSlice = createSlice({
 		},
 		removeWebsite: (state, action: PayloadAction<Website>) => {
 			state.websites = state.websites?.filter(website => website.websiteId !== action.payload.websiteId)
+		},
+		setCurrentSection: (state, action: PayloadAction<SectionState>) => {
+			state.currentSection = action.payload
 		}
 	}
 })
@@ -41,9 +47,12 @@ export const {
 	setWebsite,
 	setSavingState,
 	setWebsites,
-	removeWebsite
+	removeWebsite,
+	setCurrentSection
 } = websiteSlice.actions
 
 export const website = (state: RootState) => state.website.website
 export const saving = (state: RootState) => state.website.saving
+export const currentSection = (state: RootState) => state.website.currentSection
+
 export default websiteSlice.reducer
