@@ -24,7 +24,7 @@ export default function SiteBuilderOptions() {
   const handleButtonClick = useCallback(
     (section: SectionState) => {
       dispatch(setCurrentSection(section))
-      router.push(pathname + '?' + createQueryString('s', section))
+      router.replace(pathname + '?' + createQueryString('s', section))
     },
     [dispatch]
   )
@@ -37,7 +37,6 @@ export default function SiteBuilderOptions() {
       dispatch(setCurrentSection(section))
       return;
     }
-
     router.push(pathname + '?' + createQueryString('s', currentSelectedSection))
   }, [])
 
@@ -107,7 +106,7 @@ export default function SiteBuilderOptions() {
                   <button 
                     key={index} 
                     className={cn(
-                      'flex justify-center items-center w-full p-1 rounded-lg',
+                      'flex justify-center items-center w-full px-1 py-2 rounded-lg',
                       currentSelectedSection === item.name ? 'bg-black-50' : ''
                     )}
                     onClick={item.onClick}
