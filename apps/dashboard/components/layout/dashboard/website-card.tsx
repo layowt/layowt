@@ -64,14 +64,20 @@ export default function WebsiteCard(website: Website, index: number) {
                   <TooltipTrigger className="group flex items-center gap-x-2">
                     {website?.hasBeenPublished ? (
                       <>
-                        <div className="bg-green-500 rounded-full size-2 animate-pulse"></div>
+                        <span className="relative flex size-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full size-2 bg-green-600"></span>
+                        </span>
                         <TooltipContent side="bottom" className='bg-black-75 border border-black-50 z-[100]'> 
                           <p className="text-xs">Website Published!</p>
                         </TooltipContent>
                       </>
                     ) : (
                       <>
-                        <div className="bg-red-500 rounded-full size-2 animate-pulse"></div>
+                        <span className="relative flex size-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full size-2 bg-red-600"></span>
+                        </span>
                         <TooltipContent side="bottom" className='bg-black-75 border border-black-50 z-[100]'> 
                           <p className="text-xs">Website not published - Publish</p>
                         </TooltipContent>
