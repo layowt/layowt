@@ -100,13 +100,15 @@ export default function SiteBuilderOptions() {
           className="px-2 py-4 w-12 border-r border-black-50 flex flex-col gap-y-3"
         >
           {items.map((item, index) => (
-            <TooltipProvider delayDuration={0}>
+            <TooltipProvider 
+              key={index} 
+              delayDuration={0}
+            >
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button 
-                    key={index} 
                     className={cn(
-                      'flex justify-center items-center w-full px-1 py-2 rounded-lg',
+                      'flex justify-center items-center w-full px-1 py-2 rounded-md',
                       currentSelectedSection === item.name ? 'bg-black-50' : ''
                     )}
                     onClick={item.onClick}
