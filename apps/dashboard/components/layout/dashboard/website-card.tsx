@@ -65,24 +65,24 @@ export default function WebsiteCard(website: Website, index: number) {
                     {website?.hasBeenPublished ? (
                       <>
                         <div className="bg-green-500 rounded-full size-2 animate-pulse"></div>
-                        <TooltipContent side="bottom" className='bg-black-75'> 
+                        <TooltipContent side="bottom" className='bg-black-75 border border-black-50 z-[100]'> 
                           <p className="text-xs">Website Published!</p>
                         </TooltipContent>
                       </>
                     ) : (
                       <>
-                      <div className="bg-red-500 rounded-full size-2 animate-pulse"></div>
-                      <TooltipContent side="bottom" className='bg-black-75'> 
-                        <p className="text-xs">Website not published - Publish</p>
-                      </TooltipContent>
+                        <div className="bg-red-500 rounded-full size-2 animate-pulse"></div>
+                        <TooltipContent side="bottom" className='bg-black-75 border border-black-50 z-[100]'> 
+                          <p className="text-xs">Website not published - Publish</p>
+                        </TooltipContent>
                       </>
                     )}
-                    <span className="text-heading-xl text-white">
-                      {website.websiteName}
-                    </span>
-                  </TooltipTrigger>
+                    </TooltipTrigger>
                 </Tooltip>
               </TooltipProvider>
+              <span className="text-heading-xl text-white">
+                {website.websiteName}
+              </span>
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
             <Link
