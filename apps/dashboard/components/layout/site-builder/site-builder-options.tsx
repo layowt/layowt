@@ -24,7 +24,9 @@ export default function SiteBuilderOptions() {
   const handleButtonClick = useCallback(
     (section: SectionState) => {
       dispatch(setCurrentSection(section))
-      router.replace(pathname + '?' + createQueryString('s', section))
+      router.push(
+        pathname + '?' + createQueryString('s', section)
+      )
     },
     [dispatch]
   )
