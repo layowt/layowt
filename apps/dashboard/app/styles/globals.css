@@ -134,4 +134,8 @@
   .inter-text-xs {
     @apply font-inter text-xs
   }
+
+  .mt-navbar {
+    @apply h-[calc(100vh-73px)]
+  }
 }

@@ -114,7 +114,7 @@ export default function SiteBuilderCanvas() {
 
   return (
     <div
-      className="w-4/6 h-[calc(100vh-73px)] fixed overflow-hidden flex justify-center items-center bottom-0"
+      className="w-4/6 mt-navbar bg-black-75 fixed overflow-hidden flex justify-center items-center bottom-0"
       ref={canvasContainerWrapper}
     >
       <div
