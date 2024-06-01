@@ -21,7 +21,7 @@ const useCreateQueryString = () => {
   );
 }
 
-const useQueryParams = ({ name }: Props) => {
+const useQueryParams = ({ name, value }: Props) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
