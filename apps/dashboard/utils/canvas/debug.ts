@@ -1,6 +1,8 @@
 'use client'
 import useDebugTools from "@/hooks/builder/useDebugTools";
 
+const roundNum = (num) => Math.round(num * 100) / 100;
+
 export const addPositionTagToElement = (element) => {
   //const showDebugTools = useDebugTools();
   // If the debug tools are not enabled, return early
@@ -27,22 +29,22 @@ export const addPositionTagToElement = (element) => {
 
   // Update or create debug tools for each corner
   updateDebugTool('.debug-tool-top-left', 'top-0 left-0', `
-    <span>top: ${top}</span>
-    <span>left: ${left}</span>
+    <span>top: ${roundNum(top)}</span>
+    <span>left: ${roundNum(left)}</span>
   `);
   
   updateDebugTool('.debug-tool-top-right', 'top-0 right-0', `
-    <span>top: ${top}</span>
-    <span>right: ${right}</span>
+    <span>top: ${roundNum(top)}</span>
+    <span>right: ${roundNum(right)}</span>
   `);
   
   updateDebugTool('.debug-tool-bottom-left', 'bottom-0 left-0', `
-    <span>bottom: ${bottom}</span>
-    <span>left: ${left}</span>
+    <span>bottom: ${roundNum(bottom)}</span>
+    <span>left: ${roundNum(left)}</span>
   `);
   
   updateDebugTool('.debug-tool-bottom-right', 'bottom-0 right-0', `
-    <span>bottom: ${bottom}</span>
-    <span>right: ${right}</span>
+    <span>bottom: ${roundNum(bottom)}</span>
+    <span>right: ${roundNum(right)}</span>
   `);
 };
