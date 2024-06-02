@@ -13,15 +13,12 @@ export const setCanvasZoom = (
  */
 export const recenterCanvas = (
   canvasContainer: HTMLDivElement | null,
+  canvasContainerWrapper: HTMLDivElement | null
 ) => {
-  if(!canvasContainer) return
+  if(!canvasContainer || canvasContainerWrapper) return
 
-  // remove the left and top attributes on the canvasContainer
-  // this will recenter the canvas in the viewport
-
-  // reset the left and top attributes
-  canvasContainer.style.left = ''
-  canvasContainer.style.top = ''
+  // reset the position of the canvas by getting the
+  
 
   // reset the zoom
   canvasContainer.style.transform = 'scale(1)'

@@ -114,13 +114,16 @@ export default function SiteBuilderCanvas() {
 
   return (
     <div
-      className="w-4/6 mt-navbar bg-black-75 fixed overflow-hidden flex justify-center items-center bottom-0"
+      className="
+        w-4/6 mt-navbar bg-black-75 fixed overflow-hidden 
+        flex justify-center items-center bottom-0
+      "
       ref={canvasContainerWrapper}
     >
       <div
         className="
-        size-0 fixed bg-white border border-black-50
-      "
+          size-0 fixed bg-white border border-black-50
+        "
         style={{
           isolation: 'isolate',
           willChange: 'transform',
@@ -145,7 +148,7 @@ export default function SiteBuilderCanvas() {
       </div>
       {/* Show the recenter button when the canvas is dragged */}
       {isElementDragged === true && (
-        <SiteBuilderRecenterButton canvasContainer={canvasContainer} />
+        <SiteBuilderRecenterButton canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
       )}
     </div>
   );
