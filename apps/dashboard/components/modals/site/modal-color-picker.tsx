@@ -1,21 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
 import { HexColorInput, HexColorPicker } from 'react-colorful';
+import { isLightOrDark } from '@/utils/colors';
 
-interface ModalPrimaryColorProps {
-  secondaryColor: string;
-  onColorChange: (color: string) => void;
+export function ModalColorPickerTrigger({
+  color,
+  content
+}: {
+  color: string,
+  content?: ReactNode
+}){
+  return (
+    <DialogTrigger asChild>
+      <div className="flex gap-x-2 items-center hover:cursor-pointer">
+        {content}
+        <div
+          className="rounded-full size-8 border"
+          style={{ 
+            backgroundColor: color,
+            border: isLightOrDark(color) === 'light' ? '1px solid #000' : '1px solid #fff'
+          }}
+        ></div>
+        <p className="font-extralight text-[10px]">{color}</p>
+      </div>
+    </DialogTrigger>
+  )
 }
 
-export default function ModalSecondaryColor({
-  secondaryColor,
-  onColorChange
-}: ModalPrimaryColorProps) {
-  const [color, setColor] = useState(secondaryColor);
+interface ModalColorProps {
+  color: string;
+  onColorChange: (color: string) => void;
+  showTitle?: boolean;
+  trigger: ReactNode;
+}
+
+export default function ModalColorPicker({
+  color,
+  onColorChange,
+  trigger
+}: ModalColorProps) {
+  const [colour, setColor] = useState(color);
 
   useEffect(() => {
-    setColor(secondaryColor);
-  }, [secondaryColor]);
+    setColor(color);
+  }, [color]);
 
   const handleColorChange = (newColor) => {
     setColor(newColor);
@@ -25,16 +53,7 @@ export default function ModalSecondaryColor({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex gap-x-2 items-center hover:cursor-pointer">
-          <div
-            className="rounded-full size-8 border border-black"
-            style={{ backgroundColor: color }}
-          ></div>
-          <div className="flex flex-col gap-y-0.5">
-            <span className="text-xs">Secondary Color</span>
-            <p className="font-extralight text-[10px]">{color}</p>
-          </div>
-        </div>
+        {trigger}
       </DialogTrigger>
       <DialogContent
         showCloseButton={true}
@@ -56,5 +75,5 @@ export default function ModalSecondaryColor({
         </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

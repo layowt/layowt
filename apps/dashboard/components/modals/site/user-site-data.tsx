@@ -17,9 +17,9 @@ import type { websites as Website } from '@prisma/client';
 import { updateWebsite } from '@/utils/websites';
 import type { SavingState } from '@/types/States';
 import ModalPrimaryColor from './modal-primary-color';
-import ModalSecondaryColor from './modal-secondary-color';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { toast } from 'sonner';
+import ModalColorPicker, { ModalColorPickerTrigger } from './modal-color-picker';
 
 type NewWebsiteData = Pick<
   Website,
@@ -70,7 +70,7 @@ export default function UserSiteData() {
       websiteLogo: logoUrl
     });
   };
-
+    
   const saveSiteData = async (siteId: string, data: NewWebsiteData) => {
     setStatus('saving');
     try {
@@ -143,13 +143,15 @@ export default function UserSiteData() {
                 />
               </div>
               <div className="flex gap-4 mt-2">
-                <ModalPrimaryColor
-                  primaryColor={state.websitePrimaryColor}
+                <ModalColorPicker 
+                  color={state.websitePrimaryColor}
                   onColorChange={(color) => setPrimaryColor(color)}
+                  trigger={<ModalColorPickerTrigger color={state.websitePrimaryColor} />}
                 />
-                <ModalSecondaryColor
-                  secondaryColor={state.websiteSecondaryColor}
+                <ModalColorPicker
+                  color={state.websiteSecondaryColor}
                   onColorChange={(color) => setSecondaryColor(color)}
+                  trigger={<ModalColorPickerTrigger color={state.websiteSecondaryColor} />}
                 />
               </div>
               <div className="w-full flex justify-between items-center mt-2 text-white">

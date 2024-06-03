@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import {
   Accordion,
   AccordionContent,
@@ -8,8 +7,7 @@ import {
 } from "@/components/ui/accordion"
 import { useAppSelector } from "@/utils/index";
 import { website } from "@/store/slices/website-store";
-import ModalPrimaryColor from "@/components/modals/site/modal-primary-color";
-import { title } from 'process';
+import ModalColorPicker, { ModalColorPickerTrigger } from '@/components/modals/site/modal-color-picker';
 
 export default function SiteBuilderSettingsSection(){
   const site = useAppSelector(website);
@@ -26,23 +24,36 @@ export default function SiteBuilderSettingsSection(){
     });
   };
 
+  const setSecondaryColor = (color: string) => {
+    setState({
+      ...state,
+      websiteSecondaryColor: color
+    });
+  }
+
   const sections = [
     {
       title: "Colors",
       items: [
         {
           title: "Primary Color",
-          content:  
-          <ModalPrimaryColor
-            primaryColor={state.websitePrimaryColor}
-            onColorChange={(color) => setPrimaryColor(color)}
-            showTitle={false}
-          />,
+          content: (
+            <ModalColorPicker 
+              color={state.websitePrimaryColor}
+              onColorChange={(color) => setPrimaryColor(color)}
+              trigger={<ModalColorPickerTrigger color={state.websitePrimaryColor} />}
+            />
+          ),
           description: "The primary color of the site"
         },
         {
           title: "Secondary Color",
-          content: site?.websiteSecondaryColor,
+          content: 
+            <ModalColorPicker
+              color={state.websiteSecondaryColor}
+              onColorChange={(color) => setSecondaryColor(color)}
+              trigger={<ModalColorPickerTrigger color={state.websiteSecondaryColor} />}
+            />,
           description: "The secondary color of the site"
         },
         {
