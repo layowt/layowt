@@ -5,11 +5,13 @@ import { HexColorInput, HexColorPicker } from 'react-colorful';
 interface ModalPrimaryColorProps {
   primaryColor: string;
   onColorChange: (color: string) => void;
+  showTitle?: boolean;
 }
 
 export default function ModalPrimaryColor({
   primaryColor,
-  onColorChange
+  onColorChange,
+  showTitle = true,
 }: ModalPrimaryColorProps) {
   const [color, setColor] = useState(primaryColor);
 
@@ -30,8 +32,9 @@ export default function ModalPrimaryColor({
             className="rounded-full size-8 border border-black"
             style={{ backgroundColor: color }}
           ></div>
+
           <div className="flex flex-col gap-y-0.5">
-            <span className="text-xs">Primary Color</span>
+            {showTitle && <span className="text-xs">Primary Color</span>}
             <p className="font-extralight text-[10px]">{color}</p>
           </div>
         </div>
