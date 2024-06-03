@@ -14,7 +14,8 @@ export default function SiteBuilderSettingsSection(){
 
   const [state, setState] = useState({
     websitePrimaryColor: site?.websitePrimaryColor || "#ffffff",
-    websiteSecondaryColor: site?.websiteSecondaryColor || "#6725f2"
+    websiteSecondaryColor: site?.websiteSecondaryColor || "#6725f2",
+    websiteBackgroundColor: site?.websiteBackgroundColor || "#ffffff"
   });
 
   const setPrimaryColor = (color: string) => {
@@ -28,6 +29,13 @@ export default function SiteBuilderSettingsSection(){
     setState({
       ...state,
       websiteSecondaryColor: color
+    });
+  }
+
+  const setBackgroundColor = (color: string) => {
+    setState({
+      ...state,
+      websiteBackgroundColor: color
     });
   }
 
@@ -63,7 +71,12 @@ export default function SiteBuilderSettingsSection(){
         },
         {
           title: "Background Color",
-          content: '',
+          content: 
+          <ModalColorPicker 
+            color={state.websitePrimaryColor}
+            onColorChange={(color) => setBackgroundColor(color)}
+            trigger={<ModalColorPickerTrigger color={state.websiteBackgroundColor} />}
+          />,
           description: "The background color of the site"
         }
       ]
@@ -90,7 +103,7 @@ export default function SiteBuilderSettingsSection(){
             value={`item-${index}`} 
             className="border-b border-black-50"
           >
-            <AccordionTrigger className="hover:no-underline font-bold">
+            <AccordionTrigger className="hover:no-underline font-medium font-satoshi">
               {section.title}
             </AccordionTrigger>
             {section.items.map((item, index) => (

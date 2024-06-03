@@ -16,7 +16,6 @@ import { setWebsite, website } from '@/store/slices/website-store';
 import type { websites as Website } from '@prisma/client';
 import { updateWebsite } from '@/utils/websites';
 import type { SavingState } from '@/types/States';
-import ModalPrimaryColor from './modal-primary-color';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { toast } from 'sonner';
 import ModalColorPicker, { ModalColorPickerTrigger } from './modal-color-picker';
@@ -105,77 +104,75 @@ export default function UserSiteData() {
   };
 
   return (
-    <>
-      <Dialog
-        modal={true}
-        defaultOpen={true}
-        open={openModal}
+    <Dialog
+      modal={true}
+      defaultOpen={true}
+      open={openModal}
+    >
+      <DialogContent
+        showCloseButton={false}
+        className="bg-black-75 border border-black-50 focus:outline-none rounded-lg shadow-lg sm:rounded-lg p-6 w-full max-w-lg"
+        onInteractOutside={(e) => {
+          e.preventDefault();
+        }}
       >
-        <DialogContent
-          showCloseButton={false}
-          className="bg-black-75 border border-black-50 focus:outline-none rounded-lg shadow-lg sm:rounded-lg p-6 w-full max-w-lg"
-          onInteractOutside={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <div className="flex flex-col gap-y-2">
-            <SiteOnboardingTitle
-              userId={currentSite?.userId}
-              website={currentSite}
-              onLogoChange={setLogo}
-            />
-            <div className="flex flex-col gap-4 mt-6">
-              <div className="flex flex-col gap-y-1 relative">
-                <label
-                  htmlFor="websiteName"
-                  className="text-white/80 text-sm pl-1"
+        <div className="flex flex-col gap-y-2">
+          <SiteOnboardingTitle
+            userId={currentSite?.userId}
+            website={currentSite}
+            onLogoChange={setLogo}
+          />
+          <div className="flex flex-col gap-4 mt-6">
+            <div className="flex flex-col gap-y-1 relative">
+              <label
+                htmlFor="websiteName"
+                className="text-white/80 text-sm pl-1"
+              >
+                Site Name
+              </label>
+              <Input
+                type="text"
+                className="w-full peer"
+                placeholder=""
+                id="websiteName"
+                value={state.websiteName}
+                onChange={handleChange}
+                name="websiteName"
+              />
+            </div>
+            <div className="flex gap-4 mt-2">
+              <ModalColorPicker 
+                color={state.websitePrimaryColor}
+                onColorChange={(color) => setPrimaryColor(color)}
+                trigger={<ModalColorPickerTrigger color={state.websitePrimaryColor} />}
+              />
+              <ModalColorPicker
+                color={state.websiteSecondaryColor}
+                onColorChange={(color) => setSecondaryColor(color)}
+                trigger={<ModalColorPickerTrigger color={state.websiteSecondaryColor} />}
+              />
+            </div>
+            <div className="w-full flex justify-between items-center mt-2 text-white">
+              <Button variant="none">Clear</Button>
+              <div className="flex gap-x-4">
+                <Button
+                  variant="secondary"
+                  onClick={() => saveSiteData(currentSite.websiteId, state)}
+                  disabled={state.websiteName === '' || status === 'saving'}
                 >
-                  Site Name
-                </label>
-                <Input
-                  type="text"
-                  className="w-full peer"
-                  placeholder=""
-                  id="websiteName"
-                  value={state.websiteName}
-                  onChange={handleChange}
-                  name="websiteName"
-                />
-              </div>
-              <div className="flex gap-4 mt-2">
-                <ModalColorPicker 
-                  color={state.websitePrimaryColor}
-                  onColorChange={(color) => setPrimaryColor(color)}
-                  trigger={<ModalColorPickerTrigger color={state.websitePrimaryColor} />}
-                />
-                <ModalColorPicker
-                  color={state.websiteSecondaryColor}
-                  onColorChange={(color) => setSecondaryColor(color)}
-                  trigger={<ModalColorPickerTrigger color={state.websiteSecondaryColor} />}
-                />
-              </div>
-              <div className="w-full flex justify-between items-center mt-2 text-white">
-                <Button variant="none">Clear</Button>
-                <div className="flex gap-x-4">
-                  <Button
-                    variant="secondary"
-                    onClick={() => saveSiteData(currentSite.websiteId, state)}
-                    disabled={state.websiteName === '' || status === 'saving'}
-                  >
-                    {status === 'saving' ? (
-                      <div className="w-6 flex items-center">
-                        <ReloadIcon className="animate-spin" />
-                      </div>
-                    ) : (
-                      'Save'
-                    )}
-                  </Button>
-                </div>
+                  {status === 'saving' ? (
+                    <div className="w-6 flex items-center">
+                      <ReloadIcon className="animate-spin" />
+                    </div>
+                  ) : (
+                    'Save'
+                  )}
+                </Button>
               </div>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -14,14 +14,14 @@ export function ModalColorPickerTrigger({
     <DialogTrigger asChild>
       <div className="flex gap-x-2 items-center hover:cursor-pointer">
         {content}
+        <p className="font-extralight text-[10px]">{color}</p>
         <div
           className="rounded-full size-8 border"
           style={{ 
             backgroundColor: color,
-            border: isLightOrDark(color) === 'light' ? '1px solid #000' : '1px solid #fff'
+            border: isLightOrDark(color) === 'light' ? '1px solid #2D2D2D' : '1px solid white'
           }}
         ></div>
-        <p className="font-extralight text-[10px]">{color}</p>
       </div>
     </DialogTrigger>
   )

@@ -52,8 +52,11 @@ model websites {
   websiteName                                 String        
   websiteUrl                                  String        
   websiteLogo                                 String
+
   websitePrimaryColor                         String 
   websiteSecondaryColor                       String
+  websiteBackgroundColor                      String        @default("#ffffff")
+
   hasBeenPublished                            Boolean       @default(false)
 
   createdAt                                   DateTime      @default(now())
