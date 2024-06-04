@@ -69,6 +69,7 @@ export default function SiteBuilderSettingsSection(){
               color={state.websitePrimaryColor}
               onColorChange={(color) => setPrimaryColor(color)}
               trigger={<ModalColorPickerTrigger color={state.websitePrimaryColor} />}
+              fieldValue={{ websitePrimaryColor: state.websitePrimaryColor }}
             />
           ),
           description: "The primary color of the site"
@@ -80,6 +81,7 @@ export default function SiteBuilderSettingsSection(){
               color={state.websiteSecondaryColor}
               onColorChange={(color) => setSecondaryColor(color)}
               trigger={<ModalColorPickerTrigger color={state.websiteSecondaryColor} />}
+              fieldValue={{ websiteSecondaryColor: state.websiteSecondaryColor }}
             />,
           description: "The secondary color of the site"
         },
@@ -92,9 +94,10 @@ export default function SiteBuilderSettingsSection(){
           title: "Background Color",
           content: 
           <ModalColorPicker 
-            color={state.websitePrimaryColor}
+            color={state.websiteBackgroundColor}
             onColorChange={(color) => setBackgroundColor(color)}
             trigger={<ModalColorPickerTrigger color={state.websiteBackgroundColor} />}
+            fieldValue={{ websiteBackgroundColor: state.websiteBackgroundColor }}
           />,
           description: "The background color of the site"
         }

@@ -1,4 +1,3 @@
-'use client'
 import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { isLightOrDark } from '@/utils/colors';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -32,37 +31,33 @@ export function ModalColorPickerTrigger({
   )
 }
 
+type PartialPick<T, K extends keyof T> = Partial<Pick<T, K>>;
+
 interface ModalColorProps {
   color: string;
   onColorChange: (color: string) => void;
-  showTitle?: boolean;
   trigger: React.ReactNode;
   popoverContent?: React.ReactNode;
+  fieldValue?: PartialPick<websites, 'websiteBackgroundColor' | 'websitePrimaryColor' | 'websiteSecondaryColor'>;
 }
 
 export default function ModalColorPicker({
   color,
   onColorChange,
   trigger,
-  popoverContent
+  popoverContent,
+  fieldValue
 }: ModalColorProps) {
   const currentSite = useAppSelector(website);
 
-  const handleColorChange = (newColor) => {
+  const handleColorChange = (newColor: string) => {
     onColorChange(newColor);
   };
 
-  type PartialPick<T, K extends keyof T> = Partial<Pick<T, K>>;
-
-  const updateColorChange = async( 
-    fieldValue: PartialPick<websites, 
-      'websiteBackgroundColor' | 
-      'websitePrimaryColor' | 
-      'websiteSecondaryColor'
-      >) => {
+  const updateColorChange = async () => {
     await updateWebsite(currentSite?.websiteId, {
       ...fieldValue
-    })  
+    });
   }
 
   return (
@@ -74,9 +69,8 @@ export default function ModalColorPicker({
           rounded-lg shadow-lg sm:rounded-lg p-5 w-fit
         "
         onInteractOutside={(e) => {
-          updateColorChange({
-            websitePrimaryColor: color
-          })
+          console.log(color);
+          updateColorChange();
         }}
       >
         <div className="flex flex-col gap-y-4">
@@ -91,8 +85,8 @@ export default function ModalColorPicker({
           />
           {popoverContent}
         </div>
-      <PopoverArrow  className='fill-black-75'/>
+        <PopoverArrow className='fill-black-75'/>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
