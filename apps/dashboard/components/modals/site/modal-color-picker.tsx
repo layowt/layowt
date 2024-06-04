@@ -4,8 +4,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { PopoverArrow } from '@radix-ui/react-popover';
 import { updateWebsite } from '@/utils/websites';
 import { websites } from '@prisma/client';
-import { useAppSelector } from '@/utils/index';
-import { website } from '@/store/slices/website-store';
+import { useAppSelector, useAppDispatch } from '@/utils/index';
+import { website, setSavingState } from '@/store/slices/website-store';
 
 export function ModalColorPickerTrigger({
   color,
@@ -48,6 +48,7 @@ export default function ModalColorPicker({
   popoverContent,
   fieldValue
 }: ModalColorProps) {
+  const dispatch = useAppDispatch();
   const currentSite = useAppSelector(website);
 
   const handleColorChange = (newColor: string) => {
@@ -55,9 +56,11 @@ export default function ModalColorPicker({
   };
 
   const updateColorChange = async () => {
+    dispatch(setSavingState('saving'))
     await updateWebsite(currentSite?.websiteId, {
       ...fieldValue
     });
+    dispatch(setSavingState('idle'))
   }
 
   return (
