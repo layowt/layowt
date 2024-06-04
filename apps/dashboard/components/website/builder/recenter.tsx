@@ -4,15 +4,17 @@ import { setIsDragged } from "@/store/slices/canvas";
 import { useAppDispatch } from "@/utils/index";
 
 export default function SiteBuilderRecenterButton({ 
-  canvasContainer 
+  canvasContainer,
+  canvasContainerWrapper
 }: {
-  canvasContainer: React.RefObject<HTMLDivElement>
+  canvasContainer: React.RefObject<HTMLDivElement>,
+  canvasContainerWrapper: React.RefObject<HTMLDivElement>
 }){
   const dispatch = useAppDispatch()
 
   const handleRecenterCanvas = (canvasContainer) => {
     // call the recenterCanvas function
-    recenterCanvas(canvasContainer)
+    recenterCanvas(canvasContainer, canvasContainerWrapper.current)
     // dispatch the isDragged action to false
     dispatch(setIsDragged(false))
   }
