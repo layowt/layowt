@@ -48,11 +48,15 @@ export default function Page({
   const { domain } = params;
 
   const websiteData = use(getCurrentSite(decodeURIComponent(domain)));
-  if (!websiteData) return notFound();
 
+  if (!websiteData) return notFound();
   return (
-    <>
+    <main 
+      style={{
+        backgroundColor: websiteData?.websiteBackgroundColor
+      }}
+    >
       <div>hello from {websiteData.websiteName}</div>
-    </>
+    </main>
   )
 }

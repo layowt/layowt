@@ -1,17 +1,22 @@
-import React, { useState, useEffect, ReactNode } from 'react';
-import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
+'use client'
 import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { isLightOrDark } from '@/utils/colors';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { PopoverArrow } from '@radix-ui/react-popover';
+import { updateWebsite } from '@/utils/websites';
+import { websites } from '@prisma/client';
+import { useAppSelector } from '@/utils/index';
+import { website } from '@/store/slices/website-store';
 
 export function ModalColorPickerTrigger({
   color,
   content
 }: {
   color: string,
-  content?: ReactNode
+  content?: React.ReactNode
 }){
   return (
-    <DialogTrigger asChild>
+    <PopoverTrigger asChild>
       <div className="flex gap-x-2 items-center hover:cursor-pointer">
         {content}
         <p className="font-extralight text-[10px]">{color}</p>
@@ -23,7 +28,7 @@ export function ModalColorPickerTrigger({
           }}
         ></div>
       </div>
-    </DialogTrigger>
+    </PopoverTrigger>
   )
 }
 
@@ -31,36 +36,48 @@ interface ModalColorProps {
   color: string;
   onColorChange: (color: string) => void;
   showTitle?: boolean;
-  trigger: ReactNode;
+  trigger: React.ReactNode;
+  popoverContent?: React.ReactNode;
 }
 
 export default function ModalColorPicker({
   color,
   onColorChange,
-  trigger
+  trigger,
+  popoverContent
 }: ModalColorProps) {
-  const [colour, setColor] = useState(color);
-
-  useEffect(() => {
-    setColor(color);
-  }, [color]);
+  const currentSite = useAppSelector(website);
 
   const handleColorChange = (newColor) => {
-    setColor(newColor);
     onColorChange(newColor);
   };
 
+  type PartialPick<T, K extends keyof T> = Partial<Pick<T, K>>;
+
+  const updateColorChange = async( 
+    fieldValue: PartialPick<websites, 
+      'websiteBackgroundColor' | 
+      'websitePrimaryColor' | 
+      'websiteSecondaryColor'
+      >) => {
+    await updateWebsite(currentSite?.websiteId, {
+      ...fieldValue
+    })  
+  }
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {trigger}
-      </DialogTrigger>
-      <DialogContent
-        showCloseButton={true}
+    <Popover>
+      {trigger}
+      <PopoverContent
+        className="
+          bg-black-75 border border-black-50 focus:outline-none 
+          rounded-lg shadow-lg sm:rounded-lg p-5 w-fit
+        "
         onInteractOutside={(e) => {
-          e.preventDefault();
+          updateColorChange({
+            websitePrimaryColor: color
+          })
         }}
-        className="bg-black-75 border border-black-50 focus:outline-none rounded-lg shadow-lg sm:rounded-lg p-10 w-fit"
       >
         <div className="flex flex-col gap-y-4">
           <HexColorPicker
@@ -72,8 +89,10 @@ export default function ModalColorPicker({
             onChange={handleColorChange}
             className="bg-black-75 border border-black-50 px-2 py-1 rounded-lg"
           />
+          {popoverContent}
         </div>
-      </DialogContent>
-    </Dialog>
+      <PopoverArrow  className='fill-black-75'/>
+      </PopoverContent>
+    </Popover>
   )
 }

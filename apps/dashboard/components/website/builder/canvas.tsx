@@ -14,6 +14,7 @@ import { useAppSelector } from '@/utils/index';
 
 // store
 import { isDragged } from '@/store/slices/canvas';
+import { website } from '@/store/slices/website-store';
 import { device } from '@/store/slices/index';
 
 // framer motion
@@ -24,6 +25,7 @@ export default function SiteBuilderCanvas() {
   const currentDevice = useAppSelector(device);
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
   const isElementDragged = useAppSelector(isDragged);
+  const websiteData = useAppSelector(website);
 
   // Setting the size of the canvas via the deviceType
   const [deviceSize, setDeviceSize] = useState({
@@ -122,7 +124,7 @@ export default function SiteBuilderCanvas() {
     >
       <div
         className="
-          size-0 fixed bg-white border border-black-50
+          size-0 fixed border border-black-50
         "
         style={{
           isolation: 'isolate',
@@ -131,6 +133,7 @@ export default function SiteBuilderCanvas() {
           width: deviceSize.width,
           top: canvasContainerWrapper.current?.offsetTop + 20,
           height: '90vh',
+          backgroundColor: websiteData?.websiteBackgroundColor || 'white'
         }}
         id="canvas-container"
         ref={canvasContainer}
@@ -138,12 +141,15 @@ export default function SiteBuilderCanvas() {
         {/* <div className="absolute bg-black text-whtie border border-white"> testing left</div>
         <div className="absolute bg-black text-whtie border border-white bottom-0 left-0"> testing bottom</div> */}
         <div
-          className="bg-white h-[650px] transition-all duration-200 fixed text-black"
+          className="h-[650px] transition-all duration-200 fixed text-black"
           style={{
             maxWidth: deviceSize.width
           }}
           id="canvas"
         >
+          <div className="pt-20">
+            {websiteData?.websiteBackgroundColor}
+          </div>
         </div>
       </div>
       {/* Show the recenter button when the canvas is dragged */}

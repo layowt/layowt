@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { useAppSelector } from "@/utils/index";
-import { website } from "@/store/slices/website-store";
+import { useAppSelector, useAppDispatch } from "@/utils/index";
+import { setWebsite, website } from "@/store/slices/website-store";
 import ModalColorPicker, { ModalColorPickerTrigger } from '@/components/modals/site/modal-color-picker';
+import { updateWebsite } from '@/utils/websites';
 
 export default function SiteBuilderSettingsSection(){
+  const dispatch = useAppDispatch();
   const site = useAppSelector(website);
 
   const [state, setState] = useState({
@@ -37,6 +39,23 @@ export default function SiteBuilderSettingsSection(){
       ...state,
       websiteBackgroundColor: color
     });
+
+    // temporarily set the background color of the site until 
+    // the user clicks off of the popover
+    if(!site.websiteId) return;
+
+    // set the local store value of the bg color to the new color
+    dispatch(setWebsite({
+      ...site,
+      websiteBackgroundColor: color
+    }))
+
+    // debounce timer to only save the color after the user has stopped
+    // changing the color for 1 second
+
+    //updateWebsite(site.websiteId, {
+    //  websiteBackgroundColor: color
+    //})
   }
 
   const sections = [
