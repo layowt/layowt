@@ -1,11 +1,10 @@
 import { useCallback } from "react";
 import { useAppDispatch } from "../utils";
-import { SectionState, setCurrentSection } from '@/store/slices/website-store'
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
   name: string;
-  value: string;
+  value?: string;
 }
 
 const useCreateQueryString = () => {
@@ -21,20 +20,21 @@ const useCreateQueryString = () => {
   );
 }
 
-const useQueryParams = ({ name, value }: Props) => {
-  const dispatch = useAppDispatch();
+const useQueryParams = <T extends (...args: any[]) => any>({ name, value }: Props, callback: T) => {
   const router = useRouter();
   const pathname = usePathname();
   const createQueryString = useCreateQueryString();
 
   const handleButtonClick = useCallback(
-    (section: SectionState) => {
-      dispatch(setCurrentSection(section))
+    (parameter: Parameters<T>[0]) => {
+      // the function to call when the button is clicked 
+      // (usually a dispatch function to update the store)
+      callback(parameter);
       router.push(
-        pathname + '?' + createQueryString(name, section)
-      )
+        pathname + '?' + createQueryString(name, value ? value : parameter)
+      );
     },
-    [dispatch, router, pathname, createQueryString, name]
+    [callback, router, pathname, createQueryString, name, value]
   );
 
   return handleButtonClick;
