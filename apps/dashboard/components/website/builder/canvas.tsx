@@ -18,7 +18,7 @@ import { website } from '@/store/slices/website-store';
 import { device } from '@/store/slices/index';
 
 // framer motion
-import SiteBuilderRecenterButton from './recenter';
+import SiteBuilderCanvasHotbar from './hotbar';
 
 export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
@@ -154,7 +154,7 @@ export default function SiteBuilderCanvas() {
       </div>
       {/* Show the recenter button when the canvas is dragged */}
       {isElementDragged === true && (
-        <SiteBuilderRecenterButton canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
+        <SiteBuilderCanvasHotbar canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
       )}
     </div>
   );

@@ -23,7 +23,7 @@ export default function SiteBuilderRecenterButton({
     <motion.button
       className="
         bottom-5 bg-electric-violet-500 rounded-md absolute 
-        px-5 py-2 font-satoshi font-medium 
+        px-3 py-2 font-satoshi font-medium text-sm
       "
       aria-label='Recenter the canvas'
       transition={{ duration: 0.25 }}

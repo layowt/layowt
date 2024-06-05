@@ -92,7 +92,6 @@ export default function ScreenSizeSwapper() {
           <device.icon />
         </IconButton>
       ))}
-      {selectedDeviceType}
     </div>
   );
 }
