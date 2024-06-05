@@ -10,6 +10,7 @@ type CanvasState = {
     x: number,
     y: number
   },
+  canBeDragged: boolean,
   isDragged: boolean
   showDebugTools: boolean
   mode: CanvasMode
@@ -22,6 +23,7 @@ const initialState: CanvasState = {
     x: 0, 
     y: 0 
   },
+  canBeDragged: true,
   isDragged: false,
   showDebugTools: false,
   mode: 'move'
@@ -48,7 +50,10 @@ const canvasSlice = createSlice({
     },
     setMode: (state, action: PayloadAction<CanvasMode>) => {
       state.mode = action.payload
-    }
+
+      if(action.payload === 'move') state.canBeDragged = true
+      else state.canBeDragged = false
+    },
   }
 })
 
@@ -64,5 +69,6 @@ export const {
 export const isDragged = (state: RootState) => state.canvas.isDragged
 export const showDebugTools = (state: RootState) => state.canvas.showDebugTools
 export const canvasMode = (state: RootState) => state.canvas.mode
+export const canBeDragged = (state: RootState) => state.canvas.canBeDragged
 
 export default canvasSlice.reducer

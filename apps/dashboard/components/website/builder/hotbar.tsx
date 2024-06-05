@@ -28,7 +28,7 @@ export default function SiteBuilderRecenterButton({
       id: 'move',
       icon: () => (
         <Move
-          className="size-4"
+          className="size-3.5"
         />
       ),
       selected: mode === 'move'
@@ -37,7 +37,7 @@ export default function SiteBuilderRecenterButton({
       id: 'select',
       icon: () => (
         <CursorArrowIcon
-          className="size-4"
+          className="size-3.5"
         />
       ),
       selected: mode === 'select'
@@ -73,7 +73,7 @@ export default function SiteBuilderRecenterButton({
           <button
             key={item.id}
             className={`
-              rounded-md p-1
+              rounded-md p-2
               ${item.selected ? 'bg-black-50' : ''}
             `}
             aria-label={item.id}
@@ -84,8 +84,9 @@ export default function SiteBuilderRecenterButton({
         ))}
       </div>
       <div className="w-px h-6 bg-black-50"></div>
+      {/** TODO: ADD A TOOLTIP HERE TO EXPLAIN TO THE USER WHAT THIS CTA DOES */}
       <button
-        className="font-inter font-medium text-xs bg-black-100 p-2 rounded-md"
+        className="font-inter font-medium text-xs bg-black-100 p-2 rounded-md hover:bg-black-50 duration-300"
         aria-label="Recenter the canvas"
         onClick={() => handleRecenterCanvas(canvasContainer.current)}
       >
