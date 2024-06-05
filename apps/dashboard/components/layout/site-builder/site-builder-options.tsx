@@ -1,5 +1,6 @@
 'use client'
 import { GearIcon, LayoutIcon, FileIcon } from "@radix-ui/react-icons";
+import { useEffect } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -10,7 +11,6 @@ import {
 import { cn, useAppDispatch, useAppSelector } from "@/utils/index";
 import { currentSection, setCurrentSection, type SectionState } from '@/store/slices/website-store';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from "react";
 import { useQueryParams, useCreateQueryString } from '@/hooks/useQueryParams';
 
 export default function SiteBuilderOptions() {
@@ -25,7 +25,10 @@ export default function SiteBuilderOptions() {
 
   const handleButtonClick = useQueryParams({
     name: 's',
-    value: currentSelectedSection
+    value: currentSelectedSection,
+  }, (section: SectionState) => {
+    console.log(section)
+    dispatch(setCurrentSection(section));
   });
 
   // on mount set the current section

@@ -134,8 +134,13 @@ export default function UserDropdownMenu({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <DropdownMenuLabel className="text-sm font-inter">
-            {user?.email}
+          <DropdownMenuLabel className="flex flex-col">
+            <span className="text-sm font-satoshi">
+              {user?.email}
+            </span>
+            <span className="text-[10px] font-light">
+              Workspace Owner
+            </span>
           </DropdownMenuLabel>
         </motion.div>
         <DropdownMenuSeparator className="!bg-black-50" />

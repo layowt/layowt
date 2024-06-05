@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useAppDispatch } from "../utils";
-import { SectionState, setCurrentSection } from '@/store/slices/website-store'
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
@@ -21,20 +20,21 @@ const useCreateQueryString = () => {
   );
 }
 
-const useQueryParams = ({ name, value }: Props) => {
+const useQueryParams = <T extends (...args: any[]) => any>({ name, value }: Props, callback: T) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
   const createQueryString = useCreateQueryString();
 
   const handleButtonClick = useCallback(
-    (section: SectionState) => {
-      dispatch(setCurrentSection(section))
+    (parameter: Parameters<T>[0]) => {
+      callback(parameter);
+      console.log(value)
       router.push(
-        pathname + '?' + createQueryString(name, section)
-      )
+        pathname + '?' + createQueryString(name, value)
+      );
     },
-    [dispatch, router, pathname, createQueryString, name]
+    [callback, router, pathname, createQueryString, name, value]
   );
 
   return handleButtonClick;

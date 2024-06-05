@@ -3,6 +3,7 @@ import { cn } from '@/utils/index';
 import type { DeviceType } from '@/types/DeviceType';
 import { device, setDeviceType } from '@/store/slices/index';
 import { useAppSelector, useAppDispatch } from '@/utils/index';
+import { useQueryParams } from '@/hooks/useQueryParams';
 
 import { MobileIcon, DesktopIcon, LaptopIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
@@ -60,31 +61,39 @@ export default function ScreenSizeSwapper() {
     }
   ];
 
+  const updateQueryParams = useQueryParams({ 
+    name: 'device', 
+    value: selectedDeviceType
+  }, (parameter) => {
+    dispatch(setDeviceType(parameter));
+  });
+
   const setDevice = (deviceId: Devices['id']) => {
-    // set the device in redux
+    // set the device in redux    
     dispatch(setDeviceType(deviceId));
+
+    updateQueryParams(deviceId);
   };
 
   return (
-    <>
-      <div className="text-white flex gap-x-3">
-        {devices.map((device) => (
-          <IconButton
-            key={device.id}
-            className={cn(
-              `
-							hover:!bg-black-50 duration-300 hover:cursor-pointer rounded-md !p-1.5 !bg-transparent
-							`,
-              selectedDeviceType === device.id
-                ? '!bg-black-50'
-                : 'bg-transparent'
-            )}
-            onClick={() => setDevice(device.id)}
-          >
-            <device.icon />
-          </IconButton>
-        ))}
-      </div>
-    </>
+    <div className="text-white flex gap-x-3">
+      {devices.map((device) => (
+        <IconButton
+          key={device.id}
+          className={cn(
+            `
+            hover:!bg-black-50 duration-300 hover:cursor-pointer rounded-md !p-1.5 !bg-transparent
+            `,
+            selectedDeviceType === device.id
+              ? '!bg-black-50'
+              : 'bg-transparent'
+          )}
+          onClick={() => setDevice(device.id)}
+        >
+          <device.icon />
+        </IconButton>
+      ))}
+      {selectedDeviceType}
+    </div>
   );
 }
