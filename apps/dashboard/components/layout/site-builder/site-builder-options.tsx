@@ -24,10 +24,8 @@ export default function SiteBuilderOptions() {
   const createQueryString = useCreateQueryString();
 
   const handleButtonClick = useQueryParams({
-    name: 's',
-    value: currentSelectedSection,
+    name: 's'
   }, (section: SectionState) => {
-    console.log(section)
     dispatch(setCurrentSection(section));
   });
 
@@ -40,7 +38,7 @@ export default function SiteBuilderOptions() {
       return;
     }
     router.push(pathname + '?' + createQueryString('s', 'pages'));
-  }, [dispatch, router, pathname, searchParams, createQueryString]);
+  }, [dispatch, router, pathname]);
 
   const items = [
     {

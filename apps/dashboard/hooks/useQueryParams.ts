@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
   name: string;
-  value: string;
+  value?: string;
 }
 
 const useCreateQueryString = () => {
@@ -21,17 +21,17 @@ const useCreateQueryString = () => {
 }
 
 const useQueryParams = <T extends (...args: any[]) => any>({ name, value }: Props, callback: T) => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
   const createQueryString = useCreateQueryString();
 
   const handleButtonClick = useCallback(
     (parameter: Parameters<T>[0]) => {
+      // the function to call when the button is clicked 
+      // (usually a dispatch function to update the store)
       callback(parameter);
-      console.log(value)
       router.push(
-        pathname + '?' + createQueryString(name, value)
+        pathname + '?' + createQueryString(name, value ? value : parameter)
       );
     },
     [callback, router, pathname, createQueryString, name, value]

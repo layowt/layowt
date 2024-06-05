@@ -62,15 +62,14 @@ export default function ScreenSizeSwapper() {
   ];
 
   const updateQueryParams = useQueryParams({ 
-    name: 'device', 
-    value: selectedDeviceType
+    name: 'device'
   }, (parameter) => {
     dispatch(setDeviceType(parameter));
   });
 
   const setDevice = (deviceId: Devices['id']) => {
     // set the device in redux    
-    dispatch(setDeviceType(deviceId));
+    //dispatch(setDeviceType(deviceId));
 
     updateQueryParams(deviceId);
   };
