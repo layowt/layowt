@@ -47,7 +47,6 @@ const useDragger = (element: HTMLElement, opts: Window, canBeDragged: boolean) =
       isClicked.current = false;
       coords.current.lastX = element.offsetLeft;
       coords.current.lastY = element.offsetTop;
-      dispatch(setIsDragged(false));
     };
 
     const onMouseMove = (e: MouseEvent) => {
