@@ -29,7 +29,10 @@ function ZoomDropdownMenu({ item }){
           <item.icon className="size-3.5" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="bg-black-300 border border-black-50 text-sm font-satoshi p-0 w-32">
+      <PopoverContent   
+        className="bg-black-300 border border-black-50 text-sm font-satoshi p-0 w-32"
+        onInteractOutside={() => dispatch(setMode('move'))}
+      >
         <div 
           className="flex flex-col gap-y-2 p-2 text-end justify-end"
           style={{

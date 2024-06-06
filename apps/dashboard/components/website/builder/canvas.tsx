@@ -12,7 +12,7 @@ import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
 import { useAppSelector } from '@/utils/index';
 
 // store
-import { canBeDragged as canBeDraggedStore } from '@/store/slices/canvas';
+import { canBeDragged as canBeDraggedStore, zoomLevel } from '@/store/slices/canvas';
 import { website } from '@/store/slices/website-store';
 import { device } from '@/store/slices/index';
 
@@ -25,6 +25,7 @@ export default function SiteBuilderCanvas() {
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
   const canBeDragged = useAppSelector(canBeDraggedStore);
   const websiteData = useAppSelector(website);
+  const canvasZoomLevel = useAppSelector(zoomLevel)
 
   // Setting the size of the canvas via the deviceType
   const [deviceSize, setDeviceSize] = useState({
@@ -128,7 +129,8 @@ export default function SiteBuilderCanvas() {
           width: deviceSize.width,
           top: canvasContainerWrapper.current?.offsetTop + 20,
           height: '90vh',
-          backgroundColor: websiteData?.websiteBackgroundColor || 'white'
+          backgroundColor: websiteData?.websiteBackgroundColor || 'white',
+          scale: `${canvasZoomLevel}%`
         }}
         id="canvas-container"
         ref={canvasContainer}
@@ -140,9 +142,6 @@ export default function SiteBuilderCanvas() {
           }}
           id="canvas"
         >
-          <div className="pt-20">
-            {websiteData?.websiteBackgroundColor}
-          </div>
         </div>
       </div>      
       <SiteBuilderCanvasHotbar canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
