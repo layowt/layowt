@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-export type CanvasMode = 'move' | 'select'
+export type CanvasMode = 'move' | 'select' | 'zoom'
 
 type CanvasState = {
   device: string,

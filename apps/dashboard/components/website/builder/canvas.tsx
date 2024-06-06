@@ -12,7 +12,7 @@ import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
 import { useAppSelector } from '@/utils/index';
 
 // store
-import { isDragged, canBeDragged as canBeDraggedStore } from '@/store/slices/canvas';
+import { canBeDragged as canBeDraggedStore } from '@/store/slices/canvas';
 import { website } from '@/store/slices/website-store';
 import { device } from '@/store/slices/index';
 
@@ -23,7 +23,6 @@ export default function SiteBuilderCanvas() {
   const canvasContainer = useRef<HTMLDivElement>(null);
   const currentDevice = useAppSelector(device);
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
-  const isElementDragged = useAppSelector(isDragged);
   const canBeDragged = useAppSelector(canBeDraggedStore);
   const websiteData = useAppSelector(website);
 
