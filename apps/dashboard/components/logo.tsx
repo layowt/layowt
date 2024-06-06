@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { cn } from '@/utils/index';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 
 export default function SiteLogo({
   className = 'py-5 pl-2',

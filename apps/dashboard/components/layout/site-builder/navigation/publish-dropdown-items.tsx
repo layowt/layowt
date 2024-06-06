@@ -3,7 +3,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 
 // utils

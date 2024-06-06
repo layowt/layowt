@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { CursorArrowIcon } from "@radix-ui/react-icons";
 import { Move } from "lucide-react";
 

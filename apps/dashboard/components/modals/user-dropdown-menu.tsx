@@ -19,7 +19,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 
 export default function UserDropdownMenu({
   className = '',

@@ -13,7 +13,7 @@ import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 
 import { useState } from 'react';
 import useKeyboard from '@/hooks/useKeyboard';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import WebsiteSwitcher from './website-switcher';
 
 export default function DashboardNavBar({

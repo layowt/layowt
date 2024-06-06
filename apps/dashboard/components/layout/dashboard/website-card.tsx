@@ -18,7 +18,7 @@ import {
 } from '@/ui/tooltip';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { getEnv } from '@/utils/index';
 
 export default function WebsiteCard(website: Website, index: number) {
