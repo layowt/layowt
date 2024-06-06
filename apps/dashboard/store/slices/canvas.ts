@@ -2,18 +2,20 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export type CanvasMode = 'move' | 'select' | 'zoom'
+export type ZoomLevel = 25 | 50 | 75 | 100 | 125 | 150 | 175 | 200
 
 type CanvasState = {
-  device: string,
-  canvasZoom: number,
+  device: string
+  canvasZoom: number
   canvasPosition: {
-    x: number,
+    x: number
     y: number
   },
-  canBeDragged: boolean,
+  canBeDragged: boolean
   isDragged: boolean
   showDebugTools: boolean
-  mode: CanvasMode
+  mode: CanvasMode,
+  zoomLevel: ZoomLevel
 }
 
 const initialState: CanvasState = {
@@ -26,7 +28,8 @@ const initialState: CanvasState = {
   canBeDragged: true,
   isDragged: false,
   showDebugTools: false,
-  mode: 'move'
+  mode: 'move',
+  zoomLevel: 100
 }
 
 const canvasSlice = createSlice({
@@ -54,6 +57,9 @@ const canvasSlice = createSlice({
       if(action.payload === 'move') state.canBeDragged = true
       else state.canBeDragged = false
     },
+    setZoomLevel: (state, action: PayloadAction<ZoomLevel>) => {
+      state.zoomLevel = action.payload
+    }
   }
 })
 
@@ -63,12 +69,14 @@ export const {
   setCanvasPosition,
   setIsDragged,
   setShowDebugTools,
-  setMode
+  setMode,
+  setZoomLevel
 } = canvasSlice.actions
 
 export const isDragged = (state: RootState) => state.canvas.isDragged
 export const showDebugTools = (state: RootState) => state.canvas.showDebugTools
 export const canvasMode = (state: RootState) => state.canvas.mode
 export const canBeDragged = (state: RootState) => state.canvas.canBeDragged
+export const zoomLevel = (state: RootState) => state.canvas.zoomLevel
 
 export default canvasSlice.reducer

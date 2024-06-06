@@ -1,9 +1,9 @@
 import { m as motion, LazyMotion, domAnimation } from "framer-motion";
 import { CursorArrowIcon } from "@radix-ui/react-icons";
-import { Move, ZoomIn } from "lucide-react";
+import { Move, ZoomIn, Check } from "lucide-react";
 
 import { recenterCanvas } from "@/utils/canvas/utils";
-import { setIsDragged, setMode, canvasMode, isDragged } from "@/store/slices/canvas";
+import { setIsDragged, setMode, canvasMode, isDragged, setZoomLevel, type ZoomLevel, zoomLevel } from "@/store/slices/canvas";
 import { useAppDispatch, useAppSelector } from "@/utils/index";
 import {
   Popover,
@@ -14,8 +14,8 @@ import {
 function ZoomDropdownMenu({ item }){
   const dispatch = useAppDispatch();
   const mode = useAppSelector(canvasMode);
-
-  const zoomLevels = [100, 75, 50, 25]
+  const canvasZoomLevel = useAppSelector(zoomLevel)
+  const zoomLevels: ZoomLevel[] = [25, 50, 75, 100] as const
 
   return (
     <Popover>
@@ -40,10 +40,17 @@ function ZoomDropdownMenu({ item }){
             <button
               key={level}
               onClick={() => {
+                dispatch(setZoomLevel(level))
               }}
-              className="text-xs hover:bg-black-50 rounded-md p-1 w-full"
+              className={[
+                "text-xs hover:bg-black-50 rounded-md px-1 py-2 w-full flex justify-between items-center",
+                canvasZoomLevel === level ? "bg-black-50" : ""
+              ].join(" ")}
             >
               {level}%
+              {canvasZoomLevel === level && (
+                <Check className="size-3 text-white ml-1" />
+              )}
             </button>
           ))}
         </div>
