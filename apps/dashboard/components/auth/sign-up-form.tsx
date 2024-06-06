@@ -109,7 +109,7 @@ export default function SignUpForm() {
               name="userEmail"
               placeholder="hello@layowt.com"
               className="
-                bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
+                w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
                 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
                 hover:border-white/50 bg-transparent
               "

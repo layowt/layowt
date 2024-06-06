@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { m as motion } from 'framer-motion';
+import { LazyMotion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function NavigationItem({
@@ -22,11 +22,6 @@ export default function NavigationItem({
 
   return (
     <div key={index}>
-      <motion.div
-        initial={{ opacity: 0, x: 0 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3, delay: index * 0.1 }}
-      >
         <Link
           href={link}
           className={`flex items-center justify-between border-2 hover:bg-black-75 border-transparent duration-300 px-2 h-8 rounded hover:cursor-pointer
@@ -66,13 +61,9 @@ export default function NavigationItem({
             </button>
           )}
         </Link>
-      </motion.div>
       {isExpanded && (
-        <motion.ul
+        <ul
           className="flex flex-col gap-y-1 mt-1"
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
         >
           {nested.map((nestedItem, index) => (
             <Link
@@ -80,16 +71,13 @@ export default function NavigationItem({
               key={nestedItem.name}
               prefetch
             >
-              <motion.li
+              <li
                 className={`flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded hover:cursor-pointer group truncate
 								${
                   pathname === nestedItem.link
                     ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
                     : 'text-white/80'
                 }`}
-                initial={{ opacity: 0, x: 0 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <div
                   className={`flex items-center font-satoshi leading-loose justify-between w-full`}
@@ -101,10 +89,10 @@ export default function NavigationItem({
                     <span className="text-xs">{nestedItem.name}</span>
                   </div>
                 </div>
-              </motion.li>
+              </li>
             </Link>
           ))}
-        </motion.ul>
+        </ul>
       )}
     </div>
   );

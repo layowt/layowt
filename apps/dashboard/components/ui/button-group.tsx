@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { m as motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/utils/index';
 import { useAppDispatch } from '@/utils/index';
 import { setBillingPeriod } from '../../store/slices/user-store';

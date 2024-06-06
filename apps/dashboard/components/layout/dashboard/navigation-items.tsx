@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { m as motion } from 'framer-motion';
 import NavigationItem from '@/components/layout/dashboard/navigation-item';
 
 // icon imports
@@ -101,14 +100,9 @@ export default function NavigationItems({
       {...props}
     >
       <ul className="flex flex-col gap-y-1">
-        <motion.span
-          className="text-xs uppercase text-white/50 mx-2 mb-2"
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.2 }}
-        >
+        <span className="text-xs uppercase text-white/50 mx-2 mb-2">
           Menu
-        </motion.span>
+        </span>
         {navItems.map((item, index) =>
           item.name === 'separator' ? (
             <div
@@ -123,15 +117,12 @@ export default function NavigationItems({
             />
           )
         )}
-        <motion.a
+        <a
           className="text-xs uppercase text-white/50 mx-2 mb-2"
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.2 }}
           href="/dashboard"
         >
           All Websites
-        </motion.a>
+        </a>
         {siteDropdowns.map((item, index) => (
           <NavigationItem
             key={`${item.name}-${index}`}
@@ -141,40 +132,26 @@ export default function NavigationItems({
         ))}
       </ul>
       <div>
-        <motion.div
-          className="py-3"
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
+        <Link
+          href="/pricing"
+          className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer py-3"
         >
-          <Link
-            href="/pricing"
-            className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
-          >
-            <div className="flex items-center gap-x-2 font-inter leading-loose text-white/80">
-              <div className="size-4"></div>
-              <span className="text-base">Plans</span>
-            </div>
-          </Link>
-        </motion.div>
-        <motion.div
-          className="py-3"
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3, delay: navItems.length * 0.1 }}
+          <div className="flex items-center gap-x-2 font-inter leading-loose text-white/80">
+            <div className="size-4"></div>
+            <span className="text-base">Plans</span>
+          </div>
+        </Link>
+        <Link
+          href="/settings"
+          className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer py-3"
         >
-          <Link
-            href="/settings"
-            className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer"
-          >
-            <div className="flex items-center gap-x-2 font-inter leading-loose text-white/80">
-              <div className="size-4">
-                <MaterialSymbolsSettingsOutlineRounded />
-              </div>
-              <span className="text-base">Settings</span>
+          <div className="flex items-center gap-x-2 font-inter leading-loose text-white/80">
+            <div className="size-4">
+              <MaterialSymbolsSettingsOutlineRounded />
             </div>
-          </Link>
-        </motion.div>
+            <span className="text-base">Settings</span>
+          </div>
+        </Link>
       </div>
     </nav>
   );

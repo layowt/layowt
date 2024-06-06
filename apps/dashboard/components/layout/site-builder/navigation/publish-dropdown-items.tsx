@@ -3,7 +3,6 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
-import { m as motion } from 'framer-motion';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 
 // utils
@@ -99,15 +98,12 @@ export default function PublishDropdownItems({
             className="!bg-black-50"
           />
         ) : (
-          <motion.li
+          <li
             key={option.name}
-            initial={{ opacity: 0, x: 0 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2 }}
             className="list-none w-full"
           >
             {option.html}
-          </motion.li>
+          </li>
         )
       )}
     </>
