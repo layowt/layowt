@@ -39,6 +39,16 @@ function ZoomDropdownMenu({ item }){
             textAlignLast: 'start'
           }}
         >
+          {canvasZoomLevel === 'custom' && (
+            <div
+              className="w-full bg-black-50 p-1 rounded-md text-white flex justify-between items-center"
+            >
+              <span>
+                Custom
+              </span>
+              <Check className="size-3 text-white ml-1" />
+            </div>
+          )}
           {zoomLevels.map((level) => (
             <button
               key={level}

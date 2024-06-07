@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export type CanvasMode = 'move' | 'select' | 'zoom'
-export type ZoomLevel = 25 | 50 | 75 | 100 | 125 | 150 | 175 | 200
+export type ZoomLevel = 25 | 50 | 75 | 100 | 125 | 150 | 175 | 200 | 'custom'
 
 type CanvasState = {
   device: string

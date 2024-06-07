@@ -9,10 +9,10 @@ import useElementSize from '@/hooks/useElementSize';
 import { setCanvasZoom } from '@/utils/canvas/utils';
 import { addPositionTagToElement } from '@/utils/canvas/debug';
 import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
-import { useAppSelector } from '@/utils/index';
+import { useAppDispatch, useAppSelector } from '@/utils/index';
 
 // store
-import { canBeDragged as canBeDraggedStore, zoomLevel } from '@/store/slices/canvas';
+import { canBeDragged as canBeDraggedStore, zoomLevel, setZoomLevel } from '@/store/slices/canvas';
 import { website } from '@/store/slices/website-store';
 import { device } from '@/store/slices/index';
 
@@ -20,6 +20,8 @@ import { device } from '@/store/slices/index';
 import SiteBuilderCanvasHotbar from './hotbar';
 
 export default function SiteBuilderCanvas() {
+  const dispatch = useAppDispatch();
+
   const canvasContainer = useRef<HTMLDivElement>(null);
   const currentDevice = useAppSelector(device);
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
@@ -68,6 +70,8 @@ export default function SiteBuilderCanvas() {
   let zoom = 1;
 
   const handleWheel = (e) => {
+    // Prevent the default behavior of the scroll event
+    dispatch(setZoomLevel('custom'));
     e.preventDefault();
 
     let scale = setCanvasZoom(e, zoom);
@@ -142,6 +146,9 @@ export default function SiteBuilderCanvas() {
           }}
           id="canvas"
         >
+          <div className="pt-20 text-white">
+            {canvasZoomLevel}
+          </div>
         </div>
       </div>      
       <SiteBuilderCanvasHotbar canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
