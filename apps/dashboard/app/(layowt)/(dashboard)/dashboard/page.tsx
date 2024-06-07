@@ -19,12 +19,12 @@ export default async function Dashboard() {
       <div className="flex flex-col gap-y-10 text-white">
         <div className="flex flex-col text-heading-3xl">Overview</div>
         <div className="gap-10 w-1/2 grid col-span-1 lg:grid-cols-2">
-          {websites.map((website, index) => (
+          {/* {websites.map((website, index) => (
             <WebsiteCard
               key={website.websiteId}
               {...website}
             />
-          ))}
+          ))} */}
         </div>
       </div>
     </PageClient>
