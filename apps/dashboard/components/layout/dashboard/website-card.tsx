@@ -100,7 +100,7 @@ export default function WebsiteCard(website: Website, index: number) {
             <DropdownMenuTrigger asChild>
               <DotsHorizontalIcon className="text-xs pr-0 z-[100] absolute left-auto right-5 hover:cursor-pointer" />
             </DropdownMenuTrigger>
-            <WebsiteCardModal website={website} />
+            {/* <WebsiteCardModal website={website} /> */}
           </DropdownMenu>
         </div>
       </div>
