@@ -21,7 +21,7 @@ import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { getEnv } from '@/utils/index';
 
 export default function WebsiteCard(website: Website, index: number) {
-  const env = getEnv() === 'production' ? 'https' : 'http';
+  //const env = getEnv() === 'production' ? 'https' : 'http';
 
   return (
     <div
@@ -88,7 +88,7 @@ export default function WebsiteCard(website: Website, index: number) {
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
             <Link
-              href={`${env}://${website.websiteUrl}` || '#'}
+              href={`https://${website.websiteUrl}` || '#'}
               className="text-xs text-white/50 hover:underline font-inter"
               prefetch
             >
@@ -97,7 +97,7 @@ export default function WebsiteCard(website: Website, index: number) {
           </div>
           <DropdownMenu key={website?.websiteId}>
             <DropdownMenuTrigger asChild>
-              <DotsHorizontalIcon className="text-xs pr-0 z-[100] absolute left-auto right-5" />
+              <DotsHorizontalIcon className="text-xs pr-0 z-[100] absolute left-auto right-5 hover:cursor-pointer" />
             </DropdownMenuTrigger>
             <WebsiteCardModal website={website} />
           </DropdownMenu>
