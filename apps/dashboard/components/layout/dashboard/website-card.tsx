@@ -75,7 +75,7 @@ export default function WebsiteCard(website: Website, index: number) {
                           <span className="relative inline-flex rounded-full size-2 bg-red-600"></span>
                         </span>
                         <TooltipContent side="bottom" className='bg-black-75 border border-black-50 z-[100]'> 
-                          <p className="text-xs">Website not published - Publish</p>
+                          <p className="text-xs">Website not published - Publish test push</p>
                         </TooltipContent>
                       </>
                     )}
