@@ -1,4 +1,3 @@
-// react
 import { useRef, useEffect, useState } from 'react';
 
 // hooks
@@ -10,22 +9,25 @@ import useElementSize from '@/hooks/useElementSize';
 import { setCanvasZoom } from '@/utils/canvas/utils';
 import { addPositionTagToElement } from '@/utils/canvas/debug';
 import { detectCanvasOutOfBounds } from '@/utils/canvas/bounds';
-import { useAppSelector } from '@/utils/index';
+import { useAppDispatch, useAppSelector } from '@/utils/index';
 
 // store
-import { isDragged } from '@/store/slices/canvas';
+import { canBeDragged as canBeDraggedStore, zoomLevel, setZoomLevel } from '@/store/slices/canvas';
 import { website } from '@/store/slices/website-store';
 import { device } from '@/store/slices/index';
 
 // framer motion
-import SiteBuilderRecenterButton from './recenter';
+import SiteBuilderCanvasHotbar from './hotbar';
 
 export default function SiteBuilderCanvas() {
+  const dispatch = useAppDispatch();
+
   const canvasContainer = useRef<HTMLDivElement>(null);
   const currentDevice = useAppSelector(device);
   const canvasContainerWrapper = useRef<HTMLDivElement>(null);
-  const isElementDragged = useAppSelector(isDragged);
+  const canBeDragged = useAppSelector(canBeDraggedStore);
   const websiteData = useAppSelector(website);
+  const canvasZoomLevel = useAppSelector(zoomLevel)
 
   // Setting the size of the canvas via the deviceType
   const [deviceSize, setDeviceSize] = useState({
@@ -51,8 +53,7 @@ export default function SiteBuilderCanvas() {
         height: 1000
       },
       mobile: {
-        width:
-          390,
+        width: 390,
         height: 1000
       }
     };
@@ -64,18 +65,16 @@ export default function SiteBuilderCanvas() {
     });
 
     addPositionTagToElement(canvasContainer.current);
-
   }, [currentDevice]);
-
-  // Get the width and height of the canvas wrapper element
-  //const { width, height } = useElementSize('canvas-container', currentDevice);
 
   let zoom = 1;
 
   const handleWheel = (e) => {
+    // Prevent the default behavior of the scroll event
+    dispatch(setZoomLevel('custom'));
     e.preventDefault();
 
-    let scale = setCanvasZoom(e, zoom)
+    let scale = setCanvasZoom(e, zoom);
 
     if (canvasContainer.current) {
       canvasContainer.current.style.transform = `scale(${scale})`;
@@ -104,15 +103,16 @@ export default function SiteBuilderCanvas() {
 
   // Pass in the max top value of the wrapper canvas to prevent the user from
   // being able to drag the canvas above that point (outside the viewport)
-  useDragger(canvasContainer.current, {
-    windowWidth: windowSize.width,
-    windowHeight: windowSize.height,
-    elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,
-    elementHeight: height,
-    elementWidth: width
-  });
-
-  //const myUrl = url`user?name=John&age=30`
+  useDragger(
+    canvasContainer.current, {
+      windowWidth: windowSize.width,
+      windowHeight: windowSize.height,
+      elementWrapperWidth: canvasContainerWrapper.current?.clientWidth,
+      elementHeight: height,
+      elementWidth: width,
+    },
+    canBeDragged
+  );
 
   return (
     <div
@@ -129,17 +129,16 @@ export default function SiteBuilderCanvas() {
         style={{
           isolation: 'isolate',
           willChange: 'transform',
-          cursor: 'grab',
+          cursor: canBeDragged ? 'grab' : 'default',
           width: deviceSize.width,
           top: canvasContainerWrapper.current?.offsetTop + 20,
           height: '90vh',
-          backgroundColor: websiteData?.websiteBackgroundColor || 'white'
+          backgroundColor: websiteData?.websiteBackgroundColor || 'white',
+          transform: `scale(${canvasZoomLevel}%)`
         }}
         id="canvas-container"
         ref={canvasContainer}
       >
-        {/* <div className="absolute bg-black text-whtie border border-white"> testing left</div>
-        <div className="absolute bg-black text-whtie border border-white bottom-0 left-0"> testing bottom</div> */}
         <div
           className="h-[650px] transition-all duration-200 fixed text-black"
           style={{
@@ -147,15 +146,12 @@ export default function SiteBuilderCanvas() {
           }}
           id="canvas"
         >
-          <div className="pt-20">
-            {websiteData?.websiteBackgroundColor}
+          <div className="pt-20 text-white">
+            {canvasZoomLevel}
           </div>
         </div>
-      </div>
-      {/* Show the recenter button when the canvas is dragged */}
-      {isElementDragged === true && (
-        <SiteBuilderRecenterButton canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
-      )}
+      </div>      
+      <SiteBuilderCanvasHotbar canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />
     </div>
   );
 }

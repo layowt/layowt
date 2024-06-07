@@ -23,7 +23,7 @@ import {
   DropdownMenuGroup
 } from '@/ui/dropdown-menu';
 import { toast } from 'sonner';
-import PublishDropdownItems from './navigation-publish-dropdown-items';
+import PublishDropdownItems from './publish-dropdown-items';
 import { User } from '@supabase/supabase-js';
 
 export default function SiteBuilderPublishModal({ website }) {

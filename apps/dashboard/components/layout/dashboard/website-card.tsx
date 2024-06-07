@@ -18,18 +18,14 @@ import {
 } from '@/ui/tooltip';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 
-import { motion } from 'framer-motion';
 import { getEnv } from '@/utils/index';
 
 export default function WebsiteCard(website: Website, index: number) {
   const env = getEnv() === 'production' ? 'https' : 'http';
 
   return (
-    <motion.div
+    <div
       key={website.websiteId}
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3, delay: index * 0.1 }}
       className="relative"
     >
       <div
@@ -107,6 +103,6 @@ export default function WebsiteCard(website: Website, index: number) {
           </DropdownMenu>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

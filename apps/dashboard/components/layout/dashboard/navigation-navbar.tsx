@@ -13,7 +13,6 @@ import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 
 import { useState } from 'react';
 import useKeyboard from '@/hooks/useKeyboard';
-import { motion } from 'framer-motion';
 import WebsiteSwitcher from './website-switcher';
 
 export default function DashboardNavBar({
@@ -32,12 +31,7 @@ export default function DashboardNavBar({
         <div className="w-full h-14 border-b border-black-50">
           <div className="flex justify-center items-center size-full relative">
             {/* <Breadcrumbs className="absolute left-4 text-xs font-poppins font-bold" /> */}
-            <motion.div
-              className="h-full relative flex items-center"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
+            <div className="h-full relative flex items-center">
               <Button
                 className="
                   flex justify-start items-center border border-black-50 w-64 h-3/4 py-1.5 
@@ -61,7 +55,7 @@ export default function DashboardNavBar({
                   </kbd>
                 </p>
               </Button>
-            </motion.div>
+            </div>
             <div className="flex items-center gap-x-2.5 text-white/60 absolute right-2">
               <Toggle
                 className="

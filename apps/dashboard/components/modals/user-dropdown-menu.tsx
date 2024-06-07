@@ -19,7 +19,6 @@ import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
-import { motion } from 'framer-motion';
 
 export default function UserDropdownMenu({
   className = '',
@@ -129,28 +128,19 @@ export default function UserDropdownMenu({
           )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="font-inter border border-black-50 !bg-black text-white/80 m-1 w-72">
-        <motion.div
-          initial={{ opacity: 0, x: 0 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <DropdownMenuLabel className="flex flex-col">
-            <span className="text-sm font-satoshi">
-              {user?.email}
-            </span>
-            <span className="text-[10px] font-light">
-              Workspace Owner
-            </span>
-          </DropdownMenuLabel>
-        </motion.div>
+        <DropdownMenuLabel className="flex flex-col">
+          <span className="text-sm font-satoshi">
+            {user?.email}
+          </span>
+          <span className="text-[10px] font-light">
+            Workspace Owner
+          </span>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator className="!bg-black-50" />
         <DropdownMenuGroup className="flex flex-col">
           {items.map((item, index) => (
-            <motion.li
+            <li
               key={index}
-              initial={{ opacity: 0, x: 0 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.2, delay: index * 0.1 }}
               className="list-none w-full"
             >
               {item.name === 'separator' ? (
@@ -171,7 +161,7 @@ export default function UserDropdownMenu({
                   </div>
                 </button>
               )}
-            </motion.li>
+            </li>
           ))}
         </DropdownMenuGroup>
       </DropdownMenuContent>

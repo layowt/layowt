@@ -1,5 +1,5 @@
 'use server';
-import SiteBuilderNavBar from '@/components/layout/site-builder/navigation-navbar';
+import SiteBuilderNavBar from '@/components/layout/site-builder/navigation/navbar';
 import SiteBuilderOptionsLeft from '@/components/layout/site-builder/site-builder-left';
 import DebugTools from '@/components/website/builder/debug-tools';
 

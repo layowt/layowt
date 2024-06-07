@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 // components
 import ScreenSizeSwapper from '@/components/layout/site-builder/screensize-swapper';
-import SiteBuilderSettings from '@/components/layout/site-builder/navigation-settings';
+import SiteBuilderSettings from '@/components/layout/site-builder/navigation/settings';
 import WebsiteNameInput from '@/components/website/name-input';
 
 // misc
