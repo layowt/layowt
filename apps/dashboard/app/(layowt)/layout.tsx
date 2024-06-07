@@ -35,7 +35,7 @@ export default async function RootLayout({
           content="width=device-width, height=device-height, initial-scale:1, user-scalable=no"
         />
         <body
-          className="bg-black-300 min-h-screen"
+          className="bg-black-300 min-h-screen !overflow-hidden"
           suppressHydrationWarning={true}
         >
           <Theme>

@@ -22,7 +22,7 @@ export default async function DashboardSidebar() {
       </div>
       <NavigationItems
         websites={websites}
-        className="px-2 h-full border-r border-black-50 pt-6"
+        className="px-2 h-full border-r border-black-50 pt-6 pb-3"
       />
     </section>
   );

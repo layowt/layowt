@@ -131,13 +131,13 @@ export default function NavigationItems({
           />
         ))}
       </ul>
-      <div>
+      <div className="flex flex-col gap-y-1">
         <Link
           href="/pricing"
           className="flex items-center border-2 hover:bg-black-75 border-transparent duration-300 pl-2 pr-4 h-8 rounded-lg hover:cursor-pointer py-3"
         >
           <div className="flex items-center gap-x-2 font-inter leading-loose text-white/80">
-            <div className="size-4"></div>
+            <div className="size-4 bg-white rounded-md"></div>
             <span className="text-base">Plans</span>
           </div>
         </Link>

@@ -85,7 +85,9 @@ export default function DashboardNavBar({
             </div>
           </div>
           {/** Entry point for page */}
-          <div className="p-10">{children}</div>
+          <div className="p-10 max-h-[calc(100vh-55px)] overflow-y-scroll relative">
+            {children}
+          </div>
         </div>
       </div>
       <CommandDialog
