@@ -130,7 +130,7 @@ export default function SiteBuilderCanvas() {
           top: canvasContainerWrapper.current?.offsetTop + 20,
           height: '90vh',
           backgroundColor: websiteData?.websiteBackgroundColor || 'white',
-          scale: `${canvasZoomLevel}%`
+          transform: `scale(${canvasZoomLevel}%)`
         }}
         id="canvas-container"
         ref={canvasContainer}
