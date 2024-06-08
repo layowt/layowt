@@ -25,14 +25,12 @@ export default async function CreateNewSite() {
   }
 
   let user;
-
   try {
     // get the user from the db
     user = await getUserFromDb(userSession.data.user.id);
   } catch (e) {
     console.log(e);
   }
-
   //before we generate a new site, check if the user is eligible
   const userSubscription = await getUserSubscription(userSession.data.user.id);
 
@@ -41,7 +39,6 @@ export default async function CreateNewSite() {
     { userId: userSession.data.user.id },
     true
   );
-
   // compare the number of sites the user has to the limit
   if (userSites.length >= userSubscription?.numOfWebsites) {
     return (
