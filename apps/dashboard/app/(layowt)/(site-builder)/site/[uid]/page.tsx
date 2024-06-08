@@ -5,8 +5,7 @@ import { Metadata } from 'next';
 import { generateSiteMetadata } from '@/utils/websites/metadata';
 
 async function getSite({ websiteId }) {
-  const website = await getWebsite({ websiteId });
-  return website;
+  return await getWebsite({ websiteId });
 }
 
 export async function generateMetadata({

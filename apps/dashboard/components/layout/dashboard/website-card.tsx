@@ -75,7 +75,7 @@ export default function WebsiteCard(website: Website, index: number) {
                           <span className="relative inline-flex rounded-full size-2 bg-red-600"></span>
                         </span>
                         <TooltipContent side="bottom" className='bg-black-75 border border-black-50 z-[100]'> 
-                          <p className="text-xs">Website not published - Publish</p>
+                          <p className="text-xs">Website not published - Publish test push</p>
                         </TooltipContent>
                       </>
                     )}
@@ -88,13 +88,20 @@ export default function WebsiteCard(website: Website, index: number) {
               </span>
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
-            <Link
-              href={`${env}://${website.websiteUrl}` || '#'}
-              className="text-xs text-white/50 hover:underline font-inter"
-              prefetch
-            >
-              {website?.websiteUrl || 'Not Published'}
-            </Link>
+            {website.websiteUrl ? (
+              <Link
+                href={`${env}://${website.websiteUrl}` || '#'}
+                className="text-xs text-white/50 hover:underline font-inter"
+                prefetch
+                target="_blank"
+              >
+                {website?.websiteUrl || 'Not Published'}
+              </Link>
+            ) : (
+              <span className="text-xs text-white/50 font-inter">
+                Not Published
+              </span>
+            )}
           </div>
           <DropdownMenu key={website?.websiteId}>
             <DropdownMenuTrigger asChild>

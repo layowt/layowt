@@ -37,7 +37,7 @@ export default function SiteBuilderOptions() {
       dispatch(setCurrentSection(section));
       return;
     }
-    router.push(pathname + '?' + createQueryString('s', 'pages'));
+    //router.push(pathname + '?' + createQueryString('s', 'pages'));
   }, [dispatch, router, pathname]);
 
   const items = [
