@@ -88,19 +88,26 @@ export default function WebsiteCard(website: Website, index: number) {
               </span>
               <ArrowRightIcon className="size-4 opacity-0 group-hover:opacity-100 duration-300 transition-all" />
             </div>
-            <Link
-              href={`${env}://${website.websiteUrl}` || '#'}
-              className="text-xs text-white/50 hover:underline font-inter"
-              prefetch
-            >
-              {website?.websiteUrl || 'Not Published'}
-            </Link>
+            {website.websiteUrl ? (
+              <Link
+                href={`${env}://${website.websiteUrl}` || '#'}
+                className="text-xs text-white/50 hover:underline font-inter"
+                prefetch
+                target="_blank"
+              >
+                {website?.websiteUrl || 'Not Published'}
+              </Link>
+            ) : (
+              <span className="text-xs text-white/50 font-inter">
+                Not Published
+              </span>
+            )}
           </div>
           <DropdownMenu key={website?.websiteId}>
             <DropdownMenuTrigger asChild>
               <DotsHorizontalIcon className="text-xs pr-0 z-[100] absolute left-auto right-5 hover:cursor-pointer" />
             </DropdownMenuTrigger>
-            {/* <WebsiteCardModal website={website} /> */}
+            <WebsiteCardModal website={website} />
           </DropdownMenu>
         </div>
       </div>
