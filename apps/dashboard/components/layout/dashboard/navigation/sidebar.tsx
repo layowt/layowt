@@ -3,7 +3,7 @@ import { getUserFromSession } from '@/utils/user';
 import { getWebsite } from '@/utils/websites';
 import type { websites } from '@prisma/client';
 
-import NavigationItems from '@/components/layout/dashboard/navigation-items';
+import NavigationItems from '@/components/layout/dashboard/navigation/items';
 import SiteLogo from '@/components/logo';
 
 export default async function DashboardSidebar() {

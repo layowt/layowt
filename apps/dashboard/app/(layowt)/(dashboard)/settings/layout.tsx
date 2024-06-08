@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import Loading from '../../loading';
 
 import DashboardNavBar from '@/components/layout/dashboard/navigation-navbar';
-import DashboardSidebar from '@/components/layout/dashboard/navigation-sidebar';
+import DashboardSidebar from '@/components/layout/dashboard/navigation/navigation-sidebar';
 
 export default function DashboardLayout({
   children
