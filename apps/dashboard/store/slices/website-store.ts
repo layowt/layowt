@@ -4,7 +4,7 @@ import { RootState } from "../store";
 import type { websites as Website } from "@prisma/client";
 
 export type SavingState = 'idle' | 'saving' | 'error'
-export type SectionState = 'pages' | 'layout' | 'settings'
+export type SectionState = 'pages' | 'layout' | 'settings' | 'insert'
 
 type WebsiteTypeState = {
 	website: Website | null // singular site

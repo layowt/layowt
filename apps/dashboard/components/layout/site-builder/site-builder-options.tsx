@@ -1,5 +1,5 @@
 'use client'
-import { GearIcon, LayoutIcon, FileIcon } from "@radix-ui/react-icons";
+import { GearIcon, LayoutIcon, FileIcon, PlusIcon } from "@radix-ui/react-icons";
 import { useEffect } from "react";
 import {
   Tooltip,
@@ -41,6 +41,12 @@ export default function SiteBuilderOptions() {
   }, [dispatch, router, pathname]);
 
   const items = [
+    {
+      name: 'insert',
+      icon: <PlusIcon className="size-4" />,
+      toolTip: 'Insert',
+      onClick: () => handleButtonClick('insert')
+    },
     {
       name: 'pages',
       icon: <FileIcon className="size-4" />,
