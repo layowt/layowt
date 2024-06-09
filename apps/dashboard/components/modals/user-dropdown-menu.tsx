@@ -19,6 +19,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
+import ThemeSwitcherModal from './dashboard/theme-switcher';
 
 export default function UserDropdownMenu({
   className = '',
@@ -63,12 +64,7 @@ export default function UserDropdownMenu({
     },
     {
       name: 'Theme',
-      icon: theme === 'dark' ? <IcOutlineDarkMode /> : '🌞',
-      onClick: () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
-        toggleTheme();
-        document.documentElement.classList.toggle('dark', newTheme === 'dark');
-      }
+      html: <ThemeSwitcherModal />
     },
     {
       name: 'Help',
@@ -138,6 +134,9 @@ export default function UserDropdownMenu({
         <DropdownMenuSeparator className="!bg-black-50" />
         <DropdownMenuGroup className="flex flex-col">
           {items.map((item, index) => (
+            item.html ? (
+              <div key={item.name}>{item.html}</div>
+            ) : (
             <li
               key={index}
               className="list-none w-full"
@@ -161,7 +160,7 @@ export default function UserDropdownMenu({
                 </button>
               )}
             </li>
-          ))}
+          )))}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
