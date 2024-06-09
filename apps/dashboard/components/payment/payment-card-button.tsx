@@ -20,6 +20,7 @@ import { Elements } from '@stripe/react-stripe-js';
 
 // supabase imports
 import { createClient } from '../../utils/supabase/client';
+import { toast } from 'sonner';
 
 const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 
@@ -73,7 +74,7 @@ export function PaymentButton({ product }: { product: StripeProduct }) {
     } catch (error) {
       console.error(error);
 
-      // TODO: Show Sonner here on error
+      toast.error('An error occurred while trying to create the subscription');
     }
 
     // reset the loading state for the specific product
