@@ -150,7 +150,6 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 			websiteSecondaryColor: '#000000',
 			websiteUrl: '',
 			websiteId: websiteId,
-			//TODO: GENERATE NAME FOR HERE
 			websiteName: 'Untitled', 
 			createdAt: new Date(),
 			lastUpdated: new Date(),

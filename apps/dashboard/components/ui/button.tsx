@@ -46,15 +46,21 @@ const buttonVariants = cva(
   }
 );
 
+type ButtonElementProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+type AnchorElementProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends VariantProps<typeof buttonVariants> {
+  href?: string;
   asChild?: boolean;
   special?: boolean;
   hoverEffect?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<
+  HTMLButtonElement & HTMLAnchorElement,
+  ButtonProps & (ButtonElementProps | AnchorElementProps)
+>(
   (
     {
       className,
@@ -64,14 +70,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       special,
       hoverEffect = true,
       rounded,
+      href,
       ...props
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : 'button';
+    const Comp = asChild ? Slot : href ? 'a' : 'button';
     return (
       <div className={special ? 'relative w-full' : ''}>
-        {/** Conditionally make the button have a spring hover effect */}
         {hoverEffect ? (
           <motion.div
             whileHover={{ scale: 1.03 }}
@@ -82,13 +88,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 buttonVariants({ variant, size, className, rounded })
               )}
               ref={ref}
-              {...props}
+              href={href}
+              {...(props as any)}
             />
             {special ? (
               <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
-            ) : (
-              ''
-            )}
+            ) : null}
           </motion.div>
         ) : (
           <Comp
@@ -96,7 +101,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               buttonVariants({ variant, size, className, rounded })
             )}
             ref={ref}
-            {...props}
+            href={href}
+            {...(props as any)}
           />
         )}
       </div>
