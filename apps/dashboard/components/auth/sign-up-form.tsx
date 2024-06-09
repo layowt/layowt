@@ -77,7 +77,6 @@ export default function SignUpForm() {
       // reset the loading state
       setIsLoading(false);
     } catch (e) {
-      // TODO: add sonner here on error
       toast.error('An error occurred while creating your account');
     }
   };

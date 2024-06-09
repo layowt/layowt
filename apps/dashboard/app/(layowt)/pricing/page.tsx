@@ -16,30 +16,26 @@ import { useAppSelector } from '@/utils/index';
 import { StripeProducts } from '@/utils/stripe/stripe-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
-
 import Stripe from 'stripe';
 
 // component
 export default function PricingPage() {
   const currentBillingPeriod = useAppSelector(billingPeriod);
-  const [products, setProducts] = useState<Record<
-    'products',
-    StripeProduct[]
-  > | null>(null);
+  const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const setProductsFunc = async (
     billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
   ) => {
     setLoading(true);
-    // TODO: fix this
-    // @ts-ignore
-    setProducts(await StripeProducts(billingPeriod));
+    const { products } = await StripeProducts(billingPeriod);
+    setProducts(products);
     setLoading(false);
   };
 
   // useEffect to fetch the products on mount (This may need to be changed)
   useEffect(() => {
-    setProductsFunc();
+    setProductsFunc(currentBillingPeriod);
   }, []);
 
   // a use effect to update the products when the billing period changes
@@ -120,10 +116,10 @@ export default function PricingPage() {
         <div className="flex gap-x-10 items-center justify-center self-center">
           <div
             className={
-              pricingPlansGrid + ` grid-cols-${products?.products.length}`
+              pricingPlansGrid + ` grid-cols-${products?.length}`
             }
           >
-            {products?.products.map((product: StripeProduct, index) => (
+            {products?.map((product: StripeProduct, index) => (
               <motion.div
                 key={product.id}
                 className="min-h-full"

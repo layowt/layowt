@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import NavigationItem from '@/components/layout/dashboard/navigation-item';
+import NavigationItem from '@/components/layout/dashboard/navigation/item';
 
 // icon imports
 import MaterialSymbolsHomeOutlineRounded from '@/ui/icons/home';
