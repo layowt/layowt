@@ -2,11 +2,22 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
-function ModalErrorContent(){
+interface ModalErrorContentProps {
+  content: string;
+  button?: {
+    text: string;
+    href: string;
+  }
+}
+
+export function ModalErrorContent({
+  content,
+  button
+}: ModalErrorContentProps){
   return (
     <div className="flex flex-col gap-y-3">
       <p className="text-white text-sm font-satoshi">
-        To create a new site, please upgrade your subscription
+        {content}
       </p>
       <div className="grid grid-cols-2 gap-x-4">
         <Button 
@@ -18,10 +29,10 @@ function ModalErrorContent(){
         </Button>
         <Button 
           className='w-full'
-          href="/pricing"
+          href={button?.href}
           variant='secondary' 
         >
-          Upgrade Subscription
+          {button?.text}
         </Button>
       </div>
     </div>
@@ -30,7 +41,15 @@ function ModalErrorContent(){
 
 export default function ModalCreateSiteError({
   title,
-  content = <ModalErrorContent />
+  content = (
+    <ModalErrorContent 
+      content="To create a new site, please upgrade your subscription" 
+      button={{
+        text: 'Upgrade Subscription',
+        href: '/pricing'
+      }}
+    />
+  )
 }: {
   title: React.ReactNode;
   content?: React.ReactNode;

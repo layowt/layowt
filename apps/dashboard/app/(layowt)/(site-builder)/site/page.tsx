@@ -6,16 +6,12 @@ import { getWebsite } from '@/utils/websites';
 import { getUserSubscription } from '@/utils/subscriptions/subscriptions.get';
 import type { websites } from '@prisma/client';
 import dynamic from 'next/dynamic';
+import { ModalErrorContent } from '@/components/modals/site/modal-create-site-error';
 
 // other
 import { redirect } from 'next/navigation';
 import uniqid from 'uniqid';
 
-function ModalErrorTitle(){
-  return (
-    <h1 className="text-white text-2xl font-bold font-satoshi">You have reached your limit of sites</h1>
-  );
-}
 
 export default async function CreateNewSite() {
   // 1. check if the user has reached their limit of sites
@@ -26,11 +22,9 @@ export default async function CreateNewSite() {
     () => import('@/components/modals/site/modal-create-site-error'),
     { ssr: false }
   );
-
   // get the userId from the current session
   const userSession = await getUserFromSession();
 
-  // TODO: HANDLE THIS BETTER
   if (!userSession || !userSession?.data?.user?.id) {
     redirect('/login?error=no-user-session')
   }
@@ -51,11 +45,11 @@ export default async function CreateNewSite() {
     true
   );
   // compare the number of sites the user has to the limit
-  //if (userSites.length >= userSubscription?.numOfWebsites) {
+  if (userSites.length >= userSubscription?.numOfWebsites) {
     return (
       <NoSSR title={<ModalErrorTitle />} />
     );
-  //}
+  }
 
   // generate a unique id for the new site
   const siteUid = uniqid();
@@ -69,13 +63,36 @@ export default async function CreateNewSite() {
   // 2. redirect to the dashboard page
   if (!newWebsite) {
     return (
-      <div className="text-white">
-        <h1>Failed to create new site</h1>
-      </div>
+      <NoSSR 
+        title={<ModalWebsiteCreateError />} 
+        content={
+          <ModalErrorContent 
+            content="There was an issue creating your new site. Please try again." 
+            button={{
+              text: 'Try Again',
+              href: '/dashboard'
+            }}
+          />
+        }
+      />
     );
   }
 
   // if we have a value, redirect the user to the /site
   // page with the new site id
   redirect(`/site/${siteUid}`);
+}
+
+function ModalErrorTitle(){
+  return (
+    <h1 className="text-white text-2xl font-bold font-satoshi">You have reached your limit of sites</h1>
+  );
+}
+
+function ModalWebsiteCreateError(){
+  return (
+    <p className="text-white text-lg font-medium font-satoshi">
+      There was an issue creating your new site. Please try again.
+    </p>
+  );
 }

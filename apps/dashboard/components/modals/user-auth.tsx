@@ -1,6 +1,6 @@
 'use client';
 // react imports
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 //supabase
 import { createClient } from '@/utils/supabase/client';
 // use router as we are in a client component
@@ -26,12 +26,9 @@ export default function UserAuthModal({
   const supabase = createClient();
 
   const [showModal, setShowModal] = useState(true);
-  const [isClient, setIsClient] = useState(false);
 
   // Effects TODO: LOOK INTO REFACTORING INTO REACT QUERY
   useEffect(() => {
-    // on initial render set the isClient to true
-    setIsClient(true);
 
     // check if the user is logged in
     // if the user is present, clear the URL of the waiting_for_auth query param
@@ -60,7 +57,7 @@ export default function UserAuthModal({
             setShowModal(false);
 
             // remove the 'waiting_for_auth' query param
-            router.replace('/pricing', undefined);
+            router.replace('/login', undefined);
 
             // clear the userId cookie
           } else {

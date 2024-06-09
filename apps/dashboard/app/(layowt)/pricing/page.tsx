@@ -16,7 +16,6 @@ import { useAppSelector } from '@/utils/index';
 import { StripeProducts } from '@/utils/stripe/stripe-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
-
 import Stripe from 'stripe';
 
 // component
@@ -29,9 +28,7 @@ export default function PricingPage() {
     billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
   ) => {
     setLoading(true);
-    // TODO: fix this
     const { products } = await StripeProducts(billingPeriod);
-
     setProducts(products);
     setLoading(false);
   };

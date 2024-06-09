@@ -28,7 +28,6 @@ export default function Page({ params }: { params: { uid: string } }) {
   // get the uid from the params
   const { uid: websiteId } = params;
 
-  // TODO: HANDLE BETTER
   if (!websiteId) redirect('/dashboard?error=no-website-id');
 
   // once we have the websiteUid, we can fetch all of its data from the db

@@ -33,7 +33,6 @@ export default function UserDropdownMenu({
   const router = useRouter();
 
   const [user, setUser] = useState<User>(null);
-
   let init = useRef(false);
   // on mount get the user data
   useEffect(() => {
