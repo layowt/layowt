@@ -1,10 +1,10 @@
 import BaseComponent from './base-component';
-import { TextIcon } from 'lucide-react';
+import { TypeIcon } from 'lucide-react';
 
 export default function Text(){
   return (
-    <BaseComponent>
-      <TextIcon className='size-10' />
+    <BaseComponent name="text">
+      <TypeIcon className='size-8' />
       <span>
         Text
       </span>
