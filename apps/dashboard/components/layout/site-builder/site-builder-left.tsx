@@ -21,7 +21,7 @@ export default function SiteBuilderOptionsLeft(){
   return (
     <div className="bg-black-300 flex mt-navbar w-1/6 fixed left-0 bottom-0 border-r border-black-50 z-40">
       <SiteBuilderOptions />
-      <div className="p-4 w-full">
+      <div className="p-4 w-full overflow-y-scroll">
         {SelectedSection && <SelectedSection />}
       </div>
     </div>
