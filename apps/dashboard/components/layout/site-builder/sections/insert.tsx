@@ -1,6 +1,7 @@
 'use client';
 import { useAppSelector } from "@/utils/index";
 import { components } from "@/store/slices/canvas";
+import BaseComponent from "../components/base-component";
 
 export default function Insert(){
   const comps = useAppSelector(components);
@@ -12,9 +13,12 @@ export default function Insert(){
       </div>
       {comps.map((component) => {
         return (
-          <div key={component.name}>
-            {component.name}
-          </div>
+          <BaseComponent 
+            key={component.name} 
+            component={component} 
+          >
+            {component.type}
+          </BaseComponent>
         );
       })}
     </div>
