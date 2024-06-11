@@ -3,7 +3,7 @@ import BaseComponent from "./base-component";
 
 export default function DateComponent(){
   return (
-    <BaseComponent name="date">
+    <BaseComponent name="timestamp">
       <span className="font-bold text-xl">
         21:33 pm
       </span>

@@ -1,8 +1,10 @@
+import { CanvasComponents } from "@/types/CanvasComponents";
+import { generateElement } from "@/utils/canvas/components/generate";
 import React from "react";
 
 interface Props {
   children: React.ReactNode;
-  name: string;
+  name: CanvasComponents;
 }
 
 export default function BaseComponent({
@@ -15,7 +17,7 @@ export default function BaseComponent({
         border border-white p-3 rounded-xl flex items-center justify-center
         w-full h-32 group relative font-satoshi
       "
-      onClick={() => alert(`Add ${name}`)}
+      onClick={() => generateElement(name)}
     >
       <div className="fill-white flex flex-col gap-y-1 text-sm text-center group-hover:opacity-50">
         {children}

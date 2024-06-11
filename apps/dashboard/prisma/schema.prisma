@@ -14,6 +14,12 @@ enum planType {
   PREMIUM
 }
 
+enum ComponentType {
+  text
+  timestamp
+  div
+}
+
 // defines the user data model
 model users {
   uid                                         String @id @default(uuid())
@@ -69,4 +75,15 @@ model earlyAccess {
   email                                      String @id 
   createdAt                                  DateTime @default(now())
   updatedAt                                  DateTime @updatedAt
+}
+
+model Components {
+  type                                        ComponentType @id
+  name                                        String
+  description                                 String
+  properties                                  String[]
+  createdAt                                   DateTime @default(now())
+  updatedAt                                   DateTime @updatedAt
+  
+  data                                        Json
 }
