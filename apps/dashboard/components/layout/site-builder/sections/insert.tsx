@@ -2,6 +2,7 @@
 import { useAppSelector } from "@/utils/index";
 import { components } from "@/store/slices/canvas";
 import BaseComponent from "../components/base-component";
+import { CanvasComponentData } from "@/types/components/CanvasComponents";
 
 export default function Insert(){
   const comps = useAppSelector(components);

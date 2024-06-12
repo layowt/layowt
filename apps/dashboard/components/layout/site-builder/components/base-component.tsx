@@ -19,7 +19,7 @@ export default function BaseComponent({
         border border-white p-3 rounded-xl flex items-center justify-center
         w-full h-32 group relative font-satoshi
       "
-      onClick={() => generateElement()}
+      onClick={() => generateElement(component)}
     >
       <div className="fill-white flex flex-col gap-y-1 text-sm text-center group-hover:opacity-50">
         {children}
