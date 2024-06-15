@@ -9,7 +9,8 @@
       "@/store/*": ["./store/*"],
       "@/utils/*": ["./utils/*"],
       "@/ui/*": ["./components/ui/*"],
-      "@/types/*": ["./types/*"]
+      "@/types/*": ["./types/*"],
+      "@/actions/*": ["./actions/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,

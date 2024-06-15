@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import { CairoFont, InterFont, PoppinsFont, SatoshiFont } from '../styles/fonts'
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Toaster } from '@/ui/sonner';
 
@@ -14,6 +15,9 @@ const title =
 const description = 
   'Layowt is the all-in-one platform for creating your next digital product'
 
+// create a client
+const queryClient = new QueryClient();
+
 export const metadata: Metadata = {
   title,
   description
@@ -25,30 +29,32 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <StoreProvider>
-      <html
-        lang="en"
-        className={cn(CairoFont.variable, PoppinsFont.variable, InterFont.variable, SatoshiFont.variable)}
-      >
-        <meta
-          name="viewport"
-          content="width=device-width, height=device-height, initial-scale:1, user-scalable=no"
-        />
-        <body
-          className="bg-black-300 min-h-screen !overflow-hidden"
-          suppressHydrationWarning={true}
+    <QueryClientProvider client={queryClient}>
+      <StoreProvider>
+        <html
+          lang="en"
+          className={cn(CairoFont.variable, PoppinsFont.variable, InterFont.variable, SatoshiFont.variable)}
         >
-          <Theme>
-            <div className="flex flex-col relative">
-              <main>{children}</main>
-              <Toaster
-                closeButton
-                className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
-              />
-            </div>
-          </Theme>
-        </body>
-      </html>
-    </StoreProvider>
+          <meta
+            name="viewport"
+            content="width=device-width, height=device-height, initial-scale:1, user-scalable=no"
+          />
+          <body
+            className="bg-black-300 min-h-screen !overflow-hidden"
+            suppressHydrationWarning={true}
+          >
+            <Theme>
+              <div className="flex flex-col relative">
+                <main>{children}</main>
+                <Toaster
+                  closeButton
+                  className="z-[100] group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg group-[.toaster]:pointer-events-auto"
+                />
+              </div>
+            </Theme>
+          </body>
+        </html>
+      </StoreProvider>
+    </QueryClientProvider>
   );
 }
