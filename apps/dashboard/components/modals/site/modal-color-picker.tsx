@@ -2,7 +2,7 @@ import { HexColorInput, HexColorPicker } from 'react-colorful';
 import { isLightOrDark } from '@/utils/colors';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { PopoverArrow } from '@radix-ui/react-popover';
-import { updateWebsite } from '@/utils/websites';
+import { updateWebsite } from '@/actions/websites/update';
 import { websites } from '@prisma/client';
 import { useAppSelector, useAppDispatch } from '@/utils/index';
 import { website, setSavingState } from '@/store/slices/website-store';

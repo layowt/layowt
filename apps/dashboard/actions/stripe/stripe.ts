@@ -1,3 +1,4 @@
+'use server'
 import Stripe from 'stripe';
 import { createInvoice } from './stripe-invoice';
 import { lookupCustomer, createCustomer } from './stripe-customer';

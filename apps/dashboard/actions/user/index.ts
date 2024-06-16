@@ -2,7 +2,7 @@
 import { prisma } from '@/utils/prisma';
 import type { users as user } from '@prisma/client';
 
-import { createClient as createClientClient } from "../supabase/client";
+import { createClient as createClientClient } from '@/utils/supabase/client'
 import { createClient as createServerClient } from "@/utils/supabase/server";
 import { createClient } from '@/utils/supabase/client'
 import { UserResponse } from '@supabase/supabase-js';

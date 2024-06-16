@@ -1,3 +1,4 @@
+'use server'
 import { prisma } from '@/utils/prisma';
 
 export const getUserSubscription = async(userId: string) => {

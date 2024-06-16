@@ -1,3 +1,4 @@
+'use server'
 import Stripe from 'stripe';
 
 export const lookupCustomer = async (

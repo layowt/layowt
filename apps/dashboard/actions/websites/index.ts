@@ -10,9 +10,10 @@ import { user } from '@/store/slices/user-store';
 import { prisma } from '@/utils/prisma';
 import type { websites as Website } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { unstable_cache } from 'next/cache';
+import { unstable_cache as cache } from 'next/cache';
 import { getEnv } from '@/utils/index';
-import { getUserFromDb } from '../user';
+import { getUserFromDb } from '@/actions/user';
+import { updateWebsite } from '@/actions/websites/update';
 
 /**
  * 
@@ -45,36 +46,6 @@ export const deleteWebsite = async(websiteId: string) => {
 	revalidateTag('websites');
 	// revalidatePath('/dashboard');
 	return 'ok'
-}
-
-/**
- * Function to update a website via its id
- * 
- * @param options An object containing:
- * 					- websiteId 
- * 					- options to update
- * @returns void
- */
-export const updateWebsite = async (
-	websiteId: string,
-	options: Partial<Website>
-): Promise<Website> => {
-	if(!websiteId) throw new Error('No website ID specified')
-
-	// find the site that needs to be update and update it
-	const siteToUpdate = await prisma.websites.update({
-		where: {
-			websiteId
-		},
-		data: {
-			...options,
-			lastUpdated: new Date()
-		}
-	})
-
-	revalidateTag('websites');
-
-	return siteToUpdate;
 }
 
 interface WebsiteOptions {
@@ -248,51 +219,6 @@ export const getWebsiteByDomain = async(
 			...opts
 		}
 	})
-}
-
-/**
- * 
- * Update the URL of a website
- * Check if the new name is already taken
- * 
- * @param websiteId 
- * @param newName 
- * @param userId 
- * @returns 
- */
-export const updateWebsiteUrlChange = async(
-	websiteId: string,
-	newName: string,
-	userId: string
-) => {
-	// first check if the website name is already taken
-	const websiteExists = await getWebsiteByDomain(newName, {
-		AND: {
-			websiteId: {
-				not: websiteId
-			}
-		}
-	});
-
-	// if the website exists, return an error
-	if(websiteExists) {
-		return {
-			statusCode: 409,
-			message: 'Website name already exists'
-		}
-	}
-
-	await updateWebsite(websiteId, {
-		websiteUrl: newName,
-		lastUpdatedUid: userId
-	});
-
-	revalidateTag('websites');
-
-	return {
-		statusCode: 200,
-		message: 'Website name updated successfully'
-	}
 }
 
 /**

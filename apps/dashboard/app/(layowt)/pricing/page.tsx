@@ -13,7 +13,7 @@ import { billingPeriod } from '@/store/slices/user-store';
 import { useAppSelector } from '@/utils/index';
 
 // action imports
-import { StripeProducts } from '@/utils/stripe/stripe-products';
+import { StripeProducts } from '@/actions/stripe/stripe-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
 import Stripe from 'stripe';
