@@ -2,7 +2,6 @@ import '../styles/globals.css';
 import { CairoFont, InterFont, PoppinsFont, SatoshiFont } from '../styles/fonts'
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Toaster } from '@/ui/sonner';
 
@@ -14,9 +13,6 @@ const title =
   'Layowt | Build your next digital product with ease'
 const description = 
   'Layowt is the all-in-one platform for creating your next digital product'
-
-// create a client
-const queryClient = new QueryClient();
 
 export const metadata: Metadata = {
   title,
