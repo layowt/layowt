@@ -14,7 +14,7 @@ export default function Insert(){
       </div>
       {comps.map((component) => {
         return (
-          <div className="">{component.name}</div>
+          <div key={component.type}>{component.name}</div>
           // <BaseComponent 
           //   key={component.name} 
           //   component={component} 
