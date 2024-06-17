@@ -14,12 +14,12 @@ export default function Insert(){
       </div>
       {comps.map((component) => {
         return (
-          <BaseComponent 
-            key={component.name} 
-            component={component} 
-          >
-            {component.type}
-          </BaseComponent>
+          // <BaseComponent 
+          //   key={component.name} 
+          //   component={component} 
+          // >
+          //   {component.type}
+          // </BaseComponent>
         );
       })}
     </div>
