@@ -7,7 +7,7 @@ export default function SiteBuilderLayoutSection(){
       <div className="flex flex-col gap-y-3 font-satoshi">
         <p>
           This is the layout section.
-          It's main purpose will be allowing the user to customise
+          It&apos;s main purpose will be allowing the user to customise
         </p>
         <p>
           navigation elements of the site (e.g. header, footer, sidebar, etc.)

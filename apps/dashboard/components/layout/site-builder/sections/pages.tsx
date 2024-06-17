@@ -9,7 +9,7 @@ export default function SiteBuilderPagesSection(){
           This is the pages section.
         </p>
         <p>
-          It's main purpose will be to allow the user to add, remove, and edit pages
+          It&apos;s main purpose will be to allow the user to add, remove, and edit pages
           from the site.
         </p>
         <p>
