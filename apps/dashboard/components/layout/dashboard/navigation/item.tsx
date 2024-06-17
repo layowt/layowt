@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { LazyMotion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function NavigationItem({

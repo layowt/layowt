@@ -1,6 +1,6 @@
 'use client';
 import type { Components, websites as Website } from '@prisma/client';
-import { setWebsite } from '@/actions/websites/set-website'
+import { setWebsite } from '@/utils/websites/set-website'
 import dynamic from 'next/dynamic';
 import SiteBuilderCanvas from '@/components/website/builder/canvas';
 import { redirect } from 'next/navigation';

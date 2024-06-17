@@ -1,4 +1,3 @@
-'use client';
 import Link from 'next/link';
 import NavigationItem from '@/components/layout/dashboard/navigation/item';
 

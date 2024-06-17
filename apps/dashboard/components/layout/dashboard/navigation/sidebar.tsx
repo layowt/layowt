@@ -1,4 +1,3 @@
-'use server';
 import { getUserFromSession } from '@/actions/user/get-user';
 import { getWebsite } from '@/actions/websites/get-website';
 import type { websites } from '@prisma/client';
