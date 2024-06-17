@@ -15,7 +15,7 @@ import {
 } from '@radix-ui/react-icons';
 
 // utils
-import { signUp } from '@/utils/supabase';
+import { signUp } from '@/actions/user/user-sign-up';
 import { useRouter } from 'next/navigation';
 
 // redux imports

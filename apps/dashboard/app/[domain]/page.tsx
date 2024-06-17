@@ -1,10 +1,10 @@
 import { prisma } from '@/utils/prisma';
 import { notFound } from 'next/navigation';
 
-import { getDynamicSite } from '@/utils/websites';
+import { getDynamicSite } from '@/actions/websites/get-website';
 import { Metadata } from 'next';
 import { use } from 'react';
-import { generateSiteMetadata } from '@/utils/websites/metadata';
+import { generateSiteMetadata } from '@/actions/websites/metadata';
 
 async function getCurrentSite(domain: string) {
   return await getDynamicSite(domain);

@@ -1,10 +1,9 @@
-import { getWebsite } from '@/utils/websites';
+import { getWebsite } from '@/actions/websites/get-website';
 import SiteBuilderClient from './page-client';
-import { use } from 'react';
 import { Metadata } from 'next';
-import { generateSiteMetadata } from '@/utils/websites/metadata';
+import { generateSiteMetadata } from '@/actions/websites/metadata';
 import { redirect } from 'next/navigation';
-import { getAllComponents } from '@/utils/actions/canvas/components/getAllComponents';
+import { getAllComponents } from '@/actions/canvas/components/get-all-components';
 
 async function getSite({ websiteId }) {
   return await getWebsite({ websiteId });

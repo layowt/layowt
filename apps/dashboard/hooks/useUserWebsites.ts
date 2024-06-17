@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getWebsite } from '@/utils/websites';
+import { getWebsite } from '@/actions/websites/get-website';
 import { websites } from '@prisma/client';
 
 const useUserWebsites = <T extends websites[]>(userId: string): T | null => {

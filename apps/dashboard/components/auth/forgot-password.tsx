@@ -6,7 +6,7 @@ import { Label } from '@/ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { toast } from 'sonner';
-import { passwordReset } from '@/utils/user';
+import { passwordReset } from '@/actions/user/password-reset';
 
 export default function PasswordRestForm() {
   const [state, setState] = useState({

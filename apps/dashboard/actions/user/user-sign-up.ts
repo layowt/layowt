@@ -1,10 +1,10 @@
-'use server';
+'use server'
 import { supabase } from '@/lib/supabase';
 import { type AuthResponse } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
-const cookiesStore = cookies();
-
 import { prisma } from '@/utils/prisma';
+
+const cookiesStore = cookies();
 
 export const signUp = async (
   email: string,

@@ -2,7 +2,7 @@
 import { websites as Website } from '@prisma/client';
 import { DropdownMenuContent, DropdownMenuGroup } from '@/ui/dropdown-menu';
 import { DropdownMenuPortal } from '@radix-ui/react-dropdown-menu';
-import { deleteWebsite } from '@/utils/websites';
+import { deleteWebsite } from '@/actions/websites/delete';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { useAppDispatch } from '@/utils/index';

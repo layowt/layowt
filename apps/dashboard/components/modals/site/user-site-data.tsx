@@ -14,7 +14,7 @@ import { setWebsite, website } from '@/store/slices/website-store';
 
 // misc / utils
 import type { websites as Website } from '@prisma/client';
-import { updateWebsite } from '@/utils/websites';
+import { updateWebsite } from '@/actions/websites/update';
 import type { SavingState } from '@/types/States';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { toast } from 'sonner';
