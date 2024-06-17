@@ -29,7 +29,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <QueryClientProvider client={queryClient}>
       <StoreProvider>
         <html
           lang="en"
@@ -55,6 +54,5 @@ export default async function RootLayout({
           </body>
         </html>
       </StoreProvider>
-    </QueryClientProvider>
   );
 }
