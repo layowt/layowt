@@ -3,6 +3,7 @@ import { prisma } from '@/utils/prisma';
 import type { websites as Website } from '@prisma/client'
 import { revalidateTag } from 'next/cache';
 import { getUserFromDb } from '../user/get-user';
+import { unstable_cache } from 'next/cache';
 
 interface WebsiteOptions {
 	userId?: string;
@@ -17,7 +18,8 @@ interface WebsiteOptions {
  * @param websiteId websiteId: The ID of the website.
  * @returns A Promise resolving to an array of websites or a singular site.
  */
-export const getWebsite = async <T extends Website | Website[] = Website>(
+export const getWebsite = unstable_cache(
+	async <T extends Website | Website[] = Website>(
 	options: WebsiteOptions,
 	returnMany: boolean = false
 ): Promise<T> => {
@@ -57,7 +59,7 @@ export const getWebsite = async <T extends Website | Website[] = Website>(
 	revalidateTag('websites');
 
 	return websiteData as T;
-};
+});
 
 /**
  * Get a website by its domain
