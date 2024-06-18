@@ -10,7 +10,7 @@ import { UserResponse } from '@supabase/supabase-js';
 import { createClient as createClientClient } from '@/utils/supabase/client'
 import { createClient as createServerClient } from "@/utils/supabase/server";
 
-import { unstable_cache as cache } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 
 
 /**
@@ -20,7 +20,7 @@ import { unstable_cache as cache } from 'next/cache';
  * @param id 
  * @returns user
  */
-export const getUserFromDb = cache(
+export const getUserFromDb = unstable_cache(
   async(id) => {
     const user = await prisma.users.findFirst({
       where: {
@@ -51,8 +51,9 @@ export const getClientUser = async(): Promise<UserResponse> => {
  * 
  * @returns 
  */
-export const getUserFromSession = () => {
-	const supabase = createServerClient();
-
-	return supabase?.auth?.getUser();
-}
+export const getUserFromSession = unstable_cache(
+  async() => {
+    const supabase = createServerClient();
+    return supabase?.auth?.getUser();
+  }
+)
