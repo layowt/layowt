@@ -1,5 +1,5 @@
 generator client {
-	provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -54,7 +54,7 @@ model websites {
   owner                                       users         @relation(fields: [userId], references: [uid])
   userId                                      String
 
-  websiteId                                   String        @id
+  websiteId                                   String        @id @default(uuid())
   websiteName                                 String        
   websiteUrl                                  String        
   websiteLogo                                 String
@@ -69,6 +69,7 @@ model websites {
   lastUpdated                                 DateTime      @updatedAt
   lastUpdatedUid                              String        @default("")
 
+  canvas                                      Canvas? 
 }
 
 model earlyAccess {
@@ -86,4 +87,15 @@ model Components {
   updatedAt                                   DateTime @updatedAt
   
   data                                        Json
+}
+
+model Canvas {
+  website                                     websites      @relation(fields: [websiteId], references: [websiteId])
+  websiteId                                   String        @unique
+
+  canvasId                                    String        @id @default(uuid())
+  createdAt                                   DateTime      @default(now())
+  updatedAt                                   DateTime      @updatedAt
+
+  
 }
