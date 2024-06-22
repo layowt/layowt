@@ -94,6 +94,8 @@ model Canvas {
   websiteId                                   String        @unique
 
   canvasId                                    String        @id @default(uuid())
+  canvasUrl                                   String        @unique
+
   createdAt                                   DateTime      @default(now())
   updatedAt                                   DateTime      @updatedAt
 
