@@ -97,5 +97,21 @@ model Canvas {
   createdAt                                   DateTime      @default(now())
   updatedAt                                   DateTime      @updatedAt
 
-  
+  page                                        Page[]
+}
+
+model Page {
+  canvas                                      Canvas        @relation(fields: [canvasId], references: [canvasId])
+  canvasId                                    String
+
+  pageId                                      String        @id @default(uuid())
+  pageTitle                                   String
+  pageSlug                                    String
+
+  pagePrimaryColor                            String         
+  pageSecondaryColor                          String
+  pageBackgroundColor                         String        @default("#ffffff")
+
+  createdAt                                   DateTime      @default(now())
+  updatedAt                                   DateTime      @updatedAt
 }
