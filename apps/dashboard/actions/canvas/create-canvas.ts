@@ -37,6 +37,11 @@ export default function createCanvas(userId: string, website: Website){
                 pageSecondaryColor: '#000000',
               }
             },
+            owner: {
+                connect: {
+                    uid: userId,
+                },
+            }
         },
     });
 
