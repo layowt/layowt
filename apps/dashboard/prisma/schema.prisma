@@ -28,7 +28,7 @@ enum pageStatus {
 
 // defines the user data model
 model User {
-  uid                                         String @id @default(uuid())
+  uid                                         String @id @default(cuid())
   email                                       String @unique
   hasAuthenticatedEmail                       Boolean @default(false) // if the user has authenticated their email
   firstName                                   String?
@@ -63,7 +63,7 @@ model Website {
   owner                                       User         @relation(fields: [userId], references: [uid])
   userId                                      String
 
-  websiteId                                   String        @id @default(uuid())
+  websiteId                                   String        @id @default(cuid())
   websiteName                                 String        
   websiteUrl                                  String        
   websiteLogo                                 String
@@ -102,7 +102,7 @@ model Canvas {
   website                                     Website      @relation(fields: [websiteId], references: [websiteId])
   websiteId                                   String        @unique
 
-  canvasId                                    String        @id @default(uuid())
+  canvasId                                    String        @id @default(cuid())
   canvasUrl                                   String        @unique
 
   createdAt                                   DateTime      @default(now())
@@ -118,7 +118,7 @@ model Page {
   canvas                                      Canvas        @relation(fields: [canvasId], references: [canvasId])
   canvasId                                    String
 
-  pageId                                      String        @id @default(uuid())
+  pageId                                      String        @id @default(cuid())
   pageTitle                                   String
   pageSlug                                    String
   pageStatus                                  pageStatus    @default(DRAFT) // The current 'publish' status of the page
