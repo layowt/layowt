@@ -5,7 +5,7 @@ import {
   ArrowRightIcon
 } from '@radix-ui/react-icons';
 
-import { websites as Website } from '@prisma/client';
+import { Website } from '@prisma/client';
 import Link from 'next/link';
 
 import WebsiteCardModal from '@/components/modals/dashboard/website-card-modal';

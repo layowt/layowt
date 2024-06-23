@@ -6,7 +6,7 @@ import { CheckoutForm } from './checkout-form';
 import { ReloadIcon } from '@radix-ui/react-icons';
 
 // method imports
-import { createSubscription } from '../../utils/stripe/stripe';
+import { createSubscription } from '../../actions/stripe/stripe';
 
 // React imports
 import { useState } from 'react';

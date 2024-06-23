@@ -8,7 +8,6 @@ import {
 import { useAppSelector, useAppDispatch } from "@/utils/index";
 import { setWebsite, website } from "@/store/slices/website-store";
 import ModalColorPicker, { ModalColorPickerTrigger } from '@/components/modals/site/modal-color-picker';
-import { updateWebsite } from '@/utils/websites';
 
 export default function SiteBuilderSettingsSection(){
   const dispatch = useAppDispatch();

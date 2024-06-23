@@ -1,10 +1,10 @@
 import { prisma } from '@/utils/prisma';
 import { notFound } from 'next/navigation';
 
-import { getDynamicSite } from '@/utils/websites';
+import { getDynamicSite } from '@/actions/websites/get-website';
 import { Metadata } from 'next';
 import { use } from 'react';
-import { generateSiteMetadata } from '@/utils/websites/metadata';
+import { generateSiteMetadata } from '@/actions/websites/metadata';
 
 async function getCurrentSite(domain: string) {
   return await getDynamicSite(domain);
@@ -31,7 +31,7 @@ export async function generateMetadata({
  * 
  */
 export async function generateStaticParams(){
-  const websites = await prisma.websites.findMany();
+  const websites = await prisma.website.findMany();
 
   return websites.map((website) => ({
     params: { domain: website.websiteUrl }
@@ -55,6 +55,7 @@ export default function Page({
       style={{
         backgroundColor: websiteData?.websiteBackgroundColor
       }}
+      data-layowt-id={websiteData?.websiteId}
     >
       <div>hello from {websiteData.websiteName}</div>
     </main>

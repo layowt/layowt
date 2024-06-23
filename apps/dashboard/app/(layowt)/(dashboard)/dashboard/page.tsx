@@ -1,9 +1,8 @@
 'use server';
 import WebsiteCard from '@/components/layout/dashboard/website-card';
-import { getUserFromSession } from '@/utils/user';
-import { getUserFromDb } from '@/utils/user';
-import { getWebsite } from '@/utils/websites';
-import { websites } from '@prisma/client';
+import { getUserFromSession, getUserFromDb } from '@/actions/user/get-user';
+import { getWebsite } from '@/actions/websites/get-website';
+import { Website } from '@prisma/client';
 import PageClient from './page-client';
 
 export default async function Dashboard() {
@@ -11,7 +10,7 @@ export default async function Dashboard() {
 
   if (!userId) return;
 
-  const websites = await getWebsite<websites[]>({ userId }, true);
+  const websites = await getWebsite<Website[]>({ userId }, true);
 
   const user = await getUserFromDb(userId);
   return (

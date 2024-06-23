@@ -1,5 +1,5 @@
 generator client {
-	provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -14,23 +14,37 @@ enum planType {
   PREMIUM
 }
 
+enum ComponentType {
+  text
+  timestamp
+  div
+}
+
+enum pageStatus {
+  DRAFT
+  PUBLISHED
+  DELETED
+}
+
 // defines the user data model
-model users {
-  uid                                         String @id @default(uuid())
+model User {
+  uid                                         String @id @default(cuid())
   email                                       String @unique
   hasAuthenticatedEmail                       Boolean @default(false) // if the user has authenticated their email
   firstName                                   String?
   lastName                                    String?
 
-  subscription                                subscription?
-
   createdAt                                   DateTime @default(now())
   updatedAt                                   DateTime @updatedAt
   lastLogin                                   DateTime?
-  websites                                    websites[]
+
+  websites                                    Website[]
+  // the canvases that belong to the user - this is a 1-many relationship
+  // and is used for Supabase RLS 
+  subscription                                Subscription?
 }
 
-model subscription {
+model Subscription {
   transactionId                               String @id @unique // Define transactionId as primary key
   subscriptionActive                          Boolean
   paymentEmail                                String
@@ -38,17 +52,17 @@ model subscription {
   dateOfPurchase                              DateTime  
   dateOfExpiry                                DateTime   
 
-  user                                        users      @relation(fields: [userId], references: [uid])
+  user                                        User       @relation(fields: [userId], references: [uid])
   userId                                      String     @unique
 
   numOfWebsites                               Int
 }
 
-model websites {
-  owner                                       users         @relation(fields: [userId], references: [uid])
+model Website {
+  owner                                       User         @relation(fields: [userId], references: [uid])
   userId                                      String
 
-  websiteId                                   String        @id
+  websiteId                                   String        @id @default(cuid())
   websiteName                                 String        
   websiteUrl                                  String        
   websiteLogo                                 String
@@ -63,10 +77,55 @@ model websites {
   lastUpdated                                 DateTime      @updatedAt
   lastUpdatedUid                              String        @default("")
 
+  canvas                                      Canvas? 
 }
 
-model earlyAccess {
+model EarlyAccess {
   email                                      String @id 
   createdAt                                  DateTime @default(now())
   updatedAt                                  DateTime @updatedAt
+}
+
+model Component {
+  type                                        ComponentType @id
+  name                                        String
+  description                                 String
+  properties                                  String[]
+  createdAt                                   DateTime @default(now())
+  updatedAt                                   DateTime @updatedAt
+  
+  data                                        Json
+}
+
+model Canvas {
+  website                                     Website      @relation(fields: [websiteId], references: [websiteId])
+  websiteId                                   String        @unique
+
+  canvasId                                    String        @id @default(cuid())
+  canvasUrl                                   String        @unique
+
+  createdAt                                   DateTime      @default(now())
+  updatedAt                                   DateTime      @updatedAt
+
+  page                                        Page[]        // the pages that belong to the canvas
+}
+
+model Page {
+  canvas                                      Canvas        @relation(fields: [canvasId], references: [canvasId])
+  canvasId                                    String
+
+  pageId                                      String        @id @default(cuid())
+  pageTitle                                   String
+  pageSlug                                    String
+  pageStatus                                  pageStatus    @default(DRAFT) // The current 'publish' status of the page
+
+  pageDeleted                                 Boolean       @default(false) // If the page has been deleted
+  pageDeletedAt                               DateTime?     // When the page was deleted - this is used so the user has a window to recover the page
+
+  pagePrimaryColor                            String         
+  pageSecondaryColor                          String
+  pageBackgroundColor                         String        @default("#ffffff")
+
+  createdAt                                   DateTime      @default(now())
+  updatedAt                                   DateTime      @updatedAt
 }

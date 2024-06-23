@@ -1,12 +1,26 @@
 'use client';
-import type { websites as Website } from '@prisma/client';
-import { setWebsite } from '@/utils/websites/setWebsite';
+import type { Component, Website as Website } from '@prisma/client';
+import { setWebsite } from '@/utils/websites/set-website'
 import dynamic from 'next/dynamic';
 import SiteBuilderCanvas from '@/components/website/builder/canvas';
-import { useUser } from '@/hooks/useUser';
 import { redirect } from 'next/navigation';
+import { useAppDispatch } from '@/utils/index';
+import { setComponents } from '@/store/slices/canvas';
 
-export default function SiteBuilderClient({ website }: { website: Website }) {
+interface SiteBuilderClientProps {
+  website: Website;
+  components: Component[];
+}
+
+export default function SiteBuilderClient({
+  website,
+  components
+}: SiteBuilderClientProps) {
+  const dispatch = useAppDispatch();
+
+  // set the components in redux
+  dispatch(setComponents(components));
+
   // prevent ssr for this component
   const NoSSR = dynamic(
     () => import('@/components/modals/site/user-site-data'),

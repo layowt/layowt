@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 // utils
-import { updateWebsiteUrlChange } from '@/utils/websites';
+import { updateWebsiteUrlChange } from '@/actions/websites/update';
 import { getEnv } from '@/utils/index';
-import { getUserFromSession } from '@/utils/user';
-import { getLastUpdatedUser, publishSite, updateWebsite } from '@/utils/websites';
+import { getUserFromSession } from '@/actions/user/get-user';
+import { getLastUpdatedUser } from '@/actions/websites/get-website';
+import { publishSite } from '@/actions/websites/publish-website';
+import { updateWebsite } from '@/actions/websites/update';
 
 // components
 import {

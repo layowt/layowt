@@ -4,7 +4,8 @@ import SiteBuilderPublishModal from './publish-dropdown';
 
 import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
-import { publishSite, updateWebsite } from '@/utils/websites';
+import { updateWebsite } from '@/actions/websites/update';
+import { publishSite } from '@/actions/websites/publish-website';
 import { toast } from 'sonner';
 import { Suspense } from 'react';
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu'

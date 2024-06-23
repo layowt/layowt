@@ -1,7 +1,6 @@
-'use server';
-import { getUserFromSession } from '@/utils/user';
-import { getWebsite } from '@/utils/websites';
-import type { websites } from '@prisma/client';
+import { getUserFromSession } from '@/actions/user/get-user';
+import { getWebsite } from '@/actions/websites/get-website';
+import type { Website } from '@prisma/client';
 
 import NavigationItems from '@/components/layout/dashboard/navigation/items';
 import SiteLogo from '@/components/logo';
@@ -11,7 +10,7 @@ export default async function DashboardSidebar() {
 
   if (!userId) return;
 
-  const websites = await getWebsite<websites[]>({ userId }, true);
+  const websites = await getWebsite<Website[]>({ userId }, true);
 
   return (
     <section

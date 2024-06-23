@@ -1,4 +1,3 @@
-'use client';
 import Link from 'next/link';
 import NavigationItem from '@/components/layout/dashboard/navigation/item';
 
@@ -8,14 +7,14 @@ import MaterialSymbolsSettingsOutlineRounded from '@/ui/icons/settings';
 import MaterialSymbolsBuildOutlineRounded from '@/ui/icons/build';
 import { BarChartIcon, PlusIcon } from '@radix-ui/react-icons';
 import { cn } from '@/utils/index';
-import type { websites } from '@prisma/client';
+import type { Website } from '@prisma/client';
 
 export default function NavigationItems({
   websites,
   className,
   ...props
 }: {
-  websites: websites[];
+  websites: Website[];
   className?: string;
 }) {
   const navItems = [

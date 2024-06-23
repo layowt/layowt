@@ -122,6 +122,7 @@ export default function SiteBuilderCanvas() {
       "
       ref={canvasContainerWrapper}
     >
+      <iframe className="size-full z-[100]" src="https://www.google.com/search?igu=1" />
       <div
         className="
           size-0 fixed border border-black-50
@@ -146,9 +147,9 @@ export default function SiteBuilderCanvas() {
           }}
           id="canvas"
         >
-          <div className="pt-20 text-white">
+          {/* <div className="pt-20 text-white">
             {canvasZoomLevel}
-          </div>
+          </div> */}
         </div>
       </div>      
       <SiteBuilderCanvasHotbar canvasContainer={canvasContainer} canvasContainerWrapper={canvasContainerWrapper} />

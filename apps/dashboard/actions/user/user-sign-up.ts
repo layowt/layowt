@@ -1,10 +1,10 @@
-'use server';
+'use server'
 import { supabase } from '@/lib/supabase';
 import { type AuthResponse } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
-const cookiesStore = cookies();
-
 import { prisma } from '@/utils/prisma';
+
+const cookiesStore = cookies();
 
 export const signUp = async (
   email: string,
@@ -32,7 +32,7 @@ export const signUp = async (
     // REMEMBER EMAIL AUTH IS OFF!
 
     // if the user sign up is successful, add the user to the database
-    await prisma.users.create({
+    await prisma.user.create({
       data: {
         uid: user.id,
         email: user.email,

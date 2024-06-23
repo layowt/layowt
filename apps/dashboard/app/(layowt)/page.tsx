@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
 import SiteLogo from '@/components/logo';
-import { getUserFromSession } from '@/utils/user';
 
 export default async function App() {
   // get the user

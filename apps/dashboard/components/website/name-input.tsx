@@ -1,7 +1,7 @@
 // Import necessary dependencies
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/ui/input';
-import { updateWebsite } from '@/utils/websites';
+import { updateWebsite } from '@/actions/websites/update';
 
 // hooks
 import useDebounce from '@/hooks/useDebounce';

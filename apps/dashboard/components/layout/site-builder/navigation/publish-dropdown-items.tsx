@@ -6,8 +6,9 @@ import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 
 // utils
-import type { websites as Website } from '@prisma/client';
-import { publishSite, updateWebsite } from '@/utils/websites';
+import type { Website } from '@prisma/client';
+import { updateWebsite } from '@/actions/websites/update';
+import { publishSite } from '@/actions/websites/publish-website';
 import { getTimeStamp } from '@/utils/index';
 import { User } from '@supabase/supabase-js';
 import { useUser } from '@/hooks/useUser';
