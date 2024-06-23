@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import type { Components } from '@prisma/client'
+import type { Component } from '@prisma/client'
 
 export type CanvasMode = 'move' | 'select' | 'zoom'
 export type ZoomLevel = 25 | 50 | 75 | 100 | 125 | 150 | 175 | 200 | 'custom'
@@ -17,7 +17,7 @@ type CanvasState = {
   showDebugTools: boolean
   mode: CanvasMode,
   zoomLevel: ZoomLevel,
-  components: Components[]
+  components: Component[]
 }
 
 const initialState: CanvasState = {
@@ -63,7 +63,7 @@ const canvasSlice = createSlice({
     setZoomLevel: (state, action: PayloadAction<ZoomLevel>) => {
       state.zoomLevel = action.payload
     },
-    setComponents: (state, action: PayloadAction<Components[]>) => {
+    setComponents: (state, action: PayloadAction<Component[]>) => {
       state.components = action.payload
     }
   }
