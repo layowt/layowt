@@ -1,7 +1,7 @@
 'use client'
 import { useAppDispatch } from "@/utils/index"
 import { setWebsite as setWebsiteReducer } from '@/store/slices/website-store';
-import { websites as Website } from "@prisma/client"
+import { Website } from "@prisma/client"
 
 /**
  * Sets website in the redux store

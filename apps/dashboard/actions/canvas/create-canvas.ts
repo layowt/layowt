@@ -1,3 +1,4 @@
+'use server';
 import { Website } from "@prisma/client";
 import { prisma } from "@/utils/prisma";
 
@@ -58,6 +59,9 @@ export default function createCanvas({
     // if we do not need to generate the canvas in the site builder, 
     // we can exit early
     if(!generateCanvas) return 'ok'
+
+    // if we need to generate the canvas in the site builder, we can do so here
+    // by calling the site builder API
 
     return 'ok';
 }

@@ -4,7 +4,7 @@ import { getUserFromDb } from '@/actions/user/get-user';
 import { createWebsite } from '@/actions/websites/create-website';
 import { getWebsite } from '@/actions/websites/get-website';
 import { getUserSubscription } from '@/actions/subscriptions/get-subscriptions';
-import type { websites } from '@prisma/client';
+import type { Website } from '@prisma/client';
 import dynamic from 'next/dynamic';
 import { ModalErrorContent } from '@/components/modals/site/modal-create-site-error';
 
@@ -40,7 +40,7 @@ export default async function CreateNewSite() {
   const userSubscription = await getUserSubscription(userSession.data.user.id);
 
   // get the number of sites the use has
-  const userSites = await getWebsite<websites[]>(
+  const userSites = await getWebsite<Website[]>(
     { userId: userSession.data.user.id },
     true
   );
@@ -55,7 +55,11 @@ export default async function CreateNewSite() {
   const siteUid = uniqid();
 
   // // add this value to the db
-  const newWebsite = await createWebsite(userSession.data.user.id, siteUid);
+  const newWebsite = await createWebsite({
+    generateCanvas: true,
+    userId: userSession.data.user.id,
+    websiteId: siteUid,
+  });
 
   // TODO: REDIRECT WITH AN APPROPRIATE MESSAGE
   // either -

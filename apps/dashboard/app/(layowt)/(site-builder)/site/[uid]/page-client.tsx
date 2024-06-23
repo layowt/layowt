@@ -1,5 +1,5 @@
 'use client';
-import type { Components, websites as Website } from '@prisma/client';
+import type { Component, Website as Website } from '@prisma/client';
 import { setWebsite } from '@/utils/websites/set-website'
 import dynamic from 'next/dynamic';
 import SiteBuilderCanvas from '@/components/website/builder/canvas';
@@ -9,7 +9,7 @@ import { setComponents } from '@/store/slices/canvas';
 
 interface SiteBuilderClientProps {
   website: Website;
-  components: Components[];
+  components: Component[];
 }
 
 export default function SiteBuilderClient({

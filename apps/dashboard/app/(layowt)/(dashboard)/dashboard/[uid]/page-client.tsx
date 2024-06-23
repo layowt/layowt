@@ -1,8 +1,8 @@
 'use client';
 import { setWebsite } from '@/utils/websites/set-website';
-import { websites } from '@prisma/client';
+import { Website } from '@prisma/client';
 
-export default function PageClient({ website }: { website: websites }) {
+export default function PageClient({ website }: { website: Website }) {
   // set the website in the store
   setWebsite(website);
 

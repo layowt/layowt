@@ -1,4 +1,4 @@
-import type { websites as Website } from '@prisma/client';
+import type { Website } from '@prisma/client';
 import type { Metadata } from 'next';
 
 export const generateSiteMetadata = (

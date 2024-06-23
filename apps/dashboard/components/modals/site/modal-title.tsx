@@ -1,7 +1,7 @@
 'use client';
 
 import { DialogTitle } from '@/components/ui/dialog';
-import { websites } from '@prisma/client';
+import { Website } from '@prisma/client';
 import { CameraIcon } from '@radix-ui/react-icons';
 import { useAppDispatch } from '@/utils/index';
 import { setWebsite } from '@/store/slices/website-store';
@@ -15,7 +15,7 @@ export default function SiteOnboardingTitle({
   onLogoChange
 }: {
   userId: string;
-  website: websites;
+  website: Website;
   onLogoChange: (logoUrl: string) => void;
 }) {
   const dispatch = useAppDispatch();

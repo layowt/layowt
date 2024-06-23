@@ -1,5 +1,5 @@
 'use client';
-import { websites as Website } from '@prisma/client';
+import { Website } from '@prisma/client';
 import { DropdownMenuContent, DropdownMenuGroup } from '@/ui/dropdown-menu';
 import { DropdownMenuPortal } from '@radix-ui/react-dropdown-menu';
 import { deleteWebsite } from '@/actions/websites/delete';
