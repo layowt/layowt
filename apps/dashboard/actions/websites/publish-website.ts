@@ -1,6 +1,6 @@
 'use server'
 import { prisma } from '@/utils/prisma';
-import type { websites as Website } from '@prisma/client'
+import type { Website } from '@prisma/client'
 import { revalidateTag } from 'next/cache';
 import { getEnv } from '@/utils/index';
 import { updateWebsite } from '@/actions/websites/update';
@@ -27,7 +27,7 @@ export const publishSite = async(
 	let websiteName = `${websiteData?.websiteName.toLowerCase().replace(/\s/g, '-')}.app.${env}`;
 
 	// check if the name has been taken already
-	const websiteNameExists = await prisma.websites.findFirst({
+	const websiteNameExists = await prisma.website.findFirst({
 		where: {
 			websiteUrl: websiteName
 		},

@@ -1,5 +1,5 @@
 'use server'
-import type { websites as Website } from "@prisma/client"
+import type { Website } from "@prisma/client"
 import { prisma } from '@/utils/prisma';
 import { revalidateTag } from 'next/cache';
 import { getWebsiteByDomain } from "@/actions/websites/get-website";
@@ -19,7 +19,7 @@ export const updateWebsite = async (
 	if(!websiteId) throw new Error('No website ID specified')
 
 	// find the site that needs to be update and update it
-	const siteToUpdate = await prisma.websites.update({
+	const siteToUpdate = await prisma.website.update({
 		where: {
 			websiteId
 		},

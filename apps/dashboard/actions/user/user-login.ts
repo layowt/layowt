@@ -26,7 +26,7 @@ export const login = async (email: string, password: string) => {
 		if (error) throw new Error(error.message);
 
 		// update the 'lastLoggedIn' field in the db
-		await prisma.users.update({
+		await prisma.user.update({
 			where: {
 				uid: user?.user.id
 			},

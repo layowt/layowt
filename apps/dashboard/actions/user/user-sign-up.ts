@@ -32,7 +32,7 @@ export const signUp = async (
     // REMEMBER EMAIL AUTH IS OFF!
 
     // if the user sign up is successful, add the user to the database
-    await prisma.users.create({
+    await prisma.user.create({
       data: {
         uid: user.id,
         email: user.email,

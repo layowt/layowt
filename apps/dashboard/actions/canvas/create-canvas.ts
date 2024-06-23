@@ -1,6 +1,12 @@
 import { websites as Website } from "@prisma/client";
 import { prisma } from "@/utils/prisma";
 
+interface CreateWebsiteProps {
+	userId: string;
+	website: Website;
+	generateCanvas: boolean;
+}
+
 /**
  * 
  * Function to create a new canvas for a website
@@ -8,7 +14,11 @@ import { prisma } from "@/utils/prisma";
  * @param userId - the owner of the canvas
  * @param website - the website to create the canvas for
  */
-export default function createCanvas(userId: string, website: Website){
+export default function createCanvas({
+    userId,
+    website,
+    generateCanvas,
+}: CreateWebsiteProps){
     if(!userId) throw new Error('No user ID specified');
     if(!website) throw new Error('No website specified');
 
@@ -44,8 +54,10 @@ export default function createCanvas(userId: string, website: Website){
             }
         },
     });
-
     if(!response) throw new Error('Failed to create canvas');
+    // if we do not need to generate the canvas in the site builder, 
+    // we can exit early
+    if(!generateCanvas) return 'ok'
 
     return 'ok';
 }

@@ -3,7 +3,7 @@
 import { prisma } from '@/utils/prisma';
 
 // types
-import type { users as user } from '@prisma/client';
+import type { User } from '@prisma/client';
 import { UserResponse } from '@supabase/supabase-js';
 
 // supabase
@@ -22,7 +22,7 @@ import { unstable_cache } from 'next/cache';
  */
 export const getUserFromDb = unstable_cache(
   async(id) => {
-    const user = await prisma.users.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         uid: {
           equals: id

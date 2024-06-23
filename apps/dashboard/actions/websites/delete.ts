@@ -12,7 +12,7 @@ import { revalidateTag } from 'next/cache';
  */
 export const deleteWebsite = async(websiteId: string) => {
 	// delete the site from the db
-	await prisma.websites.delete({
+	await prisma.website.delete({
 		where: {
 			websiteId
 		}

@@ -3,6 +3,12 @@ import { prisma } from '@/utils/prisma';
 import { revalidatePath } from 'next/cache';
 import createCanvas from '../canvas/create-canvas';
 
+interface CreateWebsiteProps {
+	userId: string;
+	websiteId: string;
+	generateCanvas: boolean;
+}
+
 /**
  * Create a new website
  * 
@@ -10,11 +16,14 @@ import createCanvas from '../canvas/create-canvas';
  * @param websiteId 
  * @returns 
  */
-export const createWebsite = async (userId: string, websiteId: string) => {
-
+export const createWebsite = async ({
+	userId, 
+	websiteId, 
+	generateCanvas
+}: CreateWebsiteProps) => {
 	if(!userId) throw new Error('No user ID specified');
 
-	const response = await prisma.websites.create({
+	const response = await prisma.website.create({
 		data: {
 			websiteLogo: '',
 			websitePrimaryColor: '#ffffff',
@@ -37,8 +46,12 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 
 	// upon website creation, we need to ceate the canvas
 	// and the first page for the website
-	await createCanvas(userId, response);
-
+	await createCanvas({
+		userId,
+		website: response,
+		generateCanvas,
+	});	
+	// revalidate the dashboard page to show the new website
 	revalidatePath('/dashboard');
 
 	// return a boolean value of the response so we can

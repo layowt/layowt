@@ -31,7 +31,7 @@ export async function generateMetadata({
  * 
  */
 export async function generateStaticParams(){
-  const websites = await prisma.websites.findMany();
+  const websites = await prisma.website.findMany();
 
   return websites.map((website) => ({
     params: { domain: website.websiteUrl }

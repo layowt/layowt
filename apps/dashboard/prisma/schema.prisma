@@ -20,8 +20,14 @@ enum ComponentType {
   div
 }
 
+enum pageStatus {
+  DRAFT
+  PUBLISHED
+  DELETED
+}
+
 // defines the user data model
-model users {
+model User {
   uid                                         String @id @default(uuid())
   email                                       String @unique
   hasAuthenticatedEmail                       Boolean @default(false) // if the user has authenticated their email
@@ -32,12 +38,14 @@ model users {
   updatedAt                                   DateTime @updatedAt
   lastLogin                                   DateTime?
 
-  websites                                    websites[]
-  canvas                                      Canvas[]
-  subscription                                subscription?
+  websites                                    Website[]
+  // the canvases that belong to the user - this is a 1-many relationship
+  // and is used for Supabase RLS
+  canvas                                      Canvas[]    
+  subscription                                Subscription?
 }
 
-model subscription {
+model Subscription {
   transactionId                               String @id @unique // Define transactionId as primary key
   subscriptionActive                          Boolean
   paymentEmail                                String
@@ -45,14 +53,14 @@ model subscription {
   dateOfPurchase                              DateTime  
   dateOfExpiry                                DateTime   
 
-  user                                        users      @relation(fields: [userId], references: [uid])
+  user                                        User       @relation(fields: [userId], references: [uid])
   userId                                      String     @unique
 
   numOfWebsites                               Int
 }
 
-model websites {
-  owner                                       users         @relation(fields: [userId], references: [uid])
+model Website {
+  owner                                       User         @relation(fields: [userId], references: [uid])
   userId                                      String
 
   websiteId                                   String        @id @default(uuid())
@@ -73,13 +81,13 @@ model websites {
   canvas                                      Canvas? 
 }
 
-model earlyAccess {
+model EarlyAccess {
   email                                      String @id 
   createdAt                                  DateTime @default(now())
   updatedAt                                  DateTime @updatedAt
 }
 
-model Components {
+model Component {
   type                                        ComponentType @id
   name                                        String
   description                                 String
@@ -91,7 +99,7 @@ model Components {
 }
 
 model Canvas {
-  website                                     websites      @relation(fields: [websiteId], references: [websiteId])
+  website                                     Website      @relation(fields: [websiteId], references: [websiteId])
   websiteId                                   String        @unique
 
   canvasId                                    String        @id @default(uuid())
@@ -100,9 +108,9 @@ model Canvas {
   createdAt                                   DateTime      @default(now())
   updatedAt                                   DateTime      @updatedAt
 
-  page                                        Page[]
+  page                                        Page[]        // the pages that belong to the canvas
 
-  owner                                       users         @relation(fields: [ownerId], references: [uid])
+  owner                                       User         @relation(fields: [ownerId], references: [uid]) // The owner of the canvas - a 1-many relationship
   ownerId                                     String
 }
 
@@ -113,6 +121,10 @@ model Page {
   pageId                                      String        @id @default(uuid())
   pageTitle                                   String
   pageSlug                                    String
+  pageStatus                                  pageStatus    @default(DRAFT) // The current 'publish' status of the page
+
+  pageDeleted                                 Boolean       @default(false) // If the page has been deleted
+  pageDeletedAt                               DateTime?     // When the page was deleted - this is used so the user has a window to recover the page
 
   pagePrimaryColor                            String         
   pageSecondaryColor                          String
