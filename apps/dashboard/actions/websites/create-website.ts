@@ -1,6 +1,7 @@
 'use server'
 import { prisma } from '@/utils/prisma';
 import { revalidatePath } from 'next/cache';
+import createCanvas from '../canvas/create-canvas';
 
 /**
  * Create a new website
@@ -33,6 +34,10 @@ export const createWebsite = async (userId: string, websiteId: string) => {
 	});
 
 	if(!response) throw new Error('Failed to create website');
+
+	// upon website creation, we need to ceate the canvas
+	// and the first page for the website
+	await createCanvas(userId, response);
 
 	revalidatePath('/dashboard');
 
