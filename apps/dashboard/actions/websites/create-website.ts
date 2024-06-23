@@ -23,6 +23,15 @@ export const createWebsite = async ({
 }: CreateWebsiteProps) => {
 	if(!userId) throw new Error('No user ID specified');
 
+	// try to get the user from the db to check if valid
+	const user = await prisma.user.findUnique({
+		where: {
+			uid: userId,
+		},
+	});
+
+	if(!user) throw new Error('Invalid user ID');
+
 	const response = await prisma.website.create({
 		data: {
 			websiteLogo: '',
@@ -37,7 +46,7 @@ export const createWebsite = async ({
 			owner: {
 				connect: {
 					uid: userId,
-				},
+				}
 			},
 		},
 	});

@@ -15,7 +15,7 @@ interface CreateWebsiteProps {
  * @param userId - the owner of the canvas
  * @param website - the website to create the canvas for
  */
-export default function createCanvas({
+export default async function createCanvas({
     userId,
     website,
     generateCanvas,
@@ -26,7 +26,7 @@ export default function createCanvas({
     const { websiteId } = website;
 
     // create the new canvas
-    const response = prisma.canvas.create({
+    const response = await prisma.canvas.create({
         data: {
             canvasId: websiteId,
             website: {
@@ -47,11 +47,6 @@ export default function createCanvas({
                 pagePrimaryColor: '#ffffff',
                 pageSecondaryColor: '#000000',
               }
-            },
-            owner: {
-                connect: {
-                    uid: userId,
-                },
             }
         },
     });

@@ -40,8 +40,7 @@ model User {
 
   websites                                    Website[]
   // the canvases that belong to the user - this is a 1-many relationship
-  // and is used for Supabase RLS
-  canvas                                      Canvas[]    
+  // and is used for Supabase RLS 
   subscription                                Subscription?
 }
 
@@ -109,9 +108,6 @@ model Canvas {
   updatedAt                                   DateTime      @updatedAt
 
   page                                        Page[]        // the pages that belong to the canvas
-
-  owner                                       User         @relation(fields: [ownerId], references: [uid]) // The owner of the canvas - a 1-many relationship
-  ownerId                                     String
 }
 
 model Page {
