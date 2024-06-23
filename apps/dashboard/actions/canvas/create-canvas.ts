@@ -1,4 +1,4 @@
-import { websites as Website } from "@prisma/client";
+import { Website } from "@prisma/client";
 import { prisma } from "@/utils/prisma";
 
 interface CreateWebsiteProps {
