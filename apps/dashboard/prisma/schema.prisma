@@ -28,12 +28,13 @@ model users {
   firstName                                   String?
   lastName                                    String?
 
-  subscription                                subscription?
-
   createdAt                                   DateTime @default(now())
   updatedAt                                   DateTime @updatedAt
   lastLogin                                   DateTime?
+
   websites                                    websites[]
+  canvas                                      Canvas[]
+  subscription                                subscription?
 }
 
 model subscription {
@@ -100,6 +101,9 @@ model Canvas {
   updatedAt                                   DateTime      @updatedAt
 
   page                                        Page[]
+
+  owner                                       users         @relation(fields: [ownerId], references: [uid])
+  ownerId                                     String
 }
 
 model Page {
