@@ -97,8 +97,9 @@ const Button = React.forwardRef<
               <div className="overflow-hidden absolute right-3">
                 <ArrowRightIcon 
                   className="
-                    size-5 ml-2 -translate-x-16 oveflow-hidden
+                    size-5 ml-2 -translate-x-4 oveflow-hidden opacity-0
                     transition-transform duration-300 group-hover:translate-x-0
+                    group-hover:opacity-100
                   " 
                 />
               </div>
