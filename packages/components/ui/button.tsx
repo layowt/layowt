@@ -1,31 +1,32 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { IonSparkles } from '../../../apps/dashboard/components/ui/icons/sparkle';
+import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { IonSparkles } from '@/components/ui/icons/sparkle';
 
-import { cn } from '../../../apps/dashboard/utils/index';
+import { cn } from '@/utils/index';
 
 const buttonVariants = cva(
-  'relative w-full inline-flex items-center font-inter justify-center whitespace-nowrap duration-300 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
+  'relative w-full inline-flex items-center font-inter justify-center whitespace-nowrap duration-300 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white font-satoshi',
   {
     variants: {
       variant: {
         default:
-          'border-2 border-electric-violet-300 hover:bg-electric-violet-500 shadow-sm hover:shadow-md',
-        destructive:
+          'bg-electric-violet-500 hover:bg-electric-violet-600 text-white border-2 border-electric-violet-300',
+          destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        outline:
+          outline:
           'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-        secondary:
-          'bg-electric-violet-500 hover:bg-electric-violet-600 text-white border-2 border-electric-violet-300 rounded-xl hover:rounded-lg',
+          secondary:
+          'border-2 border-electric-violet-300 hover:bg-electric-violet-500 shadow-sm hover:shadow-md',
         tertiary:
           'bg-white hover:bg-white hover:text-black duration-300 text-black rounded-xl hover:rounded-lg',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        link: 'underline-offset-4 hover:underline text-white',
         none: '!rounded-none'
       },
       size: {
-        default: 'h-10 px-4',
+        default: 'h-10',
         sm: 'h-8 rounded-md px-3 py-1',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10'
@@ -53,6 +54,7 @@ export interface ButtonProps
   href?: string;
   asChild?: boolean;
   special?: boolean;
+  arrow?: boolean;
 }
 
 const Button = React.forwardRef<
@@ -68,21 +70,40 @@ const Button = React.forwardRef<
       special,
       rounded,
       href,
+      arrow,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : href ? 'a' : 'button';
     return (
-      <div className={special ? 'relative w-full' : ''}>
+      <div 
+        className={cn(
+          special && 'w-full',
+          'relative'
+        )}
+      >
           <Comp
             className={cn(
+              arrow && 'px-10 overflow-hidden relative group',
               buttonVariants({ variant, size, className, rounded })
             )}
             ref={ref}
             href={href}
             {...(props as any)}
-          />
+          >
+            {props.children}
+            {arrow ? (
+              <div className="overflow-hidden absolute right-3">
+                <ArrowRightIcon 
+                  className="
+                    size-5 ml-2 -translate-x-16 oveflow-hidden
+                    transition-transform duration-300 group-hover:translate-x-0
+                  " 
+                />
+              </div>
+            ) : null}
+          </Comp>
           {special ? (
             <IonSparkles className="absolute -top-2.5 right-2 size-6 text-yellow-400 " />
           ) : null}
@@ -90,6 +111,7 @@ const Button = React.forwardRef<
     );
   }
 );
+
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };
