@@ -28,6 +28,7 @@ export default function ThemeSwitcherModal() {
                 size-3 data-[state=checked]:translate-x-4 data-[state=unchecked]:bg-electric-violet
                 data-[state=unchecked]:translate-x-0.5
               "
+          asChild
         />
       </div>
     </button>
