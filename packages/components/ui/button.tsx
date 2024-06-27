@@ -94,7 +94,7 @@ const Button = React.forwardRef<
           >
             {props.children}
             {arrow ? (
-              <div className="overflow-hidden absolute right-3">
+              <div className="overflow-hidden absolute right-4">
                 <ArrowRightIcon 
                   className="
                     size-5 ml-2 -translate-x-4 oveflow-hidden opacity-0
