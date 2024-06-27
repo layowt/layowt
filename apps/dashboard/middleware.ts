@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import { updateSession } from '@/utils/supabase/middleware';
 import { getBaseUrl, getEnv } from './utils/';
+import AuthMiddleware from '@/lib/middleware/auth';
 
 export const config = {
   matcher: [
@@ -56,43 +57,7 @@ export async function middleware(req: NextRequest) {
     existingSubDomain === 'app'
   ) {
     // if we are on the root domain, we need to do user auth checks
-    const { response: session, user } = await updateSession(req)
-
-    const sessionCookie = session.headers.get('x-middleware-request-cookie')  
-
-    // if there is no user, and they are trying to access a page that requires auth
-    // redirect them to the dashboard with a not-authenticated message
-    // so on the /login route we can display a message to the user
-    if(
-      !sessionCookie &&
-      path !== '/login' &&
-      path !== '/sign-up' &&
-      path !== '/forgot-password'
-    ){
-      return NextResponse.rewrite(
-        new URL(
-          '/login?r=not-authenticated',
-          req.url
-        )
-      )
-    }
-
-    // redirect the user to the dashboard if they are 
-    //authenticated and trying to access the login page
-    if(sessionCookie && path === '/login') {
-      return NextResponse.redirect(
-        new URL('/dashboard', req.url)
-      )
-    }
-
-    // if the user is authenticated, and trying to access '/', make the dashboard the root page
-    if(sessionCookie && path === '/') {
-      return NextResponse.rewrite(
-        new URL('/dashboard', req.url)
-      )
-    }
-    // other wise, the user is authenticated, trying to access the root site (app.layowt.com), and is allowed to access the page
-    return NextResponse.next()
+    return await AuthMiddleware(req, path)
   }
   
   // at this point, we are on a subdomain - so if the user tries to access
