@@ -1,6 +1,4 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { getRedirectUrl } from '@/lib/middleware/utils';
-import { getBaseUrl, getEnv } from './utils/';
 import AuthMiddleware from '@/lib/middleware/auth';
 import AdminMiddleware from './lib/middleware/admin';
 
