@@ -1,0 +1,12 @@
+{
+  "name": "layowt-hooks",
+  "version": "0.0.1",
+  "description": "A collection of hooks for building responsive layouts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "sonner": "^1.5.0"
+  }
+}
