@@ -1,4 +1,10 @@
 'use client';
+// react
+import { useState } from 'react';
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+// components
 import {
   EnvelopeClosedIcon,
   EyeClosedIcon,
@@ -8,14 +14,11 @@ import {
 } from '@radix-ui/react-icons';
 import { Label } from '@/ui/label';
 import { Input } from '@/ui/input';
-import { useState } from 'react';
 import { Button } from '@/ui/button';
 import { toast } from 'sonner';
-import { login } from '@/actions/user/user-login';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation'
+// actions
 import { getWebsite } from '@/actions/websites/get-website';
+import { login } from '@/actions/user/user-login';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -52,8 +55,6 @@ export default function LoginForm() {
 
     // if the user does not have access, push them to the dashboard and serve a message
     if(!canAccessSite?.websiteId) {
-      // if the user cannot access the site, redirect them to the dashboard
-      // with a message
       return router.push('/dashboard?r=unauthorized-site-access');
     }
     return router.push(`/site/${siteId}`)
