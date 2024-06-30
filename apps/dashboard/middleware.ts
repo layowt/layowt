@@ -42,6 +42,10 @@ export async function middleware(req: NextRequest) {
     searchParams.toString().length > 0 ? `?${searchParams.toString()}` : ''
   }`
 
+  // separate the path and query string
+  const rootPath = path.split('?')[0]
+  const queryString = path.split('?')[1]
+
   // get the first part of the hostname
   const existingSubDomain = hostname.split('.')[0]
   // if we are developing locally or on the root domain, do not redirect
@@ -51,8 +55,9 @@ export async function middleware(req: NextRequest) {
     hostname === 'app.layowt.com' || 
     existingSubDomain === 'app'
   ) {
+    console.log('redirect')
     // if we are on the root domain, we need to do user auth checks
-    return await AuthMiddleware(req, path)
+    return await AuthMiddleware(req, rootPath)
   }
   
   // at this point, we are on a subdomain - so if the user tries to access
