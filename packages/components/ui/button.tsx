@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ArrowRightIcon } from '@radix-ui/react-icons'
-import { IonSparkles } from '@/components/ui/icons/sparkle';
+import { IonSparkles } from '~/components/ui/icons/sparkle';
 
-import { cn } from '@/utils/index';
+import { cn } from '~/utils/cn';
 
 const buttonVariants = cva(
   'relative w-full inline-flex items-center font-inter justify-center whitespace-nowrap duration-300 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white font-satoshi',
