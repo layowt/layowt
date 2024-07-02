@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -28,8 +28,10 @@ export default function LoginForm() {
   const toastRef = useRef(false);
 
   useEffect(() => {
-    if (toastRef.current) return
-      toastRef.current = true;
+    if (toastRef.current) return;
+    toastRef.current = true;
+
+    if (!reason) return;
 
     toast.error(ERROR_CODES[reason]?.title ?? ERROR_CODES[reason], {
       description: ERROR_CODES[reason]?.description,
@@ -148,6 +150,7 @@ export default function LoginForm() {
               autoComplete="current-password"
             />
             <button
+              type="button"
               className="cursor-pointer px-4 transition-all duration-300 absolute right-0"
               onClick={(e) => {
                 e.preventDefault();
