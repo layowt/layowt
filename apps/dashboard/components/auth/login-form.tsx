@@ -1,10 +1,8 @@
-'use client';
-// react
-import { useState } from 'react';
-import { useSearchParams } from 'next/navigation'
+'use client'
+import { useEffect, useState, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-// components
 import {
   EnvelopeClosedIcon,
   EyeClosedIcon,
@@ -15,72 +13,77 @@ import {
 import { Label } from '@/ui/label';
 import { Input } from '@/ui/input';
 import { Button } from '@/ui/button';
-import { toast } from 'sonner';
-// actions
 import { getWebsite } from '@/actions/websites/get-website';
 import { login } from '@/actions/user/user-login';
+import { toast } from 'sonner';
+import { ERROR_CODES } from '@/utils/constants/error-codes';
 
 export default function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   const reason = searchParams?.get('r');
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const toastRef = useRef(false);
+
+  useEffect(() => {
+    if (toastRef.current) return
+      toastRef.current = true;
+
+    toast.error(ERROR_CODES[reason]?.title ?? ERROR_CODES[reason], {
+      description: ERROR_CODES[reason]?.description,
+      duration: 5000,
+      position: 'bottom-right',
+    });
+  }, [reason]);
 
   const [state, setState] = useState({
     userEmail: '',
     userPassword: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     setState({
       ...state,
       [e.target.name]: e.target.value
     });
   };
 
-  const checkUserCanAccessSite = async(userId: string) => {
-    // at this point the user should have a session
-    // get the website the user is trying to access
+  const checkUserCanAccessSite = async (userId) => {
     const siteId = searchParams?.get('siteId');
-    if(!siteId) return;
+    if (!siteId) return;
 
-    // get the user's sites
     const canAccessSite = await getWebsite({
       websiteId: siteId,
       userId
-    })
+    });
 
-
-    // if the user does not have access, push them to the dashboard and serve a message
-    if(!canAccessSite?.websiteId) {
+    if (!canAccessSite?.websiteId) {
       return router.push('/dashboard?r=unauthorized-site-access');
     }
-    return router.push(`/site/${siteId}`)
-  }
+    return router.push(`/site/${siteId}`);
+  };
 
   const handleLogin = async () => {
     setIsLoading(true);
 
-    // get the search params 
     const siteId = searchParams?.get('siteId');
     try {
       const user = await login(state.userEmail, state.userPassword);
 
-      if(!user) throw new Error('No user found');
+      if (!user) throw new Error('No user found');
 
-      // redirect to the dashboard if the user is logged in
-      toast.success('Welcome back, ' + user?.user.email + '!');
-
-      if(reason === 'admin' && siteId){
+      if (reason === 'admin' && siteId) {
         return await checkUserCanAccessSite(user.user.id);
       }
 
+      toast.success('Welcome back, ' + user?.user.email + '!');
+
       router.push('/dashboard');
     } catch (e) {
-      toast.error(e.message);
       setIsLoading(false);
+      toast.error('Invalid email or password. Please try again.');
     }
   };
 
@@ -165,15 +168,14 @@ export default function LoginForm() {
             <span>Forgot your password?</span>
           </Link>
           <div className="flex flex-col gap-y-8 mt-6">
-            {/* submit button */}
             <div className="w-full">
               <Button
                 type="submit"
                 className="
-										rounded-lg px-4 py-1 w-full
-										duration-300 disabled:cursor-not-allowed 
-										flex gap-x-2 items-center
-									"
+                  rounded-lg px-4 py-1 w-full
+                  duration-300 disabled:cursor-not-allowed 
+                  flex gap-x-2 items-center
+                "
                 variant="secondary"
               >
                 {isLoading ? (

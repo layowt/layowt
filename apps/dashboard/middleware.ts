@@ -55,7 +55,6 @@ export async function middleware(req: NextRequest) {
     hostname === 'app.layowt.com' || 
     existingSubDomain === 'app'
   ) {
-    console.log('redirect')
     // if we are on the root domain, we need to do user auth checks
     return await AuthMiddleware(req, rootPath)
   }
