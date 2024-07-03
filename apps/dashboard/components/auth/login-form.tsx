@@ -22,6 +22,7 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const reason = searchParams?.get('r');
+  const redirect = searchParams?.get('redirect');
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +83,10 @@ export default function LoginForm() {
 
       toast.success('Welcome back, ' + user?.user.email + '!');
 
-      router.push('/dashboard');
+      if(redirect)
+        return router.push(redirect)
+      
+      return router.push('/dashboard');
     } catch (e) {
       setIsLoading(false);
       toast.error('Invalid email or password. Please try again.');
