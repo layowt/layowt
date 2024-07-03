@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 // component imports
 import { PaymentButton } from './payment-card-button';
 import { ReloadIcon, CheckIcon } from '@radix-ui/react-icons';
-import { IonSparkles } from '../ui/icons/sparkle';
+import { IonSparkles } from '~/packages/components/ui/icons/sparkle';
 
 //type imports
 import type { StripeProduct } from '../../types/StripeProduct';
