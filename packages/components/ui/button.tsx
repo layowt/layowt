@@ -7,7 +7,7 @@ import { IonSparkles } from '~/components/ui/icons/sparkle';
 import { cn } from '~/utils/cn';
 
 const buttonVariants = cva(
-  'relative w-full inline-flex items-center font-inter justify-center whitespace-nowrap duration-300 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white font-satoshi',
+  'relative w-full inline-flex items-center font-inter justify-center whitespace-nowrap duration-300 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-white font-satoshi font-bold',
   {
     variants: {
       variant: {
@@ -32,16 +32,30 @@ const buttonVariants = cva(
         icon: 'h-10 w-10'
       },
       padding: {
-        none: '!p-0'
+        none: '!p-0',
+        sm: 'px-2 py-1',
+        md: 'px-4 py-2',
+        lg: 'px-8 py-4',
+        xl: 'px-10 py-5'
+      },
+      fontSize: {
+        xs: 'text-xs',
+        sm: 'text-sm',
+        md: 'text-base',
+        lg: 'text-lg',
+        xl: 'text-xl'
       },
       rounded: {
-        default: 'rounded-2xl hover:rounded-xl',
-        sm: 'rounded-md'
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-2xl hover:rounded-xl',
       }
     },
     defaultVariants: {
       variant: 'default',
-      size: 'default'
+      size: 'default',
+      fontSize: 'md',
+      rounded: 'sm'
     }
   }
 );
@@ -71,6 +85,8 @@ const Button = React.forwardRef<
       rounded,
       href,
       arrow,
+      padding,
+      fontSize,
       ...props
     },
     ref
@@ -86,7 +102,7 @@ const Button = React.forwardRef<
           <Comp
             className={cn(
               arrow && 'px-10 overflow-hidden relative group',
-              buttonVariants({ variant, size, className, rounded })
+              buttonVariants({ variant, size, className, rounded, fontSize, padding })
             )}
             ref={ref}
             href={href}

@@ -68,12 +68,12 @@ export default function SignUpForm() {
 
       // delete the existing user in the store
       // so we can create the new one
-      if (user) {
+      if (user) 
         dispatch(deleteUser());
-      }
+      
       // create the user in the redux store
       dispatch(createUser(user));
-      router.push(`/dashboard?uid=${user.id}` ?? '/');
+      router.push('/welcome');
       // reset the loading state
       setIsLoading(false);
     } catch (e) {
