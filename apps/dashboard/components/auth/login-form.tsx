@@ -179,7 +179,7 @@ export default function LoginForm() {
                   duration-300 disabled:cursor-not-allowed 
                   flex gap-x-2 items-center
                 "
-                variant="secondary"
+                variant="default"
               >
                 {isLoading ? (
                   <ReloadIcon className="w-3 h-3 animate-spin" />
