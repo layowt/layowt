@@ -16,7 +16,7 @@ import {
   Pencil1Icon,
   QuestionMarkCircledIcon
 } from '@radix-ui/react-icons';
-import { Button } from '@/components/ui/button';
+import { Button } from '~/packages/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -99,7 +99,6 @@ export default function SiteBuilderPublishModal({ website }) {
             focus-visible:!ring-0 focus-within:border-none"
           rounded="sm"
           size="sm"
-          hoverEffect={false}
         >
           <ChevronDownIcon />
         </Button>

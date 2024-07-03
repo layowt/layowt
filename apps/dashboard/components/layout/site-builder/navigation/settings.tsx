@@ -1,5 +1,5 @@
 import LoadingSpinner from '@/components/saving';
-import { Button } from '@/components/ui/button';
+import { Button } from '~/packages/components/ui/button';
 import SiteBuilderPublishModal from './publish-dropdown';
 
 import { useAppSelector } from '@/utils/index';
@@ -35,7 +35,6 @@ export default function SiteBuilderSettings() {
           className="!rounded-br-none !rounded-tr-none group-hover:!bg-white group-hover:text-black text-xs -right-1 !border-0"
           rounded="sm"
           size="sm"
-          hoverEffect={false}
           onClick={() => handleWebsitePublish()}
         >
           Publish

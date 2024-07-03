@@ -7,7 +7,7 @@ import useInterval from '@/hooks/useInterval';
 
 // components
 import AuthenticationCardWrapper from './form-wrapper';
-import { Button } from '@/ui/button';
+import { Button } from '~/packages/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
@@ -126,7 +126,6 @@ export default function AuthenticationCard(){
             variant='secondary'
             className='w-full'
             special={false}
-            hoverEffect={false}
           >
             Confirm
           </Button>
