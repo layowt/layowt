@@ -41,10 +41,9 @@ export default function Welcome(){
         >
           <Button 
             variant='default'
-            arrow
+            href="/welcome?onboarding=details"
             fontSize='lg'
             padding='xl'
-            href="/welcome"
           >
             Get started
           </Button>
