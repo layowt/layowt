@@ -3,11 +3,14 @@ import { useSearchParams } from "next/navigation";
 
 interface GetQueryParamsProps {
   keys?: string | string[]
-  returnMany?: boolean
 }
 
 /**
- * Method to extract all params in a query.
+ * Method to get all parameters in a query string.
+ * (
+ *  not to be confused with 'useQueryParams', which allows 
+ *  you to set query params.
+ * )
  * 
  * @returns string | string[]
  */
@@ -16,15 +19,21 @@ export const getQueryParams = <T extends (...args: any[]) => any>({
 }: GetQueryParamsProps): Parameters<T>[0] => {
   const searchParams = useSearchParams();
   // check that the passed in key(s) exist
-  const searchParamsKeys = searchParams.keys();
+  const searchParamsKeys = Array.from(searchParams.keys());
 
-  const arr = [];
-  for(const key of searchParamsKeys){
-    // if the passed in key is valid, get the value for that key and return it
-    if(keys?.includes(key)){
-      arr.push(searchParams.get(key))
-    }
+  // if no keys were passed in, return all values in the searchParams
+  if(!keys || keys.length === 0){
+    return Array.from(searchParams.values()) as unknown as T;
   }
 
-  return arr;
+  const values: string[] = [];
+  for(const key of searchParamsKeys){
+    const value = searchParams.get(key);
+    if(value === null || !keys.includes(key)){
+      continue;
+    }
+    values.push(value);
+  }
+
+  return values as unknown as T;
 }
