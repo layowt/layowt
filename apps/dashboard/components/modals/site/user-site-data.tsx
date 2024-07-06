@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 // components
 import { Button } from '~/packages/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '~/packages/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import SiteOnboardingTitle from './modal-title';
 

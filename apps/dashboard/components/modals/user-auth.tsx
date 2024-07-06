@@ -5,11 +5,6 @@ import { useEffect, useState, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';
 // use router as we are in a client component
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-// shadcn imports
-import { Dialog, DialogContent } from '@/ui/dialog';
-import { Button } from '~/packages/components/ui/button';
-import { ReloadIcon } from '@radix-ui/react-icons';
-import { Toaster } from '@/ui/sonner';
 
 // type imports
 import type { User } from '@supabase/supabase-js';

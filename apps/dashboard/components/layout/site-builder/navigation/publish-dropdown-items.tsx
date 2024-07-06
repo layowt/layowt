@@ -1,5 +1,5 @@
 // components
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogTrigger } from '~/packages/components/ui/dialog';
 import { Button } from '~/packages/components/ui/button';
 import { toast } from 'sonner';
 import ModalDeleteSite from '@/components/modals/site/modal-delete-site';
