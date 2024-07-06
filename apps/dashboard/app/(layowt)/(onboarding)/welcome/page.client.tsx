@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { getQueryParams } from "~/packages/utils/src/get-query-params";
 
-export default function WelcomePageClient(){
+export default function WelcomePageClient() {
   const router = useRouter();
   const queryParams = getQueryParams({
     keys: ['onboarding']
@@ -12,7 +12,7 @@ export default function WelcomePageClient(){
 
   // if no query params exist, redirect to the welcome page
   // to start the onboarding flow again
-  if(!queryParams){
+  if (!queryParams.onboarding) {
     toast.error('No query params found. Redirecting to welcome page.');
     router.push('/welcome');
     return null;
@@ -20,9 +20,9 @@ export default function WelcomePageClient(){
 
   return (
     <>
-      {queryParams.includes(str => str.includes('details')) && (
+      {queryParams.onboarding === 'details' && (
         <Welcome />
       )}
-    </> 
-  )
+    </>
+  );
 }
