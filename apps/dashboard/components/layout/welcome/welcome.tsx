@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '~/packages/components/ui/button';
 import { FlipWords } from '~/packages/components/ui/flip-words'
-import { m as motion, LazyMotion, domAnimation } from 'framer-motion';
+import { m as motion, LazyMotion, domAnimation } from 'framer-motion'
 
 export default function Welcome(){
   const words = ['solutions', 'storefronts', 'companies'];
@@ -16,12 +16,12 @@ export default function Welcome(){
             aria-label="Create expeptional user expierences with Layowt."
           >
             <span className='inline-block'>
-              Create exceptional 
+              Create exceptional <br />
             </span>
             <FlipWords 
               words={words} 
               className="text-white" 
-              /> <br />
+            /> <br />
             effortlessly with Layowt.
           </motion.h1>
           <motion.p 

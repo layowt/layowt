@@ -7,15 +7,13 @@ interface GetQueryParamsProps {
 
 /**
  * Method to get all parameters in a query string.
- * (
- *  not to be confused with 'useQueryParams', which allows 
- *  you to set query params.
- * )
+ * (not to be confused with 'useQueryParams', which allows 
+ *  you to set query params.)
  * 
  * @returns string | string[]
  */
 export const getQueryParams = <T extends (...args: any[]) => any>({
-  keys
+  keys = []
 }: GetQueryParamsProps): Parameters<T>[0] => {
   const searchParams = useSearchParams();
   // check that the passed in key(s) exist
@@ -25,8 +23,10 @@ export const getQueryParams = <T extends (...args: any[]) => any>({
   if(!keys || keys.length === 0){
     return Array.from(searchParams.values()) as unknown as T;
   }
-
+  // init new values array
   const values: string[] = [];
+
+  // loop through all of our keys to check for a match
   for(const key of searchParamsKeys){
     const value = searchParams.get(key);
     if(value === null || !keys.includes(key)){

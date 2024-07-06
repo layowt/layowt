@@ -1,7 +1,7 @@
-import Welcome from "@/components/layout/welcome/welcome";
+import WelcomePageClient from "./page.client";
 
 export default function WelcomePage(){
   return (
-    <Welcome />
+    <WelcomePageClient />
   )
 }

@@ -19,7 +19,14 @@ export default async function AuthMiddleware(
   // redirect them to the dashboard with a not-authenticated message
   // so on the /login route we can display a message to the user
   if (!user?.user?.id) {
-    if (path !== '/login' && path !== '/sign-up' && path !== '/forgot-password') {
+    if (
+      path !== '/login' && 
+      path !== '/sign-up' && 
+      path !== '/forgot-password' &&
+      path !== '/reset-password' &&
+      path !== '/verify-email' &&
+      path !== '/welcome'
+    ) {
       return NextResponse.redirect(new URL('/login?r=not-authenticated', req.url));
     }
   } else {
