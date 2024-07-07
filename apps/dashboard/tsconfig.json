@@ -30,6 +30,12 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts", 
+    ".next/types/**/*.ts", 
+    "**/*.ts", 
+    "**/*.tsx",
+    "../../packages/components/src/**/*.tsx",
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 'use client';
 // component imports
 import { Button } from '~/packages/components/src/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '~/packages/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger } from '~/packages/components/src/ui/dialog';
 import { CheckoutForm } from './checkout-form';
 import { ReloadIcon } from '@radix-ui/react-icons';
 

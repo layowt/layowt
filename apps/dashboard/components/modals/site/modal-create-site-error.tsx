@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '~/packages/components/src/ui/button';
-import { Dialog, DialogContent } from '~/packages/components/ui/dialog';
+import { Dialog, DialogContent } from '~/packages/components/src/ui/dialog';
 
 interface ModalErrorContentProps {
   content: string;

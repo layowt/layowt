@@ -1,5 +1,5 @@
 import { Button } from '~/packages/components/src/ui/button';
-import { Dialog, DialogContent } from '~/packages/components/ui/dialog';
+import { Dialog, DialogContent } from '~/packages/components/src/ui/dialog';
 import { deleteWebsite } from '@/actions/websites/delete';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
