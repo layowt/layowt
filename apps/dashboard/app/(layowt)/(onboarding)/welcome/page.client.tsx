@@ -1,8 +1,11 @@
 'use client';
-import Welcome from "@/components/layout/welcome/welcome";
+// hooks 
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+// utils
 import { getQueryParams } from "~/packages/utils/src/get-query-params";
+// components
+import Welcome from "@/components/layout/welcome/welcome";
+import WelcomePageDetails from "@/components/layout/welcome/details";
 
 export default function WelcomePageClient() {
   const router = useRouter();
@@ -13,15 +16,16 @@ export default function WelcomePageClient() {
   // if no query params exist, redirect to the welcome page
   // to start the onboarding flow again
   if (!queryParams.onboarding) {
-    toast.error('No query params found. Redirecting to welcome page.');
-    router.push('/welcome');
-    return null;
+    return <Welcome />
   }
 
   return (
     <>
       {queryParams.onboarding === 'details' && (
-        <Welcome />
+        <WelcomePageDetails />
+      )}
+      {queryParams.onboarding === 'payment-plans' && (
+        'payment plans page'
       )}
     </>
   );

@@ -16,8 +16,9 @@ export default function Welcome(){
             aria-label="Create expeptional user expierences with Layowt."
           >
             <span className='inline-block'>
-              Create exceptional <br />
+              Create exceptional
             </span>
+            <br />
             <FlipWords 
               words={words} 
               className="text-white" 
