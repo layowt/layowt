@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '~/packages/components/ui/button';
+import { Button } from '~/packages/components/src/ui/button';
 import { FlipWords } from '~/packages/components/ui/flip-words'
 import { m as motion, LazyMotion, domAnimation } from 'framer-motion'
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Button } from '~/packages/components/ui/button';
-import { InputWithLabel } from '~/packages/components/ui/input-label';
+import { Button } from '~/packages/components/src/ui/button';
+import { InputWithLabel } from '~/packages/components/src/ui/input-label';
 import { m as motion, LazyMotion, domAnimation } from 'framer-motion'
 import { useState } from 'react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
@@ -87,7 +87,7 @@ export default function WelcomePageDetails(){
               icon: (
                 <QuestionMarkCircledIcon />
               ),
-              text: 'Your display name is how you appear to other users.'
+              text: 'Your display name is how you will appear when publishing blogs posts.'
             }}
           />
           

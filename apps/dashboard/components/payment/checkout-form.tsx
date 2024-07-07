@@ -1,4 +1,4 @@
-import { Button } from '~/packages/components/ui/button';
+import { Button } from '~/packages/components/src/ui/button';
 import {
   useStripe,
   useElements,

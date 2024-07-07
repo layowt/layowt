@@ -7,7 +7,7 @@ import useInterval from '@/hooks/useInterval';
 
 // components
 import AuthenticationCardWrapper from './form-wrapper';
-import { Button } from '~/packages/components/ui/button';
+import { Button } from '~/packages/components/src/ui/button';
 import {
   Tooltip,
   TooltipContent,

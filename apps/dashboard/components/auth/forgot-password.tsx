@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { EnvelopeClosedIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { Label } from '@/ui/label';
 import { Input } from '@/ui/input';
-import { Button } from '~/packages/components/ui/button';
+import { Button } from '~/packages/components/src/ui/button';
 import { toast } from 'sonner';
 import { passwordReset } from '@/actions/user/password-reset';
 

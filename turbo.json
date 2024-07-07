@@ -22,7 +22,9 @@
     "deploy": {
       "dependsOn": ["build", "test", "lint"]
     },
-    "lint": {},
+    "lint": {
+     "dependsOn": ["^lint"]
+    },
     "test": {
       "dependsOn": ["^build"]
     }
