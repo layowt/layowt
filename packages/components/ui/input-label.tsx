@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input } from '~/components/ui/input';
+import { cn } from '~/utils/src/cn';
 
 interface InputWithLabelProps {
   label: string;
@@ -9,6 +10,7 @@ interface InputWithLabelProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
+  wrapperClassName?: string;
   icon?: React.ReactNode;
   disabled?: boolean;
   autoComplete?: string;
@@ -17,7 +19,12 @@ interface InputWithLabelProps {
 const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
   ({ label, ...props }, ref) => {
     return (
-      <div className="flex flex-col gap-y-1.5">
+      <div 
+        className={cn`
+          flex flex-col gap-y-1.5
+          ${props.wrapperClassName}
+        `}
+      >
         <label className="text-sm text-muted-foreground text-white/80">
           {label}
         </label>

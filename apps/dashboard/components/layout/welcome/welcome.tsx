@@ -7,11 +7,11 @@ export default function Welcome(){
   const words = ['solutions', 'storefronts', 'companies'];
 
   return (
-    <LazyMotion features={domAnimation} >
+    <LazyMotion features={domAnimation}>
       <div className="text-white font-satoshi flex flex-col gap-y-7 min-h-full w-full bg-black-300 bg-dot-white/[0.2] relative items-center justify-center">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-black-300 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
         <div className="flex flex-col gap-y-4 items-center w-1/2">
-          <motion.h1 
+          <h1 
             className="text-5xl font-bold text-center" 
             aria-label="Create expeptional user expierences with Layowt."
           >
@@ -24,7 +24,7 @@ export default function Welcome(){
               className="text-white" 
             /> <br />
             effortlessly with Layowt.
-          </motion.h1>
+          </h1>
           <motion.p 
             className="max-w-96 text-center text-xl relative"
             initial={{ bottom: 10, opacity: 0 }}
