@@ -1,6 +1,12 @@
 import React from 'react';
 import { Input } from '~/components/ui/input';
 import { cn } from '~/utils/src/cn';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
 interface InputWithLabelProps {
   label: string;
@@ -14,6 +20,10 @@ interface InputWithLabelProps {
   icon?: React.ReactNode;
   disabled?: boolean;
   autoComplete?: string;
+  question?: {
+    text: string;
+    icon: React.ReactNode;
+  }
 }
 
 const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
@@ -25,9 +35,28 @@ const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
           ${props.wrapperClassName}
         `}
       >
-        <label className="text-sm text-muted-foreground text-white/80">
-          {label}
-        </label>
+        <div className="flex gap-x-1 items-center">
+          <label 
+            className="text-sm text-muted-foreground text-white/80"
+            >
+            {label}
+          </label>
+          {props.question && (
+            <TooltipProvider delayDuration={0}>
+              <Tooltip>
+                <TooltipTrigger
+                  className="text-white/50 hover:text-white"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {props.question.icon}
+                </TooltipTrigger>
+                <TooltipContent>
+                  {props.question.text}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
         <Input
           ref={ref}
           className="

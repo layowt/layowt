@@ -2,8 +2,20 @@ import Link from 'next/link';
 import { Button } from '~/packages/components/ui/button';
 import { InputWithLabel } from '~/packages/components/ui/input-label';
 import { m as motion, LazyMotion, domAnimation } from 'framer-motion'
+import { useState } from 'react';
+import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 
 export default function WelcomePageDetails(){
+  const [details, setDetails] = useState<{
+    firstName: string;
+    lastName: string;
+    displayName: string;
+  }>({
+    firstName: '',
+    lastName: '',
+    displayName: ''
+  })
+
   return (
     <LazyMotion features={domAnimation}>
       <div
@@ -41,31 +53,44 @@ export default function WelcomePageDetails(){
           <InputWithLabel 
             label="First name"
             name="firstName"
-            value=""
+            value={details.firstName}
             type="text"
-            onChange={() => {}}
+            onChange={(e) => setDetails({...details, firstName: e.target.value })}
             className="bg-black-300 w-full"
-            wrapperClassName='col-span-6'
+            wrapperClassName="col-span-6"
+            placeholder="John"
           />
           <InputWithLabel 
             label="Last name"
             name="lastName"
-            value=""
+            value={details.lastName}
             type="text"
-            onChange={() => {}}
+            onChange={(e) => setDetails({...details, lastName: e.target.value })}
             className="bg-black-300 w-full"
-            wrapperClassName='col-span-6'
+            wrapperClassName="col-span-6"
+            placeholder="Doe"
           />
           <InputWithLabel
             label="Display name"
             name="displayName"
-            value=""
+            value={details.displayName}
             type="text"
-            onChange={() => {}}
+            onChange={(e) => setDetails({...details, displayName: e.target.value })}
             className="bg-black-300 w-full"
-            wrapperClassName='col-span-12'
+            wrapperClassName="col-span-12"
+            placeholder={
+              details.firstName && details.lastName ?  
+              `${details.firstName} ${details.lastName}`.toLowerCase() :
+              'John_Doe'.toLowerCase()
+            }
+            question={{
+              icon: (
+                <QuestionMarkCircledIcon />
+              ),
+              text: 'Your display name is how you appear to other users.'
+            }}
           />
-
+          
           <div className="col-span-12">
             <Button
               variant="default"
