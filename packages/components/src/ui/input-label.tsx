@@ -16,7 +16,7 @@ interface InputWithLabelProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
-  wrapperClassName?: string;
+  wrapperclassName?: string;
   icon?: React.ReactNode;
   disabled?: boolean;
   autoComplete?: string;
@@ -32,7 +32,7 @@ const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
       <div 
         className={cn`
           flex flex-col gap-y-1.5
-          ${props.wrapperClassName}
+          ${props.wrapperclassName}
         `}
       >
         <div className="flex gap-x-1 items-center">

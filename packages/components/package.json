@@ -1,10 +1,12 @@
 {
-  "name": "layowt-components",
+  "name": "@layowt/components",
+  "type": "module",
   "version": "0.1.1",
   "description": "A collection of components used within Layowt.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -12,7 +14,8 @@
     "sonner": "^1.5.0"
   },
   "devDependencies": {
-    "@layowt/tailwind-config": "workspace:*",
-    "@layowt/utils": "workspace:*"
+    "@layowt/tailwind-config": "*",
+    "@layowt/utils": "*",
+    "typescript": "latest"
   }
 }

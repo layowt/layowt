@@ -12,6 +12,10 @@
     "check:types": "tsc --noEmit"
   },
   "dependencies": {
+    "@layowt/tailwind-config": "*",
+    "@layowt/components": "*",
+    
+
     "@prisma/client": "^5.9.1",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",

@@ -57,7 +57,7 @@ export default function WelcomePageDetails(){
             type="text"
             onChange={(e) => setDetails({...details, firstName: e.target.value })}
             className="bg-black-300 w-full"
-            wrapperClassName="col-span-6"
+            wrapperclassName="col-span-6"
             placeholder="John"
           />
           <InputWithLabel 
@@ -67,7 +67,7 @@ export default function WelcomePageDetails(){
             type="text"
             onChange={(e) => setDetails({...details, lastName: e.target.value })}
             className="bg-black-300 w-full"
-            wrapperClassName="col-span-6"
+            wrapperclassName="col-span-6"
             placeholder="Doe"
           />
           <InputWithLabel
@@ -77,7 +77,7 @@ export default function WelcomePageDetails(){
             type="text"
             onChange={(e) => setDetails({...details, displayName: e.target.value })}
             className="bg-black-300 w-full"
-            wrapperClassName="col-span-12"
+            wrapperclassName="col-span-12"
             placeholder={
               details.firstName && details.lastName ?  
               `${details.firstName} ${details.lastName}`.toLowerCase() :
