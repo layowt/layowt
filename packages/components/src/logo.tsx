@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { cn } from '~/utils/src/cn';
+import { cn } from '@layowt/utils/src/cn';
 
 export default function SiteLogo({
   className = 'py-5 pl-2',

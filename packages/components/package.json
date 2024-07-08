@@ -1,12 +1,11 @@
 {
   "name": "@layowt/components",
   "type": "module",
+  "private": true,
   "version": "0.1.1",
   "description": "A collection of components used within Layowt.",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -17,5 +16,6 @@
     "@layowt/tailwind-config": "*",
     "@layowt/utils": "*",
     "typescript": "latest"
-  }
+  },
+  "packageManager": "npm@10.0.0"
 }

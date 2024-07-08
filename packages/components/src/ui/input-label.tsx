@@ -1,12 +1,12 @@
-import React from 'react';
-import { Input } from '~/components/src/ui/input';
-import { cn } from '~/utils/src/cn';
+import * as React from 'react';
+import { Input } from '@layowt/components/src/ui/input';
+import { cn } from '@layowt/utils/src/cn';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
-} from '@/components/ui/tooltip';
+} from '@layowt/components/src/ui/tooltip';
 
 interface InputWithLabelProps {
   label: string;
