@@ -11,6 +11,8 @@
     "dev:dashboard": "turbo dev --filter=layowt-dashboard",
     "dev:marketing": "turbo dev --filter=layowt-marketing",
     "build": "npx prisma generate && next build",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "prettier-check": "prettier --check \"**/*.{ts,tsx}\"",
     "start": "next start",
     "lint": "next lint",
     "stripe:listen": "stripe listen --forward-to localhost:4343/api/webhooks/stripe",
