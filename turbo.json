@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env"],
-  "pipeline": {
+  "tasks": {
     "db:generate": {
       "cache": false
     },
@@ -15,6 +15,9 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
     },
     "clean": {
       "cache": false

@@ -1,9 +1,8 @@
 {
   "name": "@layowt/typescript-config",
-  "type": "module",
-  "private": true,
   "version": "0.1.0",
-  "exports": {
-    "./tsconfig.json": "./tsconfig.json"
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
   }
 }

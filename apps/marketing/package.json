@@ -63,6 +63,10 @@
     "postcss": "^8",
     "stripe-cli": "^0.1.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+
+    "@layowt/tailwind-config": "*",
+    "@layowt/utils": "*",
+    "@layowt/components": "*"
   }
 }
