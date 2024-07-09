@@ -40,7 +40,7 @@ export default function SiteLogo({
           />
         </svg>
         {showName && (
-          <h1 className="text-heading-md group-hover:text-white/60 duration-300">
+          <h1 className="text-heading-lg group-hover:text-white/60 duration-300">
             Layowt
           </h1>
         )}
