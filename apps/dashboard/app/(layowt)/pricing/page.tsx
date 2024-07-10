@@ -5,7 +5,7 @@ import { m as motion, LazyMotion, domAnimation } from 'framer-motion';
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
 import { ButtonGroup } from '@/components/ui/button-group';
-import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
+import { HoverBorderGradient } from '@layowt/components/src/ui/hover-border-gradient';
 
 // redux imports
 import { billingPeriod } from '@/store/slices/user-store';
@@ -20,7 +20,7 @@ import { useQuery } from '@tanstack/react-query';
 export default function PricingPage() {
   const currentBillingPeriod = useAppSelector(billingPeriod);
 
-  const { data: products, isLoading } = useQuery({
+  const { data: products, isLoading, isError } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
       const { products } = await getStripeProducts(currentBillingPeriod);
