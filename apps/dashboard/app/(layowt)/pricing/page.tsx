@@ -1,7 +1,6 @@
 'use client';
 // react imports
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m as motion, LazyMotion, domAnimation } from 'framer-motion';
 
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
@@ -14,34 +13,22 @@ import { useAppSelector } from '@/utils/index';
 
 // action imports
 import { getStripeProducts } from '@layowt/utils/src/get-products';
-// type imports
-import { StripeProduct } from '@/types/StripeProduct';
-import Stripe from 'stripe';
+
+import { useQuery } from '@tanstack/react-query';
 
 // component
 export default function PricingPage() {
   const currentBillingPeriod = useAppSelector(billingPeriod);
-  const [products, setProducts] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  const setProductsFunc = async (
-    billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
-  ) => {
-    setLoading(true);
-    const { products } = await getStripeProducts(billingPeriod);
-    setProducts(products);
-    setLoading(false);
-  };
+  const { data: products, isLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: async () => {
+      const { products } = await getStripeProducts(currentBillingPeriod);
+      return products;
+    }
+  })
 
-  // useEffect to fetch the products on mount (This may need to be changed)
-  useEffect(() => {
-    setProductsFunc(currentBillingPeriod);
-  }, []);
-
-  // a use effect to update the products when the billing period changes
-  useEffect(() => {
-    setProductsFunc(currentBillingPeriod);
-  }, [currentBillingPeriod]);
+  console.log(products)
 
   let pricingPlansGrid = 'grid w-full gap-x-8';
 
@@ -60,7 +47,7 @@ export default function PricingPage() {
   ];
 
   return (
-    <>
+    <LazyMotion features={domAnimation}>
       <div className="flex flex-col h-full gap-y-10 text-white py-20">
         <div className="flex flex-col gap-y-6 w-full items-center">
           <motion.div
@@ -119,7 +106,7 @@ export default function PricingPage() {
               pricingPlansGrid + ` grid-cols-${products?.length}`
             }
           >
-            {products?.map((product: StripeProduct, index) => (
+            {products?.map((product, index) => (
               <motion.div
                 key={product.id}
                 className="min-h-full"
@@ -130,7 +117,7 @@ export default function PricingPage() {
                 <PricingCard
                   key={product.id}
                   product={product}
-                  isLoading={loading}
+                  isLoading={isLoading}
                   billingPeriod={currentBillingPeriod}
                 />
               </motion.div>
@@ -138,6 +125,6 @@ export default function PricingPage() {
           </div>
         </div>
       </div>
-    </>
+    </LazyMotion>
   );
 }
