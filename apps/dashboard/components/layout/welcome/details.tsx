@@ -1,9 +1,11 @@
+'use client'
 import Link from 'next/link';
-import { Button } from '~/packages/components/src/ui/button';
-import { InputWithLabel } from '~/packages/components/src/ui/input-label';
+import { Button } from '@layowt/components/src/ui/button';
+import { InputWithLabel } from '@layowt/components/src/ui/input-label';
 import { m as motion, LazyMotion, domAnimation } from 'framer-motion'
 import { useState } from 'react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+import { useRouter } from 'next/navigation';
 
 export default function WelcomePageDetails(){
   const [details, setDetails] = useState<{
@@ -94,7 +96,9 @@ export default function WelcomePageDetails(){
           <div className="col-span-12">
             <Button
               variant="default"
-              >
+              onClick={() => useRouter().push('/welcome?onboarding=payment-plans')}
+              disabled={!details.firstName || !details.lastName || !details.displayName}
+            >
               Continue
             </Button>
           </div>

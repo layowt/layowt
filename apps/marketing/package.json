@@ -6,7 +6,8 @@
     "dev": "next dev --turbo --port 4344",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.4",

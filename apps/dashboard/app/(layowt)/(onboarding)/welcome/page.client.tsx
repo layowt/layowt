@@ -1,6 +1,4 @@
 'use client';
-// hooks 
-import { useRouter } from "next/navigation";
 // utils
 import { getQueryParams } from "~/packages/utils/src/get-query-params";
 // components
@@ -8,7 +6,6 @@ import Welcome from "@/components/layout/welcome/welcome";
 import WelcomePageDetails from "@/components/layout/welcome/details";
 
 export default function WelcomePageClient() {
-  const router = useRouter();
   const queryParams = getQueryParams({
     keys: ['onboarding']
   });

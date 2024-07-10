@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Input } from '@layowt/components/src/ui/input';
 import { cn } from '@layowt/utils/src/cn';
 import {
@@ -38,7 +38,7 @@ const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
         <div className="flex gap-x-1 items-center">
           <label 
             className="text-sm text-muted-foreground text-white/80"
-            >
+          >
             {label}
           </label>
           {props.question && (
