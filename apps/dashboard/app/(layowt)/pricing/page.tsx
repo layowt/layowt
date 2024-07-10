@@ -13,7 +13,7 @@ import { billingPeriod } from '@/store/slices/user-store';
 import { useAppSelector } from '@/utils/index';
 
 // action imports
-import { StripeProducts } from '@/actions/stripe/stripe-products';
+import { getStripeProducts } from '@layowt/utils/src/get-products';
 // type imports
 import { StripeProduct } from '@/types/StripeProduct';
 import Stripe from 'stripe';
@@ -28,7 +28,7 @@ export default function PricingPage() {
     billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
   ) => {
     setLoading(true);
-    const { products } = await StripeProducts(billingPeriod);
+    const { products } = await getStripeProducts(billingPeriod);
     setProducts(products);
     setLoading(false);
   };

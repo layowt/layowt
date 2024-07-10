@@ -2,11 +2,16 @@
 // utils
 import { getQueryParams } from "~/packages/utils/src/get-query-params";
 // components
-import Welcome from "@/components/layout/welcome/welcome";
 import WelcomePageDetails from "@/components/layout/welcome/details";
 import WelcomePageWrapper from '@/components/layout/welcome/welcome-wrapper'
+import WelcomePagePaymentPlans from "@/components/layout/welcome/payment-plans";
+import Stripe from "stripe";
 
-export default function WelcomePageClient() {
+export default function WelcomePageClient({
+  products
+}: {
+  products: Stripe.Product[];
+}) {
   const queryParams = getQueryParams({
     keys: ['onboarding']
   });
@@ -24,7 +29,7 @@ export default function WelcomePageClient() {
           <WelcomePageDetails />
         )}
         {queryParams.onboarding === 'payment-plans' && (
-          'payment plans page'
+          <WelcomePagePaymentPlans products={products} />
         )}
       </WelcomePageWrapper>
     </>

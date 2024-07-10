@@ -1,7 +1,4 @@
-'use client';
 import { LazyMotion, domAnimation } from 'framer-motion';
-import { useState } from 'react';
-
 
 export default function WelcomePageWrapper({
   children
