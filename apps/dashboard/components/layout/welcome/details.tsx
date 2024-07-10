@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import Link from 'next/link';
 import { Button } from '@layowt/components/src/ui/button';
 import { InputWithLabel } from '@layowt/components/src/ui/input-label';
@@ -19,13 +19,7 @@ export default function WelcomePageDetails(){
   })
 
   return (
-    <LazyMotion features={domAnimation}>
-      <div
-        className="
-          bg-black-300 border border-black-100 text-white font-inter
-          flex flex-col justify-center items-center p-10 rounded-lg
-        "
-      >
+      <div className="">
         <div className="flex flex-col gap-y-2 text-center items-center">
           <motion.h1 
             className="animate-text text-3xl flex justify-center w-full text-center font-semibold bg-gradient-to-r from-white to-gray-500 text-transparent bg-clip-text"
@@ -102,8 +96,7 @@ export default function WelcomePageDetails(){
               Continue
             </Button>
           </div>
-        </form>
-      </div>
-    </LazyMotion> 
+      </form>
+    </div>
   )
 }
