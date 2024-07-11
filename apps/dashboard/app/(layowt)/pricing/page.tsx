@@ -20,17 +20,18 @@ import { useQuery } from '@tanstack/react-query';
 export default function PricingPage() {
   const currentBillingPeriod = useAppSelector(billingPeriod);
 
-  const { data: products, isLoading, isError } = useQuery({
+  const { data: products, isLoading, isError, isPending, isStale } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const { products } = await getStripeProducts(currentBillingPeriod);
+      const { products } = await getStripeProducts();
       return products;
-    }
+    },
+    staleTime: 1000 * 60 * 60 * 24,
+    refetchOnMount: 'always'
   })
 
   console.log(products)
-
-  let pricingPlansGrid = 'grid w-full gap-x-8';
+  if(isStale) return null;
 
   const tabs: {
     title: string;
@@ -102,11 +103,9 @@ export default function PricingPage() {
         </div>
         <div className="flex gap-x-10 items-center justify-center self-center">
           <div
-            className={
-              pricingPlansGrid + ` grid-cols-${products?.length}`
-            }
+            className={`grid w-full gap-x-8 grid-cols-3 justify-center`}
           >
-            {products?.map((product, index) => (
+            {/* {products[currentBillingPeriod].map((product, index) => (
               <motion.div
                 key={product.id}
                 className="min-h-full"
@@ -121,7 +120,7 @@ export default function PricingPage() {
                   billingPeriod={currentBillingPeriod}
                 />
               </motion.div>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>

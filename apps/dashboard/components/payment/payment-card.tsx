@@ -4,12 +4,15 @@ import { PaymentButton } from './payment-card-button';
 import { ReloadIcon, CheckIcon } from '@radix-ui/react-icons';
 import { IonSparkles } from '~/packages/components/src/ui/icons/sparkle';
 
+//type imports
+import type { StripeProduct } from '@/types/StripeProduct';
+
 export function PricingCard({
   product,
   isLoading,
   billingPeriod
 }: {
-  product: Stripe.Product;
+  product: StripeProduct;
   isLoading: boolean;
   billingPeriod: Stripe.PriceListParams.Recurring.Interval;
 }) {

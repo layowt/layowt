@@ -1,60 +1,88 @@
-'use server'
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16'
 });
 
-export const getStripeProducts = async (
-  billingPeriod: Stripe.PriceListParams.Recurring.Interval = 'month'
-): Promise<Record<
-  'products',
-  Stripe.Product[]
-> | null> => {
+interface StripeProductReturnType {
+  products: {
+    monthly: Stripe.Product[];
+    yearly: Stripe.Product[];
+  }
+
+}
+
+/**
+ * Method for fetching all of the products from stripe
+ * 
+ * @returns 
+ */
+export const getStripeProducts = async (): Promise<StripeProductReturnType> => {
   if (!stripe) return Promise.reject('Stripe is not available');
 
-  let products: Stripe.Response<Stripe.ApiList<Stripe.Product>> =
-    await stripe.products.list({
-      active: true,
-      limit: 10
-    });
-    
-  if (!products) return Promise.reject('No products found');
-
-  // now we have the product ids, lets fetch the prices as there can be multiple
-  // billing periods for each product
-  const prices: Stripe.Response<Stripe.ApiList<Stripe.Price>> = await stripe.prices.list({
+  // Fetch the monthly prices
+  const monthlyPrices: Stripe.Response<Stripe.ApiList<Stripe.Price>> = await stripe.prices.list({
     active: true,
     limit: 10,
     expand: ['data.product'],
-    recurring: {
-      interval: billingPeriod
+    recurring: { 
+      interval:  'month'
     }
   });
 
-  // loop over all of the prices and match them to the product
-  prices.data.forEach((price) => {
-    // @ts-expect-error - the product object is expanded
-    const priceProductId = price.product.id
+  if (!monthlyPrices) return Promise.reject('No monthly prices found');
 
-    // find the product that matches the price
-    const product = products.data.find((product) => product.id === priceProductId);
+  // Fetch the yearly prices
+  const yearlyPrices: Stripe.Response<Stripe.ApiList<Stripe.Price>> = await stripe.prices.list({
+    active: true,
+    limit: 10,
+    expand: ['data.product'],
+    recurring: { 
+      interval:  'year'
+    }
+  });
 
-    // if we can't find the product, then we can't match the price
-    if(!product) return;
+  if (!yearlyPrices) return Promise.reject('No yearly prices found');
 
-    // match the price to the product
-    product.default_price = price
-  })
+  // Extract the products from the prices
+  const monthlyProducts = monthlyPrices.data.map(price => price.product) as Stripe.Product[];
+  const yearlyProducts = yearlyPrices.data.map(price => price.product) as Stripe.Product[];
 
-  // once we have the products, lets sort them via the price
-  products.data.sort((productA, productB) => {
+  // Match prices to the products for monthly
+  monthlyPrices.data.forEach(price => {
+    const product = monthlyProducts.find(product => product.id === price.product.id);
+    if (product) {
+      product.default_price = price;
+    }
+  });
+
+  // Match prices to the products for yearly
+  yearlyPrices.data.forEach(price => {
+    const product = yearlyProducts.find(product => product.id === price.product.id);
+    if (product) {
+      product.default_price = price;
+    }
+  });
+
+  // Sort the products by price for both monthly and yearly
+  monthlyProducts.sort((productA, productB) => {
     if (!productA.default_price || !productB.default_price) return 0;
     return (
-      // @ts-ignore - we know that this is a field as we expand it in the list
       productA.default_price.unit_amount - productB.default_price.unit_amount
     );
   });
 
-  return Promise.resolve({ products: products.data })
+  yearlyProducts.sort((productA, productB) => {
+    if (!productA.default_price || !productB.default_price) return 0;
+    return (
+      productA.default_price.unit_amount - productB.default_price.unit_amount
+    );
+  });
+
+  return Promise.resolve({
+    products:{
+      monthly: monthlyProducts,
+      yearly: yearlyProducts
+    }
+  });
 };
