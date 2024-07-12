@@ -2,14 +2,16 @@
 import Link from 'next/link';
 import { Button } from '@layowt/components/src/ui/button';
 import { InputWithLabel } from '@layowt/components/src/ui/input-label';
-import { m as motion } from 'framer-motion'
+import { m as motion } from 'framer-motion';
 import { useState } from 'react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 
-export default function WelcomePageDetails(){
-  const router = useRouter();
-
+export default function WelcomePageDetails ({ 
+  updateHash 
+}: { 
+  updateHash: (newHash: string) => void 
+}) {
   const [details, setDetails] = useState<{
     firstName: string;
     lastName: string;
@@ -18,7 +20,7 @@ export default function WelcomePageDetails(){
     firstName: '',
     lastName: '',
     displayName: ''
-  })
+  });
 
   return (
     <>
@@ -93,8 +95,8 @@ export default function WelcomePageDetails(){
           <Button
             variant="default"
             onClick={(e) => {
-              e.preventDefault()
-              router.push('/welcome?onboarding=payment-plans')
+              e.preventDefault();
+              updateHash('#payment-plans');
             }}
             disabled={!details.firstName || !details.lastName || !details.displayName}
           >
@@ -103,5 +105,5 @@ export default function WelcomePageDetails(){
         </div>
       </form>
     </>
-  )
-}
+  );
+};

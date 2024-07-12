@@ -1,4 +1,5 @@
 'use client';
+
 import { cn } from '@/utils/index';
 import type { DeviceType } from '@/types/DeviceType';
 import { device, setDeviceType } from '@/store/slices/index';
@@ -61,17 +62,12 @@ export default function ScreenSizeSwapper() {
     }
   ];
 
-  const updateQueryParams = useQueryParams({ 
-    name: 'device'
-  }, (parameter) => {
-    dispatch(setDeviceType(parameter));
-  });
+  const updateQueryParams = useQueryParams();
 
   const setDevice = (deviceId: Devices['id']) => {
-    // set the device in redux    
-    //dispatch(setDeviceType(deviceId));
-
-    updateQueryParams(deviceId);
+    updateQueryParams('device', deviceId, (value) => {
+      dispatch(setDeviceType(value as DeviceType));
+    });
   };
 
   return (

@@ -1,3 +1,4 @@
+
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
@@ -9,7 +10,6 @@ interface StripeProductReturnType {
     monthly: Stripe.Product[];
     yearly: Stripe.Product[];
   }
-
 }
 
 /**
@@ -26,11 +26,11 @@ export const getStripeProducts = async (): Promise<StripeProductReturnType> => {
     limit: 10,
     expand: ['data.product'],
     recurring: { 
-      interval:  'month'
+      interval: 'month'
     }
   });
 
-  if (!monthlyPrices) return Promise.reject('No monthly prices found');
+  if (!monthlyPrices) throw new Error('No monthly prices found');
 
   // Fetch the yearly prices
   const yearlyPrices: Stripe.Response<Stripe.ApiList<Stripe.Price>> = await stripe.prices.list({
@@ -38,11 +38,11 @@ export const getStripeProducts = async (): Promise<StripeProductReturnType> => {
     limit: 10,
     expand: ['data.product'],
     recurring: { 
-      interval:  'year'
+      interval: 'year'
     }
   });
 
-  if (!yearlyPrices) return Promise.reject('No yearly prices found');
+  if (!yearlyPrices) throw new Error('No yearly prices found');
 
   // Extract the products from the prices
   const monthlyProducts = monthlyPrices.data.map(price => price.product) as Stripe.Product[];
@@ -67,22 +67,16 @@ export const getStripeProducts = async (): Promise<StripeProductReturnType> => {
   // Sort the products by price for both monthly and yearly
   monthlyProducts.sort((productA, productB) => {
     if (!productA.default_price || !productB.default_price) return 0;
-    return (
-      productA.default_price.unit_amount - productB.default_price.unit_amount
-    );
+    return productA.default_price.unit_amount - productB.default_price.unit_amount;
   });
 
   yearlyProducts.sort((productA, productB) => {
     if (!productA.default_price || !productB.default_price) return 0;
-    return (
-      productA.default_price.unit_amount - productB.default_price.unit_amount
-    );
+    return productA.default_price.unit_amount - productB.default_price.unit_amount;
   });
 
-  return Promise.resolve({
-    products:{
-      monthly: monthlyProducts,
-      yearly: yearlyProducts
-    }
-  });
+  return {
+    monthly: monthlyProducts,
+    yearly: yearlyProducts
+  }
 };
