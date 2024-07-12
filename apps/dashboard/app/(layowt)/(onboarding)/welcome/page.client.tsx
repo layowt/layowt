@@ -21,11 +21,9 @@ export default function WelcomePageClient() {
 
   return (
     <WelcomePageWrapper>
-      {
-        currentHash === '#details' && (
-          <WelcomePageDetails updateHash={updateHash} />
-        )
-      }
+      {currentHash === '#details' && (
+        <WelcomePageDetails updateHash={updateHash} />
+      )}
       {currentHash === '#payment-plans' && (
         <WelcomePagePaymentPlans updateHash={updateHash} />
       )}

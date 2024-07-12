@@ -5,7 +5,6 @@ import { InputWithLabel } from '@layowt/components/src/ui/input-label';
 import { m as motion } from 'framer-motion';
 import { useState } from 'react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import { useRouter } from 'next/navigation';
 
 export default function WelcomePageDetails ({ 
   updateHash 
