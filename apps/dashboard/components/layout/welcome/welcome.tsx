@@ -1,6 +1,6 @@
 'use client'
-import { Button } from '~/packages/components/src/ui/button';
-import { FlipWords } from '~/packages/components/src/ui/flip-words'
+import { Button } from '@layowt/components/src/ui/button';
+import { FlipWords } from '@layowt/components/src/ui/flip-words'
 import { m as motion, LazyMotion, domAnimation } from 'framer-motion'
 
 export default function Welcome(){

@@ -16,7 +16,7 @@ import {
   Pencil1Icon,
   QuestionMarkCircledIcon
 } from '@radix-ui/react-icons';
-import { Button } from '~/packages/components/src/ui/button';
+import { Button } from '@layowt/components/src/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,

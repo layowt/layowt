@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '~/packages/components/src/ui/button';
+import { Button } from '@layowt/components/src/ui/button';
 import { CommandDialog, CommandInput } from '@/ui/command';
 import {
   Tooltip,

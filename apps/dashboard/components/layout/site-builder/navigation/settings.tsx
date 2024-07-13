@@ -1,5 +1,5 @@
 import LoadingSpinner from '@/components/saving';
-import { Button } from '~/packages/components/src/ui/button';
+import { Button } from '@layowt/components/src/ui/button';
 import SiteBuilderPublishModal from './publish-dropdown';
 
 import { useAppSelector } from '@/utils/index';

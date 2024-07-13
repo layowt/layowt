@@ -11,8 +11,7 @@
       "@/utils/*": ["./utils/*"],
       "@/ui/*": ["./components/ui/*"],
       "@/types/*": ["./types/*"],
-      "@/actions/*": ["./actions/*"],
-      "~/packages/*": ["../../packages/*"],
+      "@/actions/*": ["./actions/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,

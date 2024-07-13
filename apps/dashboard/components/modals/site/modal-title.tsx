@@ -1,6 +1,6 @@
 'use client';
 
-import { DialogTitle } from '~/packages/components/src/ui/dialog';
+import { DialogTitle } from '@layowt/components/src/ui/dialog';
 import { Website } from '@prisma/client';
 import { CameraIcon } from '@radix-ui/react-icons';
 import { useAppDispatch } from '@/utils/index';

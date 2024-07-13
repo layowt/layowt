@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Input } from '@/ui/input';
 import { Label } from '@/ui/label';
 import { Checkbox } from '@/ui/checkbox';
-import { Button } from '~/packages/components/src/ui/button';
+import { Button } from '@layowt/components/src/ui/button';
 import {
   ReloadIcon,
   EnvelopeClosedIcon,
