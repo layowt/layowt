@@ -3,6 +3,7 @@ import Back  from '@layowt/components/src/back';
 import { Button } from '@layowt/components/src/ui/button';
 import Link from 'next/link';
 import { StripeProductReturnType } from '@layowt/utils/src/get-products';
+import { Separator } from '@layowt/components/src/ui/separator';
 
 interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
   updateHash: (newHash: string) => void;
@@ -43,10 +44,12 @@ export default function WelcomePagePaymentPlans({
       >
         <span className="col-span-12">
           {products.monthly.map((product) => (
-            <div key={product.id} className="flex flex-col gap-y-2">
-              <h3 className="text-lg font-semibold text-white/80">{product.name}</h3>
-              <p className="text-sm text-white/50">{product.description}</p>
-            </div>
+            <>
+            </>
+            // <div key={product.id} className="flex flex-col gap-y-2">
+            //   <h3 className="text-lg font-semibold text-white/80">{product.name}</h3>
+            //   <p className="text-sm text-white/50">{product.description}</p>
+            // </div>
           ))}
         </span>
       </form>
@@ -61,8 +64,9 @@ export default function WelcomePagePaymentPlans({
         >
           Continue
         </Button>
+          {/** Send to dashboard with new-user param */}
         <Link
-          href="/dashboard"
+          href="/dashboard?q=new-user"
           className="text-xs text-white/50 hover:underline"
           prefetch={true}
         >
