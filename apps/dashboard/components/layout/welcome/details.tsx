@@ -48,6 +48,11 @@ export default function WelcomePageDetails ({
       </div>
       <form
         className="grid grid-cols-12 gap-4 w-96 mt-8"
+        onSubmit={(e) => {
+          console.log('submitting')
+          e.preventDefault()
+          updateHash('#payment-plans')
+        }}
       >
         <InputWithLabel 
           label="First name"
@@ -93,10 +98,7 @@ export default function WelcomePageDetails ({
         <div className="col-span-12">
           <Button
             variant="default"
-            onClick={(e) => {
-              e.preventDefault();
-              updateHash('#payment-plans');
-            }}
+            type="submit"
             disabled={!details.firstName || !details.lastName || !details.displayName}
           >
             Continue
