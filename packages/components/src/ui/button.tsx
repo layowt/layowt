@@ -2,8 +2,10 @@ import React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
+// packages
 import { IonSparkles } from '@layowt/components/src/ui/icons/sparkle';
 import { cn } from '@layowt/utils/src/cn';
+// next
 import Link, { LinkProps } from 'next/link';
 
 const buttonVariants = cva(

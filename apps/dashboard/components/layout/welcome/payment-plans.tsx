@@ -40,9 +40,13 @@ export default function WelcomePagePaymentPlans({
         </motion.p>
       </div>
       <form 
-        className="grid grid-cols-12 gap-4 w-96 mt-8"
+        className="grid grid-cols-12 gap-4 w-96"
       >
         <span className="col-span-12">
+          <Separator 
+            className="my-4" 
+            color='offWhite'
+          />
           {products.monthly.map((product) => (
             <>
             </>
