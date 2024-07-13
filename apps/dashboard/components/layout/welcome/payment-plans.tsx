@@ -2,13 +2,16 @@ import { m as motion } from 'framer-motion';
 import Back  from '@layowt/components/src/back';
 import { Button } from '@layowt/components/src/ui/button';
 import Link from 'next/link';
+import { StripeProductReturnType } from '@layowt/utils/src/get-products';
+
+interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
+  updateHash: (newHash: string) => void;
+}
 
 export default function WelcomePagePaymentPlans({ 
-  updateHash 
-}: { 
-  updateHash: (newHash: string) => void 
-}){
-
+  products,
+  updateHash,
+}: WelcomePagePaymentPlansProps) {
   if (typeof window === 'undefined') console.log('server')
 
   return (
@@ -35,10 +38,17 @@ export default function WelcomePagePaymentPlans({
           Choose from a wide range of flexible payment plans to suit your needs.
         </motion.p>
       </div>
-      <form
+      <form 
         className="grid grid-cols-12 gap-4 w-96 mt-8"
       >
-        
+        <span className="col-span-12">
+          {products.monthly.map((product) => (
+            <div key={product.id} className="flex flex-col gap-y-2">
+              <h3 className="text-lg font-semibold text-white/80">{product.name}</h3>
+              <p className="text-sm text-white/50">{product.description}</p>
+            </div>
+          ))}
+        </span>
       </form>
 
       <div className="col-span-12 flex flex-col gap-y-2 text-center">
