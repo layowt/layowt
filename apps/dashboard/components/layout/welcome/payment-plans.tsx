@@ -1,9 +1,20 @@
 import { m as motion } from 'framer-motion';
-import Back  from '@layowt/components/src/back';
-import { Button } from '@layowt/components/src/ui/button';
 import Link from 'next/link';
 import { StripeProductReturnType } from '@layowt/utils/src/get-products';
+
+// components
+import Back  from '@layowt/components/src/back';
+import { Button } from '@layowt/components/src/ui/button';
 import { Separator } from '@layowt/components/src/ui/separator';
+import { 
+  Select, 
+  SelectContent, 
+  SelectTrigger, 
+  SelectItem, 
+  SelectLabel,
+  SelectGroup,
+  SelectValue
+} from '@layowt/components/src/ui/select';
 
 interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
   updateHash: (newHash: string) => void;
@@ -16,7 +27,7 @@ export default function WelcomePagePaymentPlans({
   if (typeof window === 'undefined') console.log('server')
 
   return (
-    <div className="px-10">
+    <div className="px-10 flex flex-col gap-y-4">
       <Back 
         onClick={() => updateHash('#details')}
         className="absolute top-4 left-4" 
@@ -42,19 +53,28 @@ export default function WelcomePagePaymentPlans({
       <form 
         className="grid grid-cols-12 gap-4 w-96"
       >
-        <span className="col-span-12">
-          <Separator 
-            className="my-4" 
-            color='offWhite'
-          />
-          {products.monthly.map((product) => (
-            <>
-            </>
-            // <div key={product.id} className="flex flex-col gap-y-2">
-            //   <h3 className="text-lg font-semibold text-white/80">{product.name}</h3>
-            //   <p className="text-sm text-white/50">{product.description}</p>
-            // </div>
-          ))}
+        <span className="col-span-12 flex flex-col gap-y-4">
+          <Separator color='offWhite' />
+          <div className="">
+            <Select>
+              <SelectTrigger className="bg-black-100 border border-black-300">
+                <SelectValue placeholder="Select a plan" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {products.monthly.map((product) => (
+              <>
+              </>
+              // <div key={product.id} className="flex flex-col gap-y-2">
+              //   <h3 className="text-lg font-semibold text-white/80">{product.name}</h3>
+              //   <p className="text-sm text-white/50">{product.description}</p>
+              // </div>
+            ))}
+          </div>
         </span>
       </form>
 
