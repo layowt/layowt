@@ -1,11 +1,11 @@
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { StripeProductReturnType } from '@layowt/utils/src/get-products';
-import { useRef } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 // components
-import Back  from '@layowt/components/src/back';
+import Back from '@layowt/components/src/back';
 import { Button } from '@layowt/components/src/ui/button';
 import { Separator } from '@layowt/components/src/ui/separator';
 import { 
@@ -26,16 +26,20 @@ export default function WelcomePagePaymentPlans({
   products,
   updateHash,
 }: WelcomePagePaymentPlansProps) {
-  if (typeof window === 'undefined') console.log('server')
+  const [selectedPlanId, setSelectedPlanId] = useState(products.monthly[0].id);
+  const [selectedBillingPeriod, setSelectedBillingPeriod] = useState<'monthly' | 'year'>('monthly');
 
-  const router = useRouter();
-  // if there are no products, send the user to the dashboard page with the new-user param
-  if(!products){
-    router.push('/dashboard?q=new-user');
-  }
-  const selectedPlanId = useRef(products.monthly[0].id);
-  const selectedBillingPeriod = useRef<'month' | 'year'>('month');
-  
+  const selectedPlan = useMemo(
+    () => products[selectedBillingPeriod].find(plan => plan.id === selectedPlanId),
+    [selectedPlanId, selectedBillingPeriod, products]
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      console.log('server');
+    }
+  }, []);
+
   return (
     <div className="px-10 flex flex-col gap-y-4">
       <Back 
@@ -60,21 +64,24 @@ export default function WelcomePagePaymentPlans({
           Choose from a wide range of flexible payment plans to suit your needs.
         </motion.p>
       </div>
-      <form 
-        className="grid grid-cols-12 gap-4 w-96"
-      >
+      <form className="grid grid-cols-12 gap-4 w-96">
         <Separator color='offWhite' className="col-span-full" />
         <div className="col-span-full lg:col-span-7">
-          <Select>
+          <Select 
+            value={selectedPlanId} 
+            onValueChange={(value) => setSelectedPlanId(value)}
+          >
             <SelectTrigger className="bg-black-100 border border-black-300 font-satoshi">
-              <SelectValue placeholder={products.monthly[0].name} defaultValue={products.monthly[0].id} />
+              <SelectValue placeholder="Select a plan" />
             </SelectTrigger>
-            <SelectContent 
-              className="bg-black-100 text-white border border-black-300 font-satoshi"
-              >
+            <SelectContent className="bg-black-100 text-white border border-black-300 font-satoshi">
               <SelectGroup>
                 {products.monthly.map((product) => (
-                  <SelectItem value={product.id} className="flex items-center hover:bg-black-50">
+                  <SelectItem 
+                    key={product.id}
+                    value={product.id} 
+                    className="flex items-center hover:bg-black-50"
+                  >
                     {product.name}
                   </SelectItem>  
                 ))}
@@ -83,23 +90,29 @@ export default function WelcomePagePaymentPlans({
           </Select>
         </div>
         <div className="col-span-full lg:col-span-5">
-          <Select>
+          <Select 
+            value={selectedBillingPeriod} 
+            onValueChange={(value) => setSelectedBillingPeriod(value as 'monthly' | 'year')}
+          >
             <SelectTrigger className="bg-black-100 border border-black-300 font-satoshi">
-              <SelectValue placeholder="Monthly" defaultValue="month" />
+              <SelectValue placeholder="Select billing period" />
             </SelectTrigger>
-            <SelectContent 
-              className="bg-black-100 text-white border border-black-300 font-satoshi"
-              >
+            <SelectContent className="bg-black-100 text-white border border-black-300 font-satoshi">
               <SelectGroup>
-                <SelectItem value="month" className="flex items-center hover:bg-black-50">
+                <SelectItem value="monthly" className="flex items-center hover:bg-black-50">
                   Monthly
                 </SelectItem>
-                <SelectItem value="year" className="flex items-center hover:bg-black-50">
+                <SelectItem value="yearly" className="flex items-center hover:bg-black-50">
                   Yearly
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
+        </div>
+        {/** Features */}
+        <div className="col-span-full">
+          {selectedPlan?.id}
+          {selectedBillingPeriod}
         </div>
       </form>
 
@@ -113,7 +126,7 @@ export default function WelcomePagePaymentPlans({
         >
           Continue
         </Button>
-          {/** Send to dashboard with new-user param */}
+        {/** Send to dashboard with new-user param */}
         <Link
           href="/dashboard?q=new-user"
           className="text-xs text-white/50 hover:underline"
@@ -123,5 +136,5 @@ export default function WelcomePagePaymentPlans({
         </Link>
       </div>
     </div>
-  )
+  );
 }
