@@ -4,7 +4,7 @@ import { m as motion, LazyMotion, domAnimation } from 'framer-motion';
 
 // component imports
 import { PricingCard } from '@/components/payment/payment-card';
-import { ButtonGroup } from '@/components/ui/button-group';
+import { ButtonGroup, type Tab } from '@/components/ui/button-group';
 import { HoverBorderGradient } from '@layowt/components/src/ui/hover-border-gradient';
 
 // redux imports
@@ -45,7 +45,7 @@ export default function PricingPageClient() {
   const sanitizedData = removeCircularReferences(data);
   console.log(JSON.stringify(sanitizedData));
 
-  const tabs = [
+  const tabs: Tab[] = [
     {
       title: 'Monthly',
       value: 'month'

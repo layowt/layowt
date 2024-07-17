@@ -5,7 +5,7 @@ import { cn } from '@/utils/index';
 import { useAppDispatch } from '@/utils/index';
 import { setBillingPeriod } from '../../store/slices/user-store';
 
-type Tab = {
+export type Tab = {
   title: string;
   value: 'month' | 'year';
   content?: string | React.ReactNode | any;
