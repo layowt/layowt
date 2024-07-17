@@ -49,7 +49,6 @@ export default function WelcomePageDetails ({
       <form
         className="grid grid-cols-12 gap-4 w-96 mt-8"
         onSubmit={(e) => {
-          console.log('submitting')
           e.preventDefault()
           updateHash('#payment-plans')
         }}
