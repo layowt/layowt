@@ -1,8 +1,9 @@
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { StripeProductReturnType } from '@layowt/utils/src/get-products';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import type { StripeProduct } from '@/types/StripeProduct';
 
 // components
 import Back from '@layowt/components/src/back';
@@ -17,6 +18,7 @@ import {
   SelectGroup,
   SelectValue
 } from '@layowt/components/src/ui/select';
+import { CheckIcon } from '@radix-ui/react-icons';
 
 interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
   updateHash: (newHash: string) => void;
@@ -26,19 +28,19 @@ export default function WelcomePagePaymentPlans({
   products,
   updateHash,
 }: WelcomePagePaymentPlansProps) {
+  const router  = useRouter();
+
+  // if no plans are present at this stage, just redirect the user to the dashboard
+  if (!products) {
+    router.push('/dashboard?q=new-user');
+  }
+
   const [selectedPlanId, setSelectedPlanId] = useState(products.monthly[0].id);
   const [selectedBillingPeriod, setSelectedBillingPeriod] = useState<'monthly' | 'year'>('monthly');
-
-  const selectedPlan = useMemo(
+  const selectedPlan = useMemo<StripeProduct>(
     () => products[selectedBillingPeriod].find(plan => plan.id === selectedPlanId),
     [selectedPlanId, selectedBillingPeriod, products]
   );
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      console.log('server');
-    }
-  }, []);
 
   return (
     <div className="px-10 flex flex-col gap-y-4">
@@ -65,8 +67,8 @@ export default function WelcomePagePaymentPlans({
         </motion.p>
       </div>
       <form className="grid grid-cols-12 gap-4 w-96">
-        <Separator color='offWhite' className="col-span-full" />
-        <div className="col-span-full lg:col-span-7">
+        <Separator color="offWhite" className="col-span-full" />
+        <div className="col-span-full lg:col-span-8">
           <Select 
             value={selectedPlanId} 
             onValueChange={(value) => setSelectedPlanId(value)}
@@ -89,7 +91,7 @@ export default function WelcomePagePaymentPlans({
             </SelectContent>
           </Select>
         </div>
-        <div className="col-span-full lg:col-span-5">
+        <div className="col-span-full lg:col-span-4">
           <Select 
             value={selectedBillingPeriod} 
             onValueChange={(value) => setSelectedBillingPeriod(value as 'monthly' | 'year')}
@@ -110,9 +112,30 @@ export default function WelcomePagePaymentPlans({
           </Select>
         </div>
         {/** Features */}
-        <div className="col-span-full">
-          {selectedPlan?.id}
-          {selectedBillingPeriod}
+        <div className="col-span-full flex flex-col justify-between">
+          <div>
+            {selectedPlan.features.map((feature, index) => (
+              <div
+                key={index + feature.name}
+                className="flex gap-x-2 items-center font-satoshi"
+              >
+                <div className="flex items-center justify-center bg-electric-violet-500 rounded-full size-3">
+                  <CheckIcon className="size-3 text-white" />
+                </div>
+                <span>{feature.name}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 font-satoshi">
+            £
+            <span className="text-3xl">
+              {selectedPlan.default_price.unit_amount / 100}
+            </span>
+            /
+            <span className="text-sm">
+              {selectedBillingPeriod === 'monthly' ? 'month' : 'year'}
+            </span>
+          </div>
         </div>
       </form>
 
