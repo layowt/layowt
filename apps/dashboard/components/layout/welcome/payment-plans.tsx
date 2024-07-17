@@ -37,6 +37,7 @@ export default function WelcomePagePaymentPlans({
 
   const [selectedPlanId, setSelectedPlanId] = useState(products.monthly[0].id);
   const [selectedBillingPeriod, setSelectedBillingPeriod] = useState<'monthly' | 'year'>('monthly');
+  
   const selectedPlan = useMemo<StripeProduct>(
     () => products[selectedBillingPeriod].find(plan => plan.id === selectedPlanId),
     [selectedPlanId, selectedBillingPeriod, products]
@@ -144,7 +145,7 @@ export default function WelcomePagePaymentPlans({
           variant="default"
           onClick={(e) => {
             e.preventDefault();
-            updateHash('#payment-plans');
+            updateHash('#payment');
           }}
         >
           Continue
