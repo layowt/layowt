@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 interface BackProps extends React.HTMLAttributes<HTMLButtonElement> {
-  content?: React.ReactNode;
+  contentElement?: React.ReactNode;
   href?: string;
   prefetch?: boolean;
   replace?: boolean;
@@ -24,7 +24,7 @@ function DefaultBackContent() {
  * @returns JSX.Element
  */
 export default function Back({
-  content = <DefaultBackContent />,
+  contentElement = <DefaultBackContent />,
   href,
   prefetch,
   replace,
@@ -39,7 +39,7 @@ export default function Back({
         onClick={() => router.back()}
         {...props}
       >
-        {content}
+        {contentElement}
       </button>
     )
   }
@@ -47,7 +47,7 @@ export default function Back({
   return (
     <Link href={href} prefetch={prefetch} replace={replace}>
       <span {...props}>
-        {content}
+        {contentElement}
       </span>
     </Link>
   )
