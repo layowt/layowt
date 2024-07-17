@@ -4,8 +4,10 @@ import { useHash } from '@/hooks/useHash';
 // components
 import WelcomePageDetails from '@/components/layout/welcome/details';
 import WelcomePageWrapper from '@/components/layout/welcome/welcome-wrapper';
-import WelcomePagePaymentPlans from "@/components/layout/welcome/payment-plans";
-import type { StripeProductReturnType } from '@layowt/utils/src/products';
+import WelcomePagePaymentPlans from '@/components/layout/welcome/payment-plans';
+import WelcomePagePayment from '@/components/layout/welcome/payment';
+
+import type { StripeProductReturnType } from '@layowt/utils/src/get-products';
 
 export default function WelcomePageClient({
   products
@@ -37,6 +39,9 @@ export default function WelcomePageClient({
       )}
       {currentHash === '#payment-plans' && (
         <WelcomePagePaymentPlans products={products} updateHash={updateHash} />
+      )}
+      {currentHash === '#payment' && (
+        <WelcomePagePayment updateHash={updateHash} />
       )}
     </WelcomePageWrapper>
   );
