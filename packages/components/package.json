@@ -1,13 +1,22 @@
 {
-  "name": "layowt-components",
-  "version": "0.0.1",
-  "description": "A collection of Layowt components",
-  "main": "index.js",
+  "name": "@layowt/components",
+  "type": "module",
+  "private": true,
+  "version": "0.1.1",
+  "description": "A collection of components used within Layowt.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-select": "^2.1.1",
     "sonner": "^1.5.0"
-  }
+  },
+  "devDependencies": {
+    "@layowt/tailwind-config": "*",
+    "@layowt/utils": "*",
+    "typescript": "latest"
+  },
+  "packageManager": "npm@10.0.0"
 }

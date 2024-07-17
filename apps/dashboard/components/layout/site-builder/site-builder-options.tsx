@@ -1,6 +1,6 @@
 'use client'
 import { GearIcon, LayoutIcon, FileIcon, PlusIcon } from "@radix-ui/react-icons";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -23,11 +23,13 @@ export default function SiteBuilderOptions() {
   
   const createQueryString = useCreateQueryString();
 
-  const handleButtonClick = useQueryParams({
-    name: 's'
-  }, (section: SectionState) => {
-    dispatch(setCurrentSection(section));
-  });
+  const updateQueryParams = useQueryParams()
+
+  const handleButtonClick = (section: SectionState) => {
+      updateQueryParams('s', section, (value) => {
+      dispatch(setCurrentSection(value as SectionState));
+    })
+  };
 
   // on mount set the current section
   useEffect(() => {

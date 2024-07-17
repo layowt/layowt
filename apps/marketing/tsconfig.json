@@ -30,10 +30,10 @@
     "**/*.ts",
     "**/*.tsx",
     "../../packages/components/logo.tsx",
-    "../../packages/components/ui/background-beams.tsx",
-    "../../packages/components/ui/vortex.tsx",
-    "../../packages/components/ui/input.tsx",
-    "../../packages/components/ui/button.tsx",
+    "../../packages/components/src/ui/background-beams.tsx",
+    "../../packages/components/src/ui/vortex.tsx",
+    "../../packages/components/src/ui/input.tsx",
+    "../../packages/components/src/ui/button.tsx",
     "app/providers.ts"
   ],
   "exclude": ["node_modules"]
