@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Input } from '@/ui/input';
 import { Label } from '@/ui/label';
 import { Checkbox } from '@/ui/checkbox';
-import { Button } from '~/packages/components/ui/button';
+import { Button } from '@layowt/components/src/ui/button';
 import {
   ReloadIcon,
   EnvelopeClosedIcon,
@@ -68,12 +68,12 @@ export default function SignUpForm() {
 
       // delete the existing user in the store
       // so we can create the new one
-      if (user) {
+      if (user) 
         dispatch(deleteUser());
-      }
+      
       // create the user in the redux store
       dispatch(createUser(user));
-      router.push(`/dashboard?uid=${user.id}` ?? '/');
+      router.push('/welcome');
       // reset the loading state
       setIsLoading(false);
     } catch (e) {

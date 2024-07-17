@@ -1,6 +1,7 @@
 {
-  "name": "layowt-hooks",
+  "name": "@layowt/hooks",
   "version": "0.0.1",
+  "private": true,
   "description": "A collection of hooks for building responsive layouts",
   "main": "index.js",
   "scripts": {

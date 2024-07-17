@@ -2,8 +2,8 @@ import './styles/globals.css';
 import { Cairo, Poppins, Kanit, Inter } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
-import SiteLogo from '~/components/logo';
-import { Toaster } from '~/components/ui/sonnner';
+import SiteLogo from '~/components/src/logo';
+import { Toaster } from '~/components/src/ui/sonnner';
 import { CSPostHogProvider } from './providers';
 
 const CairoFont = Cairo({

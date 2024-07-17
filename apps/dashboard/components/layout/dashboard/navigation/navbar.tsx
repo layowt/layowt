@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '~/packages/components/ui/button';
+import { Button } from '@layowt/components/src/ui/button';
 import { CommandDialog, CommandInput } from '@/ui/command';
 import {
   Tooltip,
@@ -40,7 +40,7 @@ export default function DashboardNavBar({
                 "
                 variant="none"
                 onClick={() => setOpen(!open)}
-                rounded="default"
+                rounded="md"
               >
                 <MagnifyingGlassIcon className="absolute left-2 size-3" />
                 <span>Search</span>

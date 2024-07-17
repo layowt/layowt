@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo --port 4344",
-    "build": "turbo build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -49,9 +50,13 @@
     "sonner": "^1.4.0",
     "stripe": "^14.15.0",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
+    "@layowt/components": "*",
+    "@layowt/tailwind-config": "*",
+    "@layowt/utils": "*",
     "@types/micro-cors": "^0.1.5",
     "@types/node": "^20",
     "@types/react": "^18",

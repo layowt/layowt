@@ -8,6 +8,8 @@ import { Toaster } from '@/ui/sonner';
 import StoreProvider from '@/store/store-provider';
 import { Metadata } from 'next';
 import { cn } from '@/utils/index';
+import { ReactQueryClientProvider } from '@/components/react-query-client-provider';
+
 
 const title = 
   'Layowt | Build your next digital product with ease'
@@ -25,6 +27,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ReactQueryClientProvider>
       <StoreProvider>
         <html
           lang="en"
@@ -50,5 +53,6 @@ export default async function RootLayout({
           </body>
         </html>
       </StoreProvider>
+    </ReactQueryClientProvider>
   );
 }
