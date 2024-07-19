@@ -1,10 +1,9 @@
 import Back from "@layowt/components/src/back"
+import { useHash } from "./welcome-wrapper"
 
-export default function WelcomePagePayment({
-  updateHash
-}: {
-  updateHash: (newHash: string) => void
-}){
+export default function WelcomePagePayment(){
+  const { updateHash } = useHash();
+
   return (
     <div className="px-10 flex flex-col gap-y-4">
       <Back 
