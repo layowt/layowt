@@ -21,15 +21,12 @@ import {
 import { CheckIcon } from '@radix-ui/react-icons';
 import Countup from 'react-countup';
 
-interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
-  updateHash: (newHash: string) => void;
-}
 
 export default function WelcomePagePaymentPlans({ 
   products,
-  updateHash,
-}: WelcomePagePaymentPlansProps) {
+}: StripeProductReturnType) {
   const router  = useRouter();
+  const { updateHash } = useHash();
 
   // if no plans are present at this stage, just redirect the user to the dashboard
   if (!products) {

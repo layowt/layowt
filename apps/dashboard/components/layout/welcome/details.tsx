@@ -5,21 +5,15 @@ import { InputWithLabel } from '@layowt/components/src/ui/input-label';
 import { m as motion } from 'framer-motion';
 import { useState } from 'react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+import { useHash } from './welcome-wrapper';
 
-export default function WelcomePageDetails ({ 
-  updateHash 
-}: { 
-  updateHash: (newHash: string) => void 
-}) {
-  const [details, setDetails] = useState<{
-    firstName: string;
-    lastName: string;
-    displayName: string;
-  }>({
+export default function WelcomePageDetails() {
+  const [details, setDetails] = useState({
     firstName: '',
     lastName: '',
-    displayName: ''
+    displayName: '',
   });
+  const { updateHash, hash } = useHash();
 
   return (
     <>
@@ -41,7 +35,7 @@ export default function WelcomePageDetails ({
             href="/"
             prefetch
             className="text-xs underline underline-offset-2 hover:text-white/60 font-satoshi"
-            >
+          >
             What do you do with my data?
           </Link>
         </motion.div>
@@ -49,8 +43,8 @@ export default function WelcomePageDetails ({
       <form
         className="grid grid-cols-12 gap-4 w-96 mt-8"
         onSubmit={(e) => {
-          e.preventDefault()
-          updateHash('#payment-plans')
+          e.preventDefault();
+          updateHash('#payment-plans');
         }}
       >
         <InputWithLabel 
