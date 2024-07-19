@@ -3,15 +3,30 @@ import { domAnimation, LazyMotion } from 'framer-motion';
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useHash as HashHook } from '@/hooks/useHash';
 
+interface HashContextType {
+  hash: string;
+  updateHash: (newHash: string) => void;
+  userOnboardingDetails: {
+    firstName: string;
+    lastName: string;
+    displayName: string;
+  }
+}
+
 /**
  * Create the context for the component
  * 
  * @default { hash: '', updateHash: (newHash: string) => {} }
  * @returns {React.Context}
  */
-export const HashContext = createContext({
+export const HashContext = createContext<HashContextType>({
   hash: '',
-  updateHash: (newHash: string) => {}
+  updateHash: (newHash: string) => {},
+  userOnboardingDetails: {
+    firstName: '',
+    lastName: '',
+    displayName: '',
+  }
 });
 
 export const HashProvider = ({ children }) => {
@@ -33,7 +48,7 @@ export const HashProvider = ({ children }) => {
 
   return (
     <LazyMotion features={domAnimation}>
-      <HashContext.Provider value={{ hash, updateHash }}>
+      <HashContext.Provider value={{ hash, updateHash, userOnboardingDetails: { displayName: '', lastName: '', firstName: ''} }}>
         <div
           className="
             bg-black-300 border border-black-100 text-white font-inter

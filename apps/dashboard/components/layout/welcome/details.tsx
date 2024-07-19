@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { Button } from '@layowt/components/src/ui/button';
 import { InputWithLabel } from '@layowt/components/src/ui/input-label';
@@ -6,14 +7,32 @@ import { m as motion } from 'framer-motion';
 import { useState } from 'react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import { useHash } from './welcome-wrapper';
+import { onboardingSchema } from '@/lib/zod/schemas/onboarding';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+type SchemaProps = z.infer<typeof onboardingSchema>;
 
 export default function WelcomePageDetails() {
-  const [details, setDetails] = useState({
-    firstName: '',
-    lastName: '',
-    displayName: '',
+  const { 
+    handleSubmit, 
+    register, 
+    formState: { 
+      errors 
+    },
+    getValues,
+    control
+  } = useForm<SchemaProps>({
+    resolver: zodResolver(onboardingSchema),
   });
-  const { updateHash, hash } = useHash();
+
+  const { updateHash } = useHash();
+
+  const onSubmit = (data: SchemaProps) => {
+    console.log('Form submitted:', data);
+    updateHash('#payment-plans');
+  };
 
   return (
     <>
@@ -42,42 +61,39 @@ export default function WelcomePageDetails() {
       </div>
       <form
         className="grid grid-cols-12 gap-4 w-96 mt-8"
-        onSubmit={(e) => {
-          e.preventDefault();
-          updateHash('#payment-plans');
-        }}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <InputWithLabel 
           label="First name"
           name="firstName"
-          value={details.firstName}
           type="text"
-          onChange={(e) => setDetails({...details, firstName: e.target.value })}
           className="bg-black-300 w-full"
           wrapperclassname="col-span-6"
           placeholder="John"
+          control={control}
         />
+        {errors.firstName && <p>{errors.firstName.message}</p>}
+        
         <InputWithLabel 
           label="Last name"
           name="lastName"
-          value={details.lastName}
           type="text"
-          onChange={(e) => setDetails({...details, lastName: e.target.value })}
           className="bg-black-300 w-full"
           wrapperclassname="col-span-6"
           placeholder="Doe"
+          control={control}
         />
+        {errors.lastName && <p>{errors.lastName.message}</p>}
+        
         <InputWithLabel
           label="Display name"
           name="displayName"
-          value={details.displayName}
           type="text"
-          onChange={(e) => setDetails({...details, displayName: e.target.value })}
           className="bg-black-300 w-full"
           wrapperclassname="col-span-12"
           placeholder={
-            details.firstName && details.lastName ?  
-            `${details.firstName} ${details.lastName}`.toLowerCase() :
+            getValues('firstName') && getValues('lastName') ?  
+            `${getValues('firstName')} ${getValues('lastName')}`.toLowerCase() :
             'John_Doe'.toLowerCase()
           }
           question={{
@@ -86,13 +102,17 @@ export default function WelcomePageDetails() {
             ),
             text: 'Your display name is how you will appear when publishing blogs posts.'
           }}
+          control={control}
         />
-          
+        {errors.displayName && <p>{errors.displayName.message}</p>}
+
+        {getValues('firstName') && getValues('lastName') }
+        
         <div className="col-span-12">
           <Button
             variant="default"
             type="submit"
-            disabled={!details.firstName || !details.lastName || !details.displayName}
+            disabled={!getValues('firstName') || !getValues('lastName') || !getValues('displayName')}
           >
             Continue
           </Button>
@@ -100,4 +120,4 @@ export default function WelcomePageDetails() {
       </form>
     </>
   );
-};
+}
