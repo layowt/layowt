@@ -1,13 +1,13 @@
 'use client';
-
 import Link from 'next/link';
+import { m as motion } from 'framer-motion';
+// components
 import { Button } from '@layowt/components/src/ui/button';
 import { InputWithLabel } from '@layowt/components/src/ui/input-label';
-import { m as motion } from 'framer-motion';
-import { useState } from 'react';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import { useHash } from './welcome-wrapper';
 import { onboardingSchema } from '@/lib/zod/schemas/onboarding';
+import { useHash } from './welcome-wrapper';
+// zod
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -25,30 +25,25 @@ import {
 type SchemaProps = z.infer<typeof onboardingSchema>;
 
 export default function WelcomePageDetails() {
-  const { 
-    handleSubmit, 
-    register, 
-    formState: { 
-      errors 
-    },
-    getValues,
-    control
-  } = useForm<SchemaProps>({
-    resolver: zodResolver(onboardingSchema),
-  });
-
   const { updateHash } = useHash();
 
+  // define the form
+  const form = useForm<z.infer<typeof onboardingSchema>>({
+    resolver: zodResolver(onboardingSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      displayName: '',
+    }
+  });
+
+  // Handle form submission
   function onSubmit(values: z.infer<typeof onboardingSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
     updateHash('#payment-plans');
   }
-
-  const form = useForm<SchemaProps>({
-    resolver: zodResolver(onboardingSchema),
-  });
 
   return (
     <>
@@ -80,126 +75,79 @@ export default function WelcomePageDetails() {
           onSubmit={form.handleSubmit(onSubmit)} 
           className="grid grid-cols-12 gap-4 w-96 mt-8"
         >
+          {/** First name field */}
           <FormField
             control={form.control}
             name="firstName"
             render={({ field }) => (
               <FormControl>
-                <>
+                <div className="col-span-6">
                   <InputWithLabel
                     wrapperclassname="col-span-6"
                     label="First name"
                     type="text"
                     placeholder="John"
                     {...field}
-                  />
+                    />
                   <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
-
-                  <InputWithLabel 
-                    label="Last name"
-                    name="lastName"
-                    type="text"
-                    className="bg-black-300 w-full"
-                    wrapperclassname="col-span-6"
-                    placeholder="Doe"
-                  />
-                  <FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
-
-                  <InputWithLabel
-                    label="Display name"
-                    name="displayName"
-                    type="text"
-                    className="bg-black-300 w-full"
-                    wrapperclassname="col-span-12"
-                    placeholder={
-                      getValues('firstName') && getValues('lastName') ?  
-                      `${getValues('firstName')} ${getValues('lastName')}`.toLowerCase() :
-                      'John_Doe'.toLowerCase()
-                    }
-                    question={{
-                      icon: (
-                        <QuestionMarkCircledIcon />
-                      ),
-                      text: 'Your display name is how you will appear when publishing blogs posts.'
-                    }}
-                  />
-                  <FormMessage>{form.formState.errors.displayName?.message}</FormMessage>
-                  
-                  <div className="col-span-12">
-                    <Button
-                      variant="default"
-                      type="submit"
-                      disabled={!getValues('firstName') || !getValues('lastName') || !getValues('displayName')}
-                    >
-                      Continue
-                    </Button>
-                  </div>
-                </>
+                </div>
               </FormControl>
             )}
-          >
-          </FormField>
+          />
+          {/** Last name field */}
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormControl>
+                <div className="col-span-6">
+                  <InputWithLabel
+                    wrapperclassname="col-span-6"
+                    label="Last name"
+                    type="text"
+                    placeholder="Doe"
+                    {...field}
+                  />
+                  <FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
+                </div>
+              </FormControl>
+            )}
+          />
+          {/** Display name field */}
+          <FormField
+            control={form.control}
+            name="displayName"
+            render={({ field }) => (
+              <FormControl>
+                <div className="col-span-6">
+                  <InputWithLabel
+                    wrapperclassname="col-span-12"
+                    label="Display name"
+                    type="text"
+                    placeholder="John Doe"
+                    question={{
+                      text: 'This is the name that will be displayed to other users.',
+                      icon: <QuestionMarkCircledIcon />
+                    }}
+                    {...field}
+                  />
+                  <FormMessage>{form.formState.errors.displayName?.message}</FormMessage>
+                </div>
+              </FormControl>
+            )}
+          />
+          {/** Submit button */}
+          <div className="col-span-12">
+            <Button
+              variant="default"
+              type="submit"
+              disabled={!form.formState.isValid}
+            >
+              Continue
+            </Button>
+          </div>
         </form>
       </Form>
-      {/* <form
-        className="grid grid-cols-12 gap-4 w-96 mt-8"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <InputWithLabel 
-          label="First name"
-          name="firstName"
-          type="text"
-          className="bg-black-300 w-full"
-          wrapperclassname="col-span-6"
-          placeholder="John"
-          control={control}
-        />
-        {errors.firstName && <p>{errors.firstName.message}</p>}
-        
-        <InputWithLabel 
-          label="Last name"
-          name="lastName"
-          type="text"
-          className="bg-black-300 w-full"
-          wrapperclassname="col-span-6"
-          placeholder="Doe"
-          control={control}
-        />
-        {errors.lastName && <p>{errors.lastName.message}</p>}
-        
-        <InputWithLabel
-          label="Display name"
-          name="displayName"
-          type="text"
-          className="bg-black-300 w-full"
-          wrapperclassname="col-span-12"
-          placeholder={
-            getValues('firstName') && getValues('lastName') ?  
-            `${getValues('firstName')} ${getValues('lastName')}`.toLowerCase() :
-            'John_Doe'.toLowerCase()
-          }
-          question={{
-            icon: (
-              <QuestionMarkCircledIcon />
-            ),
-            text: 'Your display name is how you will appear when publishing blogs posts.'
-          }}
-          control={control}
-        />
-        {errors.displayName && <p>{errors.displayName.message}</p>}
-
-        {getValues('firstName') && getValues('lastName') }
-        
-        <div className="col-span-12">
-          <Button
-            variant="default"
-            type="submit"
-            disabled={!getValues('firstName') || !getValues('lastName') || !getValues('displayName')}
-          >
-            Continue
-          </Button>
-        </div>
-      </form> */}
     </>
   );
 }
