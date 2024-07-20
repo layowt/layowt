@@ -87,13 +87,53 @@ export default function WelcomePageDetails() {
               <FormControl>
                 <>
                   <InputWithLabel
-                    className="col-span-6"
+                    wrapperclassname="col-span-6"
                     label="First name"
                     type="text"
                     placeholder="John"
                     {...field}
                   />
                   <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
+
+                  <InputWithLabel 
+                    label="Last name"
+                    name="lastName"
+                    type="text"
+                    className="bg-black-300 w-full"
+                    wrapperclassname="col-span-6"
+                    placeholder="Doe"
+                  />
+                  <FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
+
+                  <InputWithLabel
+                    label="Display name"
+                    name="displayName"
+                    type="text"
+                    className="bg-black-300 w-full"
+                    wrapperclassname="col-span-12"
+                    placeholder={
+                      getValues('firstName') && getValues('lastName') ?  
+                      `${getValues('firstName')} ${getValues('lastName')}`.toLowerCase() :
+                      'John_Doe'.toLowerCase()
+                    }
+                    question={{
+                      icon: (
+                        <QuestionMarkCircledIcon />
+                      ),
+                      text: 'Your display name is how you will appear when publishing blogs posts.'
+                    }}
+                  />
+                  <FormMessage>{form.formState.errors.displayName?.message}</FormMessage>
+                  
+                  <div className="col-span-12">
+                    <Button
+                      variant="default"
+                      type="submit"
+                      disabled={!getValues('firstName') || !getValues('lastName') || !getValues('displayName')}
+                    >
+                      Continue
+                    </Button>
+                  </div>
                 </>
               </FormControl>
             )}
