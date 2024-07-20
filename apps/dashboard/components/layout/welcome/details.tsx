@@ -12,6 +12,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@layowt/components/src/ui/form';
+
 type SchemaProps = z.infer<typeof onboardingSchema>;
 
 export default function WelcomePageDetails() {
@@ -29,10 +39,16 @@ export default function WelcomePageDetails() {
 
   const { updateHash } = useHash();
 
-  const onSubmit = (data: SchemaProps) => {
-    console.log('Form submitted:', data);
+  function onSubmit(values: z.infer<typeof onboardingSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
     updateHash('#payment-plans');
-  };
+  }
+
+  const form = useForm<SchemaProps>({
+    resolver: zodResolver(onboardingSchema),
+  });
 
   return (
     <>
@@ -59,7 +75,33 @@ export default function WelcomePageDetails() {
           </Link>
         </motion.div>
       </div>
-      <form
+      <Form {...form}>
+        <form 
+          onSubmit={form.handleSubmit(onSubmit)} 
+          className="grid grid-cols-12 gap-4 w-96 mt-8"
+        >
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormControl>
+                <>
+                  <InputWithLabel
+                    className="col-span-6"
+                    label="First name"
+                    type="text"
+                    placeholder="John"
+                    {...field}
+                  />
+                  <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
+                </>
+              </FormControl>
+            )}
+          >
+          </FormField>
+        </form>
+      </Form>
+      {/* <form
         className="grid grid-cols-12 gap-4 w-96 mt-8"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -117,7 +159,7 @@ export default function WelcomePageDetails() {
             Continue
           </Button>
         </div>
-      </form>
+      </form> */}
     </>
   );
 }
