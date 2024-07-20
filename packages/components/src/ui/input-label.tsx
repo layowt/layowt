@@ -33,8 +33,6 @@ interface InputWithLabelProps {
 
   // react hook form props
   label: Path<IFormProps>;
-  required?: boolean;
-  control: any;
 }
 
 const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
@@ -68,19 +66,14 @@ const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
             </TooltipProvider>
           )}
         </div>
-        <Controller
-          name={props.name}
-          control={props.control}
-          render={({ field }) => (
-            <Input 
-              className="
-                bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
-                focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
-                hover:border-white/50
-              "
-              {...field} 
-            />
-          )}
+        <Input 
+          ref={ref}
+          {...props}
+          className="
+            bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
+            focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-4
+            hover:border-white/50
+          "
         />
       </div>
       
