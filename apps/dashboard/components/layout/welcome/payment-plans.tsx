@@ -2,7 +2,6 @@ import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { StripeProductReturnType } from '@layowt/utils/src/get-products';
 import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import type { StripeProduct } from '@/types/StripeProduct';
 
 // components
@@ -18,19 +17,18 @@ import {
   SelectValue
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
-import { useHashContext } from './welcome-wrapper';
+import { useHashContext } from './welcome-wrapper-context';
 
 
 export default function WelcomePagePaymentPlans({ 
   products,
 }: StripeProductReturnType) {
-  const router  = useRouter();
-  const { setHash } = useHashContext();
-
-  // if no plans are present at this stage, just redirect the user to the dashboard
-  if (!products) {
-    router.push('/dashboard?q=new-user');
-  }
+  const { 
+    setHash, 
+    userOnboardingDetails, 
+    planContext, 
+    setPlanContext
+  } = useHashContext();
 
   const [selectedPlanId, setSelectedPlanId] = useState(products.monthly[0].id);
   const [selectedBillingPeriod, setSelectedBillingPeriod] = useState<'monthly' | 'year'>('monthly');
@@ -39,6 +37,24 @@ export default function WelcomePagePaymentPlans({
     () => products[selectedBillingPeriod].find(plan => plan.id === selectedPlanId),
     [selectedPlanId, selectedBillingPeriod, products]
   );
+
+  // handle the form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // guard clause
+    if( 
+      !selectedPlanId || 
+      !selectedBillingPeriod ||
+      !selectedPlan
+    ) {
+     setHash('#details?error=missing-plan'); 
+    }
+    // save the payment plan to the context
+    setPlanContext(selectedPlan);
+
+    // send the user to the payment page
+    setHash('#payment');
+  }
 
   return (
     <div className="px-10 flex flex-col gap-y-4 relative">
@@ -140,10 +156,7 @@ export default function WelcomePagePaymentPlans({
       <div className="col-span-12 flex flex-col gap-y-2 text-center">
         <Button
           variant="default"
-          onClick={(e) => {
-            e.preventDefault();
-            setHash('#payment');
-          }}
+          onClick={(e) => handleSubmit(e)}
         >
           Continue
         </Button>

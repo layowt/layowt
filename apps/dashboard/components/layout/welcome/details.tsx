@@ -12,7 +12,7 @@ import {
 } from '@layowt/components/src/ui/form';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 
-import { useHashContext } from './welcome-wrapper';
+import { useHashContext } from './welcome-wrapper-context';
 // zod
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,7 +22,7 @@ import { z } from 'zod';
 type SchemaProps = z.infer<typeof onboardingSchema>;
 
 export default function WelcomePageDetails() {
-  const { setHash } = useHashContext();
+  const { setHash, userOnboardingDetails } = useHashContext();
 
   // define the form
   const form = useForm<SchemaProps>({
@@ -36,9 +36,12 @@ export default function WelcomePageDetails() {
 
   // Handle form submission
   function onSubmit(values: SchemaProps) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    // update the context with the user's details
+    userOnboardingDetails.firstName = values.firstName;
+    userOnboardingDetails.lastName = values.lastName;
+    userOnboardingDetails.displayName = values.displayName;
+
+    // update the hash to move to the next screen
     setHash('#payment-plans');
   }
 
@@ -80,12 +83,11 @@ export default function WelcomePageDetails() {
               <FormControl>
                 <div className="col-span-6">
                   <InputWithLabel
-                    wrapperclassname="col-span-6"
                     label="First name"
                     type="text"
                     placeholder="John"
                     {...field}
-                    />
+                  />
                   <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
                 </div>
               </FormControl>
@@ -99,7 +101,6 @@ export default function WelcomePageDetails() {
               <FormControl>
                 <div className="col-span-6">
                   <InputWithLabel
-                    wrapperclassname="col-span-6"
                     label="Last name"
                     type="text"
                     placeholder="Doe"
@@ -116,9 +117,8 @@ export default function WelcomePageDetails() {
             name="displayName"
             render={({ field }) => (
               <FormControl>
-                <div className="col-span-6">
+                <div className="col-span-12">
                   <InputWithLabel
-                    wrapperclassname="col-span-12"
                     label="Display name"
                     type="text"
                     placeholder="John Doe"

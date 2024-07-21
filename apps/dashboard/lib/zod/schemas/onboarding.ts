@@ -4,6 +4,7 @@ interface OnboardingSchema {
   firstName: string;
   lastName: string;
   displayName: string;
+  paymentPlan: string;
 }
 
 export const onboardingSchema: ZodType<OnboardingSchema> = z.object({
@@ -18,5 +19,8 @@ export const onboardingSchema: ZodType<OnboardingSchema> = z.object({
   displayName: 
     z.string()
     .min(1, 'Display name cannot be empty')
-    .max(50, 'Display name cannot be longer than 50 characters')
+    .max(50, 'Display name cannot be longer than 50 characters'),
+  paymentPlan: 
+    z.string()
+    .optional()
 }) as ZodType<OnboardingSchema>;

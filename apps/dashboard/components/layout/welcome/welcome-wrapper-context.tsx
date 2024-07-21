@@ -1,6 +1,14 @@
 'use client';
+import { StripeProduct } from '@/types/StripeProduct';
 import { domAnimation, LazyMotion } from 'framer-motion';
-import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import { 
+  createContext, 
+  useContext, 
+  useState, 
+  useEffect, 
+  useMemo, 
+  useCallback 
+} from 'react';
 
 interface HashContextType {
   hash: string;
@@ -10,27 +18,24 @@ interface HashContextType {
     lastName: string;
     displayName: string;
   };
+  planContext: StripeProduct;
+  setPlanContext: (newPlanContext: any) => void;
 }
-
-const defaultHashContext: HashContextType = {
-  hash: '',
-  setHash: () => {},
-  userOnboardingDetails: {
-    firstName: '',
-    lastName: '',
-    displayName: '',
-  },
-};
 
 export const HashContext = createContext<HashContextType | null>(null);
 
 export const HashProvider = ({ children }) => {
   const [hash, setHashState] = useState('');
-  const userOnboardingDetails = useMemo(
-    () => ({ firstName: '', lastName: '', displayName: '' }),
-    []
-  );
+  const [planContext, setPlanContext] = useState<StripeProduct>();
 
+  const userOnboardingDetails = useMemo(
+    () => ({ 
+      firstName: '', 
+      lastName: '', 
+      displayName: '' 
+    }),[]);
+
+  // method passed to the context to update the hash
   const setHash = useCallback((newHash: string) => {
     if (typeof window !== 'undefined') {
       window.location.hash = newHash;
@@ -54,6 +59,8 @@ export const HashProvider = ({ children }) => {
       hash,
       setHash,
       userOnboardingDetails,
+      planContext,
+      setPlanContext
     }),
     [hash, setHash]
   );
@@ -67,6 +74,7 @@ export const HashProvider = ({ children }) => {
   );
 };
 
+// custom hook to use the context
 export const useHashContext = () => {
   const context = useContext(HashContext);
   if (!context) {
