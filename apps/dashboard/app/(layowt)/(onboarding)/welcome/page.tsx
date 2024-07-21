@@ -1,6 +1,6 @@
 import WelcomePageClient from './page.client';
 import { getStripeProducts } from '@layowt/utils/src/get-products';
-import { HashProvider } from '@/components/layout/welcome/welcome-wrapper';
+import { HashProvider } from '@/components/layout/welcome/welcome-wrapper-context';
 
 export default async function WelcomePage(){
   const { products } = await getStripeProductsBillingperiod();
