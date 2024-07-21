@@ -4,31 +4,28 @@ import { m as motion } from 'framer-motion';
 // components
 import { Button } from '@layowt/components/src/ui/button';
 import { InputWithLabel } from '@layowt/components/src/ui/input-label';
-import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
-import { onboardingSchema } from '@/lib/zod/schemas/onboarding';
-import { useHash } from './welcome-wrapper';
-// zod
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
-  FormItem,
-  FormLabel,
   FormMessage,
 } from '@layowt/components/src/ui/form';
+import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+
+import { useHashContext } from './welcome-wrapper';
+// zod
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { onboardingSchema } from '@/lib/zod/schemas/onboarding';
+import { z } from 'zod';
 
 type SchemaProps = z.infer<typeof onboardingSchema>;
 
 export default function WelcomePageDetails() {
-  const { updateHash } = useHash();
+  const { setHash } = useHashContext();
 
   // define the form
-  const form = useForm<z.infer<typeof onboardingSchema>>({
+  const form = useForm<SchemaProps>({
     resolver: zodResolver(onboardingSchema),
     defaultValues: {
       firstName: '',
@@ -38,11 +35,11 @@ export default function WelcomePageDetails() {
   });
 
   // Handle form submission
-  function onSubmit(values: z.infer<typeof onboardingSchema>) {
+  function onSubmit(values: SchemaProps) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
-    updateHash('#payment-plans');
+    setHash('#payment-plans');
   }
 
   return (

@@ -14,19 +14,18 @@ import {
   SelectContent, 
   SelectTrigger, 
   SelectItem, 
-  SelectLabel,
   SelectGroup,
   SelectValue
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
-import { useHash } from './welcome-wrapper';
+import { useHashContext } from './welcome-wrapper';
 
 
 export default function WelcomePagePaymentPlans({ 
   products,
 }: StripeProductReturnType) {
   const router  = useRouter();
-  const { updateHash } = useHash();
+  const { setHash } = useHashContext();
 
   // if no plans are present at this stage, just redirect the user to the dashboard
   if (!products) {
@@ -42,9 +41,9 @@ export default function WelcomePagePaymentPlans({
   );
 
   return (
-    <div className="px-10 flex flex-col gap-y-4">
+    <div className="px-10 flex flex-col gap-y-4 relative">
       <Back 
-        onClick={() => updateHash('#details')}
+        onClick={() => setHash('#details')}
         className="absolute top-4 left-4" 
       />
       <div className="flex flex-col gap-y-2">
@@ -143,7 +142,7 @@ export default function WelcomePagePaymentPlans({
           variant="default"
           onClick={(e) => {
             e.preventDefault();
-            updateHash('#payment');
+            setHash('#payment');
           }}
         >
           Continue
