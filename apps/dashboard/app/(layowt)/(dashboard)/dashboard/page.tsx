@@ -3,7 +3,7 @@ import WebsiteCard from '@/components/layout/dashboard/website-card';
 import { getUserFromSession, getUserFromDb } from '@/actions/user/get-user';
 import { getWebsite } from '@/actions/websites/get-website';
 import { Website } from '@prisma/client';
-import PageClient from './page-client';
+import PageClient from './page.client';
 
 export default async function Dashboard() {
   const userId = await (await getUserFromSession())?.data?.user?.id;

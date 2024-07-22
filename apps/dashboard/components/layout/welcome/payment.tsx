@@ -1,3 +1,4 @@
+'use client';
 import Back from '@layowt/components/src/back';
 import { useHashContext } from './welcome-wrapper-context';
 import { m as motion } from "framer-motion";
@@ -17,8 +18,6 @@ const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string);
 
 export default function WelcomePagePaymentClient(){
   const { planContext, setHash } = useHashContext();
-
-  const { data: clientSecret } = useSubscriptions(planContext);
 
   return (
     <div className="px-10 flex flex-col gap-y-4">
