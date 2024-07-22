@@ -2,7 +2,7 @@
 import { SunIcon, MoonIcon } from '@radix-ui/react-icons';
 import { Switch } from '@/components/ui/switch';
 
-import useCurrentTheme from '@/hooks/useCurrentTheme';
+import useCurrentTheme from '@/hooks/use-current-theme';
 
 export default function ThemeSwitcherModal() {
   const { theme, toggleTheme } = useCurrentTheme();

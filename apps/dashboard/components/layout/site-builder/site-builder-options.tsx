@@ -11,7 +11,7 @@ import {
 import { cn, useAppDispatch, useAppSelector } from "@/utils/index";
 import { currentSection, setCurrentSection, type SectionState } from '@/store/slices/website-store';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useQueryParams, useCreateQueryString } from '@/hooks/useQueryParams';
+import { useQueryParams, useCreateQueryString } from '@/hooks/use-query-params';
 
 export default function SiteBuilderOptions() {
   const dispatch = useAppDispatch();

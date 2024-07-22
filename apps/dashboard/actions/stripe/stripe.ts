@@ -15,10 +15,10 @@ export const createSubscription = async (
   invoice: string;
   paymentPrice: number;
 } | null> => {
+  console.log("hello world");
   if(!currentPlan) throw new Error('No plan provided.')
 
   let currentUser: Stripe.Customer | null = null;
-
   // try to find the customer via the email
   const isExistingCustomer = await lookupCustomer(userEmail, stripe);
 
@@ -36,10 +36,9 @@ export const createSubscription = async (
 
       if (!currentUser) return null;
     } catch (error) {
-      console.error(error);
+      console.error('Error creating customer', error);
     }
   }
-
   if (!currentPlan || !currentUser) return null;
 
   const invoice = await createInvoice(
@@ -47,7 +46,6 @@ export const createSubscription = async (
     currentPlan.default_price?.unit_amount,
     stripe
   );
-
   if (!invoice) return null;
 
   return {

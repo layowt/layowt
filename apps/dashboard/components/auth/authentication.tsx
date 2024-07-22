@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation'
 
 // hooks
-import useInterval from '@/hooks/useInterval';
+import useInterval from '@/hooks/use-interval';
 
 // components
 import AuthenticationCardWrapper from './form-wrapper';
