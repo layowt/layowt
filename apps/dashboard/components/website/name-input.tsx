@@ -4,8 +4,8 @@ import { Input } from '@/ui/input';
 import { updateWebsite } from '@/actions/websites/update';
 
 // hooks
-import useDebounce from '@/hooks/useDebounce';
-import usePageRefresh from '@/hooks/usePageRefresh';
+import useDebounce from '@/hooks/use-debounce';
+import usePageRefresh from '@/hooks/use-page-refresh';
 
 // redux
 import { website, saving, setSavingState } from '@/store/slices/website-store';

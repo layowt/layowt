@@ -11,7 +11,7 @@ import { updateWebsite } from '@/actions/websites/update';
 import { publishSite } from '@/actions/websites/publish-website';
 import { getTimeStamp } from '@/utils/index';
 import { User } from '@supabase/supabase-js';
-import { useUser } from '@/hooks/useUser';
+import { useUser } from '@/hooks/use-user';
 
 export default function PublishDropdownItems({
   website,

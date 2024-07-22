@@ -12,7 +12,7 @@ import { Toggle } from '@/ui/toggle';
 import { MagnifyingGlassIcon, BellIcon } from '@radix-ui/react-icons';
 
 import { useState } from 'react';
-import useKeyboard from '@/hooks/useKeyboard';
+import useKeyboard from '@/hooks/use-keyboard';
 import WebsiteSwitcher from '../website-switcher';
 
 export default function DashboardNavBar({

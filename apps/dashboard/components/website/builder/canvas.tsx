@@ -2,8 +2,8 @@ import { useRef, useEffect, useState } from 'react';
 
 // hooks
 import useDragger from '@/hooks/builder/useDragger';
-import useWindowSize from '@/hooks/useWindowSize';
-import useElementSize from '@/hooks/useElementSize';
+import useWindowSize from '@/hooks/use-window-size';
+import useElementSize from '@/hooks/use-element-size';
 
 // utils
 import { setCanvasZoom } from '@/utils/canvas/utils';
