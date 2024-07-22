@@ -19,7 +19,7 @@ interface HashContextType {
     displayName: string;
   };
   planContext: StripeProduct;
-  setPlanContext: (newPlanContext: any) => void;
+  setPlanContext: (newPlanContext: StripeProduct) => void;
 }
 
 export const HashContext = createContext<HashContextType | null>(null);
@@ -75,10 +75,4 @@ export const HashProvider = ({ children }) => {
 };
 
 // custom hook to use the context
-export const useHashContext = () => {
-  const context = useContext(HashContext);
-  if (!context) {
-    throw new Error('useHashContext must be used within a HashProvider');
-  }
-  return context;
-};
+export const useHashContext = () => useContext(HashContext);

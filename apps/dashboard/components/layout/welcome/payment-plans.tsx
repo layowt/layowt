@@ -26,8 +26,6 @@ export default function WelcomePagePaymentPlans({
 }: StripeProductReturnType) {
   const { 
     setHash, 
-    userOnboardingDetails, 
-    planContext, 
     setPlanContext
   } = useHashContext();
 
