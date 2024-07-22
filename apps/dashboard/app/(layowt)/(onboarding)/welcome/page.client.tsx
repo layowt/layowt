@@ -26,7 +26,7 @@ export default function WelcomePageClient({ products }: StripeProductReturnType)
   return (
     <div
       className="
-        w-1/3 p-8 text-white font-satoshi flex flex-col border border-black-50
+        w-min p-8 text-white font-satoshi flex flex-col border border-black-50
         gap-y-7 min-h-full bg-black-300 relative items-center justify-center
         rounded-lg
       "
