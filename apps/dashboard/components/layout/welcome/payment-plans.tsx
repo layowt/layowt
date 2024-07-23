@@ -19,6 +19,7 @@ import {
   SelectValue
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
+import Countup from 'react-countup';
 
 interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
   updateHash: (newHash: string) => void;
@@ -128,9 +129,13 @@ export default function WelcomePagePaymentPlans({
           </div>
           <div className="mt-10 font-satoshi">
             £
-            <span className="text-3xl">
-              {selectedPlan.default_price.unit_amount / 100}
-            </span>
+            <Countup 
+              start={0}
+              end={selectedPlan.default_price.unit_amount / 100}
+              decimalPlaces={2}
+              decimals={selectedPlan.default_price.unit_amount / 100 % 1 != 0 ? 2 : 0}
+              className="text-3xl"
+            />
             /
             <span className="text-sm">
               {selectedBillingPeriod === 'monthly' ? 'month' : 'year'}
