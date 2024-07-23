@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import { unstable_cache } from 'next/cache';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16'
@@ -16,7 +17,8 @@ export interface StripeProductReturnType {
  * 
  * @returns 
  */
-export const getStripeProducts = async (): Promise<StripeProductReturnType> => {
+export const getStripeProducts = unstable_cache(
+  async (): Promise<StripeProductReturnType> => {
   if (!stripe) return Promise.reject('Stripe is not available');
 
   // Fetch the monthly prices
@@ -84,4 +86,4 @@ export const getStripeProducts = async (): Promise<StripeProductReturnType> => {
       yearly: yearlyProducts
     }
   }
-};
+});
