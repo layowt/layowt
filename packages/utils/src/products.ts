@@ -20,8 +20,19 @@ export interface StripeProductReturnType {
  * them by billing period.
  */
 export const getStripeProducts = unstable_cache(
-  async () => {
-    
+  async (): Promise<Stripe.Product[]> => {
+    if (!stripe) {
+      throw new Error('Stripe is not initialized');
+    };
+
+    const products: Stripe.Response<Stripe.ApiList<Stripe.Product>> = await stripe.products.list({
+      active: true,
+      limit: 10
+    });
+
+    if (!products) throw new Error('No products found');
+
+    return products.data;
   }
 )
 
@@ -109,10 +120,32 @@ export const getStripeProductsBillingperiod = unstable_cache(
  * plan.
  * 
  * @param currentPlan 
+ * @param currentBillingCycle - 'monthly' | 'yearly'
+ * 
+ * @returns Stripe.Product
  */
 export const getNextPlan = async(
   currentPlan: Stripe.Product,
-) => { }
+  currentBillingCycle: 'monthly' | 'yearly' 
+) => {
+  // get all of the products
+  const { products } = await getStripeProductsBillingperiod();
+  if(!products) throw new Error('No products found');
+
+  // get the plans with the same billing cycle
+  const billingCyclePlans = currentBillingCycle === 'monthly' ? products.monthly : products.yearly;
+  if(!billingCyclePlans) throw new Error('No plans found');
+
+  // get the current plan index
+  const currentPlanIndex = billingCyclePlans.findIndex(plan => plan.id === currentPlan.id);
+  if(currentPlanIndex === -1) throw new Error('Current plan not found');
+
+  // get the next plan
+  const nextPlan = billingCyclePlans[currentPlanIndex + 1];
+  if(!nextPlan) throw new Error('No next plan found');
+
+  return nextPlan;
+}
 
 /**
  * Method to get a plan via it's id
@@ -120,4 +153,14 @@ export const getNextPlan = async(
  */
 export const getPlanById = async (
   planId: string
-) => { } 
+) => { 
+  // grab all of the products, doesn't matter if it's monthly or yearly
+  const products = await getStripeProducts();
+  if(!products) throw new Error('No products found');
+
+  // find the plan
+  const plan = products.find(product => product.id === planId);
+  if (!plan) throw new Error('Plan not found');
+  
+  return plan;
+} 
