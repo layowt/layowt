@@ -1,8 +1,8 @@
 import WelcomePageClient from './page.client';
-import { getStripeProducts } from '@layowt/utils/src/products';
+import { getStripeProductsBillingperiod } from '@layowt/utils/src/products';
 
 export default async function WelcomePage(){
-  const { products } = await getStripeProducts();
+  const { products } = await getStripeProductsBillingperiod();
 
   return (
     <div className="text-white font-satoshi flex flex-col gap-y-7 min-h-full w-full bg-black-300 bg-dot-white/[0.2] relative items-center justify-center">
