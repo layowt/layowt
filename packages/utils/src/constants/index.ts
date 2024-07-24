@@ -1,7 +1,13 @@
-// the name of the site
+/**
+ * The name of the app
+ * @constant
+ */
 export const APP_NAME = 'Layowt';
 
-// Easy way to get the domain for the app depending on the environment
+/**
+ * The domain of the site (set up this way to allow for local development)
+ * @constant
+ */
 export const APP_DOMAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
     ? "https://app.layowt.com"
@@ -9,8 +15,14 @@ export const APP_DOMAIN =
 
 /** USED FOR METADATA */
 
-// the title of the site
+/**
+ * The title of the site
+ * @constant
+ */
 export const APP_TITLE = 'Layowt | Build your next digital product with ease';
 
-// the description of the site
+/**
+ * The description of the site
+ * @constant
+ */
 export const APP_DESCRIPTION = 'Layowt is the all-in-one platform for creating your next digital product';

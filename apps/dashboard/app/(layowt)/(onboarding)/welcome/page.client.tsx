@@ -17,10 +17,18 @@ export default function WelcomePageClient({
     setCurrentHash(hash);
   }, [hash]);
 
+  useEffect(() => {
+    if (currentHash === '') {
+      updateHash('#details');
+    }
+  }, []);
+
   const updateHash = (newHash: string) => {
     window.location.hash = newHash;
     setCurrentHash(newHash);
   };
+
+  console.log(products);
 
   return (
     <WelcomePageWrapper>
