@@ -15,7 +15,7 @@ export interface StripeProductReturnType {
 /**
  * Method for fetching all of the products from stripe
  * 
- * @returns 
+ * @returns StripeProductReturnType
  */
 export const getStripeProducts = unstable_cache(
   async (): Promise<StripeProductReturnType> => {
@@ -87,3 +87,16 @@ export const getStripeProducts = unstable_cache(
     }
   }
 });
+
+/**
+ * Method for getting the next plan from the users current
+ * plan.
+ * 
+ * @param currentPlan 
+ */
+export const getNextPlan = async(
+  currentPlan: Stripe.Product,
+) => {
+  // get all of the plans
+  const plans = await getStripeProducts();
+}

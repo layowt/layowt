@@ -1,5 +1,5 @@
 import WelcomePageClient from './page.client';
-import { getStripeProducts } from '@layowt/utils/src/get-products';
+import { getStripeProducts } from '@layowt/utils/src/products';
 
 export default async function WelcomePage(){
   const { products } = await getStripeProducts();

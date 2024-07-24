@@ -1,5 +1,3 @@
-//import Stripe from 'stripe';
-
 /** Variables to get the number of sites available per plan  */
 
 /**

@@ -5,7 +5,7 @@ import { useHash } from '@/hooks/useHash';
 import WelcomePageDetails from '@/components/layout/welcome/details';
 import WelcomePageWrapper from '@/components/layout/welcome/welcome-wrapper';
 import WelcomePagePaymentPlans from "@/components/layout/welcome/payment-plans";
-import type { StripeProductReturnType } from '@layowt/utils/src/get-products';
+import type { StripeProductReturnType } from '@layowt/utils/src/products';
 
 export default function WelcomePageClient({
   products

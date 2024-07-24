@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getStripeProducts } from '@layowt/utils/src/get-products';
+import { getStripeProducts } from '@layowt/utils/src/products';
 
 export const useProducts = () => {
   return useQuery({
