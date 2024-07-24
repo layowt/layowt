@@ -18,7 +18,8 @@ import {
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
 import Countup from 'react-countup';
-import { useHashContext } from './welcome-wrapper-context';
+import { useMutation } from '@tanstack/react-query';
+import { updateUser } from '@/actions/user/update-user';
 
 
 export default function WelcomePagePaymentPlans({ 
@@ -37,23 +38,13 @@ export default function WelcomePagePaymentPlans({
     [selectedPlanId, selectedBillingPeriod, products]
   );
 
-  // handle the form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // guard clause
-    if( 
-      !selectedPlanId || 
-      !selectedBillingPeriod ||
-      !selectedPlan
-    ) {
-     setHash('#details?error=missing-plan'); 
-    }
-    // save the payment plan to the context
-    setPlanContext(selectedPlan);
-
-    // send the user to the payment page
-    setHash('#payment');
-  }
+  const {
+    data,
+    mutate: server_updateUser
+  } = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => router.push('/')
+  })
 
   return (
     <div className="px-10 flex flex-col gap-y-4 relative">
@@ -164,13 +155,12 @@ export default function WelcomePagePaymentPlans({
           Continue
         </Button>
         {/** Send to dashboard with new-user param */}
-        <Link
-          href="/dashboard?q=new-user"
+        <Button
+          onClick={() => server_updateUser({ id: '', data: {}})}
           className="text-xs text-white/50 hover:underline"
-          prefetch={true}
         >
           Skip for now
-        </Link>
+        </Button>
       </div>
     </div>
   );
