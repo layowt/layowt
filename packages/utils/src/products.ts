@@ -5,19 +5,12 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16'
 });
 
-export interface StripeProductReturnType {
-  products: {
-    monthly: Stripe.Product[];
-    yearly: Stripe.Product[];
-  }
-}
-
 /**
- * Method to retrieve all of the products from stripe.
+ *  @description Method to retrieve all of the products from stripe.
  * 
- * Not to be confused with getStripeProductsBillingperiod,
- * which retrieves the products and their prices and groups
- * them by billing period.
+ *  Not to be confused with getStripeProductsBillingperiod,
+ *  which retrieves the products and their prices and groups
+ *  them by billing period.
  */
 export const getStripeProducts = unstable_cache(
   async (): Promise<Stripe.Product[]> => {
@@ -36,8 +29,15 @@ export const getStripeProducts = unstable_cache(
   }
 )
 
+export interface StripeProductReturnType {
+  products: {
+    monthly: Stripe.Product[];
+    yearly: Stripe.Product[];
+  }
+}
+
 /**
- * Method for fetching all of the products from stripe
+ * @description Method for fetching all of the products from stripe
  * 
  * @returns StripeProductReturnType
  */
@@ -116,16 +116,17 @@ export const getStripeProductsBillingperiod = unstable_cache(
 );
 
 /**
- * Method for getting the next plan from the users current
- * plan.
+ *  @description Method for getting the next plan from the users current plan.
+ *  No unstable_cache here because we want to get the latest
+ *  data.
  * 
- * @param currentPlan 
+ * @param currentPlanId - the user's current plan id
  * @param currentBillingCycle - 'monthly' | 'yearly'
  * 
  * @returns Stripe.Product
  */
 export const getNextPlan = async(
-  currentPlan: Stripe.Product,
+  currentPlanId: Stripe.Product['id'],
   currentBillingCycle: 'monthly' | 'yearly' 
 ) => {
   // get all of the products
@@ -137,7 +138,7 @@ export const getNextPlan = async(
   if(!billingCyclePlans) throw new Error('No plans found');
 
   // get the current plan index
-  const currentPlanIndex = billingCyclePlans.findIndex(plan => plan.id === currentPlan.id);
+  const currentPlanIndex = billingCyclePlans.findIndex(plan => plan.id === currentPlanId);
   if(currentPlanIndex === -1) throw new Error('Current plan not found');
 
   // get the next plan
@@ -148,19 +149,33 @@ export const getNextPlan = async(
 }
 
 /**
- * Method to get a plan via it's id
- * @param planId 
+ * @description Method to get a plan via it's id
+ * @param planId - The id of the plan you want to get the data for 
  */
-export const getPlanById = async (
-  planId: string
-) => { 
-  // grab all of the products, doesn't matter if it's monthly or yearly
-  const products = await getStripeProducts();
-  if(!products) throw new Error('No products found');
+export const getPlanById = unstable_cache(
+  async (planId: string) => { 
+    // grab all of the products, doesn't matter if it's monthly or yearly
+    const products = await getStripeProducts();
+    if(!products) throw new Error('No products found');
 
-  // find the plan
-  const plan = products.find(product => product.id === planId);
-  if (!plan) throw new Error('Plan not found');
-  
-  return plan;
-} 
+    // find the plan
+    const plan = products.find(product => product.id === planId);
+    if (!plan) throw new Error('Plan not found');
+    
+    return plan;
+  } 
+)
+
+/**
+ * @description Method to get the features of a plan
+ * 
+ * @param planId - The id of the plan you want to get the features for
+ */
+export const getPlanFeatures = unstable_cache(
+  async (planId: string) => {
+    const plan = await getPlanById(planId);
+    if (!plan) throw new Error('No plan found');
+
+    return plan.metadata.features;
+  }
+)
