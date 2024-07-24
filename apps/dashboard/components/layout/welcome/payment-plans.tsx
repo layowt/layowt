@@ -14,12 +14,13 @@ import {
   SelectContent, 
   SelectTrigger, 
   SelectItem, 
-  SelectLabel,
   SelectGroup,
   SelectValue
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
 import Countup from 'react-countup';
+import { useMutation } from '@tanstack/react-query';
+import { updateUser } from '@/actions/user/update-user';
 
 interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
   updateHash: (newHash: string) => void;
@@ -42,6 +43,14 @@ export default function WelcomePagePaymentPlans({
     () => products[selectedBillingPeriod].find(plan => plan.id === selectedPlanId),
     [selectedPlanId, selectedBillingPeriod, products]
   );
+
+  const {
+    data,
+    mutate: server_updateUser
+  } = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => router.push('/')
+  })
 
   return (
     <div className="px-10 flex flex-col gap-y-4">
@@ -155,13 +164,12 @@ export default function WelcomePagePaymentPlans({
           Continue
         </Button>
         {/** Send to dashboard with new-user param */}
-        <Link
-          href="/dashboard?q=new-user"
+        <Button
+          onClick={() => server_updateUser({ id: '', data: {}})}
           className="text-xs text-white/50 hover:underline"
-          prefetch={true}
         >
           Skip for now
-        </Link>
+        </Button>
       </div>
     </div>
   );
