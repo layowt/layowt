@@ -26,7 +26,7 @@ export default function NavigationItem({
           className={`flex items-center justify-between border-2 hover:bg-black-75 border-transparent duration-300 px-2 h-8 rounded hover:cursor-pointer
 				${
           pathname === link
-            ? 'bg-electric-violet-600 transition-colors !duration-3000 border-2 !border-electric-violet-300 animate-shimmer bg-[linear-gradient(110deg,#6725F2,45%,#8A5DDE,55%,#6725F2)] bg-[length:200%_100%]'
+            ? 'bg-black-50'
             : 'text-white/80'
         }`}
           prefetch

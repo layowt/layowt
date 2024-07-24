@@ -1,6 +1,6 @@
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
-import { StripeProductReturnType } from '@layowt/utils/src/get-products';
+import { StripeProductReturnType } from '@layowt/utils/src/products';
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { StripeProduct } from '@/types/StripeProduct';
