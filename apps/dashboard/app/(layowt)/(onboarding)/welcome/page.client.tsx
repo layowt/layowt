@@ -4,7 +4,7 @@ import { useHashContext } from '@/components/layout/welcome/welcome-wrapper-cont
 import WelcomePagePaymentPlans from '@/components/layout/welcome/payment-plans';
 import WelcomePagePayment from '@/components/layout/welcome/payment';
 
-import type { StripeProductReturnType } from '@layowt/utils/src/get-products';
+import type { StripeProductReturnType } from '@layowt/utils/src/products';
 import { useEffect } from 'react';
 
 export default function WelcomePageClient({ products }: StripeProductReturnType) {
