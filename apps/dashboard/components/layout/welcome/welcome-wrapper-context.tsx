@@ -24,7 +24,7 @@ interface HashContextType {
 
 export const HashContext = createContext<HashContextType | null>(null);
 
-export const HashProvider = ({ children }) => {
+export const HashProvider = ({ children, ...props }) => {
   const [hash, setHashState] = useState('');
   const [planContext, setPlanContext] = useState<StripeProduct>();
 

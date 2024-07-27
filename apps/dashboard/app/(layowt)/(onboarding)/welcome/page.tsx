@@ -1,5 +1,5 @@
 import WelcomePageClient from './page.client';
-import { getStripeProducts } from '@layowt/utils/src/get-products';
+import { getStripeProductsBillingperiod } from '@layowt/utils/src/products';
 import { HashProvider } from '@/components/layout/welcome/welcome-wrapper-context';
 import { createSubscription } from '@/actions/stripe/stripe';
 
