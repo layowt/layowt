@@ -14,10 +14,13 @@ import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 
 import { useHashContext } from './welcome-wrapper-context';
 // zod
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { onboardingSchema } from '@/lib/zod/schemas/onboarding';
 import { z } from 'zod';
+import { getUserFromSession } from '@/actions/user/get-user';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 type SchemaProps = z.infer<typeof onboardingSchema>;
 
@@ -34,12 +37,38 @@ export default function WelcomePageDetails() {
     }
   });
 
+
+  const {
+    data: { data: user } = {},
+    mutate: server_getUser,
+    isError,
+    isPending
+  } = useMutation({ 
+    mutationFn: getUserFromSession,
+    onSuccess: (data) => {
+      userOnboardingDetails.id = data.data.user.id;
+      console.log(data)
+    },
+    onError: (error) => {
+      console.error(error);
+      // show an error toast
+      toast.error('There was an error fetching your user details');
+      // send the user back to the first screen
+      setHash('#details');
+    }
+  });
+
   // Handle form submission
   function onSubmit(values: SchemaProps) {
+    // call the method to grab the user from the server
+    server_getUser();
+
     // update the context with the user's details
     userOnboardingDetails.firstName = values.firstName;
     userOnboardingDetails.lastName = values.lastName;
     userOnboardingDetails.displayName = values.displayName;
+
+    // set the id that we get back from the server
 
     // update the hash to move to the next screen
     setHash('#payment-plans');
@@ -129,6 +158,21 @@ export default function WelcomePageDetails() {
                     {...field}
                   />
                   <FormMessage>{form.formState.errors.displayName?.message}</FormMessage>
+                </div>
+              </FormControl>
+            )}
+          />
+          {/** hidden field for id */}
+          <FormField
+            control={form.control}
+            name="id"
+            render={({ field }) => (
+              <FormControl>
+                <div className="col-span-12">
+                  <InputWithLabel
+                    type="hidden"
+                    {...field}
+                  />
                 </div>
               </FormControl>
             )}

@@ -1,6 +1,7 @@
 import { z, ZodType } from "zod";
 
 interface OnboardingSchema {
+  id: string;
   firstName: string;
   lastName: string;
   displayName: string;
@@ -8,6 +9,9 @@ interface OnboardingSchema {
 }
 
 export const onboardingSchema: ZodType<OnboardingSchema> = z.object({
+  id:
+    z.string()
+    .default(''),
   firstName: 
     z.string()
     .min(1, 'First name cannot be empty')

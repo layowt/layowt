@@ -1,6 +1,8 @@
-import { m as motion } from 'framer-motion';
-import { StripeProductReturnType } from '@layowt/utils/src/products';
 import { useMemo, useState } from 'react';
+import { m as motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+// stripe
+import { StripeProductReturnType } from '@layowt/utils/src/products';
 import type { StripeProduct } from '@/types/StripeProduct';
 
 // components
@@ -17,10 +19,11 @@ import {
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
 import Countup from 'react-countup';
-import { useMutation } from '@tanstack/react-query';
-import { updateUser } from '@/actions/user/update-user';
+// tanstack query
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useHashContext } from '@/components/layout/welcome/welcome-wrapper-context';
-import { useRouter } from 'next/router';
+// actions
+import { updateUser } from '@/actions/user/update-user';
 
 export default function WelcomePagePaymentPlans({ 
   products,
@@ -28,7 +31,8 @@ export default function WelcomePagePaymentPlans({
   const router = useRouter();
   const { 
     setHash, 
-    setPlanContext
+    setPlanContext,
+    userOnboardingDetails
   } = useHashContext();
 
   const [selectedPlanId, setSelectedPlanId] = useState(products.monthly[0].id);
@@ -45,7 +49,7 @@ export default function WelcomePagePaymentPlans({
   } = useMutation({
     mutationFn: updateUser,
     onSuccess: () => router.push('/')
-  })
+  });
 
   return (
     <div className="px-10 flex flex-col gap-y-4 relative">
@@ -70,6 +74,9 @@ export default function WelcomePagePaymentPlans({
         >
           Choose from a wide range of flexible payment plans to suit your needs.
         </motion.p>
+        <p>
+          {userOnboardingDetails.id}
+        </p>
       </div>
       <form className="grid grid-cols-12 gap-4 w-96">
         <Separator color="offWhite" className="col-span-full" />
@@ -159,6 +166,7 @@ export default function WelcomePagePaymentPlans({
         <Button
           onClick={() => server_updateUser({ id: '', data: {}})}
           className="text-xs text-white/50 hover:underline"
+          variant='none'
         >
           Skip for now
         </Button>

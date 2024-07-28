@@ -2,6 +2,11 @@
 import { prisma } from '@/utils/prisma';
 import { User } from '@supabase/supabase-js';
 
+type UpdateUser = {
+  id: User['id'],
+  data: Partial<User>
+}
+
 /**
  * Method to update a user's details in the database
  * 
@@ -9,13 +14,7 @@ import { User } from '@supabase/supabase-js';
  * @param data 
  * @returns 
  */
-export const updateUser = async ({
-  id,
-  data
-}: {
-  id: User['id'],
-  data: Partial<User>
-}) => { 
+export const updateUser = async ({ id, data }: UpdateUser) => { 
   if (!id) throw new Error('No id provided');
   
   // update the user details

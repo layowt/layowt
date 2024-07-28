@@ -14,6 +14,7 @@ interface HashContextType {
   hash: string;
   setHash: (newHash: string) => void;
   userOnboardingDetails: {
+    id: string;
     firstName: string;
     lastName: string;
     displayName: string;
@@ -30,6 +31,7 @@ export const HashProvider = ({ children, ...props }) => {
 
   const userOnboardingDetails = useMemo(
     () => ({ 
+      id: '',
       firstName: '', 
       lastName: '', 
       displayName: '' 

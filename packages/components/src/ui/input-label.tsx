@@ -32,7 +32,7 @@ interface InputWithLabelProps {
   };
 
   // react hook form props
-  label: Path<IFormProps>;
+  label?: Path<IFormProps>;
 }
 
 const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(

@@ -18,9 +18,9 @@ export default function WelcomePageClient({ products }: StripeProductReturnType)
 
   // if the user has refreshed the page after entering their details, we need to 
   // send them back to the details page to enter them
-  if (Object.values(userOnboardingDetails).some(value => value === '')) {
-    setHash('#details');
-  }
+  //if (Object.values(userOnboardingDetails).some(value => value === '')) {
+  //  setHash('#details');
+  //}
 
 
   return (
