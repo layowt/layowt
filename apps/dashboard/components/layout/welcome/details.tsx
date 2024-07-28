@@ -14,12 +14,12 @@ import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 
 import { useHashContext } from './welcome-wrapper-context';
 // zod
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { onboardingSchema } from '@/lib/zod/schemas/onboarding';
 import { z } from 'zod';
 import { getUserFromSession } from '@/actions/user/get-user';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 type SchemaProps = z.infer<typeof onboardingSchema>;
@@ -40,14 +40,18 @@ export default function WelcomePageDetails() {
 
   const {
     data: { data: user } = {},
-    mutate: server_getUser,
-    isError,
+    mutateAsync: server_getUser, // mutateAsync as this is an async function! (ref: https://www.youtube.com/watch?v=8K1N3fE-cDs&ab_channel=CosdenSolutions)
     isPending
   } = useMutation({ 
     mutationFn: getUserFromSession,
-    onSuccess: (data) => {
-      userOnboardingDetails.id = data.data.user.id;
+    onSuccess: ({ data: data }) => {
+      // update the context with the user's details
+      userOnboardingDetails.id = data.user.id;
+      // log
       console.log(data)
+
+      // update the hash to move to the next screen
+      setHash('#payment-plans');
     },
     onError: (error) => {
       console.error(error);
@@ -67,11 +71,6 @@ export default function WelcomePageDetails() {
     userOnboardingDetails.firstName = values.firstName;
     userOnboardingDetails.lastName = values.lastName;
     userOnboardingDetails.displayName = values.displayName;
-
-    // set the id that we get back from the server
-
-    // update the hash to move to the next screen
-    setHash('#payment-plans');
   }
 
   return (
