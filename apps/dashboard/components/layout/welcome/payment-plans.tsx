@@ -19,11 +19,13 @@ import { CheckIcon } from '@radix-ui/react-icons';
 import Countup from 'react-countup';
 import { useMutation } from '@tanstack/react-query';
 import { updateUser } from '@/actions/user/update-user';
-
+import { useHashContext } from '@/components/layout/welcome/welcome-wrapper-context';
+import { useRouter } from 'next/router';
 
 export default function WelcomePagePaymentPlans({ 
   products,
 }: StripeProductReturnType) {
+  const router = useRouter();
   const { 
     setHash, 
     setPlanContext
@@ -149,7 +151,7 @@ export default function WelcomePagePaymentPlans({
       <div className="col-span-12 flex flex-col gap-y-2 text-center">
         <Button
           variant="default"
-          onClick={(e) => handleSubmit(e)}
+          onClick={() => console.log('')}
         >
           Continue
         </Button>
