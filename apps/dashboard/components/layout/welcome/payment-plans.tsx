@@ -20,7 +20,7 @@ import {
 import { CheckIcon } from '@radix-ui/react-icons';
 import Countup from 'react-countup';
 // tanstack query
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useHashContext } from '@/components/layout/welcome/welcome-wrapper-context';
 // actions
 import { updateUser } from '@/actions/user/update-user';
@@ -28,7 +28,6 @@ import { updateUser } from '@/actions/user/update-user';
 export default function WelcomePagePaymentPlans({ 
   products,
 }: StripeProductReturnType) {
-  const router = useRouter();
   const { 
     setHash, 
     setPlanContext,
@@ -43,12 +42,18 @@ export default function WelcomePagePaymentPlans({
     [selectedPlanId, selectedBillingPeriod, products]
   );
 
+  // remove the user id from the details we send to server_updateUser
+  const { id, ...userData } = userOnboardingDetails;
+
   const {
     data,
-    mutate: server_updateUser
+    mutateAsync: server_updateUser
   } = useMutation({
     mutationFn: updateUser,
-    onSuccess: () => router.push('/')
+    onSuccess: (data) => {
+      console.log(data.data)
+      setHash('#dashboard?new-user=true');
+    }
   });
 
   return (
@@ -74,9 +79,6 @@ export default function WelcomePagePaymentPlans({
         >
           Choose from a wide range of flexible payment plans to suit your needs.
         </motion.p>
-        <p>
-          {userOnboardingDetails.id}
-        </p>
       </div>
       <form className="grid grid-cols-12 gap-4 w-96">
         <Separator color="offWhite" className="col-span-full" />
@@ -164,7 +166,7 @@ export default function WelcomePagePaymentPlans({
         </Button>
         {/** Send to dashboard with new-user param */}
         <Button
-          onClick={() => server_updateUser({ id: '', data: {}})}
+          onClick={() => server_updateUser({ uid: userOnboardingDetails.id, data: userData })}
           className="text-xs text-white/50 hover:underline"
           variant='none'
         >

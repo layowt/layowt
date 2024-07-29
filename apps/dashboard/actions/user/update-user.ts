@@ -1,9 +1,9 @@
 'use server';
 import { prisma } from '@/utils/prisma';
-import { User } from '@supabase/supabase-js';
+import { User } from '@prisma/client';
 
 type UpdateUser = {
-  id: User['id'],
+  uid: User['uid'],
   data: Partial<User>
 }
 
@@ -14,17 +14,20 @@ type UpdateUser = {
  * @param data 
  * @returns 
  */
-export const updateUser = async ({ id, data }: UpdateUser) => { 
-  if (!id) throw new Error('No id provided');
+export const updateUser = async ({ uid, data }: UpdateUser) => { 
+  if (!uid) throw new Error('No id provided');
   
   // update the user details
   const res = await prisma.user.update({
     where: {
-      uid: id
+      uid
     },
     data
   })
   if (!res) throw new Error('No user found');
 
-  return true;
+  return {
+    success: true,
+    data: res
+  };
 }
