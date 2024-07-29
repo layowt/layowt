@@ -1,4 +1,6 @@
+
 {
+  "extends": "@layowt/typescript-config/react-library.json",
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
@@ -13,8 +15,8 @@
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -38,3 +40,4 @@
   ],
   "exclude": ["node_modules"]
 }
+

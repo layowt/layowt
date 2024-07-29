@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { signUp } from '@/utils/sign-up';
 import posthog from 'posthog-js';
 
-import { Input } from '~/components/src/ui/input';
-import { Button } from '~/components/src/ui/button';
+import { Input } from '@layowt/components/src/ui/input';
+import { Button } from '@layowt/components/src/ui/button';
 import { toast } from 'sonner';
 import { ReloadIcon } from '@radix-ui/react-icons';
 

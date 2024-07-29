@@ -1,5 +1,5 @@
 'use server'
-import { prisma } from "@/utils/prisma";
+import { prisma } from '@layowt/database';
 
 export const signUp = async (email: string): Promise<409 | 'ok'> => {
 	// try to find the email in the early access table
