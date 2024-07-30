@@ -9,14 +9,14 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@layowt/tailwind-config": "*",
+    "@layowt/utils": "*",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-select": "^2.1.1",
     "posthog-js": "^1.149.1",
     "sonner": "^1.5.0"
   },
   "devDependencies": {
-    "@layowt/tailwind-config": "*",
-    "@layowt/utils": "*",
     "typescript": "latest"
   },
   "packageManager": "npm@10.0.0"

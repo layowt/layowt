@@ -1,13 +1,24 @@
-
 {
   "extends": "@layowt/typescript-config/react-library.json",
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "paths": {
-      "@/*": ["./*"],
-      "@/components/*": ["./components/*"],
-      "~/*": ["../../packages/*"],
-      "~/components/*": ["../../packages/components/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@/components/*": [
+        "./components/*"
+      ],
+      "~/*": [
+        "../../packages/*"
+      ],
+      "~/components/*": [
+        "../../packages/components/*"
+      ]
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,8 +26,8 @@
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "esnext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -38,6 +49,7 @@
     "../../packages/components/src/ui/button.tsx",
     "app/providers.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
-
