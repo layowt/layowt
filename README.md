@@ -8,15 +8,6 @@
 
 <p align="center">A no-code solution to coding problems.</p>
 
-## Features
-
-- Drag and drop website builder
-- Pre-built UI components
-- Custom blocks
-- Analytics
-- Logs
-- AI site builder
-
 ## Tech Stack
 
 - Nextjs & React (Framework)
