@@ -1,35 +1,41 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { useHash } from '@/hooks/useHash';
-// components
 import WelcomePageDetails from '@/components/layout/welcome/details';
-import WelcomePageWrapper from '@/components/layout/welcome/welcome-wrapper';
-import WelcomePagePaymentPlans from "@/components/layout/welcome/payment-plans";
-import type { StripeProductReturnType } from '@layowt/utils/src/get-products';
+import { useHashContext } from '@/components/layout/welcome/welcome-wrapper-context';
+import WelcomePagePaymentPlans from '@/components/layout/welcome/payment-plans';
+import WelcomePagePayment from '@/components/layout/welcome/payment';
 
-export default function WelcomePageClient({
-  products
-}: StripeProductReturnType) {
-  const hash = useHash();
-  const [currentHash, setCurrentHash] = useState('');
+import type { StripeProductReturnType } from '@layowt/utils/src/products';
+import { useEffect } from 'react';
 
+export default function WelcomePageClient({ products }: StripeProductReturnType) {
+  const { hash, setHash, userOnboardingDetails } = useHashContext();
+  // if no hash is present, set the default hash
   useEffect(() => {
-    setCurrentHash(hash);
-  }, [hash]);
+    if (hash === '') {
+      setHash('#details');
+    }
+  }, [hash, setHash]);
 
-  const updateHash = (newHash: string) => {
-    window.location.hash = newHash;
-    setCurrentHash(newHash);
-  };
+  // if the user has refreshed the page after entering their details, we need to 
+  // send them back to the details page to enter them
+  if (Object.values(userOnboardingDetails).some(value => value === '')) {
+    setHash('#details');
+  }
+
 
   return (
-    <WelcomePageWrapper>
-      {currentHash === '#details' && (
-        <WelcomePageDetails updateHash={updateHash} />
+    <div
+      className="
+        w-min p-8 text-white font-satoshi flex flex-col border border-black-50
+        gap-y-7 min-h-full bg-black-300 relative items-center justify-center
+        rounded-lg
+      "
+    >
+      {hash === '#details' && <WelcomePageDetails />}
+      {hash === '#payment-plans' && (
+        <WelcomePagePaymentPlans products={products} />
       )}
-      {currentHash === '#payment-plans' && (
-        <WelcomePagePaymentPlans products={products} updateHash={updateHash} />
-      )}
-    </WelcomePageWrapper>
+      {hash === '#payment' && <WelcomePagePayment />}
+    </div>
   );
 }

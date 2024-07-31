@@ -25,7 +25,7 @@ import { useAppSelector } from '@/utils/index';
 import { website } from '@/store/slices/website-store';
 
 // hooks
-import useUserWebsites from '@/hooks/useUserWebsites';
+import useUserWebsites from '@/hooks/use-user-websites';
 
 // misc
 import { createClient } from '@/utils/supabase/client';

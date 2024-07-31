@@ -1,25 +1,49 @@
 'use client';
 import Link from 'next/link';
+import { m as motion } from 'framer-motion';
+// components
 import { Button } from '@layowt/components/src/ui/button';
 import { InputWithLabel } from '@layowt/components/src/ui/input-label';
-import { m as motion } from 'framer-motion';
-import { useState } from 'react';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormMessage,
+} from '@layowt/components/src/ui/form';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 
-export default function WelcomePageDetails ({ 
-  updateHash 
-}: { 
-  updateHash: (newHash: string) => void 
-}) {
-  const [details, setDetails] = useState<{
-    firstName: string;
-    lastName: string;
-    displayName: string;
-  }>({
-    firstName: '',
-    lastName: '',
-    displayName: ''
+import { useHashContext } from './welcome-wrapper-context';
+// zod
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { onboardingSchema } from '@/lib/zod/schemas/onboarding';
+import { z } from 'zod';
+
+type SchemaProps = z.infer<typeof onboardingSchema>;
+
+export default function WelcomePageDetails() {
+  const { setHash, userOnboardingDetails } = useHashContext();
+
+  // define the form
+  const form = useForm<SchemaProps>({
+    resolver: zodResolver(onboardingSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      displayName: '',
+    }
   });
+
+  // Handle form submission
+  function onSubmit(values: SchemaProps) {
+    // update the context with the user's details
+    userOnboardingDetails.firstName = values.firstName;
+    userOnboardingDetails.lastName = values.lastName;
+    userOnboardingDetails.displayName = values.displayName;
+
+    // update the hash to move to the next screen
+    setHash('#payment-plans');
+  }
 
   return (
     <>
@@ -41,70 +65,86 @@ export default function WelcomePageDetails ({
             href="/"
             prefetch
             className="text-xs underline underline-offset-2 hover:text-white/60 font-satoshi"
-            >
+          >
             What do you do with my data?
           </Link>
         </motion.div>
       </div>
-      <form
-        className="grid grid-cols-12 gap-4 w-96 mt-8"
-        onSubmit={(e) => {
-          console.log('submitting')
-          e.preventDefault()
-          updateHash('#payment-plans')
-        }}
-      >
-        <InputWithLabel 
-          label="First name"
-          name="firstName"
-          value={details.firstName}
-          type="text"
-          onChange={(e) => setDetails({...details, firstName: e.target.value })}
-          className="bg-black-300 w-full"
-          wrapperclassname="col-span-6"
-          placeholder="John"
-        />
-        <InputWithLabel 
-          label="Last name"
-          name="lastName"
-          value={details.lastName}
-          type="text"
-          onChange={(e) => setDetails({...details, lastName: e.target.value })}
-          className="bg-black-300 w-full"
-          wrapperclassname="col-span-6"
-          placeholder="Doe"
-        />
-        <InputWithLabel
-          label="Display name"
-          name="displayName"
-          value={details.displayName}
-          type="text"
-          onChange={(e) => setDetails({...details, displayName: e.target.value })}
-          className="bg-black-300 w-full"
-          wrapperclassname="col-span-12"
-          placeholder={
-            details.firstName && details.lastName ?  
-            `${details.firstName} ${details.lastName}`.toLowerCase() :
-            'John_Doe'.toLowerCase()
-          }
-          question={{
-            icon: (
-              <QuestionMarkCircledIcon />
-            ),
-            text: 'Your display name is how you will appear when publishing blogs posts.'
-          }}
-        />
-          
-        <div className="col-span-12">
-          <Button
-            variant="default"
-            type="submit"
-            disabled={!details.firstName || !details.lastName || !details.displayName}
-          >
-            Continue
-          </Button>
-        </div>
-      </form>
+      <Form {...form}>
+        <form 
+          onSubmit={form.handleSubmit(onSubmit)} 
+          className="grid grid-cols-12 gap-4 w-96 mt-8"
+        >
+          {/** First name field */}
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormControl>
+                <div className="col-span-6">
+                  <InputWithLabel
+                    label="First name"
+                    type="text"
+                    placeholder="John"
+                    {...field}
+                  />
+                  <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
+                </div>
+              </FormControl>
+            )}
+          />
+          {/** Last name field */}
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormControl>
+                <div className="col-span-6">
+                  <InputWithLabel
+                    label="Last name"
+                    type="text"
+                    placeholder="Doe"
+                    {...field}
+                  />
+                  <FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
+                </div>
+              </FormControl>
+            )}
+          />
+          {/** Display name field */}
+          <FormField
+            control={form.control}
+            name="displayName"
+            render={({ field }) => (
+              <FormControl>
+                <div className="col-span-12">
+                  <InputWithLabel
+                    label="Display name"
+                    type="text"
+                    placeholder="John Doe"
+                    question={{
+                      text: 'This is the name that will be displayed to other users.',
+                      icon: <QuestionMarkCircledIcon />
+                    }}
+                    {...field}
+                  />
+                  <FormMessage>{form.formState.errors.displayName?.message}</FormMessage>
+                </div>
+              </FormControl>
+            )}
+          />
+          {/** Submit button */}
+          <div className="col-span-12">
+            <Button
+              variant="default"
+              type="submit"
+              disabled={!form.formState.isValid}
+            >
+              Continue
+            </Button>
+          </div>
+        </form>
+      </Form>
     </>
   );
-};
+}

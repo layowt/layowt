@@ -1,8 +1,7 @@
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
-import { StripeProductReturnType } from '@layowt/utils/src/get-products';
+import { StripeProductReturnType } from '@layowt/utils/src/products';
 import { useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import type { StripeProduct } from '@/types/StripeProduct';
 
 // components
@@ -14,38 +13,52 @@ import {
   SelectContent, 
   SelectTrigger, 
   SelectItem, 
-  SelectLabel,
   SelectGroup,
   SelectValue
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
+import Countup from 'react-countup';
+import { useHashContext } from './welcome-wrapper-context';
 
-interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
-  updateHash: (newHash: string) => void;
-}
 
 export default function WelcomePagePaymentPlans({ 
   products,
-  updateHash,
-}: WelcomePagePaymentPlansProps) {
-  const router  = useRouter();
-
-  // if no plans are present at this stage, just redirect the user to the dashboard
-  if (!products) {
-    router.push('/dashboard?q=new-user');
-  }
+}: StripeProductReturnType) {
+  const { 
+    setHash, 
+    setPlanContext
+  } = useHashContext();
 
   const [selectedPlanId, setSelectedPlanId] = useState(products.monthly[0].id);
   const [selectedBillingPeriod, setSelectedBillingPeriod] = useState<'monthly' | 'year'>('monthly');
+  
   const selectedPlan = useMemo<StripeProduct>(
     () => products[selectedBillingPeriod].find(plan => plan.id === selectedPlanId),
     [selectedPlanId, selectedBillingPeriod, products]
   );
 
+  // handle the form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // guard clause
+    if( 
+      !selectedPlanId || 
+      !selectedBillingPeriod ||
+      !selectedPlan
+    ) {
+     setHash('#details?error=missing-plan'); 
+    }
+    // save the payment plan to the context
+    setPlanContext(selectedPlan);
+
+    // send the user to the payment page
+    setHash('#payment');
+  }
+
   return (
-    <div className="px-10 flex flex-col gap-y-4">
+    <div className="px-10 flex flex-col gap-y-4 relative">
       <Back 
-        onClick={() => updateHash('#details')}
+        onClick={() => setHash('#details')}
         className="absolute top-4 left-4" 
       />
       <div className="flex flex-col gap-y-2">
@@ -128,9 +141,13 @@ export default function WelcomePagePaymentPlans({
           </div>
           <div className="mt-10 font-satoshi">
             £
-            <span className="text-3xl">
-              {selectedPlan.default_price.unit_amount / 100}
-            </span>
+            <Countup 
+              start={0}
+              end={selectedPlan.default_price.unit_amount / 100}
+              decimalPlaces={2}
+              decimals={selectedPlan.default_price.unit_amount / 100 % 1 != 0 ? 2 : 0}
+              className="text-3xl"
+            />
             /
             <span className="text-sm">
               {selectedBillingPeriod === 'monthly' ? 'month' : 'year'}
@@ -142,10 +159,7 @@ export default function WelcomePagePaymentPlans({
       <div className="col-span-12 flex flex-col gap-y-2 text-center">
         <Button
           variant="default"
-          onClick={(e) => {
-            e.preventDefault();
-            updateHash('#payment-plans');
-          }}
+          onClick={(e) => handleSubmit(e)}
         >
           Continue
         </Button>

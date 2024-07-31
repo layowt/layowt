@@ -10,11 +10,11 @@ import { Metadata } from 'next';
 import { cn } from '@/utils/index';
 import { ReactQueryClientProvider } from '@/components/react-query-client-provider';
 
+// constants
+import { APP_DESCRIPTION, APP_TITLE } from '@layowt/utils/src/constants/index'
 
-const title = 
-  'Layowt | Build your next digital product with ease'
-const description = 
-  'Layowt is the all-in-one platform for creating your next digital product'
+const title = APP_TITLE;
+const description = APP_DESCRIPTION;
 
 export const metadata: Metadata = {
   title,

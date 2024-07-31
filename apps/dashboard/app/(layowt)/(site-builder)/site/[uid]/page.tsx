@@ -1,5 +1,5 @@
 import { getWebsite } from '@/actions/websites/get-website';
-import SiteBuilderClient from './page-client';
+import SiteBuilderClient from './page.client';
 import { Metadata } from 'next';
 import { generateSiteMetadata } from '@/actions/websites/metadata';
 import { redirect } from 'next/navigation';
