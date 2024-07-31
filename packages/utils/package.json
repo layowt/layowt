@@ -10,7 +10,7 @@
     "./src/*": "./src/*"
   },
   "devDependencies": {
-    "@layowt/typescript-config": "workspace:*",
+    "@layowt/typescript-config": "*",
     "typescript": "^4.5.5"
   }
 }

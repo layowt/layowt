@@ -1,9 +1,6 @@
 {
   "name": "@layowt/database",
-  "version": "0.0.0",
-  "exports": {
-    ".": "./src/index.ts"
-  },
+  "version": "0.0.1",
   "scripts": {
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate"
