@@ -28,6 +28,7 @@ import { updateUser } from '@/actions/user/update-user';
 export default function WelcomePagePaymentPlans({ 
   products,
 }: StripeProductReturnType) {
+  const router = useRouter();
   const { 
     setHash, 
     setPlanContext,
@@ -52,7 +53,7 @@ export default function WelcomePagePaymentPlans({
     mutationFn: updateUser,
     onSuccess: (data) => {
       console.log(data.data)
-      setHash('#dashboard?new-user=true');
+      router.push('/dashboard?new-user=true');
     }
   });
 
