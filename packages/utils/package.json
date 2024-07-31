@@ -8,5 +8,9 @@
   },
   "exports": {
     "./src/*": "./src/*"
+  },
+  "devDependencies": {
+    "@layowt/typescript-config": "workspace:*",
+    "typescript": "^4.5.5"
   }
 }
