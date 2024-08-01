@@ -1,4 +1,3 @@
-'use client'
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/utils/index";
 import { setUser as setStoreUser, user } from "@/store/slices/user-store";

@@ -8,12 +8,18 @@ import {
   TooltipTrigger
 } from '@layowt/components/src/ui/tooltip';
 
+// react hook form 
+import { UseFormRegister, Path, Controller } from 'react-hook-form';
+
+interface IFormProps {
+  [key: string]: string;
+}
+
 interface InputWithLabelProps {
-  label: string;
   type: string;
   name: string;
   value?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
   wrapperclassname?: string;
@@ -23,7 +29,10 @@ interface InputWithLabelProps {
   question?: {
     text: string;
     icon: React.ReactNode;
-  }
+  };
+
+  // react hook form props
+  label?: Path<IFormProps>;
 }
 
 const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
@@ -57,16 +66,17 @@ const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
             </TooltipProvider>
           )}
         </div>
-        <Input
+        <Input 
           ref={ref}
+          {...props}
           className="
             bg-transparent w-full p-2 placeholder:text-white/50 autofill:!bg-transparent border border-black-50
-            focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-10
+            focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 px-4
             hover:border-white/50
           "
-          {...props}
         />
       </div>
+      
     );
   }
 );

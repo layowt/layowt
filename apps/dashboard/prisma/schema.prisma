@@ -28,104 +28,105 @@ enum pageStatus {
 
 // defines the user data model
 model User {
-  uid                                         String @id @default(cuid())
-  email                                       String @unique
-  hasAuthenticatedEmail                       Boolean @default(false) // if the user has authenticated their email
-  firstName                                   String?
-  lastName                                    String?
+  uid                   String  @id @default(cuid())
+  email                 String  @unique
+  hasAuthenticatedEmail Boolean @default(false) // if the user has authenticated their email
+  firstName             String?
+  lastName              String?
+  displayName           String?
 
-  createdAt                                   DateTime @default(now())
-  updatedAt                                   DateTime @updatedAt
-  lastLogin                                   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  lastLogin DateTime?
 
-  websites                                    Website[]
+  websites     Website[]
   // the canvases that belong to the user - this is a 1-many relationship
   // and is used for Supabase RLS 
-  subscription                                Subscription?
+  subscription Subscription?
 }
 
 model Subscription {
-  transactionId                               String @id @unique // Define transactionId as primary key
-  subscriptionActive                          Boolean
-  paymentEmail                                String
-  planType                                    planType
-  dateOfPurchase                              DateTime  
-  dateOfExpiry                                DateTime   
+  transactionId      String   @id @unique // Define transactionId as primary key
+  subscriptionActive Boolean
+  paymentEmail       String
+  planType           planType
+  dateOfPurchase     DateTime
+  dateOfExpiry       DateTime
 
-  user                                        User       @relation(fields: [userId], references: [uid])
-  userId                                      String     @unique
+  user   User   @relation(fields: [userId], references: [uid])
+  userId String @unique
 
-  numOfWebsites                               Int
+  numOfWebsites Int
 }
 
 model Website {
-  owner                                       User         @relation(fields: [userId], references: [uid])
-  userId                                      String
+  owner  User   @relation(fields: [userId], references: [uid])
+  userId String
 
-  websiteId                                   String        @id @default(cuid())
-  websiteName                                 String        
-  websiteUrl                                  String        
-  websiteLogo                                 String
+  websiteId   String @id @default(cuid())
+  websiteName String
+  websiteUrl  String
+  websiteLogo String
 
-  websitePrimaryColor                         String 
-  websiteSecondaryColor                       String
-  websiteBackgroundColor                      String        @default("#ffffff")
+  websitePrimaryColor    String
+  websiteSecondaryColor  String
+  websiteBackgroundColor String @default("#ffffff")
 
-  hasBeenPublished                            Boolean       @default(false)
+  hasBeenPublished Boolean @default(false)
 
-  createdAt                                   DateTime      @default(now())
-  lastUpdated                                 DateTime      @updatedAt
-  lastUpdatedUid                              String        @default("")
+  createdAt      DateTime @default(now())
+  lastUpdated    DateTime @updatedAt
+  lastUpdatedUid String   @default("")
 
-  canvas                                      Canvas? 
+  canvas Canvas?
 }
 
 model EarlyAccess {
-  email                                      String @id 
-  createdAt                                  DateTime @default(now())
-  updatedAt                                  DateTime @updatedAt
+  email     String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Component {
-  type                                        ComponentType @id
-  name                                        String
-  description                                 String
-  properties                                  String[]
-  createdAt                                   DateTime @default(now())
-  updatedAt                                   DateTime @updatedAt
-  
-  data                                        Json
+  type        ComponentType @id
+  name        String
+  description String
+  properties  String[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  data Json
 }
 
 model Canvas {
-  website                                     Website      @relation(fields: [websiteId], references: [websiteId])
-  websiteId                                   String        @unique
+  website   Website @relation(fields: [websiteId], references: [websiteId])
+  websiteId String  @unique
 
-  canvasId                                    String        @id @default(cuid())
-  canvasUrl                                   String        @unique
+  canvasId  String @id @default(cuid())
+  canvasUrl String @unique
 
-  createdAt                                   DateTime      @default(now())
-  updatedAt                                   DateTime      @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  page                                        Page[]        // the pages that belong to the canvas
+  page Page[] // the pages that belong to the canvas
 }
 
 model Page {
-  canvas                                      Canvas        @relation(fields: [canvasId], references: [canvasId])
-  canvasId                                    String
+  canvas   Canvas @relation(fields: [canvasId], references: [canvasId])
+  canvasId String
 
-  pageId                                      String        @id @default(cuid())
-  pageTitle                                   String
-  pageSlug                                    String
-  pageStatus                                  pageStatus    @default(DRAFT) // The current 'publish' status of the page
+  pageId     String     @id @default(cuid())
+  pageTitle  String
+  pageSlug   String
+  pageStatus pageStatus @default(DRAFT) // The current 'publish' status of the page
 
-  pageDeleted                                 Boolean       @default(false) // If the page has been deleted
-  pageDeletedAt                               DateTime?     // When the page was deleted - this is used so the user has a window to recover the page
+  pageDeleted   Boolean   @default(false) // If the page has been deleted
+  pageDeletedAt DateTime? // When the page was deleted - this is used so the user has a window to recover the page
 
-  pagePrimaryColor                            String         
-  pageSecondaryColor                          String
-  pageBackgroundColor                         String        @default("#ffffff")
+  pagePrimaryColor    String
+  pageSecondaryColor  String
+  pageBackgroundColor String @default("#ffffff")
 
-  createdAt                                   DateTime      @default(now())
-  updatedAt                                   DateTime      @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

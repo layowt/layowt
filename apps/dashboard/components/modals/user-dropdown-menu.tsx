@@ -13,7 +13,7 @@ import IcRoundLogOut from '@/ui/icons/logout';
 import IcOutlineDarkMode from '@/ui/icons/darkmode';
 import IcSharpHelpOutline from '@/ui/icons/help';
 import { cn } from '@/utils/index';
-import useCurrentTheme from '@/hooks/useCurrentTheme';
+import useCurrentTheme from '@/hooks/use-current-theme';
 
 import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@/utils/supabase/client';

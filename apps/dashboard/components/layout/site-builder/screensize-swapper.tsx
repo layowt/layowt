@@ -4,7 +4,7 @@ import { cn } from '@/utils/index';
 import type { DeviceType } from '@/types/DeviceType';
 import { device, setDeviceType } from '@/store/slices/index';
 import { useAppSelector, useAppDispatch } from '@/utils/index';
-import { useQueryParams } from '@/hooks/useQueryParams';
+import { useQueryParams } from '@/hooks/use-query-params';
 
 import { MobileIcon, DesktopIcon, LaptopIcon } from '@radix-ui/react-icons';
 import { IconButton } from '@radix-ui/themes';
