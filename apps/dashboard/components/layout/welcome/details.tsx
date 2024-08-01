@@ -90,10 +90,6 @@ export default function WelcomePageDetails() {
     userOnboardingDetails.lastName = values.lastName;
     userOnboardingDetails.displayName = values.displayName;
     userOnboardingDetails.experienceLevel = values.experienceLevel;
-
-    console.log({
-      userOnboardingDetails
-    })
   }
 
   return (
