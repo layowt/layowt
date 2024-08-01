@@ -78,8 +78,8 @@ export function PricingCard({
           </div>
           {/** payment trigger */}
           <PaymentButton
-            product={product}
             key={product.id}
+            product={product}
           />
         </div>
       </div>

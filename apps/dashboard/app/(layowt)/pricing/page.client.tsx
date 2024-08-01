@@ -11,7 +11,7 @@ import { HoverBorderGradient } from '@layowt/components/src/ui/hover-border-grad
 import { billingPeriod } from '@/store/slices/user-store';
 import { useAppSelector } from '@/utils/index';
 
-import { useProducts } from '@/hooks/useProducts';
+import { useProducts } from '@/hooks/use-products';
 
 // Utility function to remove circular references
 const removeCircularReferences = (obj, seen = new WeakSet()) => {
@@ -43,7 +43,7 @@ export default function PricingPageClient() {
 
   // Remove circular references before logging
   const sanitizedData = removeCircularReferences(data);
-  console.log(JSON.stringify(sanitizedData));
+  //console.log(JSON.stringify(sanitizedData));
 
   const tabs: Tab[] = [
     {
@@ -66,7 +66,7 @@ export default function PricingPageClient() {
 
   const products = data ? data[currentBillingPeriod] : [];
 
-  console.log(products)
+  //console.log(products)
 
   return (
     <LazyMotion features={domAnimation}>
@@ -121,7 +121,7 @@ export default function PricingPageClient() {
           </motion.div>
         </div>
         <div className="flex gap-x-10 items-center justify-center self-center">
-          <div className={`grid w-full gap-x-8 grid-cols-3 justify-center`}>
+          <div className="grid w-full gap-x-8 grid-cols-3 justify-center">
             {/* {products.map((product, index) => (
               <motion.div
                 key={product.id}

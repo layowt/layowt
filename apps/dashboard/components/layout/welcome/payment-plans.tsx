@@ -1,8 +1,8 @@
-import { m as motion } from 'framer-motion';
-import Link from 'next/link';
-import { StripeProductReturnType } from '@layowt/utils/src/products';
 import { useMemo, useState } from 'react';
+import { m as motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+// stripe
+import { StripeProductReturnType } from '@layowt/utils/src/products';
 import type { StripeProduct } from '@/types/StripeProduct';
 
 // components
@@ -14,39 +14,53 @@ import {
   SelectContent, 
   SelectTrigger, 
   SelectItem, 
-  SelectLabel,
   SelectGroup,
   SelectValue
 } from '@layowt/components/src/ui/select';
 import { CheckIcon } from '@radix-ui/react-icons';
 import Countup from 'react-countup';
-
-interface WelcomePagePaymentPlansProps extends StripeProductReturnType {
-  updateHash: (newHash: string) => void;
-}
+// tanstack query
+import { useMutation } from '@tanstack/react-query';
+import { useHashContext } from '@/components/layout/welcome/welcome-wrapper-context';
+// actions
+import { updateUser } from '@/actions/user/update-user';
 
 export default function WelcomePagePaymentPlans({ 
   products,
-  updateHash,
-}: WelcomePagePaymentPlansProps) {
-  const router  = useRouter();
-
-  // if no plans are present at this stage, just redirect the user to the dashboard
-  if (!products) {
-    router.push('/dashboard?q=new-user');
-  }
+}: StripeProductReturnType) {
+  const router = useRouter();
+  const { 
+    setHash, 
+    setPlanContext,
+    userOnboardingDetails
+  } = useHashContext();
 
   const [selectedPlanId, setSelectedPlanId] = useState(products.monthly[0].id);
   const [selectedBillingPeriod, setSelectedBillingPeriod] = useState<'monthly' | 'year'>('monthly');
+  
   const selectedPlan = useMemo<StripeProduct>(
     () => products[selectedBillingPeriod].find(plan => plan.id === selectedPlanId),
     [selectedPlanId, selectedBillingPeriod, products]
   );
 
+  // remove the user id from the details we send to server_updateUser
+  const { id, ...userData } = userOnboardingDetails;
+
+  const {
+    data,
+    mutateAsync: server_updateUser
+  } = useMutation({
+    mutationFn: updateUser,
+    onSuccess: (data) => {
+      console.log(data.data)
+      router.push('/dashboard?new-user=true');
+    }
+  });
+
   return (
-    <div className="px-10 flex flex-col gap-y-4">
+    <div className="px-10 flex flex-col gap-y-4 relative">
       <Back 
-        onClick={() => updateHash('#details')}
+        onClick={() => setHash('#details')}
         className="absolute top-4 left-4" 
       />
       <div className="flex flex-col gap-y-2">
@@ -147,21 +161,18 @@ export default function WelcomePagePaymentPlans({
       <div className="col-span-12 flex flex-col gap-y-2 text-center">
         <Button
           variant="default"
-          onClick={(e) => {
-            e.preventDefault();
-            updateHash('#payment-plans');
-          }}
+          onClick={() => console.log('')}
         >
           Continue
         </Button>
         {/** Send to dashboard with new-user param */}
-        <Link
-          href="/dashboard?q=new-user"
+        <Button
+          onClick={() => server_updateUser({ uid: userOnboardingDetails.id, data: userData })}
           className="text-xs text-white/50 hover:underline"
-          prefetch={true}
+          variant='none'
         >
           Skip for now
-        </Link>
+        </Button>
       </div>
     </div>
   );
