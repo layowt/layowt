@@ -29,6 +29,7 @@ import { z } from 'zod';
 import { getUserFromSession } from '@/actions/user/get-user';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { experienceLevel } from '@prisma/client';
 
 type SchemaProps = z.infer<typeof onboardingSchema>;
 
@@ -42,6 +43,7 @@ export default function WelcomePageDetails() {
       firstName: '',
       lastName: '',
       displayName: '',
+      experienceLevel: 'businessOwner'
     }
   });
 
@@ -49,6 +51,7 @@ export default function WelcomePageDetails() {
     'business-owner': 'Business owner',
     'developer': 'Developer',
     'designer': 'Designer',
+    'marketer': 'Marketer',
     'student': 'Student',
     'other': 'Other'
   }
@@ -86,6 +89,11 @@ export default function WelcomePageDetails() {
     userOnboardingDetails.firstName = values.firstName;
     userOnboardingDetails.lastName = values.lastName;
     userOnboardingDetails.displayName = values.displayName;
+    userOnboardingDetails.experienceLevel = values.experienceLevel;
+
+    console.log({
+      userOnboardingDetails
+    })
   }
 
   return (
@@ -178,7 +186,9 @@ export default function WelcomePageDetails() {
           />
           {/** expierence level */}
           <div className="col-span-full">
-            <Select>
+            <Select
+              onValueChange={(value: experienceLevel) => form.setValue('experienceLevel', value)}
+            >
               <SelectTrigger className="bg-black-100 border border-black-300 font-satoshi">
                 <SelectValue placeholder="What is your technical background?" />
               </SelectTrigger>
@@ -188,6 +198,7 @@ export default function WelcomePageDetails() {
                     key={key}
                     value={key}
                     className="flex items-center hover:bg-black-50"
+
                   >
                     {value}
                   </SelectItem>

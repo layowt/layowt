@@ -26,14 +26,24 @@ enum pageStatus {
   DELETED
 }
 
+enum experienceLevel {
+  businessOwner
+  developer
+  designer
+  marketer
+  student
+  other
+}
+
 // defines the user data model
 model User {
-  uid                   String  @id @default(cuid())
-  email                 String  @unique
-  hasAuthenticatedEmail Boolean @default(false) // if the user has authenticated their email
+  uid                   String           @id @default(cuid())
+  email                 String           @unique
+  hasAuthenticatedEmail Boolean          @default(false) // if the user has authenticated their email
   firstName             String?
   lastName              String?
   displayName           String?
+  experienceLevel       experienceLevel?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
