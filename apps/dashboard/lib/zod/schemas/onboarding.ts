@@ -1,30 +1,27 @@
-import { z, ZodType } from "zod";
+import { z } from "zod";
 
-interface OnboardingSchema {
-  id: string;
-  firstName: string;
-  lastName: string;
-  displayName: string;
-  paymentPlan: string;
-}
+const experienceLevelEnum = z.enum([
+  "businessOwner",
+  "developer",
+  "designer",
+  "marketer",
+  "student",
+  "other"
+]);
 
-export const onboardingSchema: ZodType<OnboardingSchema> = z.object({
-  id:
-    z.string()
-    .default(''),
-  firstName: 
-    z.string()
+export const onboardingSchema = z.object({
+  id: z.string().default(''),
+  firstName: z.string()
     .min(1, 'First name cannot be empty')
     .max(50, 'First name cannot be longer than 50 characters'),
-  lastName: 
-    z.string()
+  lastName: z.string()
     .min(1, 'Last name cannot be empty')
     .max(50, 'Last name cannot be longer than 50 characters'),
-  displayName: 
-    z.string()
+  displayName: z.string()
     .min(1, 'Display name cannot be empty')
     .max(50, 'Display name cannot be longer than 50 characters'),
-  paymentPlan: 
-    z.string()
-    .optional()
-}) as ZodType<OnboardingSchema>;
+  paymentPlan: z.string().optional(),
+  experienceLevel: experienceLevelEnum.optional(),
+});
+
+export type OnboardingSchema = z.infer<typeof onboardingSchema>;

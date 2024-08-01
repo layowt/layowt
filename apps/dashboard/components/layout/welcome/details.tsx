@@ -11,6 +11,14 @@ import {
   FormMessage,
 } from '@layowt/components/src/ui/form';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
+import { 
+  Select, 
+  SelectContent, 
+  SelectTrigger, 
+  SelectItem, 
+  SelectGroup,
+  SelectValue
+} from '@layowt/components/src/ui/select';
 
 import { useHashContext } from './welcome-wrapper-context';
 // zod
@@ -21,6 +29,7 @@ import { z } from 'zod';
 import { getUserFromSession } from '@/actions/user/get-user';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { experienceLevel } from '@prisma/client';
 
 type SchemaProps = z.infer<typeof onboardingSchema>;
 
@@ -34,8 +43,18 @@ export default function WelcomePageDetails() {
       firstName: '',
       lastName: '',
       displayName: '',
+      experienceLevel: 'businessOwner'
     }
   });
+
+  const expierenceLevels = {
+    'business-owner': 'Business owner',
+    'developer': 'Developer',
+    'designer': 'Designer',
+    'marketer': 'Marketer',
+    'student': 'Student',
+    'other': 'Other'
+  }
 
 
   const {
@@ -63,14 +82,14 @@ export default function WelcomePageDetails() {
   });
 
   // Handle form submission
-  function onSubmit(values: SchemaProps) {
+  const onSubmit = (values: SchemaProps) => {
     // call the method to grab the user from the server
     server_getUser();
-
     // update the context with the user's details
     userOnboardingDetails.firstName = values.firstName;
     userOnboardingDetails.lastName = values.lastName;
     userOnboardingDetails.displayName = values.displayName;
+    userOnboardingDetails.experienceLevel = values.experienceLevel;
   }
 
   return (
@@ -161,21 +180,28 @@ export default function WelcomePageDetails() {
               </FormControl>
             )}
           />
-          {/** hidden field for id */}
-          <FormField
-            control={form.control}
-            name="id"
-            render={({ field }) => (
-              <FormControl>
-                <div className="col-span-12">
-                  <InputWithLabel
-                    type="hidden"
-                    {...field}
-                  />
-                </div>
-              </FormControl>
-            )}
-          />
+          {/** expierence level */}
+          <div className="col-span-full">
+            <Select
+              onValueChange={(value: experienceLevel) => form.setValue('experienceLevel', value)}
+            >
+              <SelectTrigger className="bg-black-100 border border-black-300 font-satoshi">
+                <SelectValue placeholder="What is your technical background?" />
+              </SelectTrigger>
+              <SelectContent className="bg-black-100 text-white border border-black-300 font-satoshi">
+                {Object.entries(expierenceLevels).map(([key, value]) => (
+                  <SelectItem
+                    key={key}
+                    value={key}
+                    className="flex items-center hover:bg-black-50"
+
+                  >
+                    {value}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           {/** Submit button */}
           <div className="col-span-12">
             <Button

@@ -1,5 +1,6 @@
 'use client';
 import { StripeProduct } from '@/types/StripeProduct';
+import { experienceLevel } from '@prisma/client';
 import { domAnimation, LazyMotion } from 'framer-motion';
 import { 
   createContext, 
@@ -18,6 +19,7 @@ interface HashContextType {
     firstName: string;
     lastName: string;
     displayName: string;
+    experienceLevel: experienceLevel;
   };
   planContext: StripeProduct;
   setPlanContext: (newPlanContext: StripeProduct) => void;
@@ -34,7 +36,8 @@ export const HashProvider = ({ children, ...props }) => {
       id: '',
       firstName: '', 
       lastName: '', 
-      displayName: '' 
+      displayName: '',
+      experienceLevel: experienceLevel.businessOwner
     }),[]);
 
   // method passed to the context to update the hash
