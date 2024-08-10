@@ -87,7 +87,7 @@ export default function SiteBuilderOptions() {
                     {item.icon}
                   </button>
                 </TooltipTrigger>
-                <TooltipContent side="right" className="bg-black-75 border border-black-50 z-[100]">
+                <TooltipContent side="right" className="bg-black-75 border border-black-50 z-[100] text-white">
                   {item.toolTip}
                 </TooltipContent>
               </Tooltip>
