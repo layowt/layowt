@@ -17,7 +17,7 @@ export default async function DashboardSidebar() {
       className="min-w-48 min-h-screen flex flex-col text-white font-poppins bg-black-300"
     >
       <div className="border-b border-black-50 relative -top-px">
-        <SiteLogo className="py-4 px-4" />
+        <SiteLogo className="pt-4 pb-3 px-4" />
       </div>
       <NavigationItems
         websites={websites}

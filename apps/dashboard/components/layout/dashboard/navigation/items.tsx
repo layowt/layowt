@@ -94,7 +94,7 @@ export default function NavigationItems({
     <nav
       className={cn(
         className,
-        'font-satoshi font-semibold h-full flex flex-col justify-between'
+        'font-inter h-full flex flex-col justify-between'
       )}
       {...props}
     >
