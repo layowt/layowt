@@ -79,7 +79,7 @@ export default function PublishDropdownItems({
           </Dialog>
           <Button
             variant="secondary"
-            className="p-2 group-hover:!bg-white group-hover:text-black text-xs !border-none"
+            className="p-2 group-hover:!bg-black-50 group-hover:text-black text-xs !border-none"
             rounded="sm"
             onClick={async () => await handleWebsitePublish()}
           >

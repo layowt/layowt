@@ -7,7 +7,6 @@ import { website } from '@/store/slices/website-store';
 import { updateWebsite } from '@/actions/websites/update';
 import { publishSite } from '@/actions/websites/publish-website';
 import { toast } from 'sonner';
-import { Suspense } from 'react';
 import UserDropdownMenu from '@/components/modals/user-dropdown-menu'
 
 export default function SiteBuilderSettings() {
@@ -46,7 +45,7 @@ export default function SiteBuilderSettings() {
           className="!size-8 text-sm"
           siteLogo={websiteObj?.websiteLogo}
         />
-        </div>
+      </div>
     </div>
   );
 }
